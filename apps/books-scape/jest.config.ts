@@ -1,9 +1,9 @@
 /* eslint-disable */
 export default {
-  displayName: 'angular-monorepo',
+  displayName: 'books-scape',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory: '../../coverage/apps/angular-monorepo',
+  coverageDirectory: '../../coverage/apps/books-scape',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',

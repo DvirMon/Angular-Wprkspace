@@ -1,26 +1,26 @@
 {
-  "name": "angular-monorepo",
+  "name": "books-scape",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "prefix": "angular-monorepo",
-  "sourceRoot": "apps/angular-monorepo/src",
+  "sourceRoot": "apps/books-scape/src",
   "tags": [],
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/angular-monorepo/browser",
-        "index": "apps/angular-monorepo/src/index.html",
-        "main": "apps/angular-monorepo/src/main.ts",
+        "outputPath": "dist/apps/books-scape/browser",
+        "index": "apps/books-scape/src/index.html",
+        "main": "apps/books-scape/src/main.ts",
         "polyfills": ["zone.js"],
-        "tsConfig": "apps/angular-monorepo/tsconfig.app.json",
+        "tsConfig": "apps/books-scape/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
-          "apps/angular-monorepo/src/favicon.ico",
-          "apps/angular-monorepo/src/assets"
+          "apps/books-scape/src/favicon.ico",
+          "apps/books-scape/src/assets"
         ],
-        "styles": ["apps/angular-monorepo/src/styles.scss"],
+        "styles": ["apps/books-scape/src/styles.scss"],
         "scripts": []
       },
       "configurations": {
@@ -54,10 +54,10 @@
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
-          "buildTarget": "angular-monorepo:build:production"
+          "buildTarget": "books-scape:build:production"
         },
         "development": {
-          "buildTarget": "angular-monorepo:build:development"
+          "buildTarget": "books-scape:build:development"
         }
       },
       "defaultConfiguration": "development"
@@ -65,22 +65,22 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "buildTarget": "angular-monorepo:build"
+        "buildTarget": "books-scape:build"
       }
     },
     "serve-static": {
       "executor": "@nx/web:file-server",
       "options": {
-        "buildTarget": "angular-monorepo:build"
+        "buildTarget": "books-scape:build"
       }
     },
     "server": {
       "dependsOn": ["build"],
       "executor": "@angular-devkit/build-angular:server",
       "options": {
-        "outputPath": "dist/apps/angular-monorepo/server",
-        "main": "apps/angular-monorepo/server.ts",
-        "tsConfig": "apps/angular-monorepo/tsconfig.server.json",
+        "outputPath": "dist/apps/books-scape/server",
+        "main": "apps/books-scape/server.ts",
+        "tsConfig": "apps/books-scape/tsconfig.server.json",
         "inlineStyleLanguage": "scss"
       },
       "configurations": {
@@ -101,12 +101,12 @@
       "executor": "@angular-devkit/build-angular:ssr-dev-server",
       "configurations": {
         "development": {
-          "browserTarget": "angular-monorepo:build:development",
-          "serverTarget": "angular-monorepo:server:development"
+          "browserTarget": "books-scape:build:development",
+          "serverTarget": "books-scape:server:development"
         },
         "production": {
-          "browserTarget": "angular-monorepo:build:production",
-          "serverTarget": "angular-monorepo:server:production"
+          "browserTarget": "books-scape:build:production",
+          "serverTarget": "books-scape:server:production"
         }
       },
       "defaultConfiguration": "development"
@@ -118,12 +118,12 @@
       },
       "configurations": {
         "development": {
-          "browserTarget": "angular-monorepo:build:development",
-          "serverTarget": "angular-monorepo:server:development"
+          "browserTarget": "books-scape:build:development",
+          "serverTarget": "books-scape:server:development"
         },
         "production": {
-          "browserTarget": "angular-monorepo:build:production",
-          "serverTarget": "angular-monorepo:server:production"
+          "browserTarget": "books-scape:build:production",
+          "serverTarget": "books-scape:server:production"
         }
       },
       "defaultConfiguration": "production"

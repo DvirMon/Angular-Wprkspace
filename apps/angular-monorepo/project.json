@@ -1,0 +1,132 @@
+{
+  "name": "angular-monorepo",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "angular-monorepo",
+  "sourceRoot": "apps/angular-monorepo/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/angular-monorepo/browser",
+        "index": "apps/angular-monorepo/src/index.html",
+        "main": "apps/angular-monorepo/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "apps/angular-monorepo/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          "apps/angular-monorepo/src/favicon.ico",
+          "apps/angular-monorepo/src/assets"
+        ],
+        "styles": ["apps/angular-monorepo/src/styles.scss"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "buildTarget": "angular-monorepo:build:production"
+        },
+        "development": {
+          "buildTarget": "angular-monorepo:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "angular-monorepo:build"
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "angular-monorepo:build"
+      }
+    },
+    "server": {
+      "dependsOn": ["build"],
+      "executor": "@angular-devkit/build-angular:server",
+      "options": {
+        "outputPath": "dist/apps/angular-monorepo/server",
+        "main": "apps/angular-monorepo/server.ts",
+        "tsConfig": "apps/angular-monorepo/tsconfig.server.json",
+        "inlineStyleLanguage": "scss"
+      },
+      "configurations": {
+        "production": {
+          "outputHashing": "media"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "sourceMap": true,
+          "extractLicenses": false,
+          "vendorChunk": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve-ssr": {
+      "executor": "@angular-devkit/build-angular:ssr-dev-server",
+      "configurations": {
+        "development": {
+          "browserTarget": "angular-monorepo:build:development",
+          "serverTarget": "angular-monorepo:server:development"
+        },
+        "production": {
+          "browserTarget": "angular-monorepo:build:production",
+          "serverTarget": "angular-monorepo:server:production"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "prerender": {
+      "executor": "@angular-devkit/build-angular:prerender",
+      "options": {
+        "routes": ["/"]
+      },
+      "configurations": {
+        "development": {
+          "browserTarget": "angular-monorepo:build:development",
+          "serverTarget": "angular-monorepo:server:development"
+        },
+        "production": {
+          "browserTarget": "angular-monorepo:build:production",
+          "serverTarget": "angular-monorepo:server:production"
+        }
+      },
+      "defaultConfiguration": "production"
+    }
+  }
+}

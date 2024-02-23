@@ -1,0 +1,23 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{ book.title }}</mat-card-title>
+    <mat-card-subtitle>{{
+      book.description | truncate : 100
+    }}</mat-card-subtitle>
+  </mat-card-header>
+  <img
+    mat-card-image
+    [ngSrc]="book.imageLinks.thumbnail"
+    width="185"
+    height="280"
+    [alt]="book.description"
+  />
+
+  <ng-container *ngIf="!cartFlag">
+    <mat-card-actions>
+      <button color="primary" mat-raised-button (click)="onAddToCart(book)">
+        Add To Cart
+      </button>
+    </mat-card-actions>
+  </ng-container>
+</mat-card>

@@ -1,0 +1,28 @@
+div.books-page {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+
+  header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 16px;
+
+    div.search-wrapper {
+      width: 50%;
+    }
+  }
+
+  main.books-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    width: 80%;
+    gap: 16px;
+
+    div.book-card-wrapper {
+      width: 24%;
+    }
+  }
+}

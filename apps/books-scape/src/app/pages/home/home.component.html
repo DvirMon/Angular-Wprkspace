@@ -1,0 +1,22 @@
+<div class="books-page">
+  <header>
+    <div class="search-wrapper">
+      <app-search-input
+        [initialValue]="initialValue()"
+        [searchResultsData]="searchResultsData()"
+        (termChanged)="onTermChanged($event)"
+      ></app-search-input>
+    </div>
+  </header>
+
+  <main class="books-wrapper">
+    <ng-container *ngFor="let book of books()">
+      <div class="book-card-wrapper">
+        <app-book-card
+          [book]="book"
+          (addToCart)="onAddToCart($event)"
+        ></app-book-card>
+      </div>
+    </ng-container>
+  </main>
+</div>

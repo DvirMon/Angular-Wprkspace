@@ -1,0 +1,17 @@
+mat-card {
+  height: 100%;
+  justify-content: space-between;
+
+  .mat-mdc-card-subtitle {
+    min-height: 57px;
+  }
+
+  .mdc-card__media {
+    align-self: center;
+    margin: 16px;
+  }
+
+  .mdc-card__actions {
+    align-self: center;
+  }
+}

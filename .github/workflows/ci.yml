@@ -1,34 +1,48 @@
-name: CI
+name: Continuous Integration Workflow
 
 on:
   push:
     branches:
       - main
   pull_request:
+    branches:
+      - main
 
 permissions:
   actions: read
   contents: read
 
 jobs:
-  main:
+  build_and_test:
+    name: Build and Test Projects
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      # Connect your workspace on nx.app and uncomment this to enable task distribution.
-      # The "--stop-agents-after" is optional, but allows idle agents to shut down once the "e2e-ci" targets have been requested
-      # - run: npx nx-cloud start-ci-run --distribute-on="5 linux-medium-js" --stop-agents-after="e2e-ci"
+      # Optional NX Cloud Integration for Distributed Task Execution
+      # Uncomment the following line to enable NX Cloud
+      # - name: Start NX Cloud Distributed Execution
+      #   run: npx nx-cloud start-ci-run --distribute-on="5 linux-medium-js" --stop-agents-after="e2e-ci"
 
-      # Cache node_modules
-      - uses: actions/setup-node@v3
+      - name: Setup Node.js with Caching
+        uses: actions/setup-node@v3
         with:
-          node-version: 18.3
+          node-version: '18.3'
           cache: 'npm'
-      - run: npm ci
-      - uses: nrwl/nx-set-shas@v4
 
-      - run: npx nx-cloud record -- nx format:check
-      - run: npx nx affected -t lint test build e2e-ci
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Set NX SHA's for Caching
+        uses: nrwl/nx-set-shas@v4
+
+      # Format Check
+      - name: Check Code Formatting with NX
+        run: npx nx-cloud record -- nx format:check
+
+      # Lint, Test, Build, and E2E
+      - name: Run Lint, Test, Build, and E2E Targets
+        run: npx nx affected --target=lint,test,build,e2e-ci

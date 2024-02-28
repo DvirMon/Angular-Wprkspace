@@ -42,4 +42,5 @@ jobs:
         with:
           args: deploy --only hosting --project angular-books-scape
         env:
+          FIREBASE_CLI_EXPERIMENTS: webframeworks
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}

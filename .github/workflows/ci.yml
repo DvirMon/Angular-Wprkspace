@@ -1,36 +1,34 @@
-name: Deploy to Firebase Hosting on Main Push
+name: CI
 
 on:
   push:
-    branches: [ main ]
-    paths:
-      - 'apps/books-scape/**'
+    branches:
+      - main
   pull_request:
-    branches: [ main ]
-    paths:
-      - 'apps/books-scape/**'
+
+permissions:
+  actions: read
+  contents: read
 
 jobs:
-  build_and_deploy:
+  main:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
         with:
-          node-version: '18.13'
+          fetch-depth: 0
 
-      - name: Install Dependencies
-        run: npm install
+      # Connect your workspace on nx.app and uncomment this to enable task distribution.
+      # The "--stop-agents-after" is optional, but allows idle agents to shut down once the "e2e-ci" targets have been requested
+      # - run: npx nx-cloud start-ci-run --distribute-on="5 linux-medium-js" --stop-agents-after="e2e-ci"
 
-      - name: Build Specific Angular App
-        run: npx nx build books-scape --prod
-
-      - name: Deploy to Firebase Hosting
-        uses: w9jds/firebase-action@master
+      # Cache node_modules
+      - uses: actions/setup-node@v3
         with:
-          args: deploy --only hosting --project angular-books-scape
-        env:
-          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+          node-version: 18.3
+          cache: 'npm'
+      - run: npm ci
+      - uses: nrwl/nx-set-shas@v4
+
+      - run: npx nx-cloud record -- nx format:check
+      - run: npx nx affected -t lint test build e2e-ci

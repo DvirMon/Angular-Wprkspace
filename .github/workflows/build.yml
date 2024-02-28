@@ -7,9 +7,7 @@ on:
     paths:
       - 'apps/books-scape/**'
   pull_request:
-    branches:
-        - main
-        
+
 permissions:
   actions: read
   contents: read
@@ -43,3 +41,5 @@ jobs:
         uses: w9jds/firebase-action@master
         with:
           args: deploy --only hosting --project angular-books-scape
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}

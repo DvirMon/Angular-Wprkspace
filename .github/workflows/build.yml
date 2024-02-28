@@ -43,5 +43,3 @@ jobs:
         uses: w9jds/firebase-action@master
         with:
           args: deploy --only hosting --project angular-books-scape
-        env:
-          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}

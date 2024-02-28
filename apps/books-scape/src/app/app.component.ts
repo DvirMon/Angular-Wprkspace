@@ -1,3 +1,4 @@
+/* eslint-disable @angular-eslint/component-selector */
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { DashboardComponent } from './layout/dashboard/dashboard.component';

@@ -1,23 +1,20 @@
-import { CommonModule } from '@angular/common';
-import { Component, Signal, inject } from '@angular/core';
-import { BookCardComponent } from '../../books/book-card/book-card.component';
-import { Book } from '../../books/books';
-import { StoreService } from '../../shared/store.service';
+import { Component, Signal, inject } from "@angular/core";
+import { BookCardComponent } from "../../books/book-card/book-card.component";
+import { Book } from "../../books/books";
+import { AppSignalSore } from "../../store/store";
 
 
 @Component({
-  selector: 'app-cart',
+  selector: "app-cart",
   standalone: true,
-  imports: [CommonModule, BookCardComponent],
-  templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.scss']
+  imports: [BookCardComponent],
+  templateUrl: "./cart.component.html",
+  styleUrls: ["./cart.component.scss"],
 })
 export class CartComponent {
-
-  public readonly cart: Signal<Book[]>
+  public readonly cart: Signal<Book[]>;
 
   constructor() {
-    this.cart = inject(StoreService).selectCart;
+    this.cart = inject(AppSignalSore).cart;
   }
-
 }

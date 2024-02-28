@@ -1,10 +1,10 @@
 import { withDevtools } from "@angular-architects/ngrx-toolkit";
 import { signalStore, withHooks, withState } from "@ngrx/signals";
 import { Book } from "../books/books";
-import { BooksService } from "../books/books.service";
 import { withCart } from "./with-cart";
 import { withLoadEntities } from "./with-load-entity";
 import { withSearchTerm } from "./with-search-term";
+import { BooksService } from "../books/books.service";
 
 export interface AppState {
   book: Book | null;

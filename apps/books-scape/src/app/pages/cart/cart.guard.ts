@@ -1,15 +1,15 @@
-import { inject } from '@angular/core';
+import { inject } from "@angular/core";
 import {
   ActivatedRouteSnapshot,
   CanActivateFn,
   RouterStateSnapshot,
-} from '@angular/router';
-import { StoreService } from '../../shared/store.service';
+} from "@angular/router";
+import { AppSignalSore } from "../../store/store";
 
 export const cartGuard: CanActivateFn = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot,
-  storeService = inject(StoreService)
+  store = inject(AppSignalSore)
 ) => {
-  return !!storeService.selectCart().length;
+  return store.cart().length != 0;
 };

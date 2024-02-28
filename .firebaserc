@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "angular-books-scape": {
+      "hosting": {
+        "books-scape": [
+          "angular-books-scape"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "angular-books-scape"
+  }
+}

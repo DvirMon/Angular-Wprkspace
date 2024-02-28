@@ -8,19 +8,25 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/apps/books-scape/browser",
         "index": "apps/books-scape/src/index.html",
         "main": "apps/books-scape/src/main.ts",
-        "polyfills": ["zone.js"],
+        "polyfills": [
+          "zone.js"
+        ],
         "tsConfig": "apps/books-scape/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
           "apps/books-scape/src/favicon.ico",
           "apps/books-scape/src/assets"
         ],
-        "styles": ["apps/books-scape/src/styles.scss"],
+        "styles": [
+          "apps/books-scape/src/styles.scss"
+        ],
         "scripts": []
       },
       "configurations": {
@@ -75,7 +81,9 @@
       }
     },
     "server": {
-      "dependsOn": ["build"],
+      "dependsOn": [
+        "build"
+      ],
       "executor": "@angular-devkit/build-angular:server",
       "options": {
         "outputPath": "dist/apps/books-scape/server",
@@ -114,7 +122,9 @@
     "prerender": {
       "executor": "@angular-devkit/build-angular:prerender",
       "options": {
-        "routes": ["/"]
+        "routes": [
+          "/"
+        ]
       },
       "configurations": {
         "development": {
@@ -124,6 +134,23 @@
         "production": {
           "browserTarget": "books-scape:build:production",
           "serverTarget": "books-scape:server:production"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "deploy": {
+      "executor": "@angular/fire:deploy",
+      "options": {
+        "version": 2
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "books-scape:build:production",
+          "serveTarget": "books-scape:serve-ssr:production"
+        },
+        "development": {
+          "buildTarget": "books-scape:build:development",
+          "serveTarget": "books-scape:serve-ssr:development"
         }
       },
       "defaultConfiguration": "production"

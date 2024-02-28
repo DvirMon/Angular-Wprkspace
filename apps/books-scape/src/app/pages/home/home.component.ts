@@ -8,7 +8,7 @@ import { SearchInputComponent } from '../../search-input/search-input.component'
 import { AppSignalSore } from '../../store/store';
 
 @Component({
-  selector: 'app-home',
+  selector: 'books-scape-home',
   standalone: true,
   imports: [BookCardComponent, SearchInputComponent],
   templateUrl: './home.component.html',

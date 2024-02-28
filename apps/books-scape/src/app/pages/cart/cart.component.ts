@@ -5,7 +5,7 @@ import { AppSignalSore } from "../../store/store";
 
 
 @Component({
-  selector: "app-cart",
+  selector: "books-scape-cart",
   standalone: true,
   imports: [BookCardComponent],
   templateUrl: "./cart.component.html",

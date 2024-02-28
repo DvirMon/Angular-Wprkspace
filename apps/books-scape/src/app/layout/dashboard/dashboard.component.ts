@@ -1,4 +1,3 @@
-/* eslint-disable @angular-eslint/component-selector */
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { CommonModule } from "@angular/common";
 import { Component, Signal, inject } from "@angular/core";
@@ -17,7 +16,7 @@ import { map, shareReplay } from "rxjs/operators";
 import { AppSignalSore } from "../../store/store";
 
 @Component({
-  selector: "app-dashboard",
+  selector: "book-scape-dashboard",
   templateUrl: "./dashboard.component.html",
   styleUrls: ["./dashboard.component.scss"],
   standalone: true,

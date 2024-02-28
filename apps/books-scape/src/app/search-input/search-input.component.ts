@@ -11,7 +11,7 @@ export interface SearchResultsData {
 }
 
 @Component({
-  selector: 'app-search-input',
+  selector: 'books-scape-search-input',
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule, MatInputModule, MatFormFieldModule],
   templateUrl: './search-input.component.html',

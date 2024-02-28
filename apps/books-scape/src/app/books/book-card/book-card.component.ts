@@ -6,7 +6,7 @@ import { TruncatePipe } from '../../shared/truncate.pipe';
 import { Book } from '../books';
 
 @Component({
-  selector: 'app-book-card',
+  selector: 'books-scape-book-card',
   standalone: true,
   imports: [
     CommonModule,

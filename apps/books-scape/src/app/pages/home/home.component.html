@@ -1,18 +1,18 @@
 <div class="books-page">
   <header>
     <div class="search-wrapper">
-      <app-search-input
+      <books-scape-search-input
         [initialValue]="initialValue()"
-        (termChanged)="onTermChanged($event)"></app-search-input>
+        (termChanged)="onTermChanged($event)"></books-scape-search-input>
     </div>
   </header>
 
   <main class="books-wrapper">
     @for (book of books(); track book.id) {
     <div class="book-card-wrapper">
-      <app-book-card
+      <books-scape-book-card
         [book]="book"
-        (addToCart)="onAddToCart($event)"></app-book-card>
+        (addToCart)="onAddToCart($event)"></books-scape-book-card>
     </div>
 
     }

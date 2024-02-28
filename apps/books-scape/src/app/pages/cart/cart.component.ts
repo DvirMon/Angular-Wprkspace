@@ -1,8 +1,9 @@
-import { Component, Signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BookCardComponent } from 'src/app/books/book-card/book-card.component';
-import { StoreService } from 'src/app/shared/store.service';
-import { Book } from 'src/app/books/books';
+import { Component, Signal, inject } from '@angular/core';
+import { BookCardComponent } from '../../books/book-card/book-card.component';
+import { Book } from '../../books/books';
+import { StoreService } from '../../shared/store.service';
+
 
 @Component({
   selector: 'app-cart',

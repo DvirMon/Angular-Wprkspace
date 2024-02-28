@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { NxWelcomeComponent } from './nx-welcome.component';
+import { RouterOutlet } from '@angular/router';
+import { DashboardComponent } from './layout/dashboard/dashboard.component';
 
 @Component({
+  selector: 'app-root',
   standalone: true,
-  imports: [NxWelcomeComponent, RouterModule],
-  selector: 'angular-monorepo-root',
+  imports: [RouterOutlet, DashboardComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
   title = 'books-scape';

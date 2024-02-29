@@ -12,7 +12,7 @@
         "{options.outputPath}"
       ],
       "options": {
-        "outputPath": "dist/apps/books-scape/browser",
+        "outputPath": "public/apps/books-scape/browser",
         "index": "apps/books-scape/src/index.html",
         "main": "apps/books-scape/src/main.ts",
         "polyfills": [
@@ -86,7 +86,7 @@
       ],
       "executor": "@angular-devkit/build-angular:server",
       "options": {
-        "outputPath": "dist/apps/books-scape/server",
+        "outputPath": "public/apps/books-scape/server",
         "main": "apps/books-scape/server.ts",
         "tsConfig": "apps/books-scape/tsconfig.server.json",
         "inlineStyleLanguage": "scss"

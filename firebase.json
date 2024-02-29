@@ -1,6 +1,7 @@
 {
   "hosting": [
     {
+      "public": "public/apps/books-scape/browser",
       "target": "books-scape",
       "source": ".",
       "frameworksBackend": {

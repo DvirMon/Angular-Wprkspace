@@ -12,7 +12,6 @@ export interface LoadResponse {
   providedIn: 'root',
 })
 export class BooksService {
-  private readonly API_URL = environment.apiUrl;
   private readonly MAX_RESULTS: number = 12;
   private readonly BOOKS_API_KEY = environment.googleApiKey;
 
@@ -36,7 +35,7 @@ export class BooksService {
     const maxResults = `maxResults=${this.MAX_RESULTS}`;
     const apiKey = `key=${this.BOOKS_API_KEY}`;
 
-    return `${this.API_URL}?${baseQuery}&${languageRestrict}&${maxResults}&${apiKey}`;
+    return `?${baseQuery}&${languageRestrict}&${maxResults}&${apiKey}`;
   }
 
   // Fetch data from Google Books API

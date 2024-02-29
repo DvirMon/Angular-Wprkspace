@@ -18,13 +18,15 @@ export class BooksService {
 
   constructor(private http: HttpClient) {}
 
-  // function to fetch books from Google Books API
-  // Main function to get books
-  public getBooks(query?: string): Observable<Book[]> {
+  // function to fetch books from Google Books API}
+  public load(query?: string): Observable<LoadResponse> {
     return this.fetchBooksFromApi(query as string).pipe(
       map((items) => this.filterItemsByLanguage(items, 'en')),
       map((items) => this.mapItemsToBooks(items)),
-      map((books) => this.filterBooksWithImages(books))
+      map((books) => this.filterBooksWithImages(books)),
+      map((books: Book[]) => ({
+        content: books,
+      }))
     );
   }
 
@@ -57,26 +59,6 @@ export class BooksService {
   // Filter books with images
   private filterBooksWithImages(books: Book[]): Book[] {
     return books.filter((book) => book.imageLinks != null);
-  }
-
-  public load(query?: string): Observable<LoadResponse> {
-    return this.http
-      .get<Root>(
-        `${this.API_URL}?q=intitle:${query}&langRestrict=en&maxResults=${this.MAX_RESULTS}&key=${this.BOOKS_API_KEY}`
-      )
-      .pipe(
-        map((res) =>
-          res.items.filter((item: Item) => item.volumeInfo.language === 'en')
-        ),
-        map((items) =>
-          items
-            .map((item: Item) => this.mapVolumeToBook(item.id, item.volumeInfo))
-            .filter((book: Book) => book.imageLinks != null)
-        ),
-        map((books: Book[]) => ({
-          content: books,
-        }))
-      );
   }
 
   // RxJS operator function to transform book data

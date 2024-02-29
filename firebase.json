@@ -2,8 +2,12 @@
   "hosting": [
     {
       "public": "public/apps/books-scape/browser",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
       "target": "books-scape",
-      "source": ".",
       "frameworksBackend": {
         "region": "europe-west1"
       }

@@ -2,13 +2,23 @@ import {
   Injector,
   ProviderToken,
   inject,
-  runInInjectionContext,
-} from "@angular/core";
-import { tapResponse } from "@ngrx/operators";
-import { StateSignal, patchState, signalStoreFeature, withMethods } from "@ngrx/signals";
-import { EntityId, addEntities, withEntities } from "@ngrx/signals/entities";
-import { rxMethod } from "@ngrx/signals/rxjs-interop";
-import { Observable, pipe, switchMap } from "rxjs";
+  runInInjectionContext
+} from '@angular/core';
+import { tapResponse } from '@ngrx/operators';
+import {
+  StateSignal,
+  patchState,
+  signalStoreFeature,
+  withMethods,
+} from '@ngrx/signals';
+import {
+  EntityId,
+  addEntities,
+  setAllEntities,
+  withEntities
+} from '@ngrx/signals/entities';
+import { rxMethod } from '@ngrx/signals/rxjs-interop';
+import { Observable, pipe, switchMap } from 'rxjs';
 
 // Loader interface for loading entities
 
@@ -26,25 +36,33 @@ function createLoader<Entity extends { id: EntityId }>(
   });
 }
 
-// Function to handle the success response of loading entities
-function handleLoadSuccess<Entity extends { id: EntityId }>(state: StateSignal<object>) {
-  return (res: { content: Entity[] }) =>
-    patchState(state, addEntities(res.content));
+function handleLoadSuccess<Entity extends { id: EntityId }>(state: any) {
+  return (res: { content: Entity[] }) => {
+    const hasEntities = state.entities() && state.entities().length > 0;
+
+    // If entities already exist, use setAllEntities to replace them
+    if (hasEntities) {
+      patchState(state as StateSignal<object>, setAllEntities(res.content));
+    } else {
+      // If no entities exist yet, use addEntities to add them
+      patchState(state as StateSignal<object>, addEntities(res.content));
+    }
+  };
 }
 
 // Modular rxMethod function for loading entities
 function loadEntitiesMethod<Entity extends { id: EntityId }>(
   loader: (query?: string) => Observable<{ content: Entity[] }>,
-  state: StateSignal<object>
+  state: object
 ) {
   return rxMethod<string>(
     pipe(
-      switchMap((query) =>
+      switchMap((query: string) =>
         loader(query).pipe(
           tapResponse({
             next: handleLoadSuccess<Entity>(state),
             error: () => {
-              console.log("error");
+              console.log('error');
             },
           })
         )

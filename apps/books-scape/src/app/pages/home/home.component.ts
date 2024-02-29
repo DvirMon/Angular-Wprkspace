@@ -1,4 +1,3 @@
-/* eslint-disable @angular-eslint/component-selector */
 import { Component, Signal, inject } from '@angular/core';
 
 import { patchState } from '@ngrx/signals';

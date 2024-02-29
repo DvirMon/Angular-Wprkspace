@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, map, of } from 'rxjs';
+import { Observable, catchError, map, of, pipe, tap } from 'rxjs';
 import { Book, Item, Root, VolumeInfo } from './books';
 import { environment } from '../../environments/environment';
 

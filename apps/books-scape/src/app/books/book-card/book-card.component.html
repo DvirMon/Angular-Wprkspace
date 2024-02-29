@@ -14,7 +14,7 @@
     [alt]="book().description"
   />
 
-  <ng-container *ngIf="!cartFlag">
+  <ng-container *ngIf="!cartFlag()">
     <mat-card-actions>
       <button color="primary" mat-raised-button (click)="onAddToCart(book())">
         Add To Cart

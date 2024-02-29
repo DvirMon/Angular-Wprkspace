@@ -1,54 +1,55 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, input } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { debounceTime, distinctUntilChanged, startWith } from 'rxjs';
+import { MatInputModule } from '@angular/material/input';
+import { rxMethod } from '@ngrx/signals/rxjs-interop';
+import { debounceTime, distinctUntilChanged, pipe, tap } from 'rxjs';
 
 export interface SearchResultsData {
-  totalResults: number
+  totalResults: number;
 }
 
 @Component({
   selector: 'books-scape-search-input',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, MatInputModule, MatFormFieldModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatFormFieldModule,
+  ],
   templateUrl: './search-input.component.html',
-  styleUrls: ['./search-input.component.scss']
+  styleUrls: ['./search-input.component.scss'],
 })
 export class SearchInputComponent implements OnInit {
-
-  @Input() initialValue!: string;
-  @Input() searchResultsData!: SearchResultsData
+  initialValue = input<string>();
+  searchResultsData = input<SearchResultsData>();
 
   public searchControl: FormControl<string> = new FormControl();
 
   @Output() termChanged = new EventEmitter<string>();
 
+  private onTermChanged = rxMethod<string>(
+    pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      tap((value) => this.termChanged.emit(value))
+    )
+  );
+
   constructor() {
-
-    this.searchControl.valueChanges
-      .pipe(
-        startWith(this.initialValue),
-        // wait 300ms after each keystroke before considering the term
-        debounceTime(300),
-
-        // ignore new term if same as previous term
-        distinctUntilChanged(),
-
-        takeUntilDestroyed()
-      )
-      .subscribe((value: string) => {
-        this.termChanged.emit(value);
-      });
+    this.onTermChanged(this.searchControl.valueChanges);
   }
 
   ngOnInit() {
     // Set initial value if provided
-    if (this.initialValue) {
-      this.searchControl.setValue(this.initialValue);
-    }
 
+    const value: string | undefined = this.initialValue();
+
+    if (value != undefined) {
+      this.searchControl.setValue(value);
+    }
   }
 }

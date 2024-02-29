@@ -3,12 +3,12 @@
     "angular-books-scape": {
       "hosting": {
         "books-scape": [
-          "books-scape"
+          "angular-books-scape"
         ]
       }
     }
   },
   "projects": {
-    "default": "books-scape"
+    "default": "angular-books-scape"
   }
 }

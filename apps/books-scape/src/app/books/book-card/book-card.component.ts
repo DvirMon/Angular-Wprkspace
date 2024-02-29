@@ -2,7 +2,7 @@ import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { Component, EventEmitter, Input, Output, input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { TruncatePipe } from '../../shared/truncate.pipe';
+import { TruncatePipe } from '../../shared/pipes/truncate.pipe';
 import { Book } from '../books';
 
 @Component({

@@ -13,28 +13,10 @@ export interface LoadResponse {
 })
 export class BooksService {
   private readonly API_URL = environment.apiUrl;
-  private readonly MAX_RESULTS: number = 10;
+  private readonly MAX_RESULTS: number = 12;
   private readonly BOOKS_API_KEY = environment.googleApiKey;
 
   constructor(private http: HttpClient) {}
-
-  // function to fetch books from Google Books API
-  public getBooks(query?: string): Observable<Book[]> {
-    return this.http
-      .get<Root>(
-        `${this.API_URL}?q=intitle:${query}&langRestrict=en&maxResults=${this.MAX_RESULTS}&key=${this.BOOKS_API_KEY}`
-      )
-      .pipe(
-        map((res) =>
-          res.items.filter((item: Item) => item.volumeInfo.language === "en")
-        ),
-        map((items) =>
-          items
-            .map((item: Item) => this.mapVolumeToBook(item.id, item.volumeInfo))
-            .filter((book: Book) => book.imageLinks != null)
-        )
-      );
-  }
 
   public load(query?: string): Observable<LoadResponse> {
     return this.http

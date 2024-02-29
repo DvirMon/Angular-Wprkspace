@@ -1,11 +1,8 @@
-import { Entity } from '@angular-architects/ngrx-toolkit';
 import {
   Injector,
   ProviderToken,
-  Signal,
-  WritableSignal,
   inject,
-  runInInjectionContext,
+  runInInjectionContext
 } from '@angular/core';
 import { tapResponse } from '@ngrx/operators';
 import {
@@ -16,14 +13,12 @@ import {
 } from '@ngrx/signals';
 import {
   EntityId,
-  EntityMap,
   addEntities,
   setAllEntities,
-  setEntities,
-  withEntities,
+  withEntities
 } from '@ngrx/signals/entities';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { Observable, pipe, switchMap, tap } from 'rxjs';
+import { Observable, pipe, switchMap } from 'rxjs';
 
 // Loader interface for loading entities
 

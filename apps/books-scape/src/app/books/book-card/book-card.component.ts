@@ -1,5 +1,5 @@
 import { CommonModule, NgOptimizedImage } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { TruncatePipe } from '../../shared/truncate.pipe';
@@ -19,8 +19,8 @@ import { Book } from '../books';
   styleUrls: ['./book-card.component.scss'],
 })
 export class BookCardComponent {
-  @Input({ required: true }) book!: Book;
-  @Input() cartFlag = false;
+  book = input.required<Book>();
+  cartFlag = input<boolean>(false);
 
   @Output() addToCart: EventEmitter<Book> = new EventEmitter();
 

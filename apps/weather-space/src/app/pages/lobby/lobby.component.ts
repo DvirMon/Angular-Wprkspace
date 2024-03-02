@@ -1,25 +1,37 @@
-import { AsyncPipe, JsonPipe, NgFor, NgIf } from "@angular/common";
-import { Component, OnInit, Signal, computed, inject } from "@angular/core";
-import { FormControl, NonNullableFormBuilder, ReactiveFormsModule } from "@angular/forms";
-import { MatAutocomplete, MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from "@angular/material/autocomplete";
-import { MatOption } from "@angular/material/core";
-import { MatFormField, MatLabel } from "@angular/material/form-field";
-import { MatInput } from "@angular/material/input";
-import { ActivatedRoute } from "@angular/router";
-import { BehaviorSubject, Observable, Subject } from "rxjs";
-import { AutocompleteComponent } from "../../features/weather-autocomplete/autocomplete.component";
-import { SelectChangeEvent, UnitChangeEvent, WeatherResultComponent } from "../../features/weather-result-card/weather-result.component";
-import { HighLightPipe } from "../../shared/pipes/high-light.pipe";
-import { PluckPipe } from "../../shared/pipes/pluck.pipe";
-import { SignalSore } from "../../store/store";
-import { AutocompleteOption } from "../../utilities/models/autocomplete-option";
-import { AutocompleteResOption } from "../../utilities/models/autocomplete-result";
-import { WeatherResult } from "../../utilities/models/weather-result";
+import { AsyncPipe, JsonPipe, NgFor, NgIf } from '@angular/common';
+import { Component, OnInit, Signal, computed, inject } from '@angular/core';
+import {
+  FormControl,
+  NonNullableFormBuilder,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import {
+  MatAutocomplete,
+  MatAutocompleteSelectedEvent,
+  MatAutocompleteTrigger,
+} from '@angular/material/autocomplete';
+import { MatOption } from '@angular/material/core';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { ActivatedRoute } from '@angular/router';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { AutocompleteComponent } from '../../features/weather-autocomplete/autocomplete.component';
+import {
+  SelectChangeEvent,
+  UnitChangeEvent,
+  WeatherResultComponent,
+} from '../../features/weather-result-card/weather-result.component';
+import { HighLightPipe } from '../../shared/pipes/high-light.pipe';
+import { PluckPipe } from '../../shared/pipes/pluck.pipe';
+import { SignalSore } from '../../store/store';
+import { AutocompleteOption } from '../../shared/models/autocomplete-option';
+import { AutocompleteResOption } from '../../shared/models/autocomplete-result';
+import { WeatherResult } from '../../shared/models/weather-result';
 
 @Component({
-  selector: "weather-space-lobby",
-  templateUrl: "./lobby.component.html",
-  styleUrls: ["./lobby.component.scss"],
+  selector: 'weather-space-lobby',
+  templateUrl: './lobby.component.html',
+  styleUrls: ['./lobby.component.scss'],
   standalone: true,
   imports: [
     ReactiveFormsModule,
@@ -40,7 +52,6 @@ import { WeatherResult } from "../../utilities/models/weather-result";
   ],
 })
 export class LobbyComponent implements OnInit {
-
   #store = inject(SignalSore);
 
   options: Signal<AutocompleteResOption[]>;
@@ -48,9 +59,11 @@ export class LobbyComponent implements OnInit {
   searchControl!: FormControl<AutocompleteOption>;
   control!: Signal<FormControl<AutocompleteResOption>>;
 
+  metric: boolean = true;
+
   constructor(
     private activatedRoute: ActivatedRoute,
-    private nfb: NonNullableFormBuilder,
+    private nfb: NonNullableFormBuilder
   ) {
     this.options = this.#store.entities;
     this.currentSelection = this.#store.currentSelection;
@@ -69,8 +82,6 @@ export class LobbyComponent implements OnInit {
     this.#store.loadQuery(this.#store.searchTerm);
   }
 
-
-
   onQueryChange(query: string): void {
     // this.queryChangeSource$.next(query);
   }
@@ -82,13 +93,13 @@ export class LobbyComponent implements OnInit {
     // this.updateQuery(option.value);
   }
 
-  onSelectChange({selected, source}: SelectChangeEvent): void {
-  }
+  onSelectChange({ selected, source }: SelectChangeEvent): void {}
 
-  onUnitTempChange({metric}: UnitChangeEvent): void {
-  }
+  onUnitTempChange({ metric }: UnitChangeEvent): void {}
 
   displayFn(option: AutocompleteResOption): string {
-    return option ? `${option.LocalizedName}, ${option.Country.LocalizedName}` : "";
+    return option
+      ? `${option.LocalizedName}, ${option.Country.LocalizedName}`
+      : '';
   }
 }

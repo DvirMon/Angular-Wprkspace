@@ -16,8 +16,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideRouter } from '@angular/router';
 
 import { appRoutes } from './app.routs';
-import { HttpErrorInterceptor } from './utilities/interceptors/error.interceptor';
-import { ErrorsService } from './utilities/services/error.service';
+import { HttpErrorInterceptor } from './shared/interceptors/error.interceptor';
+import { ErrorsService } from './shared/services/error.service';
 
 import { provideToastr } from 'ngx-toastr';
 

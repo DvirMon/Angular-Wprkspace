@@ -1,35 +1,29 @@
-import { HttpClient, HttpParams } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
 import {
   AutocompleteResOption,
   AutocompleteResult,
-} from "../models/autocomplete-result";
+} from '../models/autocomplete-result';
 
-
-import { environment } from "apps/weather-space/src/environments/environment.prod";
-import {
-  distinctUntilChanged,
-  map,
-  Observable,
-  of,
-  switchMap
-} from "rxjs";
-import { EntityResult } from "../../store/with-load-entity";
-import {
-  LOCATIONS_AUTOCOMPLETE_RESULT
-} from "../mock_data/data";
-import { GeolocationWeatherResult } from "../models/geolocation-weather-result";
+import { environment } from 'apps/weather-space/src/environments/environment.prod';
+import { distinctUntilChanged, map, Observable, of, switchMap } from 'rxjs';
+import { EntityResult } from '../../store/with-load-entity';
+import { CURRENT_WEATHER_RESULT, LOCATIONS_AUTOCOMPLETE_RESULT } from '../mock_data/data';
+import { GeolocationWeatherResult } from '../models/geolocation-weather-result';
+import { CurrentWeatherResult } from '../models/current-weather-result';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class WeatherHttpService {
   private _baseUrl: string = environment.weatherEndpoint;
 
   constructor(private http: HttpClient) {}
 
-  public loadQuery(query: string): Observable<EntityResult<AutocompleteResOption>> {
+  public loadQuery(
+    query: string
+  ): Observable<EntityResult<AutocompleteResOption>> {
     return of(LOCATIONS_AUTOCOMPLETE_RESULT).pipe(
       map((results) => this._mapToAutocompleteResults(results)),
       map((options) => ({ content: options }))
@@ -50,7 +44,17 @@ export class WeatherHttpService {
     }));
   }
 
-
+  
+  private getCurrentWeather(
+    locationKey: number
+  ): Observable<CurrentWeatherResult> {
+    return of(CURRENT_WEATHER_RESULT).pipe(
+      map((data: CurrentWeatherResult[]) => {
+        return data[0];
+      })
+    );
+    // );
+  }
 
   private _getGeolocation(): Observable<any> {
     return new Observable((obs) => {
@@ -68,7 +72,7 @@ export class WeatherHttpService {
 
   public getGeolocationWeather(): Observable<string> {
     const url: string =
-      this._baseUrl + "locations/v1/cities/geoposition/search";
+      this._baseUrl + 'locations/v1/cities/geoposition/search';
 
     return this._getGeolocation().pipe(
       map((position: GeolocationPosition) => {
@@ -79,8 +83,8 @@ export class WeatherHttpService {
       distinctUntilChanged(),
       switchMap((query: string) => {
         const params = new HttpParams()
-          .set("apikey", environment.accuWeatherAPIKey)
-          .append("q", query);
+          .set('apikey', environment.accuWeatherAPIKey)
+          .append('q', query);
         return this.http
           .get<GeolocationWeatherResult>(url, { params })
           .pipe(map((res: GeolocationWeatherResult) => res.LocalizedName));

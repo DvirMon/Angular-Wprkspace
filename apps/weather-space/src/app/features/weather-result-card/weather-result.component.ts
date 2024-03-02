@@ -1,14 +1,23 @@
-import {DatePipe, NgFor, NgIf, TitleCasePipe} from "@angular/common";
-import {Component, EventEmitter, input, Output} from "@angular/core";
-import {MatIconButton} from "@angular/material/button";
-import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup,} from "@angular/material/button-toggle";
-import {MatCard, MatCardContent, MatCardHeader, MatCardSubtitle, MatCardTitle,} from "@angular/material/card";
-import {MatIcon} from "@angular/material/icon";
-import {DailyTemperaturePipe} from "../../shared/pipes/daily-temperature.pipe";
-import {TemperaturePipe} from "../../shared/pipes/temperature.pipe";
-import {IsUnitPipe} from "../../shared/pipes/unit-temperature.pipe";
-import {WeatherResult} from "../../utilities/models/weather-result";
-
+import { DatePipe, NgFor, NgIf, TitleCasePipe } from '@angular/common';
+import { Component, EventEmitter, input, Output } from '@angular/core';
+import { MatIconButton } from '@angular/material/button';
+import {
+  MatButtonToggle,
+  MatButtonToggleChange,
+  MatButtonToggleGroup,
+} from '@angular/material/button-toggle';
+import {
+  MatCard,
+  MatCardContent,
+  MatCardHeader,
+  MatCardSubtitle,
+  MatCardTitle,
+} from '@angular/material/card';
+import { MatIcon } from '@angular/material/icon';
+import { DailyTemperaturePipe } from '../../shared/pipes/daily-temperature.pipe';
+import { TemperaturePipe } from '../../shared/pipes/temperature.pipe';
+import { IsUnitPipe } from '../../shared/pipes/unit-temperature.pipe';
+import { WeatherResult } from '../../shared/models/weather-result';
 
 export interface SelectChangeEvent {
   selected: boolean;
@@ -19,9 +28,9 @@ export interface UnitChangeEvent {
 }
 
 @Component({
-  selector: "weather-space-result-card",
-  templateUrl: "./weather-result.component.html",
-  styleUrls: ["./weather-result.component.scss"],
+  selector: 'weather-space-result-card',
+  templateUrl: './weather-result.component.html',
+  styleUrls: ['./weather-result.component.scss'],
   standalone: true,
   imports: [
     NgIf,
@@ -43,8 +52,8 @@ export interface UnitChangeEvent {
   ],
 })
 export class WeatherResultComponent {
-  weatherResult = input.required< Partial<WeatherResult>>();
-  metric  = input.required<boolean>();
+  weatherResult = input.required<Partial<WeatherResult>>();
+  metric = input.required<boolean>();
 
   @Output() selectChanged: EventEmitter<SelectChangeEvent> = new EventEmitter();
   @Output() unitChanged: EventEmitter<UnitChangeEvent> = new EventEmitter();

@@ -5,10 +5,10 @@ import {
   HttpInterceptor,
   HttpRequest,
   HttpResponse,
-} from "@angular/common/http";
-import { Injectable, inject } from "@angular/core";
-import { Observable, catchError, map, throwError } from "rxjs";
-import { SpinnerService } from "../../shared/components/spinner/spinner.service";
+} from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
+import { Observable, catchError, map, throwError } from 'rxjs';
+import { SpinnerService } from '../components/spinner/spinner.service';
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {

@@ -1,23 +1,13 @@
-import { DatePipe, NgFor, NgIf, TitleCasePipe } from "@angular/common";
-import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { MatIconButton } from "@angular/material/button";
-import {
-  MatButtonToggle,
-  MatButtonToggleChange,
-  MatButtonToggleGroup,
-} from "@angular/material/button-toggle";
-import {
-  MatCard,
-  MatCardContent,
-  MatCardHeader,
-  MatCardSubtitle,
-  MatCardTitle,
-} from "@angular/material/card";
-import { MatIcon } from "@angular/material/icon";
-import { DailyTemperaturePipe } from "../../shared/pipes/daily-temperature.pipe";
-import { TemperaturePipe } from "../../shared/pipes/temperature.pipe";
-import { IsUnitPipe } from "../../shared/pipes/unit-temperature.pipe";
-import { WeatherResult } from "../../utilities/models/weather-result";
+import {DatePipe, NgFor, NgIf, TitleCasePipe} from "@angular/common";
+import {Component, EventEmitter, input, Output} from "@angular/core";
+import {MatIconButton} from "@angular/material/button";
+import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup,} from "@angular/material/button-toggle";
+import {MatCard, MatCardContent, MatCardHeader, MatCardSubtitle, MatCardTitle,} from "@angular/material/card";
+import {MatIcon} from "@angular/material/icon";
+import {DailyTemperaturePipe} from "../../shared/pipes/daily-temperature.pipe";
+import {TemperaturePipe} from "../../shared/pipes/temperature.pipe";
+import {IsUnitPipe} from "../../shared/pipes/unit-temperature.pipe";
+import {WeatherResult} from "../../utilities/models/weather-result";
 
 
 export interface SelectChangeEvent {
@@ -53,8 +43,8 @@ export interface UnitChangeEvent {
   ],
 })
 export class WeatherResultComponent {
-  @Input() weatherResult!: Partial<WeatherResult>;
-  @Input() metric!: boolean | null;
+  weatherResult = input.required< Partial<WeatherResult>>();
+  metric  = input.required<boolean>();
 
   @Output() selectChanged: EventEmitter<SelectChangeEvent> = new EventEmitter();
   @Output() unitChanged: EventEmitter<UnitChangeEvent> = new EventEmitter();
@@ -63,16 +53,16 @@ export class WeatherResultComponent {
 
   private _setPartialWeatherResult(): Partial<WeatherResult> {
     return {
-      id: this.weatherResult.id,
-      description: this.weatherResult.description,
-      location: this.weatherResult.location,
-      temp: this.weatherResult.temp,
+      id: this.weatherResult().id,
+      description: this.weatherResult().description,
+      location: this.weatherResult().location,
+      temp: this.weatherResult().temp,
     };
   }
 
   private _emitChange() {
     this.selectChanged.emit({
-      selected: !this.weatherResult.favorite as boolean,
+      selected: this.weatherResult().favorite as boolean,
       source: this._setPartialWeatherResult(),
     });
   }

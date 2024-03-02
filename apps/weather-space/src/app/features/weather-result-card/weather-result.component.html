@@ -34,7 +34,7 @@
               <span mat-card-title>{{ item.date | date : "EEEE" }}</span>
               <span mat-card-subtitle
                 >{{ item.temp | dailyTemperature }}
-                <!-- <span [innerHTML]="metric | siUnit : 'temp'"></span> -->
+                >{{ weatherResult.temp! | temperature : metric }}
               </span>
             </mat-card-header>
           </mat-card>

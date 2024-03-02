@@ -63,7 +63,7 @@ export class LobbyComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private nfb: NonNullableFormBuilder
   ) {
-    this.options = this.#store.entities;
+    this.options = this.#store.optionsEntities;
     this.currentSelection = this.#store.currentSelection;
     this.control = computed(() => this.nfb.control(this.currentSelection()));
   }

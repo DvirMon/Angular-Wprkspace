@@ -3,22 +3,22 @@ import {
   ProviderToken,
   inject,
   runInInjectionContext,
-} from "@angular/core";
-import { tapResponse } from "@ngrx/operators";
+} from '@angular/core';
+import { tapResponse } from '@ngrx/operators';
 import {
   StateSignal,
   patchState,
   signalStoreFeature,
   withMethods,
-} from "@ngrx/signals";
+} from '@ngrx/signals';
 import {
   EntityId,
   addEntities,
   setAllEntities,
   withEntities,
-} from "@ngrx/signals/entities";
-import { rxMethod } from "@ngrx/signals/rxjs-interop";
-import { Observable, pipe, switchMap, tap } from "rxjs";
+} from '@ngrx/signals/entities';
+import { rxMethod } from '@ngrx/signals/rxjs-interop';
+import { Observable, pipe, switchMap, tap } from 'rxjs';
 
 // interface for result
 
@@ -46,17 +46,32 @@ function createLoader<Entity extends { id: EntityId }>(
   });
 }
 
+function getKey(collection: string): string {
+  return collection == 'entities' ? collection : collection + 'Entities';
+}
+
 // Function to handle the success response of loading entities
-function handleLoadSuccess<Entity extends { id: EntityId }>(state: any) {
+function handleLoadSuccess<Entity extends { id: EntityId }>(
+  state: any,
+  collection: string
+) {
   return (res: EntityResult<Entity>) => {
-    const hasEntities = state.entities() && state.entities().length > 0;
+    
+    const key: string = getKey(collection);
+    const hasEntities = state[key]() && state[key]().length > 0;
 
     // If entities already exist, use setAllEntities to replace them
     if (hasEntities) {
-      patchState(state as StateSignal<object>, setAllEntities(res.content));
+      patchState(
+        state as StateSignal<object>,
+        setAllEntities(res.content, { collection })
+      );
     } else {
       // If no entities exist yet, use addEntities to add them
-      patchState(state as StateSignal<object>, addEntities(res.content));
+      patchState(
+        state as StateSignal<object>,
+        addEntities(res.content, { collection })
+      );
     }
   };
 }
@@ -64,16 +79,17 @@ function handleLoadSuccess<Entity extends { id: EntityId }>(state: any) {
 // Modular rxMethod function for loading entities
 function loadEntitiesMethod<Entity extends { id: EntityId }>(
   loader: (query: string) => Observable<EntityResult<Entity>>,
-  state: StateSignal<object>
+  state: StateSignal<object>,
+  collection: string
 ) {
   return rxMethod<string>(
     pipe(
       switchMap((query) =>
         loader(query).pipe(
           tapResponse({
-            next: handleLoadSuccess(state),
+            next: handleLoadSuccess(state, collection),
             error: () => {
-              console.log("error");
+              console.log('error');
             },
           })
         )
@@ -84,14 +100,15 @@ function loadEntitiesMethod<Entity extends { id: EntityId }>(
 
 // Refactored withLoadEntities function
 export function withLoadEntities<Entity extends { id: EntityId }>(
-  Loader: ProviderToken<Loader<Entity>>
+  Loader: ProviderToken<Loader<Entity>>,
+  collection: string = 'entities'
 ) {
   return signalStoreFeature(
-    withEntities<Entity>(),
+    // withEntities<Entity>(),
     withMethods((state) => {
       const loader = createLoader<Entity>(Loader);
       return {
-        loadQuery: loadEntitiesMethod<Entity>(loader, state),
+        loadQuery: loadEntitiesMethod<Entity>(loader, state, collection),
       };
     })
   );

@@ -8,18 +8,21 @@ import { WeatherHttpService } from '../shared/services/weather-http.service';
 import { initialState } from './state';
 import { withLoadEntities } from './with-load-entity';
 import { FutureWeatherResult } from '../shared/models/future-weather-result';
+import { FavoriteCard } from '../features/weather-favorite-card/favorite-card.component';
 
 export const SignalSore = signalStore(
   { providedIn: 'root' },
   withDevtools('options'),
   withState(initialState),
-  withLoadEntities(WeatherHttpService),
+  withEntities({ entity: type<AutocompleteOption>(), collection: 'options' }),
+  withLoadEntities(WeatherHttpService, "options"),
   withEntities({ entity: type<CurrentWeatherResult>(), collection: 'current' }),
   withEntities({ entity: type<FutureWeatherResult>(), collection: 'future' }),
-  withComputed(({ entities, searchTerm }) => ({
+  withEntities({ entity: type<FavoriteCard>(), collection: 'favorites' }),
+  withComputed(({ optionsEntities, searchTerm }) => ({
     currentSelection: computed(
       () =>
-        entities().find(
+      optionsEntities().find(
           (option) => option.LocalizedName.toLowerCase() === searchTerm()
         ) as AutocompleteOption
     ),

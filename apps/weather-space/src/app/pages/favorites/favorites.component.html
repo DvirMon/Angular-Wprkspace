@@ -1,0 +1,10 @@
+<main>
+  <ng-container *ngFor="let item of items$ | async | keyvalue">
+    <div class="favorite-card-wrapper">
+      <weather-space-favorite-card
+        [item]="item.value"
+        [metric]="metric$ | async"
+        (select)="onSelect($event)"></weather-space-favorite-card>
+    </div>
+  </ng-container>
+</main>

@@ -1,0 +1,87 @@
+mat-icon {
+  &.selected {
+    color: #e91e63ed;
+  }
+
+  color: #bababa;
+}
+
+mat-card {
+  &.weather-card {
+    .mat-mdc-card-header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+
+      section.weather-card-actions {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+      }
+    }
+
+    .mat-mdc-card-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      section.weather-card-info {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+      }
+    }
+  }
+}
+
+mat-card {
+  &.forecast {
+    text-align: center;
+    gap: 2rem;
+    min-width: 120px;
+    .mat-card-subtitle {
+      margin-bottom: 0px;
+    }
+
+    .mat-mdc-card-header {
+      justify-content: center;
+      gap: 2rem;
+      padding: 8px;
+
+      span {
+        padding: 4px;
+      }
+    }
+
+    button {
+      justify-content: center;
+      gap: 2rem;
+      padding: 8px;
+
+      span {
+        // padding: 4px;
+      }
+    }
+  }
+}
+
+@media (max-width: 599px) {
+  // Assuming 'sm' breakpoint is 600px
+  .forecast {
+    flex: 0 0 100%; // 100% width for screens smaller than the 'sm' breakpoint
+    display: flex;
+    flex-direction: column;
+  }
+}

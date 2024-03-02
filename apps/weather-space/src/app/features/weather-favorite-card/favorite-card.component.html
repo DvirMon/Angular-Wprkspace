@@ -1,0 +1,11 @@
+<ng-container *ngIf="item">
+  <mat-card class="favorite">
+    <button mat-button [disableRipple]="true" (click)="onSelect()">
+      <span mat-card-title>{{ item.location | titlecase }}</span>
+      <span mat-card-subtitle>
+        {{ item.temp! | temperature : metric }} {{ metric | isUnit : "temp" }}
+      </span>
+      <span>{{ item.description | titlecase }}</span>
+    </button>
+  </mat-card>
+</ng-container>

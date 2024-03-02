@@ -1,14 +1,12 @@
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { NxWelcomeComponent } from './nx-welcome.component';
+import { Component } from "@angular/core";
+import { RouterOutlet } from "@angular/router";
+import { LayoutComponent } from "./components/layout/layout.component";
 
 @Component({
+  selector: "weather-space-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.scss"],
   standalone: true,
-  imports: [NxWelcomeComponent, RouterModule],
-  selector: 'weather-root',
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+  imports: [LayoutComponent, RouterOutlet],
 })
-export class AppComponent {
-  title = 'weather-space';
-}
+export class AppComponent {}

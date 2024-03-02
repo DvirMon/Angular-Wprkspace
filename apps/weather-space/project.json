@@ -2,7 +2,7 @@
   "name": "weather-space",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "prefix": "weather",
+  "prefix": "weather-space",
   "sourceRoot": "apps/weather-space/src",
   "tags": [],
   "targets": {
@@ -20,7 +20,7 @@
           "apps/weather-space/src/favicon.ico",
           "apps/weather-space/src/assets"
         ],
-        "styles": ["apps/weather-space/src/styles.scss"],
+        "styles": ["apps/weather-space/src//styles/styles.scss"],
         "scripts": []
       },
       "configurations": {

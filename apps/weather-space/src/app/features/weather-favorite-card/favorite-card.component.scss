@@ -1,0 +1,26 @@
+:host {
+  padding: 8px;
+
+  mat-card.favorite {
+    width: 100%;
+    height: 100px;
+    button {
+      height: 100%;
+      justify-content: space-between;
+      padding: 8px;
+
+      span {
+        padding: 4px;
+      }
+    }
+
+    // button.mat-button {
+    //   width: 100%;
+    //   height: 100%;
+    // }
+
+    .mat-card-subtitle {
+      margin-bottom: 0px;
+    }
+  }
+}

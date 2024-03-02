@@ -2,7 +2,7 @@ import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import { computed } from '@angular/core';
 import { signalStore, type, withComputed, withState } from '@ngrx/signals';
 import { withEntities } from '@ngrx/signals/entities';
-import { AutocompleteResOption } from '../shared/models/autocomplete-result';
+import { AutocompleteOption } from '../shared/models/autocomplete-result';
 import { CurrentWeatherResult } from '../shared/models/current-weather-result';
 import { WeatherHttpService } from '../shared/services/weather-http.service';
 import { initialState } from './state';
@@ -21,7 +21,7 @@ export const SignalSore = signalStore(
       () =>
         entities().find(
           (option) => option.LocalizedName.toLowerCase() === searchTerm()
-        ) as AutocompleteResOption
+        ) as AutocompleteOption
     ),
   }))
 );

@@ -16,13 +16,13 @@
 
   <main>
     <section class="weather-space-result-wrapper">
-      <ng-container *ngIf="weatherResult$ | async as weatherResult">
+      <!-- <ng-container *ngIf="weatherResult$ | async as weatherResult">
         <weather-space-result-card
           [weatherResult]="weatherResult"
           [metric]="metric"
           (selectChanged)="onSelectChange($event)"
           (unitChanged)="onUnitTempChange($event)"></weather-space-result-card>
-      </ng-container>
+      </ng-container> -->
     </section>
   </main>
 </div>

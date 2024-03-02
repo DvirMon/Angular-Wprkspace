@@ -24,8 +24,7 @@ import {
 import { HighLightPipe } from '../../shared/pipes/high-light.pipe';
 import { PluckPipe } from '../../shared/pipes/pluck.pipe';
 import { SignalSore } from '../../store/store';
-import { AutocompleteOption } from '../../shared/models/autocomplete-option';
-import { AutocompleteResOption } from '../../shared/models/autocomplete-result';
+import { AutocompleteOption } from '../../shared/models/autocomplete-result';
 import { WeatherResult } from '../../shared/models/weather-result';
 
 @Component({
@@ -54,10 +53,9 @@ import { WeatherResult } from '../../shared/models/weather-result';
 export class LobbyComponent implements OnInit {
   #store = inject(SignalSore);
 
-  options: Signal<AutocompleteResOption[]>;
-  currentSelection: Signal<AutocompleteResOption>;
-  searchControl!: FormControl<AutocompleteOption>;
-  control!: Signal<FormControl<AutocompleteResOption>>;
+  options: Signal<AutocompleteOption[]>;
+  currentSelection: Signal<AutocompleteOption>;
+  control!: Signal<FormControl<AutocompleteOption>>;
 
   metric: boolean = true;
 
@@ -69,14 +67,6 @@ export class LobbyComponent implements OnInit {
     this.currentSelection = this.#store.currentSelection;
     this.control = computed(() => this.nfb.control(this.currentSelection()));
   }
-
-  weatherResult$!: Observable<Partial<WeatherResult> | null>;
-  options$!: Observable<AutocompleteOption[]>;
-  metric$!: Observable<boolean>;
-
-  selectedOptionSource$: BehaviorSubject<AutocompleteOption | null> =
-    new BehaviorSubject<AutocompleteOption | null>(null);
-  queryChangeSource$: Subject<string> = new Subject<string>();
 
   ngOnInit(): void {
     this.#store.loadQuery(this.#store.searchTerm);
@@ -97,7 +87,7 @@ export class LobbyComponent implements OnInit {
 
   onUnitTempChange({ metric }: UnitChangeEvent): void {}
 
-  displayFn(option: AutocompleteResOption): string {
+  displayFn(option: AutocompleteOption): string {
     return option
       ? `${option.LocalizedName}, ${option.Country.LocalizedName}`
       : '';

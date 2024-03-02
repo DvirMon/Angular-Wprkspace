@@ -2,14 +2,17 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import {
-  AutocompleteResOption,
+  AutocompleteOption,
   AutocompleteResult,
 } from '../models/autocomplete-result';
 
 import { environment } from 'apps/weather-space/src/environments/environment.prod';
 import { distinctUntilChanged, map, Observable, of, switchMap } from 'rxjs';
 import { EntityResult } from '../../store/with-load-entity';
-import { CURRENT_WEATHER_RESULT, LOCATIONS_AUTOCOMPLETE_RESULT } from '../mock_data/data';
+import {
+  CURRENT_WEATHER_RESULT,
+  LOCATIONS_AUTOCOMPLETE_RESULT,
+} from '../mock_data/data';
 import { GeolocationWeatherResult } from '../models/geolocation-weather-result';
 import { CurrentWeatherResult } from '../models/current-weather-result';
 
@@ -23,7 +26,7 @@ export class WeatherHttpService {
 
   public loadQuery(
     query: string
-  ): Observable<EntityResult<AutocompleteResOption>> {
+  ): Observable<EntityResult<AutocompleteOption>> {
     return of(LOCATIONS_AUTOCOMPLETE_RESULT).pipe(
       map((results) => this._mapToAutocompleteResults(results)),
       map((options) => ({ content: options }))
@@ -32,7 +35,7 @@ export class WeatherHttpService {
 
   private _mapToAutocompleteResults(
     input: AutocompleteResult[]
-  ): AutocompleteResOption[] {
+  ): AutocompleteOption[] {
     return input.map((item) => ({
       id: item.Key,
       Version: item.Version,
@@ -44,7 +47,6 @@ export class WeatherHttpService {
     }));
   }
 
-  
   private getCurrentWeather(
     locationKey: number
   ): Observable<CurrentWeatherResult> {

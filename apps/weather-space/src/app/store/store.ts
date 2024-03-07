@@ -6,15 +6,15 @@ import { FavoriteCard } from '../features/weather-favorite-card/favorite-card.co
 import { AutocompleteOption } from '../shared/models/autocomplete-result';
 import { CurrentWeather } from '../shared/models/current-weather-result';
 import { WeatherHttpService } from '../shared/services/weather-http.service';
-import { withLoadEntities } from './with-load-entity.feature';
 import { withCurrentWeather } from './with-current.feature';
+import { withOptions } from './with-options.feature';
 import { withCurrentSelection } from './with-select.feature';
 
 export const SignalSore = signalStore(
   { providedIn: 'root' },
   withDevtools('options'),
   withEntities({ entity: type<AutocompleteOption>(), collection: 'options' }),
-  withLoadEntities(WeatherHttpService, 'options'),
+  withOptions(WeatherHttpService, 'options'),
   withCurrentSelection(),
   withComputed((store) => ({
     optionSelected: computed(
@@ -29,7 +29,7 @@ export const SignalSore = signalStore(
     ),
   })),
   withEntities({ entity: type<CurrentWeather>(), collection : "current"}),
-  withCurrentWeather(),
+  withCurrentWeather(WeatherHttpService, "current"),
   withComputed(({ currentEntityMap, selection }) => ({
     currentWeather: computed(() => currentEntityMap()[selection().id]),
   })),

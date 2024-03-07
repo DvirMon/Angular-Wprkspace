@@ -74,7 +74,7 @@ export class LobbyComponent implements OnInit {
   }
   
   ngOnInit(): void {
-    this.#store.loadQuery(this.#store.selection().name);
+    this.#store.loadOptions(this.#store.selection().name);
     this.#store.updateSelection(this.#store.optionSelected())
     this.#store.loadCurrentWeather(this.#store.selection().id)
   }

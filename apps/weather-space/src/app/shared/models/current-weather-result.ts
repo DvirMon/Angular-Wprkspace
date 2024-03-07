@@ -1,4 +1,4 @@
-import { Entity } from "../../store/with-load-entity.feature";
+import { Entity } from "@angular-architects/ngrx-toolkit";
 
 export interface Metric {
   Value: number;

@@ -1,3 +1,5 @@
+import { Entity } from "../../store/with-load-entity.feature";
+
 export interface Metric {
   Value: number;
   Unit: string;
@@ -26,4 +28,10 @@ export interface CurrentWeatherResult {
   Temperature: Temperature;
   MobileLink: string;
   Link: string;
+}
+
+
+export interface CurrentWeather extends Entity {
+  id: number,
+  data : CurrentWeatherResult
 }

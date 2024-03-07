@@ -45,7 +45,6 @@ export class AutocompleteComponent<T> {
   control = input.required<FormControl<T>>();
 
   optionTemplate = input<TemplateRef<unknown>>();
-  // @Input() optionTemplate!: TemplateRef<unknown>;
 
   @Input() displayFn: (option: T) => string = () => "";
 

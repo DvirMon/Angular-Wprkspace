@@ -1,24 +1,9 @@
-import {
-  Injector,
-  ProviderToken,
-  inject,
-  runInInjectionContext,
-} from '@angular/core';
-import { tapResponse } from '@ngrx/operators';
-import {
-  StateSignal,
-  patchState,
-  signalStoreFeature,
-  withMethods,
-} from '@ngrx/signals';
-import {
-  EntityId,
-  addEntities,
-  setAllEntities,
-  withEntities,
-} from '@ngrx/signals/entities';
-import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { Observable, pipe, switchMap, tap } from 'rxjs';
+import {inject, Injector, ProviderToken, runInInjectionContext,} from '@angular/core';
+import {tapResponse} from '@ngrx/operators';
+import {patchState, signalStoreFeature, StateSignal, withMethods,} from '@ngrx/signals';
+import {addEntities, EntityId, setAllEntities,} from '@ngrx/signals/entities';
+import {rxMethod} from '@ngrx/signals/rxjs-interop';
+import {Observable, pipe, switchMap} from 'rxjs';
 
 // interface for result
 
@@ -56,7 +41,6 @@ function handleLoadSuccess<Entity extends { id: EntityId }>(
   collection: string
 ) {
   return (res: EntityResult<Entity>) => {
-    
     const key: string = getKey(collection);
     const hasEntities = state[key]() && state[key]().length > 0;
 
@@ -88,9 +72,7 @@ function loadEntitiesMethod<Entity extends { id: EntityId }>(
         loader(query).pipe(
           tapResponse({
             next: handleLoadSuccess(state, collection),
-            error: () => {
-              console.log('error');
-            },
+            error: console.error,
           })
         )
       )
@@ -104,7 +86,6 @@ export function withLoadEntities<Entity extends { id: EntityId }>(
   collection: string = 'entities'
 ) {
   return signalStoreFeature(
-    // withEntities<Entity>(),
     withMethods((state) => {
       const loader = createLoader<Entity>(Loader);
       return {

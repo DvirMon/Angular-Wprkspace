@@ -11,7 +11,7 @@ export class DailyTemperaturePipe implements PipeTransform {
     args?: 'min' | 'max' | undefined
   ): unknown {
     if (!args) {
-      return `${value.Minimum.Value} - ${value.Maximum.Value}`;
+      return `${value.Minimum.Value}${value.Minimum.Unit} - ${value.Maximum.Value}${value.Maximum.Unit}`;
     } else {
       const key: keyof DailyTemperature =
         args === 'min' ? 'Minimum' : 'Maximum';

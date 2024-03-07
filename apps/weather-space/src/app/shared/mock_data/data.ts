@@ -212,6 +212,7 @@ export const CURRENT_WEATHER_RESULT: CurrentWeatherResult[] = [
     Link: 'http://www.accuweather.com/en/il/tel-aviv/215854/current-weather/215854?lang=en-us',
   },
 ];
+
 export const FUTURE_WEATHER_RESULT: FutureWeatherResult = {
   Headline: {
     EffectiveDate: new Date('2022-07-28T14:00:00+03:00'),

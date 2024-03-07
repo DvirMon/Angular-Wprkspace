@@ -19,7 +19,7 @@ export interface AutocompleteResult {
 }
 
 export interface AutocompleteOption {
-  id: string;
+  id: number;
   Version: number;
   Type: string;
   Rank: number;

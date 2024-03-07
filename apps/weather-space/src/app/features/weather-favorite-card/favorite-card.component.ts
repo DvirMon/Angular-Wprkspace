@@ -11,6 +11,7 @@ export interface FavoriteCard {
   description: string;
   location: string;
   temp: Temperature;
+  favorite : boolean
 }
 
 @Component({

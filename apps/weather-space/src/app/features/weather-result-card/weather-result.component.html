@@ -1,9 +1,9 @@
-<ng-container *ngIf="weatherResult()">
+<!-- <ng-container *ngIf="weatherResult()"> -->
   <mat-card class="weather-card">
     <mat-card-header>
-      <mat-card-title>{{ weatherResult().location | titlecase }}</mat-card-title>
+      <mat-card-title>{{ currentSelection().LocalizedName| titlecase }}</mat-card-title>
       <mat-card-subtitle
-        >{{ weatherResult().temp! | temperature : metric() }}
+      >{{ currentWeather().Temperature | temperature : metric() }}
         {{ metric() | isUnit : "temp" }}
       </mat-card-subtitle>
       <section class="weather-card-actions">
@@ -14,8 +14,8 @@
           <mat-button-toggle [value]="false">Fahrenheit</mat-button-toggle>
         </mat-button-toggle-group>
 
-        <button mat-icon-button (click)="onSelectChange()">
-          <mat-icon [class.selected]="weatherResult().favorite"
+        <button (click)="onFavoriteChanged()" mat-icon-button>
+          <mat-icon [class.selected]="isFavorite()"
             >favorite</mat-icon
           >
         </button>
@@ -24,17 +24,17 @@
 
     <mat-card-content>
       <header>
-        <h1>{{ weatherResult().description | titlecase }}</h1>
+        <h1>{{ currentWeather().WeatherText | titlecase }}</h1>
       </header>
 
       <section class="weather-card-info">
-        <ng-container *ngFor="let item of weatherResult().forecast">
+        <ng-container *ngFor="let item of futureWeather().DailyForecasts">
           <mat-card class="forecast">
             <mat-card-header>
-              <span mat-card-title>{{ item.date | date : "EEEE" }}</span>
+              <span mat-card-title>{{ item.Date| date : "EEEE" }}</span>
               <span mat-card-subtitle
-                >{{ item.temp | dailyTemperature }}
-                >{{ weatherResult().temp! | temperature : metric() }}
+              >{{ item.Temperature| dailyTemperature }}
+                <!-- >{{ weatherResult().temp! | temperature : metric() }} -->
               </span>
             </mat-card-header>
           </mat-card>
@@ -42,4 +42,4 @@
       </section>
     </mat-card-content>
   </mat-card>
-</ng-container>
+<!-- </ng-container> -->

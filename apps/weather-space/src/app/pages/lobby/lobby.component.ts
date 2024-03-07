@@ -26,6 +26,8 @@ import { PluckPipe } from '../../shared/pipes/pluck.pipe';
 import { SignalSore } from '../../store/store';
 import { AutocompleteOption } from '../../shared/models/autocomplete-result';
 import { WeatherResult } from '../../shared/models/weather-result';
+import { CurrentWeather, CurrentWeatherResult } from '../../shared/models/current-weather-result';
+import { FutureWeatherResult } from '../../shared/models/future-weather-result';
 
 @Component({
   selector: 'weather-space-lobby',
@@ -54,26 +56,30 @@ export class LobbyComponent implements OnInit {
   #store = inject(SignalSore);
 
   options: Signal<AutocompleteOption[]>;
-  currentSelection: Signal<AutocompleteOption>;
+  optionSelected: Signal<AutocompleteOption>;
   control!: Signal<FormControl<AutocompleteOption>>;
 
   metric: boolean = true;
+  currentWeather!: CurrentWeather;
+  futureWeather!: FutureWeatherResult;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private nfb: NonNullableFormBuilder
   ) {
     this.options = this.#store.optionsEntities;
-    this.currentSelection = this.#store.currentSelection;
-    this.control = computed(() => this.nfb.control(this.currentSelection()));
+    this.optionSelected = this.#store.optionSelected;
+    this.control = computed(() => this.nfb.control(this.optionSelected()));
+    this.currentWeather = this.#store.currentWeather();
   }
-
+  
   ngOnInit(): void {
-    this.#store.loadQuery(this.#store.searchTerm);
+    this.#store.loadQuery(this.#store.selection().name);
+    this.#store.updateSelection(this.#store.optionSelected())
+    this.#store.loadCurrentWeather(this.#store.selection().id)
   }
 
   onQueryChange(query: string): void {
-    // this.queryChangeSource$.next(query);
   }
 
   onOptionSelected(event: MatAutocompleteSelectedEvent): void {

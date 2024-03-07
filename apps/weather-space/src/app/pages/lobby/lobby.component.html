@@ -5,16 +5,20 @@
       [options]="options()"
       [control]="control()"
       [displayFn]="displayFn"
-      [optionTemplate]="optionTemplate">
+      [optionTemplate]="optionTemplate"
+    >
     </weather-space-autocomplete>
 
     <ng-template #optionTemplate let-option>
-      {{ option | pluck : "LocalizedName" }},
-      {{ option | pluck : "Country" | pluck : "LocalizedName" }}
+      {{ option | pluck : 'LocalizedName' }},
+      {{ option | pluck : 'Country' | pluck : 'LocalizedName' }}
     </ng-template>
   </header>
 
   <main>
+    <pre>
+      {{ currentWeather | json }}
+    </pre>
     <section class="weather-space-result-wrapper">
       <!-- <ng-container *ngIf="weatherResult$ | async as weatherResult">
         <weather-space-result-card

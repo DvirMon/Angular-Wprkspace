@@ -1,18 +1,20 @@
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import { computed } from '@angular/core';
-import { signalStore, type, withComputed } from '@ngrx/signals';
+import { signalStore, type, withComputed, withState } from '@ngrx/signals';
 import { withEntities } from '@ngrx/signals/entities';
 import { FavoriteCard } from '../features/weather-favorite-card/favorite-card.component';
 import { AutocompleteOption } from '../shared/models/autocomplete-result';
-import { CurrentWeather } from '../shared/models/current-weather-result';
 import { WeatherHttpService } from '../shared/services/weather-http.service';
-import { withCurrentWeather } from './with-current.feature';
 import { withOptions } from './with-options.feature';
 import { withCurrentSelection } from './with-select.feature';
+import { withCurrentWeatherMap } from './with-current';
+import { initialState } from './state';
+import { CurrentWeather } from '../shared/models/current-weather-result';
 
-export const SignalSore = signalStore(
+export const Store = signalStore(
   { providedIn: 'root' },
-  withDevtools('options'),
+  withDevtools('store'),
+  withState(initialState),
   withEntities({ entity: type<AutocompleteOption>(), collection: 'options' }),
   withOptions(WeatherHttpService, 'options'),
   withCurrentSelection(),
@@ -28,11 +30,13 @@ export const SignalSore = signalStore(
           ) as AutocompleteOption
     ),
   })),
-  withEntities({ entity: type<CurrentWeather>(), collection : "current"}),
-  withCurrentWeather(WeatherHttpService, "current"),
-  withComputed(({ currentEntityMap, selection }) => ({
-    currentWeather: computed(() => currentEntityMap()[selection().id]),
-  })),
-
-  withEntities({ entity: type<FavoriteCard>(), collection: 'favorites' })
+  withEntities({ entity: type<FavoriteCard>(), collection: 'favorites' }),
+  withCurrentWeatherMap(WeatherHttpService),
+  withComputed(({ currentMap, selection }) => ({
+    currentWeather: computed(() => {
+      const res = selection();
+      console.log(res);
+      return currentMap()[selection().id] as CurrentWeather;
+    }),
+  }))
 );

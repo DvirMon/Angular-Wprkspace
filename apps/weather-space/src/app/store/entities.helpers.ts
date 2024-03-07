@@ -14,6 +14,8 @@ export interface Entity {
   id: EntityId;
 }
 
+export type EntityMap = Record<EntityId, Entity>;
+
 export interface EntityResult<Entity> {
   content: Entity[];
 }
@@ -58,7 +60,7 @@ function handleLoadSuccess<Entity extends { id: EntityId }>(
 export function createLoader(
   Loader: LoadService<Loader<Entity, string>>,
   methodName: string
-): Function {
+): (...args: any[]) => Observable<EntityResult<Entity>> {
   return runInInjectionContext(inject(Injector), () => {
     const loader = inject(Loader);
     return (query: string | number) => loader[methodName](query);
@@ -95,6 +97,26 @@ export function loadEntitiesMethod(
         loaderMethod().pipe(
           tapResponse({
             next: handleLoadSuccess(state, collection),
+            error: console.error,
+          })
+        )
+      )
+    )
+  );
+}
+
+export function loadEntities(
+  loader: (...query: any[]) => Observable<EntityResult<Entity>>,
+  state: StateSignal<object>,
+  slice: EntityMap,
+  next: (...args: any[]) => any
+) {
+  return rxMethod<string | number>(
+    pipe(
+      switchMap((query) =>
+        loader(query).pipe(
+          tapResponse({
+            next: next(state, slice),
             error: console.error,
           })
         )

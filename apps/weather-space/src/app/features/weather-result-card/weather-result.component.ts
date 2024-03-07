@@ -1,15 +1,15 @@
-import {DatePipe, NgFor, NgIf, TitleCasePipe} from '@angular/common';
-import {Component, EventEmitter, input, Output} from '@angular/core';
-import {MatIconButton} from '@angular/material/button';
-import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup,} from '@angular/material/button-toggle';
-import {MatCard, MatCardContent, MatCardHeader, MatCardSubtitle, MatCardTitle,} from '@angular/material/card';
-import {MatIcon} from '@angular/material/icon';
-import {DailyTemperaturePipe} from '../../shared/pipes/daily-temperature.pipe';
-import {TemperaturePipe} from '../../shared/pipes/temperature.pipe';
-import {CurrentWeatherResult} from '../../shared/models/current-weather-result';
-import {IsUnitPipe} from '../../shared/pipes/unit-temperature.pipe';
-import {AutocompleteOption} from '../../shared/models/autocomplete-result';
-import {FutureWeatherResult} from '../../shared/models/future-weather-result';
+import { DatePipe, NgFor, NgIf, TitleCasePipe } from '@angular/common';
+import { Component, EventEmitter, Output, input } from '@angular/core';
+import { MatIconButton } from '@angular/material/button';
+import { MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup, } from '@angular/material/button-toggle';
+import { MatCard, MatCardContent, MatCardHeader, MatCardSubtitle, MatCardTitle, } from '@angular/material/card';
+import { MatIcon } from '@angular/material/icon';
+import { AutocompleteOption } from '../../shared/models/autocomplete-result';
+import { CurrentWeather } from '../../shared/models/current-weather-result';
+import { FutureWeather } from '../../shared/models/future-weather-result';
+import { DailyTemperaturePipe } from '../../shared/pipes/daily-temperature.pipe';
+import { TemperaturePipe } from '../../shared/pipes/temperature.pipe';
+import { IsUnitPipe } from '../../shared/pipes/unit-temperature.pipe';
 
 export interface SelectChangeEvent {
   selected: boolean;
@@ -45,8 +45,8 @@ export interface UnitChangeEvent {
 })
 export class WeatherResultComponent {
   currentSelection = input.required<AutocompleteOption>();
-  currentWeather = input.required<CurrentWeatherResult>();
-  futureWeather = input.required<FutureWeatherResult>();
+  currentWeather = input.required<CurrentWeather>();
+  futureWeather = input.required<FutureWeather>();
 
   // weatherResult = input.required<Partial<WeatherResult>>();
   metric = input.required<boolean>();

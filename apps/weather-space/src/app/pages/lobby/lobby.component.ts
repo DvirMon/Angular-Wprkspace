@@ -14,20 +14,19 @@ import { MatOption } from '@angular/material/core';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { AutocompleteComponent } from '../../features/weather-autocomplete/autocomplete.component';
 import {
   SelectChangeEvent,
   UnitChangeEvent,
   WeatherResultComponent,
 } from '../../features/weather-result-card/weather-result.component';
+import { AutocompleteOption } from '../../shared/models/autocomplete-result';
+import { CurrentWeather } from '../../shared/models/current-weather-result';
+import { FutureWeather } from '../../shared/models/future-weather-result';
 import { HighLightPipe } from '../../shared/pipes/high-light.pipe';
 import { PluckPipe } from '../../shared/pipes/pluck.pipe';
-import { SignalSore } from '../../store/store';
-import { AutocompleteOption } from '../../shared/models/autocomplete-result';
-import { WeatherResult } from '../../shared/models/weather-result';
-import { CurrentWeather, CurrentWeatherResult } from '../../shared/models/current-weather-result';
-import { FutureWeatherResult } from '../../shared/models/future-weather-result';
+import { Store } from '../../store/store';
+import { WeatherSore } from '../../store/store-weather';
 
 @Component({
   selector: 'weather-space-lobby',
@@ -53,15 +52,16 @@ import { FutureWeatherResult } from '../../shared/models/future-weather-result';
   ],
 })
 export class LobbyComponent implements OnInit {
-  #store = inject(SignalSore);
+  #store = inject(Store);
+  #weatherStore = inject(WeatherSore);
 
   options: Signal<AutocompleteOption[]>;
   optionSelected: Signal<AutocompleteOption>;
   control!: Signal<FormControl<AutocompleteOption>>;
 
   metric: boolean = true;
-  currentWeather!: CurrentWeather;
-  futureWeather!: FutureWeatherResult;
+  currentWeather: CurrentWeather;
+  futureWeather: FutureWeather;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -71,16 +71,19 @@ export class LobbyComponent implements OnInit {
     this.optionSelected = this.#store.optionSelected;
     this.control = computed(() => this.nfb.control(this.optionSelected()));
     this.currentWeather = this.#store.currentWeather();
-  }
-  
-  ngOnInit(): void {
-    this.#store.loadOptions(this.#store.selection().name);
-    this.#store.updateSelection(this.#store.optionSelected())
-    this.#store.loadCurrentWeather(this.#store.selection().id)
+    this.futureWeather = this.#weatherStore.futureWeather();
   }
 
-  onQueryChange(query: string): void {
+  ngOnInit(): void {
+    this.#store.loadOptions(this.#store.selection().name);
+    
+    this.#store.updateSelection(this.#store.optionSelected());
+
+    this.#store.loadCurrentWeather(this.#store.selection().id);
+    // this.#weatherStore.loadFutureWeather(this.#store.selection().id);
   }
+
+  onQueryChange(query: string): void {}
 
   onOptionSelected(event: MatAutocompleteSelectedEvent): void {
     // const option: AutocompleteOption = event.option.value;

@@ -1,4 +1,3 @@
-
 export interface AppState {
   metric: boolean;
   geolocation: boolean;

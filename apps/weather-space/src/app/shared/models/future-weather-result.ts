@@ -54,3 +54,9 @@ export interface FutureWeatherResult {
   Headline: Headline;
   DailyForecasts: DailyForecast[];
 }
+
+export interface FutureWeather {
+  id : number
+  Headline: Headline;
+  DailyForecasts: DailyForecast[];
+}

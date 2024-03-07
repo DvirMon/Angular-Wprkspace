@@ -1,7 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { AutocompleteResult } from '../models/autocomplete-result';
+import {
+  AutocompleteOption,
+  AutocompleteResult,
+} from '../models/autocomplete-result';
 
 import { environment } from 'apps/weather-space/src/environments/environment.prod';
 import {
@@ -22,7 +25,10 @@ import {
   CurrentWeather,
   CurrentWeatherResult,
 } from '../models/current-weather-result';
-import { FutureWeatherResult } from '../models/future-weather-result';
+import {
+  FutureWeather,
+  FutureWeatherResult,
+} from '../models/future-weather-result';
 import { GeolocationWeatherResult } from '../models/geolocation-weather-result';
 import { EntityId } from '@ngrx/signals/entities';
 
@@ -34,14 +40,18 @@ export class WeatherHttpService {
 
   constructor(private http: HttpClient) {}
 
-  public loadOptions(query: EntityId): Observable<any> {
+  public loadOptions(
+    query: EntityId
+  ): Observable<EntityResult<AutocompleteOption>> {
     return of(LOCATIONS_AUTOCOMPLETE_RESULT).pipe(
       map((results) => this._mapToAutocompleteResults(results)),
       map((options) => ({ content: options }))
     );
   }
 
-  private _mapToAutocompleteResults(input: AutocompleteResult[]): any {
+  private _mapToAutocompleteResults(
+    input: AutocompleteResult[]
+  ): AutocompleteOption[] {
     return input.map((item) => ({
       id: Number(item.Key),
       Version: item.Version,
@@ -53,10 +63,12 @@ export class WeatherHttpService {
     }));
   }
 
-  public loadCurrentWeather(locationKey: EntityId): Observable<any> {
+  public loadCurrentWeather(
+    locationKey: EntityId
+  ): Observable<EntityResult<CurrentWeather>> {
     return of(CURRENT_WEATHER_RESULT).pipe(
       map((data: CurrentWeatherResult[]) => {
-        return { id: locationKey, data: data[0] };
+        return { id: locationKey, ...data[0] } as CurrentWeather;
       }),
       map((res) => ({ content: [res] }))
     );
@@ -66,10 +78,15 @@ export class WeatherHttpService {
   //   return lastValueFrom(this.getCurrentWeather(locationKey));
   // }
 
-  public getFutureWeather(
+  public loadFutureWeather(
     locationKey: number
-  ): Observable<FutureWeatherResult> {
-    return of(FUTURE_WEATHER_RESULT);
+  ): Observable<EntityResult<FutureWeather>> {
+    return of(FUTURE_WEATHER_RESULT).pipe(
+      map((data: FutureWeatherResult) => {
+        return { id: locationKey, ...data } as FutureWeather;
+      }),
+      map((res) => ({ content: [res] }))
+    );
   }
 
   private _getGeolocation(): Observable<any> {

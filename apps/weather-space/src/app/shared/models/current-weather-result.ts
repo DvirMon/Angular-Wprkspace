@@ -1,4 +1,4 @@
-import { Entity } from "@angular-architects/ngrx-toolkit";
+import { Entity } from '@angular-architects/ngrx-toolkit';
 
 export interface Metric {
   Value: number;
@@ -30,8 +30,6 @@ export interface CurrentWeatherResult {
   Link: string;
 }
 
-
-export interface CurrentWeather extends Entity {
-  id: number,
-  data : CurrentWeatherResult
+export interface CurrentWeather extends CurrentWeatherResult {
+  id: number;
 }

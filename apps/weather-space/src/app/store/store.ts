@@ -1,23 +1,29 @@
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import { computed } from '@angular/core';
-import { signalStore, type, withComputed, withState } from '@ngrx/signals';
-import { withEntities } from '@ngrx/signals/entities';
-import { FavoriteCard } from '../features/weather-favorite-card/favorite-card.component';
+import {
+  patchState,
+  signalStore,
+  withComputed,
+  withHooks,
+  withMethods,
+  withState,
+} from '@ngrx/signals';
 import { AutocompleteOption } from '../shared/models/autocomplete-result';
-import { WeatherHttpService } from '../shared/services/weather-http.service';
-import { withOptions } from './with-options.feature';
-import { withCurrentSelection } from './with-select.feature';
-import { withCurrentWeatherMap } from './with-current';
+import { WeatherService } from '../shared/services/weather.service';
+import { setIsMetric, setSelectId } from './setters';
 import { initialState } from './state';
-import { CurrentWeather } from '../shared/models/current-weather-result';
+import { withCurrentWeather } from './with-current.feature';
+import { withFutureWeather } from './with-future.feature';
+import { withOptions } from './with-options.feature';
 
 export const Store = signalStore(
   { providedIn: 'root' },
   withDevtools('store'),
   withState(initialState),
-  withEntities({ entity: type<AutocompleteOption>(), collection: 'options' }),
-  withOptions(WeatherHttpService, 'options'),
-  withCurrentSelection(),
+  withOptions(WeatherService, 'options'),
+  withCurrentWeather(WeatherService, 'current'),
+  withFutureWeather(WeatherService, 'future'),
+  // withEntities({ entity: type<FavoriteCard>(), collection: 'favorites' }),
   withComputed((store) => ({
     optionSelected: computed(
       () =>
@@ -26,17 +32,30 @@ export const Store = signalStore(
           .find(
             (option) =>
               option.LocalizedName.toLowerCase() ===
-              store.selection().name.toLowerCase()
+              store.searchTerm().toLowerCase()
           ) as AutocompleteOption
     ),
-  })),
-  withEntities({ entity: type<FavoriteCard>(), collection: 'favorites' }),
-  withCurrentWeatherMap(WeatherHttpService),
-  withComputed(({ currentMap, selection }) => ({
-    currentWeather: computed(() => {
-      const res = selection();
-      console.log(res);
-      return currentMap()[selection().id] as CurrentWeather;
+    currentWeather: computed(() => store.currentEntityMap()[store.selectId()]),
+    futureWeather: computed(() => store.futureEntityMap()[store.selectId()]),
+    futureArgs: computed(() => {
+      return { id: store.selectId(), metric: store.isMetric() };
     }),
-  }))
+  })),
+  withMethods((state) => ({
+    updateSelectId(option: AutocompleteOption) {
+      patchState(state, setSelectId(option));
+    },
+    updateIsMetric(isMetric: boolean) {
+      patchState(state, setIsMetric(isMetric));
+    },
+  })),
+
+  withHooks({
+    onInit(store) {
+      store.loadOptions(store.searchTerm);
+      store.loadCurrentWeather(store.selectId);
+      store.loadFutureWeather(store.futureArgs);
+    },
+  })
+  // withIsMetric(),
 );

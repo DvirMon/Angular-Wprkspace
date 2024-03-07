@@ -1,9 +1,19 @@
 import { DatePipe, NgFor, NgIf, TitleCasePipe } from '@angular/common';
-import { Component, EventEmitter, Output, input } from '@angular/core';
+import { Component, EventEmitter, Output, input, model } from '@angular/core';
 import { MatIconButton } from '@angular/material/button';
-import { MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup, } from '@angular/material/button-toggle';
-import { MatCard, MatCardContent, MatCardHeader, MatCardSubtitle, MatCardTitle, } from '@angular/material/card';
-import { MatIcon } from '@angular/material/icon';
+import {
+  MatButtonToggle,
+  MatButtonToggleChange,
+  MatButtonToggleGroup,
+} from '@angular/material/button-toggle';
+import {
+  MatCard,
+  MatCardContent,
+  MatCardHeader,
+  MatCardSubtitle,
+  MatCardTitle,
+} from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 import { AutocompleteOption } from '../../shared/models/autocomplete-result';
 import { CurrentWeather } from '../../shared/models/current-weather-result';
 import { FutureWeather } from '../../shared/models/future-weather-result';
@@ -33,7 +43,7 @@ export interface UnitChangeEvent {
     MatButtonToggleGroup,
     MatButtonToggle,
     MatIconButton,
-    MatIcon,
+    MatIconModule,
     MatCardContent,
     NgFor,
     TitleCasePipe,
@@ -44,12 +54,12 @@ export interface UnitChangeEvent {
   ],
 })
 export class WeatherResultComponent {
-  currentSelection = input.required<AutocompleteOption>();
+  optionSelected = input.required<AutocompleteOption>();
   currentWeather = input.required<CurrentWeather>();
   futureWeather = input.required<FutureWeather>();
 
   // weatherResult = input.required<Partial<WeatherResult>>();
-  metric = input.required<boolean>();
+  metric = model.required<boolean>();
   isFavorite = input.required<boolean>();
 
   @Output() selectChanged: EventEmitter<SelectChangeEvent> = new EventEmitter();
@@ -69,7 +79,7 @@ export class WeatherResultComponent {
   private _emitChange() {
     this.selectChanged.emit({
       selected: this.isFavorite(),
-      source: this.currentSelection(),
+      source: this.optionSelected(),
     });
   }
 
@@ -80,5 +90,6 @@ export class WeatherResultComponent {
   onUnitChange(event: MatButtonToggleChange) {
     const { value } = event;
     this.unitChanged.emit({ metric: value });
+    this.metric.update((value) => !value)
   }
 }

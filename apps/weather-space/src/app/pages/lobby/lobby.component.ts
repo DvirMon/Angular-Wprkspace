@@ -1,5 +1,12 @@
 import { AsyncPipe, JsonPipe, NgFor, NgIf } from '@angular/common';
-import { Component, OnInit, Signal, computed, inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Signal,
+  computed,
+  effect,
+  inject,
+} from '@angular/core';
 import {
   FormControl,
   NonNullableFormBuilder,
@@ -26,7 +33,6 @@ import { FutureWeather } from '../../shared/models/future-weather-result';
 import { HighLightPipe } from '../../shared/pipes/high-light.pipe';
 import { PluckPipe } from '../../shared/pipes/pluck.pipe';
 import { Store } from '../../store/store';
-import { WeatherSore } from '../../store/store-weather';
 
 @Component({
   selector: 'weather-space-lobby',
@@ -53,15 +59,14 @@ import { WeatherSore } from '../../store/store-weather';
 })
 export class LobbyComponent implements OnInit {
   #store = inject(Store);
-  #weatherStore = inject(WeatherSore);
 
   options: Signal<AutocompleteOption[]>;
   optionSelected: Signal<AutocompleteOption>;
   control!: Signal<FormControl<AutocompleteOption>>;
 
   metric: boolean = true;
-  currentWeather: CurrentWeather;
-  futureWeather: FutureWeather;
+  currentWeather: Signal<CurrentWeather>;
+  futureWeather: Signal<FutureWeather>;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -70,31 +75,25 @@ export class LobbyComponent implements OnInit {
     this.options = this.#store.optionsEntities;
     this.optionSelected = this.#store.optionSelected;
     this.control = computed(() => this.nfb.control(this.optionSelected()));
-    this.currentWeather = this.#store.currentWeather();
-    this.futureWeather = this.#weatherStore.futureWeather();
+    this.currentWeather = this.#store.currentWeather;
+    this.futureWeather = this.#store.futureWeather;
   }
 
   ngOnInit(): void {
-    this.#store.loadOptions(this.#store.selection().name);
-    
-    this.#store.updateSelection(this.#store.optionSelected());
-
-    this.#store.loadCurrentWeather(this.#store.selection().id);
-    // this.#weatherStore.loadFutureWeather(this.#store.selection().id);
+    this.#store.updateSelectId(this.#store.optionSelected());
   }
 
   onQueryChange(query: string): void {}
 
-  onOptionSelected(event: MatAutocompleteSelectedEvent): void {
-    // const option: AutocompleteOption = event.option.value;
-    // this.selectedOptionSource$.next(option);
-    // this.queryChangeSource$.next(option.value.LocalizedName);
-    // this.updateQuery(option.value);
+  onOptionSelected(option: AutocompleteOption): void {
+    this.#store.updateSelectId(option);
   }
 
   onSelectChange({ selected, source }: SelectChangeEvent): void {}
 
-  onUnitTempChange({ metric }: UnitChangeEvent): void {}
+  onUnitTempChange({ metric }: UnitChangeEvent): void {
+    this.#store.updateIsMetric(metric);
+  }
 
   displayFn(option: AutocompleteOption): string {
     return option

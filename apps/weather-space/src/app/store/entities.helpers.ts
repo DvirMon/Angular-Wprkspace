@@ -33,7 +33,7 @@ function getKey(collection: string): string {
 }
 
 // Function to handle the success response of loading entities
-function handleLoadSuccess<Entity extends { id: EntityId }>(
+export function handleLoadSuccess<Entity extends { id: EntityId }>(
   state: any,
   collection: string
 ) {

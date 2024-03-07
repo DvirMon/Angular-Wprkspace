@@ -1,9 +1,14 @@
+
 export interface AppState {
-  metric: boolean;
+  isMetric: boolean;
   geolocation: boolean;
+  searchTerm : string,
+  selectId : number,
 }
 
 export const initialState: AppState = {
-  metric: true,
+  isMetric: true,
   geolocation: true,
+  searchTerm: "tel aviv",
+  selectId : 1
 };

@@ -14,6 +14,7 @@ import {
   Observable,
   of,
   switchMap,
+  tap,
 } from 'rxjs';
 import { EntityResult } from '../../store/entities.helpers';
 import {
@@ -31,56 +32,61 @@ import {
 } from '../models/future-weather-result';
 import { GeolocationWeatherResult } from '../models/geolocation-weather-result';
 import { EntityId } from '@ngrx/signals/entities';
+import { WeatherHttpService } from './weather-http.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class WeatherHttpService {
+export class WeatherService {
   private _baseUrl: string = environment.weatherEndpoint;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private weatherHttpService: WeatherHttpService
+  ) {}
 
-  public getOptions(query: EntityId): Observable<AutocompleteResult[]> {
-    return of(LOCATIONS_AUTOCOMPLETE_RESULT);
+  public loadOptions(
+    query: EntityId
+  ): Observable<EntityResult<AutocompleteOption>> {
+    return this.weatherHttpService.getOptions(query).pipe(
+      map((results) => this._mapToAutocompleteResults(results)),
+      map((options) => ({ content: options }))
+    );
   }
 
-  public loadCurrentWeatherLocal(
+  private _mapToAutocompleteResults(
+    input: AutocompleteResult[]
+  ): AutocompleteOption[] {
+    return input.map((item) => ({
+      id: Number(item.Key),
+      Version: item.Version,
+      Type: item.Type,
+      Rank: item.Rank,
+      LocalizedName: item.LocalizedName,
+      Country: item.Country,
+      AdministrativeArea: item.AdministrativeArea,
+    }));
+  }
+
+  public loadCurrentWeather(
     locationKey: EntityId
-  ): Observable<CurrentWeatherResult[]> {
-    return of(CURRENT_WEATHER_RESULT);
-  }
-
-  public getCurrentWeather(
-    locationKey: EntityId
-  ): Observable<CurrentWeatherResult[]> {
-    const params = new HttpParams().set(
-      'apikey',
-      environment.accuWeatherAPIKey
-    );
-    return this.http.get<CurrentWeatherResult[]>(
-      this._baseUrl + 'currentconditions/v1/' + locationKey,
-      { params }
+  ): Observable<EntityResult<CurrentWeather>> {
+    return this.weatherHttpService.loadCurrentWeatherLocal(locationKey).pipe(
+      map((data: CurrentWeatherResult[]) => {
+        return { id: locationKey, ...data[0] } as CurrentWeather;
+      }),
+      map((res) => ({ content: [res] }))
     );
   }
 
-  public getFutureWeather(
-    locationKey: EntityId,
-    metric: boolean
-  ): Observable<FutureWeatherResult> {
-    const params = new HttpParams()
-      .set('apikey', environment.accuWeatherAPIKey)
-      .append('metric', metric);
-    return this.http.get<FutureWeatherResult>(
-      this._baseUrl + 'forecasts/v1/daily/5day/' + locationKey,
-      { params }
+  public loadFutureWeather(args: any): Observable<EntityResult<FutureWeather>> {
+    const { id, metric } = args;
+    return this.weatherHttpService.loadFutureWeather(id, metric).pipe(
+      map((data: FutureWeatherResult) => {
+        return { id, ...data } as FutureWeather;
+      }),
+      map((res) => ({ content: [res] }))
     );
-  }
-
-  public loadFutureWeather(
-    locationKey: number,
-    metric: boolean
-  ): Observable<FutureWeatherResult> {
-    return of(FUTURE_WEATHER_RESULT);
   }
 
   private _getGeolocation(): Observable<any> {

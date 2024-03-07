@@ -1,45 +1,46 @@
-<!-- <ng-container *ngIf="weatherResult()"> -->
-  <mat-card class="weather-card">
-    <mat-card-header>
-      <mat-card-title>{{ currentSelection().LocalizedName| titlecase }}</mat-card-title>
-      <mat-card-subtitle
+<mat-card class="weather-card">
+  <mat-card-header>
+    <mat-card-title>{{
+      optionSelected().LocalizedName | titlecase
+    }}</mat-card-title>
+    <mat-card-subtitle
       >{{ currentWeather().Temperature | temperature : metric() }}
-        {{ metric() | isUnit : "temp" }}
-      </mat-card-subtitle>
-      <section class="weather-card-actions">
-        <mat-button-toggle-group
-          [value]="metric()"
-          (change)="onUnitChange($event)">
-          <mat-button-toggle [value]="true">Celsius</mat-button-toggle>
-          <mat-button-toggle [value]="false">Fahrenheit</mat-button-toggle>
-        </mat-button-toggle-group>
+      {{ metric() | isUnit : 'temp' }}
+    </mat-card-subtitle>
+    <section class="weather-card-actions">
+      <mat-button-toggle-group
+        [value]="metric()"
+        (change)="onUnitChange($event)"
+      >
+        <mat-button-toggle [value]="true">Celsius</mat-button-toggle>
+        <mat-button-toggle [value]="false">Fahrenheit</mat-button-toggle>
+      </mat-button-toggle-group>
 
-        <button (click)="onFavoriteChanged()" mat-icon-button>
-          <mat-icon [class.selected]="isFavorite()"
-            >favorite</mat-icon
-          >
-        </button>
-      </section>
-    </mat-card-header>
+      <button (click)="onFavoriteChanged()" mat-icon-button>
+        <mat-icon
+          fontIcon="favorite"
+          [class.selected]="isFavorite()"
+        ></mat-icon>
+      </button>
+    </section>
+  </mat-card-header>
 
-    <mat-card-content>
-      <header>
-        <h1>{{ currentWeather().WeatherText | titlecase }}</h1>
-      </header>
+  <mat-card-content>
+    <header>
+      <h1>{{ currentWeather().WeatherText | titlecase }}</h1>
+    </header>
 
-      <section class="weather-card-info">
-        <ng-container *ngFor="let item of futureWeather().DailyForecasts">
-          <mat-card class="forecast">
-            <mat-card-header>
-              <span mat-card-title>{{ item.Date| date : "EEEE" }}</span>
-              <span mat-card-subtitle
-              >{{ item.Temperature| dailyTemperature }}
-                <!-- >{{ weatherResult().temp! | temperature : metric() }} -->
-              </span>
-            </mat-card-header>
-          </mat-card>
-        </ng-container>
-      </section>
-    </mat-card-content>
-  </mat-card>
-<!-- </ng-container> -->
+    <section class="weather-card-info">
+      <ng-container *ngFor="let item of futureWeather().DailyForecasts">
+        <mat-card class="forecast">
+          <mat-card-header>
+            <span mat-card-title>{{ item.Date | date : 'EEEE' }}</span>
+            <span mat-card-subtitle
+              >{{ item.Temperature | dailyTemperature }}
+            </span>
+          </mat-card-header>
+        </mat-card>
+      </ng-container>
+    </section>
+  </mat-card-content>
+</mat-card>

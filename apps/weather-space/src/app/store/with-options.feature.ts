@@ -1,4 +1,6 @@
-import { signalStoreFeature, withMethods } from '@ngrx/signals';
+import { signalStoreFeature, type, withMethods } from '@ngrx/signals';
+import { withEntities } from '@ngrx/signals/entities';
+import { AutocompleteOption } from '../shared/models/autocomplete-result';
 import {
   Entity,
   Loader,
@@ -14,6 +16,7 @@ export function withOptions(
   collection: string
 ) {
   return signalStoreFeature(
+    withEntities({ entity: type<AutocompleteOption>(), collection: 'options' }),
     withMethods((state) => {
       const loader = createLoader(Loader, 'loadOptions');
       return {

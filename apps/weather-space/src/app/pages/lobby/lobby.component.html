@@ -4,6 +4,7 @@
       [label]="'Enter City'"
       [options]="options()"
       [control]="control()"
+      (optionSelected)="onOptionSelected($event)"
       [displayFn]="displayFn"
       [optionTemplate]="optionTemplate"
     >
@@ -16,21 +17,15 @@
   </header>
 
   <main>
-    <pre>
-      dsjkdjs
-      {{ currentWeather | json }}
-    </pre>
     <section class="weather-space-result-wrapper">
-      <pre>
-        {{ futureWeather | json }}
-      </pre>
-      <!-- <weather-space-result-card
-        [currentWeather]="currentWeather"
-        [futureWeather]="futureWeather"
+      <weather-space-result-card
+        [optionSelected]="optionSelected()"
+        [currentWeather]="currentWeather()"
+        [futureWeather]="futureWeather()"
         [metric]="true"
         [isFavorite]="false"
-        []
-      ></weather-space-result-card> -->
+        (unitChanged)="onUnitTempChange($event)"
+      ></weather-space-result-card>
 
       <!-- <ng-container *ngIf="weatherResult$ | async as weatherResult">
         <weather-space-result-card

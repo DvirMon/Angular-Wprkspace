@@ -9,10 +9,6 @@ mat-icon {
 mat-card {
   &.weather-card {
 
-
-    // background-color: rgba(255, 255, 255, 0); /* Fully transparent */
-
-
     .mat-mdc-card-header {
       display: flex;
       flex-direction: row;
@@ -56,9 +52,6 @@ mat-card {
     text-align: center;
     gap: 2rem;
     min-width: 120px;
-    .mat-card-subtitle {
-      margin-bottom: 0px;
-    }
 
     .mat-mdc-card-header {
       justify-content: center;

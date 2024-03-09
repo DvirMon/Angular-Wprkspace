@@ -1,11 +1,19 @@
-<ng-container *ngIf="item">
-  <mat-card class="favorite">
-    <button mat-button [disableRipple]="true" (click)="onSelectionChanged()">
-      <span mat-card-title>{{ item.LocalizedName | titlecase }}</span>
-      <span mat-card-subtitle>
-        {{ item.Temperature! | temperature : metric }} {{ metric | isUnit : "temp" }}
-      </span>
+<ng-container *ngIf="item() as item">
+  <mat-card (click)="onSelectionChanged()" class="favorite">
+    <mat-card-header>
+      <mat-card-title>{{ item.LocalizedName | titlecase }}</mat-card-title>
+      <!-- <button mat-button color="primary" [disableRipple]="true" (click)="onSelectionChanged()">
+      </button> -->
+    </mat-card-header>
+
+    <mat-card-content>
       <span>{{ item.WeatherText | titlecase }}</span>
-    </button>
+    </mat-card-content>
+    <mat-card-content>
+      <span mat-card-subtitle>
+        {{ item.Temperature! | temperature : metric() }}
+        {{ metric() | isUnit : 'temp' }}</span
+      >
+    </mat-card-content>
   </mat-card>
 </ng-container>

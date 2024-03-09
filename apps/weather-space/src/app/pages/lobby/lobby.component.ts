@@ -28,7 +28,10 @@ import {
 } from '../../features/weather-result-card/weather-result.component';
 import { AutocompleteOption } from '../../shared/models/autocomplete-result';
 import { CurrentWeather } from '../../shared/models/current-weather-result';
-import { FutureWeather } from '../../shared/models/future-weather-result';
+import {
+  FutureWeather,
+  FutureWeatherArgs,
+} from '../../shared/models/future-weather-result';
 import { HighLightPipe } from '../../shared/pipes/high-light.pipe';
 import { PluckPipe } from '../../shared/pipes/pluck.pipe';
 import { FavoriteStore } from '../../store/store-favorites';
@@ -58,7 +61,7 @@ import { WeatherStore } from '../../store/store-weather';
     AutocompleteComponent,
   ],
 })
-export class LobbyComponent {
+export class LobbyComponent implements OnInit {
   #nfb = inject(NonNullableFormBuilder);
 
   #optionsStore = inject(OptionsStore);
@@ -69,10 +72,14 @@ export class LobbyComponent {
   optionSelected: Signal<AutocompleteOption>;
   control!: Signal<FormControl<AutocompleteOption>>;
 
-  isMetric: Signal<boolean>;
-  isFavorite: Signal<boolean>;
   currentWeather: Signal<CurrentWeather>;
   futureWeather: Signal<FutureWeather>;
+
+  isMetric: Signal<boolean>;
+  isFavorite: Signal<boolean>;
+  futureArgs: Signal<FutureWeatherArgs>;
+
+  isWeatherData: Signal<boolean>;
 
   constructor() {
     this.options = this.#optionsStore.entities;
@@ -80,28 +87,53 @@ export class LobbyComponent {
 
     this.control = computed(() => this.#nfb.control(this.optionSelected()));
 
-    this.currentWeather = this.#weatherStore.currentWeather;
-
-    this.futureWeather = this.#weatherStore.futureWeather;
-
     this.isMetric = this.#weatherStore.isMetric;
+
+    this.currentWeather = computed(
+      () =>
+        this.#weatherStore.currentEntityMap()[this.#optionsStore.selectedId()]
+    );
+
+    this.futureArgs = computed<FutureWeatherArgs>(() => {
+      return {
+        id: this.#optionsStore.selectedId(),
+        metric: this.#weatherStore.isMetric(),
+      } as FutureWeatherArgs;
+    });
+
+    this.futureWeather = computed(
+      () =>
+        this.#weatherStore.futureEntityMap()[this.#optionsStore.selectedId()]
+    );
+
+    this.isWeatherData = computed(
+      () =>
+        !!this.currentWeather() &&
+        !!this.optionSelected() &&
+        !!this.futureWeather()
+    );
 
     this.isFavorite = computed(
       () => !!this.#favoriteStore.entityMap()[this.#optionsStore.selectedId()]
     );
-
-    effect(
-      () => {
-        this.#weatherStore.updateSelectedId(this.optionSelected());
-      },
-      { allowSignalWrites: true }
-    );
   }
 
-  // onQueryChange(query: string): void {}
+  ngOnInit(): void {
+
+    if (this.options().length == 0) {
+      this.#optionsStore.loadOptions();
+    }
+
+    if (this.#optionsStore.selectedId() == -1) {
+      this.#optionsStore.setCurrentId('tel aviv');
+    }
+
+    this.#weatherStore.loadCurrentWeather(this.#optionsStore.selectedId);
+    this.#weatherStore.loadFutureWeather(this.futureArgs);
+  }
 
   onOptionSelected(option: AutocompleteOption): void {
-    this.#optionsStore.updateCurrentId(option);
+    this.#optionsStore.updateCurrentId(option.id);
   }
 
   onFavoriteChanged(event: FavoriteChangeEvent): void {
@@ -112,9 +144,9 @@ export class LobbyComponent {
     } as FavoriteEntity;
 
     if (selected) {
-      this.#favoriteStore.addFavorite(event);
+      this.#favoriteStore.addFavorite(favorite);
     } else {
-      this.#favoriteStore.removeFavorite(event);
+      this.#favoriteStore.removeFavorite(favorite);
     }
   }
 

@@ -409,3 +409,108 @@ export const GEOLOCATION_DATA: GeolocationWeatherResult = {
     },
   },
 };
+
+export const FAVORITES = [
+  {
+    id: 212575,
+    WeatherText: 'Partly cloudy',
+    LocalizedName: 'San Francisco',
+    Temperature: {
+      Metric: {
+        Value: 15.6,
+        Unit: 'C',
+        UnitType: 17,
+      },
+      Imperial: {
+        Value: 60.1,
+        Unit: 'F',
+        UnitType: 18,
+      },
+    },
+  },
+  {
+    id: 226396,
+    WeatherText: 'Partly cloudy',
+    LocalizedName: 'San Francisco',
+    Temperature: {
+      Metric: {
+        Value: 15.6,
+        Unit: 'C',
+        UnitType: 17,
+      },
+      Imperial: {
+        Value: 60.1,
+        Unit: 'F',
+        UnitType: 18,
+      },
+    },
+  },
+  {
+    id: 106770,
+    WeatherText: 'Partly cloudy',
+    LocalizedName: 'San Francisco',
+    Temperature: {
+      Metric: {
+        Value: 15.6,
+        Unit: 'C',
+        UnitType: 17,
+      },
+      Imperial: {
+        Value: 60.1,
+        Unit: 'F',
+        UnitType: 18,
+      },
+    },
+  },
+  {
+    id: 106770,
+    WeatherText: 'Partly cloudy',
+    LocalizedName: 'San Francisco',
+    Temperature: {
+      Metric: {
+        Value: 15.6,
+        Unit: 'C',
+        UnitType: 17,
+      },
+      Imperial: {
+        Value: 60.1,
+        Unit: 'F',
+        UnitType: 18,
+      },
+    },
+  },
+  {
+    id: 212575,
+    WeatherText: 'Partly cloudy',
+    LocalizedName: 'San Francisco',
+    Temperature: {
+      Metric: {
+        Value: 15.6,
+        Unit: 'C',
+        UnitType: 17,
+      },
+      Imperial: {
+        Value: 60.1,
+        Unit: 'F',
+        UnitType: 18,
+      },
+    },
+  },
+  {
+    id: 212575,
+    WeatherText: 'Partly cloudy',
+    LocalizedName: 'San Francisco',
+    Temperature: {
+      Metric: {
+        Value: 15.6,
+        Unit: 'C',
+        UnitType: 17,
+      },
+      Imperial: {
+        Value: 60.1,
+        Unit: 'F',
+        UnitType: 18,
+      },
+    },
+  },
+];

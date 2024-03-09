@@ -67,8 +67,7 @@ export class WeatherService {
     args: FutureWeatherArgs
   ): Observable<EntityResult<FutureWeather>> {
     const { id, metric } = args;
-    console.log(metric);
-    return this.weatherHttpService.loadFutureWeather().pipe(
+    return this.weatherHttpService.loadFutureWeather(id, metric).pipe(
       map((data: FutureWeatherResult) => {
         return { id, ...data } as FutureWeather;
       }),

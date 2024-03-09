@@ -17,13 +17,11 @@ import { withFutureWeather } from './with-future.feature';
 interface WeatherState {
   isMetric: boolean;
   geolocation: boolean;
-  selectedId: number;
 }
 
 const initialState: WeatherState = {
   isMetric: true,
   geolocation: true,
-  selectedId: 1,
 };
 
 export const WeatherStore = signalStore(
@@ -32,26 +30,9 @@ export const WeatherStore = signalStore(
   withState(initialState),
   withCurrentWeather(WeatherService, 'current'),
   withFutureWeather(WeatherService),
-  withComputed((store) => ({
-    currentWeather: computed(() => store.currentEntityMap()[store.selectedId()]),
-    futureWeather: computed(() => store.futureEntityMap()[store.selectedId()]),
-    futureArgs: computed(() => {
-      return { id: store.selectedId(), metric: store.isMetric() };
-    }),
-  })),
   withMethods((state) => ({
-    updateSelectedId(option: AutocompleteOption) {
-      patchState(state, updateSelectedId(option));
-    },
     updateIsMetric(isMetric: boolean) {
       patchState(state, updateIsMetric(isMetric));
     },
-  })),
-
-  withHooks({
-    onInit(store) {
-      store.loadCurrentWeather(store.selectedId);
-      store.loadFutureWeather(store.futureArgs);
-    },
-  })
+  }))
 );

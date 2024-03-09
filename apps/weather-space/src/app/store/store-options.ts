@@ -15,7 +15,7 @@ import { withOptions } from './with-options.feature';
 export const OptionsStore = signalStore(
   { providedIn: 'root' },
   withDevtools('options'),
-  withState({ selectedId: 1 }),
+  withState({ selectedId: -1 }),
   withOptions(WeatherService, 'options'),
   withComputed((store) => ({
     optionSelected: computed(() => store.entityMap()[store.selectedId()]),
@@ -28,16 +28,16 @@ export const OptionsStore = signalStore(
       patchState(state, { selectedId: option?.id });
     },
 
-    updateCurrentId(option: AutocompleteOption) {
-      patchState(state, { selectedId: option.id });
+    updateCurrentId(id: number) {
+      patchState(state, { selectedId: id });
     },
-  })),
-  withHooks({
-    onInit(store) {
-      store.loadOptions();
-      store.setCurrentId("tel aviv")
-    },
-  })
+  }))
+  // withHooks({
+  //   onInit(store) {
+  //     store.loadOptions();
+  //     store.setCurrentId("tel aviv")
+  //   },
+  // })
 );
 
 function compareTo(option: AutocompleteOption, value: string): boolean {

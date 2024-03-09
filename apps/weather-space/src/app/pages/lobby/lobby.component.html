@@ -18,6 +18,8 @@
 
   <main>
     <section class="weather-space-result-wrapper">
+      @if(isWeatherData()) {
+
       <weather-space-result-card
         [optionSelected]="optionSelected()"
         [currentWeather]="currentWeather()"
@@ -27,6 +29,7 @@
         (unitChanged)="onUnitTempChange($event)"
         (favoriteChanged)="onFavoriteChanged($event)"
       ></weather-space-result-card>
+      }
     </section>
   </main>
 </div>

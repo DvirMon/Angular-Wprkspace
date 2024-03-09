@@ -60,7 +60,10 @@ export class WeatherHttpService {
     );
   }
 
-  public loadFutureWeather(): Observable<FutureWeatherResult> {
+  public loadFutureWeather(
+    locationKey: EntityId,
+    metric: boolean
+  ): Observable<FutureWeatherResult> {
     return of(FUTURE_WEATHER_RESULT);
   }
 

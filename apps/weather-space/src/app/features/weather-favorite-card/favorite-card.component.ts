@@ -1,12 +1,5 @@
 import { NgClass, NgIf, TitleCasePipe } from '@angular/common';
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  input,
-  signal,
-} from '@angular/core';
+import { Component, EventEmitter, Output, input } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import {
   MatCard,

@@ -2,10 +2,9 @@ import { DatePipe, NgFor, NgIf, TitleCasePipe } from '@angular/common';
 import {
   Component,
   EventEmitter,
-  OnInit,
   Output,
   input,
-  model,
+  model
 } from '@angular/core';
 import { MatIconButton } from '@angular/material/button';
 import {

@@ -1,17 +1,16 @@
-import { Component, Signal, inject, signal } from '@angular/core';
+import { Component, Signal, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { KeyValuePipe, NgFor } from '@angular/common';
+import { MatButton } from '@angular/material/button';
+import { EntityMap } from '@ngrx/signals/entities';
 import {
   FavoriteEntity,
   FavoriteEntityComponent,
 } from '../../features/weather-favorite-card/favorite-card.component';
 import { FavoriteStore } from '../../store/store-favorites';
-import { EntityMap } from '@ngrx/signals/entities';
-import { WeatherStore } from '../../store/store-weather';
-import { FAVORITES } from '../../shared/mock_data/data';
-import { MatButton } from '@angular/material/button';
 import { OptionsStore } from '../../store/store-options';
+import { WeatherStore } from '../../store/store-weather';
 
 @Component({
   selector: 'weather-space-favorites',

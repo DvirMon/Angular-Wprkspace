@@ -4,8 +4,7 @@ import {
   OnInit,
   Signal,
   computed,
-  effect,
-  inject,
+  inject
 } from '@angular/core';
 import {
   FormControl,

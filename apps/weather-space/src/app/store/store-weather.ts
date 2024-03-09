@@ -1,16 +1,12 @@
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
-import { computed } from '@angular/core';
 import {
   patchState,
   signalStore,
-  withComputed,
-  withHooks,
   withMethods,
-  withState,
+  withState
 } from '@ngrx/signals';
-import { AutocompleteOption } from '../shared/models/autocomplete-result';
 import { WeatherService } from '../shared/services/weather.service';
-import { updateIsMetric, updateSelectedId } from './updaters';
+import { updateIsMetric } from './updaters';
 import { withCurrentWeather } from './with-current.feature';
 import { withFutureWeather } from './with-future.feature';
 

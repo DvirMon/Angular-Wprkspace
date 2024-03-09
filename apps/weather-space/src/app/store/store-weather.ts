@@ -10,7 +10,7 @@ import {
 } from '@ngrx/signals';
 import { AutocompleteOption } from '../shared/models/autocomplete-result';
 import { WeatherService } from '../shared/services/weather.service';
-import { setIsMetric, setSelectId } from './setters';
+import { updateIsMetric, updateSelectId } from './updaters';
 import { withCurrentWeather } from './with-current.feature';
 import { withFutureWeather } from './with-future.feature';
 
@@ -41,10 +41,10 @@ export const WeatherStore = signalStore(
   })),
   withMethods((state) => ({
     updateSelectId(option: AutocompleteOption) {
-      patchState(state, setSelectId(option));
+      patchState(state, updateSelectId(option));
     },
     updateIsMetric(isMetric: boolean) {
-      patchState(state, setIsMetric(isMetric));
+      patchState(state, updateIsMetric(isMetric));
     },
   })),
 

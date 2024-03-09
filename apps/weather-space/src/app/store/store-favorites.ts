@@ -1,11 +1,24 @@
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
-import { signalStore, withState } from '@ngrx/signals';
-import { withEntities } from '@ngrx/signals/entities';
+import { computed } from '@angular/core';
+import {
+  patchState,
+  signalStore,
+  withComputed,
+  withMethods,
+} from '@ngrx/signals';
+import { addEntity, withEntities } from '@ngrx/signals/entities';
 import { FavoriteEntity } from '../features/weather-favorite-card/favorite-card.component';
 
-export const Store = signalStore(
+export const FavoriteStore = signalStore(
   { providedIn: 'root' },
   withDevtools('favorites'),
-  withState({ searchTerm: 'tel aviv' }),
-  withEntities<FavoriteEntity>()
+  withEntities<FavoriteEntity>(),
+  withMethods((state) => ({
+    addFavorite(item: FavoriteEntity) {
+      patchState(state, addEntity(item));
+    },
+  })),
+  withComputed((state) => ({
+    hasFavorites: computed(() => !!state.entityMap),
+  }))
 );

@@ -67,15 +67,6 @@ export class WeatherResultComponent {
 
   constructor() {}
 
-  // private _setPartialWeatherResult(): Partial<WeatherResult> {
-  //   return {
-  //     id: this.currentSelection().id,
-  //     description: this.weatherResult().description,
-  //     location: this.weatherResult().location,
-  //     temp: this.weatherResult().temp,
-  //   };
-  // }
-
   private _emitChange() {
     this.selectChanged.emit({
       selected: this.isFavorite(),
@@ -90,6 +81,6 @@ export class WeatherResultComponent {
   onUnitChange(event: MatButtonToggleChange) {
     const { value } = event;
     this.unitChanged.emit({ metric: value });
-    this.metric.update((value) => !value)
+    this.metric.update((value) => !value);
   }
 }

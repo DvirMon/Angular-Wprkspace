@@ -64,7 +64,7 @@ export class LobbyComponent implements OnInit {
   optionSelected: Signal<AutocompleteOption>;
   control!: Signal<FormControl<AutocompleteOption>>;
 
-  metric: boolean = true;
+  metric = true;
   currentWeather: Signal<CurrentWeather>;
   futureWeather: Signal<FutureWeather>;
 

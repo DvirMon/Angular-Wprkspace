@@ -1,6 +1,7 @@
 import {
   Injector,
   ProviderToken,
+  Signal,
   inject,
   runInInjectionContext,
 } from '@angular/core';
@@ -20,8 +21,8 @@ export interface EntityResult<Entity> {
   content: Entity[];
 }
 
-export type Loader<Entity, MethodName extends string> = {
-  [K in MethodName]: (...args: any[]) => Observable<EntityResult<Entity>>;
+export type Loader<T, Entity, MethodName extends string> = {
+  [K in MethodName]: (args: T) => Observable<EntityResult<Entity>>;
 };
 
 export type LoaderService<T> = ProviderToken<T>;
@@ -34,12 +35,13 @@ function getKey(collection: string): string {
 
 // Function to handle the success response of loading entities
 export function handleLoadSuccess<Entity extends { id: EntityId }>(
-  state: any,
+  state: unknown,
   collection: string
 ) {
   return (res: EntityResult<Entity>) => {
     const key: string = getKey(collection);
-    const hasEntities = state[key]() && state[key]().length > 0;
+    const localState = state as Record<string, Signal<Array<Entity>>>;
+    const hasEntities = localState[key]() && localState[key]().length > 0;
 
     // If entities already exist, use setAllEntities to replace them
     if (hasEntities) {
@@ -57,66 +59,27 @@ export function handleLoadSuccess<Entity extends { id: EntityId }>(
   };
 }
 
-export function createLoader(
-  Loader: LoadService<Loader<Entity, string>>,
+export function createLoader<T>(
+  Loader: LoadService<Loader<T, Entity, string>>,
   methodName: string
-): (...args: any[]) => Observable<EntityResult<Entity>> {
+): (...args: T[]) => Observable<EntityResult<Entity>> {
   return runInInjectionContext(inject(Injector), () => {
     const loader = inject(Loader);
-    return (query: string | number) => loader[methodName](query);
+    return (query: T) => loader[methodName](query);
   });
 }
 
-export function loadEntitiesQueryMethod(
-  loaderMethod: Function,
+export function loadEntities<T>(
+  loader: (query: T) => Observable<EntityResult<Entity>>,
   state: StateSignal<object>,
-  collection: string = 'entities'
+  collection = 'entities'
 ) {
-  return rxMethod<string | number>(
-    pipe(
-      switchMap((query) =>
-        loaderMethod(query).pipe(
-          tapResponse({
-            next: handleLoadSuccess(state, collection),
-            error: console.error,
-          })
-        )
-      )
-    )
-  );
-}
-
-export function loadEntitiesMethod(
-  loaderMethod: Function,
-  state: StateSignal<object>,
-  collection: string = 'entities'
-) {
-  return rxMethod<void>(
-    pipe(
-      switchMap(() =>
-        loaderMethod().pipe(
-          tapResponse({
-            next: handleLoadSuccess(state, collection),
-            error: console.error,
-          })
-        )
-      )
-    )
-  );
-}
-
-export function loadEntities(
-  loader: (...query: any[]) => Observable<EntityResult<Entity>>,
-  state: StateSignal<object>,
-  slice: EntityMap,
-  next: (...args: any[]) => any
-) {
-  return rxMethod<string | number>(
+  return rxMethod<T>(
     pipe(
       switchMap((query) =>
         loader(query).pipe(
           tapResponse({
-            next: next(state, slice),
+            next: handleLoadSuccess(state, collection),
             error: console.error,
           })
         )

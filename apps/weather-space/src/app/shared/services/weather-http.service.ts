@@ -1,36 +1,19 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import {
-  AutocompleteOption,
-  AutocompleteResult,
-} from '../models/autocomplete-result';
+import { AutocompleteResult } from '../models/autocomplete-result';
 
+import { EntityId } from '@ngrx/signals/entities';
 import { environment } from 'apps/weather-space/src/environments/environment.prod';
-import {
-  distinctUntilChanged,
-  lastValueFrom,
-  map,
-  Observable,
-  of,
-  switchMap,
-} from 'rxjs';
-import { EntityResult } from '../../store/entities.helpers';
+import { distinctUntilChanged, map, Observable, of, switchMap } from 'rxjs';
 import {
   CURRENT_WEATHER_RESULT,
   FUTURE_WEATHER_RESULT,
   LOCATIONS_AUTOCOMPLETE_RESULT,
 } from '../mock_data/data';
-import {
-  CurrentWeather,
-  CurrentWeatherResult,
-} from '../models/current-weather-result';
-import {
-  FutureWeather,
-  FutureWeatherResult,
-} from '../models/future-weather-result';
+import { CurrentWeatherResult } from '../models/current-weather-result';
+import { FutureWeatherResult } from '../models/future-weather-result';
 import { GeolocationWeatherResult } from '../models/geolocation-weather-result';
-import { EntityId } from '@ngrx/signals/entities';
 
 @Injectable({
   providedIn: 'root',

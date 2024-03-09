@@ -22,10 +22,11 @@ export class FavoritesLayoutComponent {
   constructor(private router: Router) {}
 
   private _updateQuery(id: number, location: string): void {
+    console.log({ id, location });
     return;
   }
 
-  onSelect({ location, id }: FavoriteCard): void {
+  public onSelect({ location, id }: FavoriteCard): void {
     this._updateQuery(id, location);
     this.router.navigateByUrl('/');
   }

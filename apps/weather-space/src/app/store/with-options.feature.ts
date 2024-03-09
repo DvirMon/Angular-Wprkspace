@@ -6,10 +6,10 @@ import {
   Loader,
   LoaderService,
   createLoader,
-  loadEntitiesQueryMethod,
+  loadEntities,
 } from './entities.helpers';
 
-type OptionLoader = Loader<Entity, 'loadOptions'>;
+type OptionLoader = Loader<string, Entity, 'loadOptions'>;
 
 export function withOptions(
   Loader: LoaderService<OptionLoader>,
@@ -20,7 +20,7 @@ export function withOptions(
     withMethods((state) => {
       const loader = createLoader(Loader, 'loadOptions');
       return {
-        loadOptions: loadEntitiesQueryMethod(loader, state, collection),
+        loadOptions: loadEntities(loader, state, collection),
       };
     })
   );

@@ -6,22 +6,10 @@ import {
   AutocompleteResult,
 } from '../models/autocomplete-result';
 
+import { EntityId } from '@ngrx/signals/entities';
 import { environment } from 'apps/weather-space/src/environments/environment.prod';
-import {
-  distinctUntilChanged,
-  lastValueFrom,
-  map,
-  Observable,
-  of,
-  switchMap,
-  tap,
-} from 'rxjs';
+import { distinctUntilChanged, map, Observable, switchMap } from 'rxjs';
 import { EntityResult } from '../../store/entities.helpers';
-import {
-  CURRENT_WEATHER_RESULT,
-  FUTURE_WEATHER_RESULT,
-  LOCATIONS_AUTOCOMPLETE_RESULT,
-} from '../mock_data/data';
 import {
   CurrentWeather,
   CurrentWeatherResult,
@@ -31,7 +19,6 @@ import {
   FutureWeatherResult,
 } from '../models/future-weather-result';
 import { GeolocationWeatherResult } from '../models/geolocation-weather-result';
-import { EntityId } from '@ngrx/signals/entities';
 import { WeatherHttpService } from './weather-http.service';
 
 @Injectable({

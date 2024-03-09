@@ -4,14 +4,13 @@ import {
   Loader,
   LoaderService,
   createLoader,
-  loadEntitiesQueryMethod,
+  loadEntities,
 } from './entities.helpers';
 import { withEntities } from '@ngrx/signals/entities';
 import { CurrentWeather } from '../shared/models/current-weather-result';
 
-type WeatherLoader = Loader<Entity, 'loadCurrentWeather'>;
+type WeatherLoader = Loader<number, Entity, 'loadCurrentWeather'>;
 
-// Refactored withLoadEntities function
 export function withCurrentWeather(
   Loader: LoaderService<WeatherLoader>,
   collection: string
@@ -21,8 +20,7 @@ export function withCurrentWeather(
     withMethods((state) => {
       const loader = createLoader(Loader, 'loadCurrentWeather');
       return {
-        
-        loadCurrentWeather: loadEntitiesQueryMethod(loader, state, collection),
+        loadCurrentWeather: loadEntities(loader, state, collection),
       };
     })
   );

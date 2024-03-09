@@ -22,7 +22,7 @@ export const Store = signalStore(
   withState(initialState),
   withOptions(WeatherService, 'options'),
   withCurrentWeather(WeatherService, 'current'),
-  withFutureWeather(WeatherService, 'future'),
+  withFutureWeather(WeatherService),
   // withEntities({ entity: type<FavoriteCard>(), collection: 'favorites' }),
   withComputed((store) => ({
     optionSelected: computed(

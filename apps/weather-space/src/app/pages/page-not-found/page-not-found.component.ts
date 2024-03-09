@@ -8,7 +8,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 })
 export class PageNotFoundComponent implements OnInit, OnDestroy {
 
-  defaultMessage: string = 'Page not Found!'
+  defaultMessage = 'Page not Found!'
   message!: string
   constructor() { }
 

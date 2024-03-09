@@ -6,7 +6,7 @@ import {
   withComputed,
   withMethods,
 } from '@ngrx/signals';
-import { addEntity, withEntities } from '@ngrx/signals/entities';
+import { addEntity, removeEntity, withEntities } from '@ngrx/signals/entities';
 import { FavoriteEntity } from '../features/weather-favorite-card/favorite-card.component';
 
 export const FavoriteStore = signalStore(
@@ -16,6 +16,9 @@ export const FavoriteStore = signalStore(
   withMethods((state) => ({
     addFavorite(item: FavoriteEntity) {
       patchState(state, addEntity(item));
+    },
+    removeFavorite(item: FavoriteEntity) {
+      patchState(state, removeEntity(item.id));
     },
   })),
   withComputed((state) => ({

@@ -14,8 +14,9 @@ import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { AutocompleteComponent } from '../../features/weather-autocomplete/autocomplete.component';
 import {
+  FavoriteChangeEvent,
   UnitChangeEvent,
-  WeatherResultComponent
+  WeatherResultComponent,
 } from '../../features/weather-result-card/weather-result.component';
 import { AutocompleteOption } from '../../shared/models/autocomplete-result';
 import { CurrentWeather } from '../../shared/models/current-weather-result';
@@ -24,6 +25,8 @@ import { HighLightPipe } from '../../shared/pipes/high-light.pipe';
 import { PluckPipe } from '../../shared/pipes/pluck.pipe';
 import { Store } from '../../store/store-options';
 import { WeatherStore } from '../../store/store-weather';
+import { FavoriteStore } from '../../store/store-favorites';
+import { FavoriteEntity } from '../../features/weather-favorite-card/favorite-card.component';
 
 @Component({
   selector: 'weather-space-lobby',
@@ -49,16 +52,18 @@ import { WeatherStore } from '../../store/store-weather';
   ],
 })
 export class LobbyComponent implements OnInit {
-  
+  #nfb = inject(NonNullableFormBuilder);
+
   #store = inject(Store);
   #weatherStore = inject(WeatherStore);
-  #nfb = inject(NonNullableFormBuilder);
+  #favoriteStore = inject(FavoriteStore);
 
   options: Signal<AutocompleteOption[]>;
   optionSelected: Signal<AutocompleteOption>;
   control!: Signal<FormControl<AutocompleteOption>>;
 
-  metric = true;
+  isMetric: Signal<boolean>;
+  isFavorite: Signal<boolean>;
   currentWeather: Signal<CurrentWeather>;
   futureWeather: Signal<FutureWeather>;
 
@@ -67,8 +72,18 @@ export class LobbyComponent implements OnInit {
     this.optionSelected = this.#store.optionSelected;
     this.control = computed(() => this.#nfb.control(this.optionSelected()));
 
-    this.currentWeather = this.#weatherStore.currentWeather;
-    this.futureWeather = this.#weatherStore.futureWeather;
+    this.currentWeather = computed(
+      () => this.#weatherStore.currentEntityMap()[this.#weatherStore.selectId()]
+    );
+
+    this.futureWeather = computed(
+      () => this.#weatherStore.futureEntityMap()[this.#weatherStore.selectId()]
+    );
+    this.isMetric = this.#weatherStore.isMetric;
+
+    this.isFavorite = computed(
+      () => !!this.#favoriteStore.entityMap()[this.#weatherStore.selectId()]
+    );
   }
 
   ngOnInit(): void {
@@ -81,7 +96,19 @@ export class LobbyComponent implements OnInit {
     this.#weatherStore.updateSelectId(option);
   }
 
-  // onSelectChange({ selected, source }: SelectChangeEvent): void {}
+  onFavoriteChanged(event: FavoriteChangeEvent): void {
+    const { selected } = event;
+
+    const favorite: FavoriteEntity = {
+      ...event,
+    } as FavoriteEntity;
+
+    if (selected) {
+      this.#favoriteStore.addFavorite(event);
+    } else {
+      this.#favoriteStore.removeFavorite(event);
+    }
+  }
 
   onUnitTempChange({ metric }: UnitChangeEvent): void {
     this.#weatherStore.updateIsMetric(metric);

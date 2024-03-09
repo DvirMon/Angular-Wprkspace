@@ -22,9 +22,10 @@
         [optionSelected]="optionSelected()"
         [currentWeather]="currentWeather()"
         [futureWeather]="futureWeather()"
-        [metric]="true"
-        [isFavorite]="false"
+        [metric]="isMetric()"
+        [isFavorite]="isFavorite()"
         (unitChanged)="onUnitTempChange($event)"
+        (favoriteChanged)="onFavoriteChanged($event)"
       ></weather-space-result-card>
 
       <!-- <ng-container *ngIf="weatherResult$ | async as weatherResult">

@@ -8,10 +8,9 @@ import { IsUnitPipe } from '../../shared/pipes/unit-temperature.pipe';
 
 export interface FavoriteEntity {
   id: number;
-  description: string;
-  location: string;
-  temp: Temperature;
-  favorite: boolean;
+  WeatherText: string;
+  LocalizedName: string;
+  Temperature: Temperature;
 }
 
 @Component({

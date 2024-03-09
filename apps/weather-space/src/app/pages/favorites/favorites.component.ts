@@ -26,7 +26,7 @@ export class FavoritesLayoutComponent {
     return;
   }
 
-  public onSelect({ location, id }: FavoriteCard): void {
+  public onSelectionChanged({ location, id }: FavoriteCard): void {
     this._updateQuery(id, location);
     this.router.navigateByUrl('/');
   }

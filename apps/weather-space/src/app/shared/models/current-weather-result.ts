@@ -1,5 +1,3 @@
-import { Entity } from '@angular-architects/ngrx-toolkit';
-
 export interface Metric {
   Value: number;
   Unit: string;
@@ -23,7 +21,7 @@ export interface CurrentWeatherResult {
   WeatherText: string;
   WeatherIcon: number;
   HasPrecipitation: boolean;
-  PrecipitationType?: any;
+  PrecipitationType?: unknown;
   IsDayTime: boolean;
   Temperature: Temperature;
   MobileLink: string;

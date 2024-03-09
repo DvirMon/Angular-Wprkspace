@@ -1,12 +1,5 @@
 import { AsyncPipe, JsonPipe, NgFor, NgIf } from '@angular/common';
-import {
-  Component,
-  OnInit,
-  Signal,
-  computed,
-  effect,
-  inject,
-} from '@angular/core';
+import { Component, OnInit, Signal, computed, inject } from '@angular/core';
 import {
   FormControl,
   NonNullableFormBuilder,
@@ -14,18 +7,15 @@ import {
 } from '@angular/forms';
 import {
   MatAutocomplete,
-  MatAutocompleteSelectedEvent,
   MatAutocompleteTrigger,
 } from '@angular/material/autocomplete';
 import { MatOption } from '@angular/material/core';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
-import { ActivatedRoute } from '@angular/router';
 import { AutocompleteComponent } from '../../features/weather-autocomplete/autocomplete.component';
 import {
-  SelectChangeEvent,
   UnitChangeEvent,
-  WeatherResultComponent,
+  WeatherResultComponent
 } from '../../features/weather-result-card/weather-result.component';
 import { AutocompleteOption } from '../../shared/models/autocomplete-result';
 import { CurrentWeather } from '../../shared/models/current-weather-result';
@@ -58,7 +48,9 @@ import { Store } from '../../store/store';
   ],
 })
 export class LobbyComponent implements OnInit {
+  
   #store = inject(Store);
+  #nfb = inject(NonNullableFormBuilder);
 
   options: Signal<AutocompleteOption[]>;
   optionSelected: Signal<AutocompleteOption>;
@@ -68,13 +60,10 @@ export class LobbyComponent implements OnInit {
   currentWeather: Signal<CurrentWeather>;
   futureWeather: Signal<FutureWeather>;
 
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private nfb: NonNullableFormBuilder
-  ) {
+  constructor() {
     this.options = this.#store.optionsEntities;
     this.optionSelected = this.#store.optionSelected;
-    this.control = computed(() => this.nfb.control(this.optionSelected()));
+    this.control = computed(() => this.#nfb.control(this.optionSelected()));
     this.currentWeather = this.#store.currentWeather;
     this.futureWeather = this.#store.futureWeather;
   }
@@ -83,13 +72,13 @@ export class LobbyComponent implements OnInit {
     this.#store.updateSelectId(this.#store.optionSelected());
   }
 
-  onQueryChange(query: string): void {}
+  // onQueryChange(query: string): void {}
 
   onOptionSelected(option: AutocompleteOption): void {
     this.#store.updateSelectId(option);
   }
 
-  onSelectChange({ selected, source }: SelectChangeEvent): void {}
+  // onSelectChange({ selected, source }: SelectChangeEvent): void {}
 
   onUnitTempChange({ metric }: UnitChangeEvent): void {
     this.#store.updateIsMetric(metric);

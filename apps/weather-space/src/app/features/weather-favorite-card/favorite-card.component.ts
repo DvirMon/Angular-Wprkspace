@@ -34,10 +34,10 @@ export class FavoriteCardComponent {
   @Input() item!: FavoriteCard;
   @Input() metric!: boolean | null;
 
-  @Output() select: EventEmitter<FavoriteCard> =
+  @Output() selectionChanged: EventEmitter<FavoriteCard> =
     new EventEmitter<FavoriteCard>();
 
-  onSelect() {
-    this.select.emit(this.item);
+  onSelectionChanged() {
+    this.selectionChanged.emit(this.item);
   }
 }

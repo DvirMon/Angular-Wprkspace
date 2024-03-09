@@ -60,3 +60,5 @@ export interface FutureWeather {
   Headline: Headline;
   DailyForecasts: DailyForecast[];
 }
+
+export type FutureWeatherArgs = { id: number; metric: boolean };

@@ -1,23 +1,24 @@
 import { signalStoreFeature, type, withMethods } from '@ngrx/signals';
-import { EntityId, withEntities } from '@ngrx/signals/entities';
-import { FutureWeather } from '../shared/models/future-weather-result';
+import { withEntities } from '@ngrx/signals/entities';
+import {
+  FutureWeather,
+  FutureWeatherArgs,
+} from '../shared/models/future-weather-result';
 import {
   Entity,
   Loader,
   LoaderService,
   createLoader,
-  loadEntities
+  loadEntities,
 } from './entities.helpers';
 
-type WeatherFutureArgs = { id: EntityId; metric: boolean };
-
-type WeatherFutureLoader = Loader<
-  WeatherFutureArgs,
+type FutureWeatherLoader = Loader<
+  FutureWeatherArgs,
   Entity,
   'loadFutureWeather'
 >;
 
-export function withFutureWeather(Loader: LoaderService<WeatherFutureLoader>) {
+export function withFutureWeather(Loader: LoaderService<FutureWeatherLoader>) {
   return signalStoreFeature(
     withEntities({ entity: type<FutureWeather>(), collection: 'future' }),
     withMethods((state) => {

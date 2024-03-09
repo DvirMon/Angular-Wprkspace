@@ -7,8 +7,8 @@ import {
 } from '../models/autocomplete-result';
 
 import { EntityId } from '@ngrx/signals/entities';
-import { environment } from 'apps/weather-space/src/environments/environment.prod';
 import { distinctUntilChanged, map, Observable, switchMap } from 'rxjs';
+import { environment } from '../../../environments/environment';
 import { EntityResult } from '../../store/entities.helpers';
 import {
   CurrentWeather,
@@ -16,6 +16,7 @@ import {
 } from '../models/current-weather-result';
 import {
   FutureWeather,
+  FutureWeatherArgs,
   FutureWeatherResult,
 } from '../models/future-weather-result';
 import { GeolocationWeatherResult } from '../models/geolocation-weather-result';
@@ -35,7 +36,7 @@ export class WeatherService {
   public loadOptions(
     query: EntityId
   ): Observable<EntityResult<AutocompleteOption>> {
-    return this.weatherHttpService.getOptions(query).pipe(
+    return this.weatherHttpService.getOptions().pipe(
       map((results) => this._mapToAutocompleteResults(results)),
       map((options) => ({ content: options }))
     );
@@ -58,7 +59,7 @@ export class WeatherService {
   public loadCurrentWeather(
     locationKey: EntityId
   ): Observable<EntityResult<CurrentWeather>> {
-    return this.weatherHttpService.loadCurrentWeatherLocal(locationKey).pipe(
+    return this.weatherHttpService.loadCurrentWeatherLocal().pipe(
       map((data: CurrentWeatherResult[]) => {
         return { id: locationKey, ...data[0] } as CurrentWeather;
       }),
@@ -66,49 +67,15 @@ export class WeatherService {
     );
   }
 
-  public loadFutureWeather(args: any): Observable<EntityResult<FutureWeather>> {
+  public loadFutureWeather(
+    args: FutureWeatherArgs
+  ): Observable<EntityResult<FutureWeather>> {
     const { id, metric } = args;
-    return this.weatherHttpService.loadFutureWeather(id, metric).pipe(
+    return this.weatherHttpService.loadFutureWeather().pipe(
       map((data: FutureWeatherResult) => {
         return { id, ...data } as FutureWeather;
       }),
       map((res) => ({ content: [res] }))
-    );
-  }
-
-  private _getGeolocation(): Observable<any> {
-    return new Observable((obs) => {
-      navigator.geolocation.getCurrentPosition(
-        (success) => {
-          obs.next(success);
-          obs.complete();
-        },
-        (error) => {
-          obs.error(error);
-        }
-      );
-    });
-  }
-
-  public getGeolocationWeather(): Observable<string> {
-    const url: string =
-      this._baseUrl + 'locations/v1/cities/geoposition/search';
-
-    return this._getGeolocation().pipe(
-      map((position: GeolocationPosition) => {
-        const lat = position.coords.latitude;
-        const lot = position.coords.longitude;
-        return `${lat},${lot}`;
-      }),
-      distinctUntilChanged(),
-      switchMap((query: string) => {
-        const params = new HttpParams()
-          .set('apikey', environment.accuWeatherAPIKey)
-          .append('q', query);
-        return this.http
-          .get<GeolocationWeatherResult>(url, { params })
-          .pipe(map((res: GeolocationWeatherResult) => res.LocalizedName));
-      })
     );
   }
 }

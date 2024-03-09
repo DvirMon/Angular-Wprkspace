@@ -28,7 +28,7 @@ export class ErrorsService implements ErrorHandler {
     return message;
   }
 
-  handleError(error: any) {
+  handleError(error: HttpErrorResponse) {
     let errorMsg = '';
     if (error.error instanceof ErrorEvent) {
       console.error(

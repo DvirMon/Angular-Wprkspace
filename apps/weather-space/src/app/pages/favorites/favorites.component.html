@@ -4,7 +4,8 @@
       <weather-space-favorite-card
         [item]="item.value"
         [metric]="metric$ | async"
-        (select)="onSelect($event)"></weather-space-favorite-card>
+        (selectionChanged)="onSelectionChanged($event)"
+      ></weather-space-favorite-card>
     </div>
   </ng-container>
 </main>

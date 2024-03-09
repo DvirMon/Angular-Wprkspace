@@ -58,14 +58,11 @@ export class WeatherResultComponent {
   currentWeather = input.required<CurrentWeather>();
   futureWeather = input.required<FutureWeather>();
 
-  // weatherResult = input.required<Partial<WeatherResult>>();
   metric = model.required<boolean>();
   isFavorite = input.required<boolean>();
 
   @Output() selectChanged: EventEmitter<SelectChangeEvent> = new EventEmitter();
   @Output() unitChanged: EventEmitter<UnitChangeEvent> = new EventEmitter();
-
-  constructor() {}
 
   private _emitChange() {
     this.selectChanged.emit({

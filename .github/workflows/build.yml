@@ -34,7 +34,7 @@ jobs:
 
       # Build Specific Angular App
       - name: Build Specific Angular App
-        run: npx nx build books-scape --prod
+        run: npx nx build books-scape --prod --skip-nx-cache
 
       # Deploy to Firebase Hosting
       - name: Deploy to Firebase Hosting

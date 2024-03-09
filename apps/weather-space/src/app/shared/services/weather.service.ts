@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import {
@@ -6,8 +6,7 @@ import {
   AutocompleteResult,
 } from '../models/autocomplete-result';
 
-import { EntityId } from '@ngrx/signals/entities';
-import { distinctUntilChanged, map, Observable, switchMap } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { EntityResult } from '../../store/entities.helpers';
 import {
@@ -19,7 +18,6 @@ import {
   FutureWeatherArgs,
   FutureWeatherResult,
 } from '../models/future-weather-result';
-import { GeolocationWeatherResult } from '../models/geolocation-weather-result';
 import { WeatherHttpService } from './weather-http.service';
 
 @Injectable({
@@ -34,9 +32,9 @@ export class WeatherService {
   ) {}
 
   public loadOptions(
-    query: EntityId
+    query: string
   ): Observable<EntityResult<AutocompleteOption>> {
-    return this.weatherHttpService.getOptions().pipe(
+    return this.weatherHttpService.getOptions(query).pipe(
       map((results) => this._mapToAutocompleteResults(results)),
       map((options) => ({ content: options }))
     );
@@ -57,9 +55,9 @@ export class WeatherService {
   }
 
   public loadCurrentWeather(
-    locationKey: EntityId
+    locationKey: number
   ): Observable<EntityResult<CurrentWeather>> {
-    return this.weatherHttpService.loadCurrentWeatherLocal().pipe(
+    return this.weatherHttpService.loadCurrentWeatherLocal(locationKey).pipe(
       map((data: CurrentWeatherResult[]) => {
         return { id: locationKey, ...data[0] } as CurrentWeather;
       }),
@@ -71,6 +69,7 @@ export class WeatherService {
     args: FutureWeatherArgs
   ): Observable<EntityResult<FutureWeather>> {
     const { id, metric } = args;
+    console.log(metric);
     return this.weatherHttpService.loadFutureWeather().pipe(
       map((data: FutureWeatherResult) => {
         return { id, ...data } as FutureWeather;

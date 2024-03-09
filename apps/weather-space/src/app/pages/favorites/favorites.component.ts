@@ -2,7 +2,6 @@ import { Component, Signal } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AsyncPipe, KeyValuePipe, NgFor } from '@angular/common';
-import { Observable } from 'rxjs';
 import {
   FavoriteCard,
   FavoriteCardComponent,
@@ -16,7 +15,6 @@ import {
   imports: [NgFor, FavoriteCardComponent, AsyncPipe, KeyValuePipe],
 })
 export class FavoritesLayoutComponent {
-
   items!: Signal<Map<number, FavoriteCard>>;
   isMetric!: Signal<boolean>;
 

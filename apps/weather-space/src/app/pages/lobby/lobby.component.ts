@@ -22,7 +22,8 @@ import { CurrentWeather } from '../../shared/models/current-weather-result';
 import { FutureWeather } from '../../shared/models/future-weather-result';
 import { HighLightPipe } from '../../shared/pipes/high-light.pipe';
 import { PluckPipe } from '../../shared/pipes/pluck.pipe';
-import { Store } from '../../store/store';
+import { Store } from '../../store/store-options';
+import { WeatherStore } from '../../store/store-weather';
 
 @Component({
   selector: 'weather-space-lobby',
@@ -50,6 +51,7 @@ import { Store } from '../../store/store';
 export class LobbyComponent implements OnInit {
   
   #store = inject(Store);
+  #weatherStore = inject(WeatherStore);
   #nfb = inject(NonNullableFormBuilder);
 
   options: Signal<AutocompleteOption[]>;
@@ -61,27 +63,28 @@ export class LobbyComponent implements OnInit {
   futureWeather: Signal<FutureWeather>;
 
   constructor() {
-    this.options = this.#store.optionsEntities;
+    this.options = this.#store.entities;
     this.optionSelected = this.#store.optionSelected;
     this.control = computed(() => this.#nfb.control(this.optionSelected()));
-    this.currentWeather = this.#store.currentWeather;
-    this.futureWeather = this.#store.futureWeather;
+
+    this.currentWeather = this.#weatherStore.currentWeather;
+    this.futureWeather = this.#weatherStore.futureWeather;
   }
 
   ngOnInit(): void {
-    this.#store.updateSelectId(this.#store.optionSelected());
+    this.#weatherStore.updateSelectId(this.#store.optionSelected());
   }
 
   // onQueryChange(query: string): void {}
 
   onOptionSelected(option: AutocompleteOption): void {
-    this.#store.updateSelectId(option);
+    this.#weatherStore.updateSelectId(option);
   }
 
   // onSelectChange({ selected, source }: SelectChangeEvent): void {}
 
   onUnitTempChange({ metric }: UnitChangeEvent): void {
-    this.#store.updateIsMetric(metric);
+    this.#weatherStore.updateIsMetric(metric);
   }
 
   displayFn(option: AutocompleteOption): string {

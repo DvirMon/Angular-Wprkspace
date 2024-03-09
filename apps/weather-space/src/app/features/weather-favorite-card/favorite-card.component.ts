@@ -6,7 +6,7 @@ import { Temperature } from '../../shared/models/current-weather-result';
 import { TemperaturePipe } from '../../shared/pipes/temperature.pipe';
 import { IsUnitPipe } from '../../shared/pipes/unit-temperature.pipe';
 
-export interface FavoriteCard {
+export interface FavoriteEntity {
   id: number;
   description: string;
   location: string;
@@ -30,12 +30,12 @@ export interface FavoriteCard {
     TemperaturePipe,
   ],
 })
-export class FavoriteCardComponent {
-  @Input() item!: FavoriteCard;
+export class FavoriteEntityComponent {
+  @Input() item!: FavoriteEntity;
   @Input() metric!: boolean | null;
 
-  @Output() selectionChanged: EventEmitter<FavoriteCard> =
-    new EventEmitter<FavoriteCard>();
+  @Output() selectionChanged: EventEmitter<FavoriteEntity> =
+    new EventEmitter<FavoriteEntity>();
 
   onSelectionChanged() {
     this.selectionChanged.emit(this.item);

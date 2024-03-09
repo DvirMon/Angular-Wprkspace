@@ -16,11 +16,11 @@ export function withOptions(
   collection: string
 ) {
   return signalStoreFeature(
-    withEntities({ entity: type<AutocompleteOption>(), collection: 'options' }),
+    withEntities<AutocompleteOption>(),
     withMethods((state) => {
       const loader = createLoader(Loader, 'loadOptions');
       return {
-        loadOptions: loadEntities(loader, state, collection),
+        loadOptions: loadEntities(loader, state),
       };
     })
   );

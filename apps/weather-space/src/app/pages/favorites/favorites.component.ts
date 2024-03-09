@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 
 import { AsyncPipe, KeyValuePipe, NgFor } from '@angular/common';
 import {
-  FavoriteCard,
-  FavoriteCardComponent,
+  FavoriteEntity,
+  FavoriteEntityComponent,
 } from '../../features/weather-favorite-card/favorite-card.component';
 
 @Component({
@@ -12,10 +12,10 @@ import {
   templateUrl: './favorites.component.html',
   styleUrls: ['./favorites.component.scss'],
   standalone: true,
-  imports: [NgFor, FavoriteCardComponent, AsyncPipe, KeyValuePipe],
+  imports: [NgFor, FavoriteEntityComponent, AsyncPipe, KeyValuePipe],
 })
 export class FavoritesLayoutComponent {
-  items!: Signal<Map<number, FavoriteCard>>;
+  items!: Signal<Map<number, FavoriteEntity>>;
   isMetric!: Signal<boolean>;
 
   constructor(private router: Router) {}
@@ -25,7 +25,7 @@ export class FavoritesLayoutComponent {
     return;
   }
 
-  public onSelectionChanged({ location, id }: FavoriteCard): void {
+  public onSelectionChanged({ location, id }: FavoriteEntity): void {
     this._updateQuery(id, location);
     this.router.navigateByUrl('/');
   }

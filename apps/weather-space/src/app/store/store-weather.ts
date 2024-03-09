@@ -11,30 +11,28 @@ import {
 import { AutocompleteOption } from '../shared/models/autocomplete-result';
 import { WeatherService } from '../shared/services/weather.service';
 import { setIsMetric, setSelectId } from './setters';
-import { initialState } from './state';
 import { withCurrentWeather } from './with-current.feature';
 import { withFutureWeather } from './with-future.feature';
-import { withOptions } from './with-options.feature';
 
-export const Store = signalStore(
+interface WeatherState {
+  isMetric: boolean;
+  geolocation: boolean;
+  selectId: number;
+}
+
+const initialState: WeatherState = {
+  isMetric: true,
+  geolocation: true,
+  selectId: 1,
+};
+
+export const WeatherStore = signalStore(
   { providedIn: 'root' },
-  withDevtools('store'),
+  withDevtools('weather'),
   withState(initialState),
-  withOptions(WeatherService, 'options'),
   withCurrentWeather(WeatherService, 'current'),
   withFutureWeather(WeatherService),
-  // withEntities({ entity: type<FavoriteCard>(), collection: 'favorites' }),
   withComputed((store) => ({
-    optionSelected: computed(
-      () =>
-        store
-          .optionsEntities()
-          .find(
-            (option) =>
-              option.LocalizedName.toLowerCase() ===
-              store.searchTerm().toLowerCase()
-          ) as AutocompleteOption
-    ),
     currentWeather: computed(() => store.currentEntityMap()[store.selectId()]),
     futureWeather: computed(() => store.futureEntityMap()[store.selectId()]),
     futureArgs: computed(() => {
@@ -52,10 +50,8 @@ export const Store = signalStore(
 
   withHooks({
     onInit(store) {
-      store.loadOptions(store.searchTerm);
       store.loadCurrentWeather(store.selectId);
       store.loadFutureWeather(store.futureArgs);
     },
   })
-  // withIsMetric(),
 );

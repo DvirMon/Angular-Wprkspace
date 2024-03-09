@@ -41,19 +41,15 @@ export function handleLoadSuccess<Entity extends { id: EntityId }>(
   return (res: EntityResult<Entity>) => {
     const key: string = getKey(collection);
     const localState = state as Record<string, Signal<Array<Entity>>>;
-    const hasEntities = localState[key]() && localState[key]().length > 0;
+    const hasEntities = localState[key]()?.length > 0;
+    const update = hasEntities ? setAllEntities : addEntities;
 
-    // If entities already exist, use setAllEntities to replace them
-    if (hasEntities) {
-      patchState(
-        state as StateSignal<object>,
-        setAllEntities(res.content, { collection })
-      );
+    if (key === 'entities') {
+      patchState(state as StateSignal<object>, update(res.content));
     } else {
-      // If no entities exist yet, use addEntities to add them
       patchState(
         state as StateSignal<object>,
-        addEntities(res.content, { collection })
+        update(res.content, { collection })
       );
     }
   };

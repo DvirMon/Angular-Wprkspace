@@ -21,9 +21,13 @@ export interface CurrentWeatherResult {
   WeatherText: string;
   WeatherIcon: number;
   HasPrecipitation: boolean;
-  PrecipitationType?: any;
+  PrecipitationType?: unknown;
   IsDayTime: boolean;
   Temperature: Temperature;
   MobileLink: string;
   Link: string;
+}
+
+export interface CurrentWeather extends CurrentWeatherResult {
+  id: number;
 }

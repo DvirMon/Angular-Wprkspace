@@ -1,25 +1,33 @@
-import { AsyncPipe, JsonPipe, NgFor, NgIf } from "@angular/common";
-import { Component, OnInit, Signal, computed, inject } from "@angular/core";
-import { FormControl, NonNullableFormBuilder, ReactiveFormsModule } from "@angular/forms";
-import { MatAutocomplete, MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from "@angular/material/autocomplete";
-import { MatOption } from "@angular/material/core";
-import { MatFormField, MatLabel } from "@angular/material/form-field";
-import { MatInput } from "@angular/material/input";
-import { ActivatedRoute } from "@angular/router";
-import { BehaviorSubject, Observable, Subject } from "rxjs";
-import { AutocompleteComponent } from "../../features/weather-autocomplete/autocomplete.component";
-import { SelectChangeEvent, UnitChangeEvent, WeatherResultComponent } from "../../features/weather-result-card/weather-result.component";
-import { HighLightPipe } from "../../shared/pipes/high-light.pipe";
-import { PluckPipe } from "../../shared/pipes/pluck.pipe";
-import { SignalSore } from "../../store/store";
-import { AutocompleteOption } from "../../utilities/models/autocomplete-option";
-import { AutocompleteResOption } from "../../utilities/models/autocomplete-result";
-import { WeatherResult } from "../../utilities/models/weather-result";
+import { AsyncPipe, JsonPipe, NgFor, NgIf } from '@angular/common';
+import { Component, OnInit, Signal, computed, inject } from '@angular/core';
+import {
+  FormControl,
+  NonNullableFormBuilder,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import {
+  MatAutocomplete,
+  MatAutocompleteTrigger,
+} from '@angular/material/autocomplete';
+import { MatOption } from '@angular/material/core';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { AutocompleteComponent } from '../../features/weather-autocomplete/autocomplete.component';
+import {
+  UnitChangeEvent,
+  WeatherResultComponent
+} from '../../features/weather-result-card/weather-result.component';
+import { AutocompleteOption } from '../../shared/models/autocomplete-result';
+import { CurrentWeather } from '../../shared/models/current-weather-result';
+import { FutureWeather } from '../../shared/models/future-weather-result';
+import { HighLightPipe } from '../../shared/pipes/high-light.pipe';
+import { PluckPipe } from '../../shared/pipes/pluck.pipe';
+import { Store } from '../../store/store';
 
 @Component({
-  selector: "weather-space-lobby",
-  templateUrl: "./lobby.component.html",
-  styleUrls: ["./lobby.component.scss"],
+  selector: 'weather-space-lobby',
+  templateUrl: './lobby.component.html',
+  styleUrls: ['./lobby.component.scss'],
   standalone: true,
   imports: [
     ReactiveFormsModule,
@@ -40,55 +48,45 @@ import { WeatherResult } from "../../utilities/models/weather-result";
   ],
 })
 export class LobbyComponent implements OnInit {
+  
+  #store = inject(Store);
+  #nfb = inject(NonNullableFormBuilder);
 
-  #store = inject(SignalSore);
+  options: Signal<AutocompleteOption[]>;
+  optionSelected: Signal<AutocompleteOption>;
+  control!: Signal<FormControl<AutocompleteOption>>;
 
-  options: Signal<AutocompleteResOption[]>;
-  currentSelection: Signal<AutocompleteResOption>;
-  searchControl!: FormControl<AutocompleteOption>;
-  control!: Signal<FormControl<AutocompleteResOption>>;
+  metric = true;
+  currentWeather: Signal<CurrentWeather>;
+  futureWeather: Signal<FutureWeather>;
 
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private nfb: NonNullableFormBuilder,
-  ) {
-    this.options = this.#store.entities;
-    this.currentSelection = this.#store.currentSelection;
-    this.control = computed(() => this.nfb.control(this.currentSelection()));
+  constructor() {
+    this.options = this.#store.optionsEntities;
+    this.optionSelected = this.#store.optionSelected;
+    this.control = computed(() => this.#nfb.control(this.optionSelected()));
+    this.currentWeather = this.#store.currentWeather;
+    this.futureWeather = this.#store.futureWeather;
   }
-
-  weatherResult$!: Observable<Partial<WeatherResult> | null>;
-  options$!: Observable<AutocompleteOption[]>;
-  metric$!: Observable<boolean>;
-
-  selectedOptionSource$: BehaviorSubject<AutocompleteOption | null> =
-    new BehaviorSubject<AutocompleteOption | null>(null);
-  queryChangeSource$: Subject<string> = new Subject<string>();
 
   ngOnInit(): void {
-    this.#store.loadQuery(this.#store.searchTerm);
+    this.#store.updateSelectId(this.#store.optionSelected());
   }
 
+  // onQueryChange(query: string): void {}
 
-
-  onQueryChange(query: string): void {
-    // this.queryChangeSource$.next(query);
+  onOptionSelected(option: AutocompleteOption): void {
+    this.#store.updateSelectId(option);
   }
 
-  onOptionSelected(event: MatAutocompleteSelectedEvent): void {
-    // const option: AutocompleteOption = event.option.value;
-    // this.selectedOptionSource$.next(option);
-    // this.queryChangeSource$.next(option.value.LocalizedName);
-    // this.updateQuery(option.value);
+  // onSelectChange({ selected, source }: SelectChangeEvent): void {}
+
+  onUnitTempChange({ metric }: UnitChangeEvent): void {
+    this.#store.updateIsMetric(metric);
   }
 
-  onSelectChange({selected, source}: SelectChangeEvent): void {
-  }
-
-  onUnitTempChange({metric}: UnitChangeEvent): void {
-  }
-
-  displayFn(option: AutocompleteResOption): string {
-    return option ? `${option.LocalizedName}, ${option.Country.LocalizedName}` : "";
+  displayFn(option: AutocompleteOption): string {
+    return option
+      ? `${option.LocalizedName}, ${option.Country.LocalizedName}`
+      : '';
   }
 }

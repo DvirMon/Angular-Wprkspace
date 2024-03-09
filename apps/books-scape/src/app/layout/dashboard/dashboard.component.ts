@@ -1,24 +1,24 @@
-import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
-import { CommonModule } from "@angular/common";
-import { Component, Signal, inject } from "@angular/core";
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { CommonModule } from '@angular/common';
+import { Component, Signal, inject } from '@angular/core';
 
-import { MatBadgeModule } from "@angular/material/badge";
-import { MatButtonModule } from "@angular/material/button";
-import { MatIconModule } from "@angular/material/icon";
-import { MatListModule } from "@angular/material/list";
-import { MatSidenavModule } from "@angular/material/sidenav";
-import { MatToolbarModule } from "@angular/material/toolbar";
-import { RouterModule } from "@angular/router";
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { RouterModule } from '@angular/router';
 
-import { Observable } from "rxjs";
-import { map, shareReplay } from "rxjs/operators";
+import { Observable } from 'rxjs';
+import { map, shareReplay } from 'rxjs/operators';
 
-import { AppSignalSore } from "../../store/store";
+import { AppStore } from '../../store/store';
 
 @Component({
-  selector: "book-scape-dashboard",
-  templateUrl: "./dashboard.component.html",
-  styleUrls: ["./dashboard.component.scss"],
+  selector: 'book-scape-dashboard',
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.scss'],
   standalone: true,
   imports: [
     CommonModule,
@@ -32,11 +32,10 @@ import { AppSignalSore } from "../../store/store";
   ],
 })
 export class DashboardComponent {
-
   #breakpointObserver = inject(BreakpointObserver);
-  #store = inject(AppSignalSore);
+  #store = inject(AppStore);
 
-  protected readonly title: string = "books scape";
+  protected readonly title: string = 'books scape';
 
   public readonly selectedBooks: Signal<string> = this.#store.selectedBooks;
 

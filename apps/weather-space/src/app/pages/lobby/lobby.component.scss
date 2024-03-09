@@ -1,18 +1,15 @@
-div,
-header,
-main {
-  width: 100%;
-}
-
-dic.container {
+div.lobby-page-wrapper {
+  height: calc(100% - 64px);
+  background-image: url('../../../assets/images/bg.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   display: flex;
   flex-direction: column;
-  height: 100%;
 }
 
+
 header {
-  // display: flex;
-  // justify-content: center;
   display: flex;
   flex-direction: row;
   align-items: center;

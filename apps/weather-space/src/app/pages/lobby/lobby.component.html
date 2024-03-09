@@ -1,28 +1,39 @@
-<div class="container">
+<div class="lobby-page-wrapper">
   <header>
     <weather-space-autocomplete
       [label]="'Enter City'"
       [options]="options()"
       [control]="control()"
+      (optionSelected)="onOptionSelected($event)"
       [displayFn]="displayFn"
-      [optionTemplate]="optionTemplate">
+      [optionTemplate]="optionTemplate"
+    >
     </weather-space-autocomplete>
 
     <ng-template #optionTemplate let-option>
-      {{ option | pluck : "LocalizedName" }},
-      {{ option | pluck : "Country" | pluck : "LocalizedName" }}
+      {{ option | pluck : 'LocalizedName' }},
+      {{ option | pluck : 'Country' | pluck : 'LocalizedName' }}
     </ng-template>
   </header>
 
   <main>
     <section class="weather-space-result-wrapper">
-      <ng-container *ngIf="weatherResult$ | async as weatherResult">
+      <weather-space-result-card
+        [optionSelected]="optionSelected()"
+        [currentWeather]="currentWeather()"
+        [futureWeather]="futureWeather()"
+        [metric]="true"
+        [isFavorite]="false"
+        (unitChanged)="onUnitTempChange($event)"
+      ></weather-space-result-card>
+
+      <!-- <ng-container *ngIf="weatherResult$ | async as weatherResult">
         <weather-space-result-card
           [weatherResult]="weatherResult"
-          [metric]="metric$ | async"
+          [metric]="metric"
           (selectChanged)="onSelectChange($event)"
           (unitChanged)="onUnitTempChange($event)"></weather-space-result-card>
-      </ng-container>
+      </ng-container> -->
     </section>
   </main>
 </div>

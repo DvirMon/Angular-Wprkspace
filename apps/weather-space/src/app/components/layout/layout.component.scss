@@ -1,7 +1,5 @@
 .sidenav-container {
   height: 100%;
-  // background-image: url("../../../assets/img/background.jpg");
-  // background-size: cover;
 }
 
 .sidenav {
@@ -12,10 +10,12 @@
   background: inherit;
 }
 
-.mat-toolbar.mat-primary {
+.mat-toolbar {
+  background-image: url('../../../assets/images/bg.jpg');
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 2;
+  background-color: rgba(255, 255, 255, 0); /* Fully transparent */
 
   span.grow {
     flex-grow: 1;
@@ -24,10 +24,4 @@
 
 .mat-button-toggle-group {
   font-size: 12px;
-}
-
-.units {
-  // width: 100%;
-  // display: flex;
-  // justify-content: flex-end;
 }

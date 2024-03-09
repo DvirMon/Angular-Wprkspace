@@ -23,6 +23,7 @@
     "@angular/platform-server": "17.2.2",
     "@angular/router": "17.2.2",
     "@angular/ssr": "17.2.1",
+    "@ngrx/eslint-plugin": "^17.1.1",
     "@ngrx/operators": "^17.1.1",
     "@ngrx/signals": "^17.1.1",
     "@nx/angular": "18.0.6",

@@ -4,7 +4,7 @@ import { patchState } from '@ngrx/signals';
 import { BookCardComponent } from '../../books/book-card/book-card.component';
 import { Book } from '../../books/books';
 import { SearchInputComponent } from '../../search-input/search-input.component';
-import { AppSignalSore } from '../../store/store';
+import { AppStore } from '../../store/store';
 
 @Component({
   selector: 'books-scape-home',
@@ -14,7 +14,7 @@ import { AppSignalSore } from '../../store/store';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
-  #store = inject(AppSignalSore);
+  #store = inject(AppStore);
 
   public readonly books: Signal<Book[]>;
   public readonly initialValue: Signal<string>;

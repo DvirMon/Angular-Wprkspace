@@ -5,6 +5,7 @@ import { AutocompleteResult } from '../models/autocomplete-result';
 
 import { EntityId } from '@ngrx/signals/entities';
 import { distinctUntilChanged, map, Observable, of, switchMap } from 'rxjs';
+import { environment } from '../../../environments/environment';
 import {
   CURRENT_WEATHER_RESULT,
   FUTURE_WEATHER_RESULT,
@@ -13,7 +14,6 @@ import {
 import { CurrentWeatherResult } from '../models/current-weather-result';
 import { FutureWeatherResult } from '../models/future-weather-result';
 import { GeolocationWeatherResult } from '../models/geolocation-weather-result';
-import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -23,13 +23,14 @@ export class WeatherHttpService {
 
   constructor(private http: HttpClient) {}
 
-  public getOptions(query: string): Observable<AutocompleteResult[]> {
-    console.log(query)
+  public getOptions(): Observable<AutocompleteResult[]> {
     return of(LOCATIONS_AUTOCOMPLETE_RESULT);
   }
-  
-  public loadCurrentWeatherLocal(locationKey : number): Observable<CurrentWeatherResult[]> {
-    console.log(locationKey)
+
+  public loadCurrentWeatherLocal(
+    locationKey: number
+  ): Observable<CurrentWeatherResult[]> {
+    console.log(locationKey);
     return of(CURRENT_WEATHER_RESULT);
   }
 
@@ -59,7 +60,11 @@ export class WeatherHttpService {
     );
   }
 
-  public loadFutureWeather(): Observable<FutureWeatherResult> {
+  public loadFutureWeather(
+    locationKey: EntityId,
+    metric: boolean
+  ): Observable<FutureWeatherResult> {
+    console.log(locationKey, metric)
     return of(FUTURE_WEATHER_RESULT);
   }
 

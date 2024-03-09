@@ -1,9 +1,6 @@
 div.lobby-page-wrapper {
   height: calc(100% - 64px);
-  background-image: url('../../../assets/images/bg.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
+ 
   display: flex;
   flex-direction: column;
 }

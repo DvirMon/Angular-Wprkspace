@@ -1,17 +1,22 @@
-import { NgIf, TitleCasePipe } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { NgClass, NgIf, TitleCasePipe } from '@angular/common';
+import { Component, EventEmitter, Output, input } from '@angular/core';
 import { MatButton } from '@angular/material/button';
-import { MatCard, MatCardSubtitle, MatCardTitle } from '@angular/material/card';
+import {
+  MatCard,
+  MatCardContent,
+  MatCardHeader,
+  MatCardSubtitle,
+  MatCardTitle,
+} from '@angular/material/card';
 import { Temperature } from '../../shared/models/current-weather-result';
 import { TemperaturePipe } from '../../shared/pipes/temperature.pipe';
 import { IsUnitPipe } from '../../shared/pipes/unit-temperature.pipe';
 
-export interface FavoriteCard {
+export interface FavoriteEntity {
   id: number;
-  description: string;
-  location: string;
-  temp: Temperature;
-  favorite: boolean;
+  WeatherText: string;
+  LocalizedName: string;
+  Temperature: Temperature;
 }
 
 @Component({
@@ -21,23 +26,26 @@ export interface FavoriteCard {
   standalone: true,
   imports: [
     NgIf,
+    NgClass,
     MatCard,
-    MatButton,
+    MatCardHeader,
     MatCardTitle,
     MatCardSubtitle,
+    MatCardContent,
+    MatButton,
     TitleCasePipe,
     IsUnitPipe,
     TemperaturePipe,
   ],
 })
-export class FavoriteCardComponent {
-  @Input() item!: FavoriteCard;
-  @Input() metric!: boolean | null;
+export class FavoriteEntityComponent {
+  item = input.required<FavoriteEntity>();
+  metric = input.required<boolean>();
 
-  @Output() selectionChanged: EventEmitter<FavoriteCard> =
-    new EventEmitter<FavoriteCard>();
+  @Output() selectionChanged: EventEmitter<FavoriteEntity> =
+    new EventEmitter<FavoriteEntity>();
 
   onSelectionChanged() {
-    this.selectionChanged.emit(this.item);
+    this.selectionChanged.emit(this.item());
   }
 }

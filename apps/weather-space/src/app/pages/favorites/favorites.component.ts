@@ -1,32 +1,40 @@
-import { Component, Signal } from '@angular/core';
+import { Component, Signal, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AsyncPipe, KeyValuePipe, NgFor } from '@angular/common';
+import { KeyValuePipe, NgFor } from '@angular/common';
+import { MatButton } from '@angular/material/button';
+import { EntityMap } from '@ngrx/signals/entities';
 import {
-  FavoriteCard,
-  FavoriteCardComponent,
+  FavoriteEntity,
+  FavoriteEntityComponent,
 } from '../../features/weather-favorite-card/favorite-card.component';
+import { FavoriteStore } from '../../store/store-favorites';
+import { OptionsStore } from '../../store/store-options';
+import { WeatherStore } from '../../store/store-weather';
 
 @Component({
   selector: 'weather-space-favorites',
   templateUrl: './favorites.component.html',
   styleUrls: ['./favorites.component.scss'],
   standalone: true,
-  imports: [NgFor, FavoriteCardComponent, AsyncPipe, KeyValuePipe],
+  imports: [NgFor, FavoriteEntityComponent, KeyValuePipe, MatButton],
 })
 export class FavoritesLayoutComponent {
-  items!: Signal<Map<number, FavoriteCard>>;
-  isMetric!: Signal<boolean>;
+  #optionsStore = inject(OptionsStore);
+  #favoriteStore = inject(FavoriteStore);
+  #weatherStore = inject(WeatherStore);
 
-  constructor(private router: Router) {}
+  items: Signal<EntityMap<FavoriteEntity>>;
+  isMetric: Signal<boolean>;
 
-  private _updateQuery(id: number, location: string): void {
-    console.log({ id, location });
-    return;
+  constructor(private router: Router) {
+    this.items = this.#favoriteStore.entityMap;
+    this.isMetric = this.#weatherStore.isMetric;
   }
 
-  public onSelectionChanged({ location, id }: FavoriteCard): void {
-    this._updateQuery(id, location);
+
+  public onSelectionChanged({ id }: FavoriteEntity): void {
+    this.#optionsStore.updateCurrentId(id);
     this.router.navigateByUrl('/');
   }
 }

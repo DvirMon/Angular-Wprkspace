@@ -1,5 +1,11 @@
 import { AsyncPipe, JsonPipe, NgFor, NgIf } from '@angular/common';
-import { Component, OnInit, Signal, computed, inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Signal,
+  computed,
+  inject
+} from '@angular/core';
 import {
   FormControl,
   NonNullableFormBuilder,
@@ -13,16 +19,23 @@ import { MatOption } from '@angular/material/core';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { AutocompleteComponent } from '../../features/weather-autocomplete/autocomplete.component';
+import { FavoriteEntity } from '../../features/weather-favorite-card/favorite-card.component';
 import {
+  FavoriteChangeEvent,
   UnitChangeEvent,
-  WeatherResultComponent
+  WeatherResultComponent,
 } from '../../features/weather-result-card/weather-result.component';
 import { AutocompleteOption } from '../../shared/models/autocomplete-result';
 import { CurrentWeather } from '../../shared/models/current-weather-result';
-import { FutureWeather } from '../../shared/models/future-weather-result';
+import {
+  FutureWeather,
+  FutureWeatherArgs,
+} from '../../shared/models/future-weather-result';
 import { HighLightPipe } from '../../shared/pipes/high-light.pipe';
 import { PluckPipe } from '../../shared/pipes/pluck.pipe';
-import { Store } from '../../store/store';
+import { FavoriteStore } from '../../store/store-favorites';
+import { OptionsStore } from '../../store/store-options';
+import { WeatherStore } from '../../store/store-weather';
 
 @Component({
   selector: 'weather-space-lobby',
@@ -48,40 +61,96 @@ import { Store } from '../../store/store';
   ],
 })
 export class LobbyComponent implements OnInit {
-  
-  #store = inject(Store);
   #nfb = inject(NonNullableFormBuilder);
+
+  #optionsStore = inject(OptionsStore);
+  #weatherStore = inject(WeatherStore);
+  #favoriteStore = inject(FavoriteStore);
 
   options: Signal<AutocompleteOption[]>;
   optionSelected: Signal<AutocompleteOption>;
   control!: Signal<FormControl<AutocompleteOption>>;
 
-  metric = true;
   currentWeather: Signal<CurrentWeather>;
   futureWeather: Signal<FutureWeather>;
 
+  isMetric: Signal<boolean>;
+  isFavorite: Signal<boolean>;
+  futureArgs: Signal<FutureWeatherArgs>;
+
+  isWeatherData: Signal<boolean>;
+
   constructor() {
-    this.options = this.#store.optionsEntities;
-    this.optionSelected = this.#store.optionSelected;
+    this.options = this.#optionsStore.entities;
+    this.optionSelected = this.#optionsStore.optionSelected;
+
     this.control = computed(() => this.#nfb.control(this.optionSelected()));
-    this.currentWeather = this.#store.currentWeather;
-    this.futureWeather = this.#store.futureWeather;
+
+    this.isMetric = this.#weatherStore.isMetric;
+
+    this.currentWeather = computed(
+      () =>
+        this.#weatherStore.currentEntityMap()[this.#optionsStore.selectedId()]
+    );
+
+    this.futureArgs = computed<FutureWeatherArgs>(() => {
+      return {
+        id: this.#optionsStore.selectedId(),
+        metric: this.#weatherStore.isMetric(),
+      } as FutureWeatherArgs;
+    });
+
+    this.futureWeather = computed(
+      () =>
+        this.#weatherStore.futureEntityMap()[this.#optionsStore.selectedId()]
+    );
+
+    this.isWeatherData = computed(
+      () =>
+        !!this.currentWeather() &&
+        !!this.optionSelected() &&
+        !!this.futureWeather()
+    );
+
+    this.isFavorite = computed(
+      () => !!this.#favoriteStore.entityMap()[this.#optionsStore.selectedId()]
+    );
   }
 
   ngOnInit(): void {
-    this.#store.updateSelectId(this.#store.optionSelected());
-  }
 
-  // onQueryChange(query: string): void {}
+    if (this.options().length == 0) {
+      this.#optionsStore.loadOptions();
+    }
+
+    if (this.#optionsStore.selectedId() == -1) {
+      this.#optionsStore.setCurrentId('tel aviv');
+    }
+
+    this.#weatherStore.loadCurrentWeather(this.#optionsStore.selectedId);
+    this.#weatherStore.loadFutureWeather(this.futureArgs);
+  }
 
   onOptionSelected(option: AutocompleteOption): void {
-    this.#store.updateSelectId(option);
+    this.#optionsStore.updateCurrentId(option.id);
   }
 
-  // onSelectChange({ selected, source }: SelectChangeEvent): void {}
+  onFavoriteChanged(event: FavoriteChangeEvent): void {
+    const { selected } = event;
+
+    const favorite: FavoriteEntity = {
+      ...event,
+    } as FavoriteEntity;
+
+    if (selected) {
+      this.#favoriteStore.addFavorite(favorite);
+    } else {
+      this.#favoriteStore.removeFavorite(favorite);
+    }
+  }
 
   onUnitTempChange({ metric }: UnitChangeEvent): void {
-    this.#store.updateIsMetric(metric);
+    this.#weatherStore.updateIsMetric(metric);
   }
 
   displayFn(option: AutocompleteOption): string {

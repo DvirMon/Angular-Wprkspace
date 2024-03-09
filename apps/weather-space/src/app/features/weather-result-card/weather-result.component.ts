@@ -1,5 +1,11 @@
 import { DatePipe, NgFor, NgIf, TitleCasePipe } from '@angular/common';
-import { Component, EventEmitter, Output, input, model } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Output,
+  input,
+  model
+} from '@angular/core';
 import { MatIconButton } from '@angular/material/button';
 import {
   MatButtonToggle,
@@ -21,9 +27,11 @@ import { DailyTemperaturePipe } from '../../shared/pipes/daily-temperature.pipe'
 import { TemperaturePipe } from '../../shared/pipes/temperature.pipe';
 import { IsUnitPipe } from '../../shared/pipes/unit-temperature.pipe';
 
-export interface SelectChangeEvent {
+export interface FavoriteChangeEvent
+  extends AutocompleteOption,
+    CurrentWeather,
+    FutureWeather {
   selected: boolean;
-  source: AutocompleteOption;
 }
 export interface UnitChangeEvent {
   metric: boolean;
@@ -61,13 +69,16 @@ export class WeatherResultComponent {
   metric = model.required<boolean>();
   isFavorite = input.required<boolean>();
 
-  @Output() selectChanged: EventEmitter<SelectChangeEvent> = new EventEmitter();
+  @Output() favoriteChanged: EventEmitter<FavoriteChangeEvent> =
+    new EventEmitter();
   @Output() unitChanged: EventEmitter<UnitChangeEvent> = new EventEmitter();
 
   private _emitChange() {
-    this.selectChanged.emit({
-      selected: this.isFavorite(),
-      source: this.optionSelected(),
+    this.favoriteChanged.emit({
+      selected: !this.isFavorite(),
+      ...this.optionSelected(),
+      ...this.currentWeather(),
+      ...this.futureWeather(),
     });
   }
 
@@ -78,6 +89,5 @@ export class WeatherResultComponent {
   onUnitChange(event: MatButtonToggleChange) {
     const { value } = event;
     this.unitChanged.emit({ metric: value });
-    this.metric.update((value) => !value);
   }
 }

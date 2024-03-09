@@ -31,10 +31,8 @@ export class WeatherService {
     private weatherHttpService: WeatherHttpService
   ) {}
 
-  public loadOptions(
-    query: string
-  ): Observable<EntityResult<AutocompleteOption>> {
-    return this.weatherHttpService.getOptions(query).pipe(
+  public loadOptions(): Observable<EntityResult<AutocompleteOption>> {
+    return this.weatherHttpService.getOptions().pipe(
       map((results) => this._mapToAutocompleteResults(results)),
       map((options) => ({ content: options }))
     );
@@ -69,8 +67,7 @@ export class WeatherService {
     args: FutureWeatherArgs
   ): Observable<EntityResult<FutureWeather>> {
     const { id, metric } = args;
-    console.log(metric);
-    return this.weatherHttpService.loadFutureWeather().pipe(
+    return this.weatherHttpService.loadFutureWeather(id, metric).pipe(
       map((data: FutureWeatherResult) => {
         return { id, ...data } as FutureWeather;
       }),

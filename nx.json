@@ -19,12 +19,12 @@
   },
   "targetDefaults": {
     "@angular-devkit/build-angular:browser": {
-      "cache": true,
+      "cache": false,
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]
     },
     "server": {
-      "cache": true
+      "cache": false
     }
   },
   "plugins": [

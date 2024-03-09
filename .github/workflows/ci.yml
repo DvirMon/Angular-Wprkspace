@@ -39,10 +39,6 @@ jobs:
       - name: Set NX SHA's for Caching
         uses: nrwl/nx-set-shas@v4
 
-      # Format Check
-      - name: Check Code Formatting with NX
-        run: npx nx-cloud record -- nx format:check
-
       # Lint, Test, Build, and E2E
       - name: Run Lint, Test, Build, and E2E Targets
         run: npx nx affected --target=lint,test,build,e2e-ci

@@ -10,20 +10,20 @@ import {
 } from '@ngrx/signals';
 import { AutocompleteOption } from '../shared/models/autocomplete-result';
 import { WeatherService } from '../shared/services/weather.service';
-import { updateIsMetric, updateSelectId } from './updaters';
+import { updateIsMetric, updateSelectedId } from './updaters';
 import { withCurrentWeather } from './with-current.feature';
 import { withFutureWeather } from './with-future.feature';
 
 interface WeatherState {
   isMetric: boolean;
   geolocation: boolean;
-  selectId: number;
+  selectedId: number;
 }
 
 const initialState: WeatherState = {
   isMetric: true,
   geolocation: true,
-  selectId: 1,
+  selectedId: 1,
 };
 
 export const WeatherStore = signalStore(
@@ -33,15 +33,15 @@ export const WeatherStore = signalStore(
   withCurrentWeather(WeatherService, 'current'),
   withFutureWeather(WeatherService),
   withComputed((store) => ({
-    currentWeather: computed(() => store.currentEntityMap()[store.selectId()]),
-    futureWeather: computed(() => store.futureEntityMap()[store.selectId()]),
+    currentWeather: computed(() => store.currentEntityMap()[store.selectedId()]),
+    futureWeather: computed(() => store.futureEntityMap()[store.selectedId()]),
     futureArgs: computed(() => {
-      return { id: store.selectId(), metric: store.isMetric() };
+      return { id: store.selectedId(), metric: store.isMetric() };
     }),
   })),
   withMethods((state) => ({
-    updateSelectId(option: AutocompleteOption) {
-      patchState(state, updateSelectId(option));
+    updateSelectedId(option: AutocompleteOption) {
+      patchState(state, updateSelectedId(option));
     },
     updateIsMetric(isMetric: boolean) {
       patchState(state, updateIsMetric(isMetric));
@@ -50,7 +50,7 @@ export const WeatherStore = signalStore(
 
   withHooks({
     onInit(store) {
-      store.loadCurrentWeather(store.selectId);
+      store.loadCurrentWeather(store.selectedId);
       store.loadFutureWeather(store.futureArgs);
     },
   })

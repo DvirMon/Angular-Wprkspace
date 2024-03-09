@@ -23,13 +23,14 @@ export class WeatherHttpService {
 
   constructor(private http: HttpClient) {}
 
-  public getOptions(query: string): Observable<AutocompleteResult[]> {
-    console.log(query)
+  public getOptions(): Observable<AutocompleteResult[]> {
     return of(LOCATIONS_AUTOCOMPLETE_RESULT);
   }
-  
-  public loadCurrentWeatherLocal(locationKey : number): Observable<CurrentWeatherResult[]> {
-    console.log(locationKey)
+
+  public loadCurrentWeatherLocal(
+    locationKey: number
+  ): Observable<CurrentWeatherResult[]> {
+    console.log(locationKey);
     return of(CURRENT_WEATHER_RESULT);
   }
 

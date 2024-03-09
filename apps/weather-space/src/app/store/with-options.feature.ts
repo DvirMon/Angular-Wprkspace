@@ -9,7 +9,7 @@ import {
   loadEntities,
 } from './entities.helpers';
 
-type OptionLoader = Loader<string, Entity, 'loadOptions'>;
+type OptionLoader = Loader<void, Entity, 'loadOptions'>;
 
 export function withOptions(
   Loader: LoaderService<OptionLoader>,

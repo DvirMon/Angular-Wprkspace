@@ -31,10 +31,8 @@ export class WeatherService {
     private weatherHttpService: WeatherHttpService
   ) {}
 
-  public loadOptions(
-    query: string
-  ): Observable<EntityResult<AutocompleteOption>> {
-    return this.weatherHttpService.getOptions(query).pipe(
+  public loadOptions(): Observable<EntityResult<AutocompleteOption>> {
+    return this.weatherHttpService.getOptions().pipe(
       map((results) => this._mapToAutocompleteResults(results)),
       map((options) => ({ content: options }))
     );

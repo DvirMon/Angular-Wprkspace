@@ -152,8 +152,6 @@ export class LobbyComponent implements OnInit {
   onFavoriteChanged(event: FavoriteChangeEvent): void {
     const { selected } = event;
 
-    console.log(event);
-
     const favorite: FavoriteEntity = {
       ...event,
     } as FavoriteEntity;
@@ -176,9 +174,7 @@ export class LobbyComponent implements OnInit {
   displayFn(value: AutocompleteOption): string {
     const option = value instanceof MatOption ? value.value : value;
 
-    return option != null
-      ? `${option.LocalizedName}, ${option.Country.LocalizedName}`
-      : '';
+    return option != null ? `${option.LocalizedName}` : '';
   }
 
   predicate(option: AutocompleteOption) {

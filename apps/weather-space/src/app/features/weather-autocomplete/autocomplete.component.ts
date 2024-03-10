@@ -4,7 +4,6 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnInit,
   Output,
   TemplateRef,
   effect,
@@ -21,12 +20,12 @@ import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import {
-  pipe,
+  Subject,
   debounceTime,
   distinctUntilChanged,
-  tap,
   map,
-  Subject,
+  pipe,
+  tap,
 } from 'rxjs';
 
 @Component({
@@ -85,7 +84,6 @@ export class AutocompleteComponent<T> {
 
   onOptionSelected(event: MatAutocompleteSelectedEvent): void {
     const option: T = event.option.value;
-    console.log(this.control().value)
     this.optionSelected.emit(option);
   }
 

@@ -71,6 +71,7 @@ export class LobbyComponent implements OnInit {
   #favoriteStore = inject(FavoriteStore);
 
   options: Signal<AutocompleteOption[]>;
+  filtered: Signal<AutocompleteOption[]>;
   optionSelected: Signal<AutocompleteOption>;
   control!: FormControl<AutocompleteOption>;
 
@@ -83,14 +84,18 @@ export class LobbyComponent implements OnInit {
 
   isWeatherData: Signal<boolean>;
 
-  searchTerm: Signal<string>;
+  searchTerm: WritableSignal<string> = signal('tel aviv');
 
   constructor() {
-    this.searchTerm = this.#optionsStore.searchTerm;
     this.options = this.#optionsStore.entities;
+
     this.optionSelected = this.#optionsStore.optionSelected;
 
     this.isMetric = this.#weatherStore.isMetric;
+
+    this.filtered = computed(() =>
+      this.options().filter((option) => this.predicate(option))
+    );
 
     this.currentWeather = computed(
       () =>
@@ -147,6 +152,8 @@ export class LobbyComponent implements OnInit {
   onFavoriteChanged(event: FavoriteChangeEvent): void {
     const { selected } = event;
 
+    console.log(event);
+
     const favorite: FavoriteEntity = {
       ...event,
     } as FavoriteEntity;
@@ -163,12 +170,20 @@ export class LobbyComponent implements OnInit {
   }
 
   onQueryChanged(event: string) {
-    this.#optionsStore.updateSearchTerm(event);
+    this.searchTerm.update(() => event);
   }
 
-  displayFn(option: AutocompleteOption): string {
-    return option
+  displayFn(value: AutocompleteOption): string {
+    const option = value instanceof MatOption ? value.value : value;
+
+    return option != null
       ? `${option.LocalizedName}, ${option.Country.LocalizedName}`
       : '';
+  }
+
+  predicate(option: AutocompleteOption) {
+    return option.LocalizedName.toLowerCase().includes(
+      this.searchTerm().toLowerCase()
+    );
   }
 }

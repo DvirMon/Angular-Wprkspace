@@ -14,7 +14,7 @@ import { withOptions } from './with-options.feature';
 export const OptionsStore = signalStore(
   { providedIn: 'root' },
   withDevtools('options'),
-  withState({ selectedId: -1, searchTerm: 'tel aviv' }),
+  withState({ selectedId: -1 }),
   withOptions(WeatherService),
   withComputed((store) => ({
     optionSelected: computed(() => store.entityMap()[store.selectedId()]),
@@ -30,9 +30,6 @@ export const OptionsStore = signalStore(
     updateCurrentId(id: number) {
       patchState(state, { selectedId: id });
     },
-    updateSearchTerm(searchTerm: string) {
-      patchState(state, { searchTerm });
-    },
   }))
   // withHooks({
   //   onInit(store) {
@@ -43,5 +40,5 @@ export const OptionsStore = signalStore(
 );
 
 function compareTo(option: AutocompleteOption, value: string): boolean {
-  return option.LocalizedName.toLowerCase() === value;
+  return option ? option.LocalizedName.toLowerCase() === value : false;
 }

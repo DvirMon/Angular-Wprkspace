@@ -1,11 +1,10 @@
 <div class="lobby-page-wrapper">
   <header>
     @if(control) {
-
     <weather-space-autocomplete
       [label]="'Enter City'"
       [defaultValue]="'tel aviv'"
-      [options]="options()"
+      [options]="filtered()"
       [control]="control"
       (optionSelected)="onOptionSelected($event)"
       (queryChanged)="onQueryChanged($event)"
@@ -24,8 +23,7 @@
   <main>
     <section class="weather-space-result-wrapper">
       @if(isWeatherData()) {
-
-      <!-- <weather-space-result-card
+      <weather-space-result-card
         [optionSelected]="optionSelected()"
         [currentWeather]="currentWeather()"
         [futureWeather]="futureWeather()"
@@ -33,7 +31,7 @@
         [isFavorite]="isFavorite()"
         (unitChanged)="onUnitTempChange($event)"
         (favoriteChanged)="onFavoriteChanged($event)"
-      ></weather-space-result-card> -->
+      ></weather-space-result-card>
       }
     </section>
   </main>

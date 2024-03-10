@@ -20,7 +20,14 @@ import { MatOption } from '@angular/material/core';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { pipe, debounceTime, distinctUntilChanged, tap, map } from 'rxjs';
+import {
+  pipe,
+  debounceTime,
+  distinctUntilChanged,
+  tap,
+  map,
+  Subject,
+} from 'rxjs';
 
 @Component({
   selector: 'weather-space-autocomplete',
@@ -54,12 +61,14 @@ export class AutocompleteComponent<T> {
   @Output() queryChanged = new EventEmitter<string>();
   @Output() optionSelected = new EventEmitter<T>();
 
-  private onQueryChange = rxMethod<T>(
+  valueChanged: Subject<string> = new Subject();
+
+  private onQueryChange = rxMethod<string>(
     pipe(
       debounceTime(300),
       distinctUntilChanged(),
       map((value) => (!value ? this.defaultValue() : value)),
-      tap((value) => this.queryChanged.emit(value as string))
+      tap((value) => this.queryChanged.emit(value))
     )
   );
 
@@ -67,7 +76,7 @@ export class AutocompleteComponent<T> {
     effect(
       () => {
         if (this.control()) {
-          this.onQueryChange(this.control().valueChanges);
+          this.onQueryChange(this.valueChanged.asObservable());
         }
       },
       { allowSignalWrites: true }
@@ -76,6 +85,11 @@ export class AutocompleteComponent<T> {
 
   onOptionSelected(event: MatAutocompleteSelectedEvent): void {
     const option: T = event.option.value;
+    console.log(this.control().value)
     this.optionSelected.emit(option);
+  }
+
+  onQueryChanged() {
+    this.valueChanged.next(this.control().value as string);
   }
 }

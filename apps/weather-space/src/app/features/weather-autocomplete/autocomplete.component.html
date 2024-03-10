@@ -4,14 +4,17 @@
     #input
     type="text"
     matInput
-    [formControl]="control()"
     autocomplete="off"
-    [matAutocomplete]="auto"/>
+    [formControl]="control()"
+    [matAutocomplete]="auto"
+    (input)="onQueryChanged()"
+  />
   <mat-autocomplete
     (optionSelected)="onOptionSelected($event)"
     autoActiveFirstOption
     [displayWith]="displayFn"
-    #auto="matAutocomplete">
+    #auto="matAutocomplete"
+  >
     <ng-container *ngFor="let option of options()">
       <mat-option [value]="option">
         <ng-container *ngIf="optionTemplate(); else defaultTemplate">
@@ -19,7 +22,8 @@
             *ngTemplateOutlet="
               optionTemplate()!;
               context: { $implicit: option }
-            "></ng-container>
+            "
+          ></ng-container>
         </ng-container>
 
         <ng-template #defaultTemplate>

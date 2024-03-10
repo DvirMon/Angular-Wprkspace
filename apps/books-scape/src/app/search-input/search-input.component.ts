@@ -27,7 +27,7 @@ export class SearchInputComponent implements OnInit {
   initialValue = input<string>();
   searchResultsData = input<SearchResultsData>();
 
-  public searchControl: FormControl<string> = new FormControl();
+  searchControl: FormControl<string> = new FormControl();
 
   @Output() termChanged = new EventEmitter<string>();
 

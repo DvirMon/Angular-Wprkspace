@@ -1,12 +1,13 @@
-name: Deploy to Firebase Hosting on Main Push
+name: Deploy weather-space to Firebase Hosting
 
 on:
   push:
     branches:
       - main
+    paths:
+        - apps/weather-space
   pull_request:
   workflow_dispatch:
-
 permissions:
   actions: read
   contents: read

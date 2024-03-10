@@ -1,9 +1,11 @@
-name: Deploy to Firebase Hosting on Main Push
+name: Deploy books-scape to Firebase Hosting
 
 on:
   push:
     branches:
       - main
+    paths:
+        - apps/books-scape
   pull_request:
   workflow_dispatch:
 

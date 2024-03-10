@@ -1,4 +1,4 @@
-import { AsyncPipe, JsonPipe, NgFor, NgIf } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import {
   Component,
   OnInit,
@@ -50,8 +50,6 @@ import { WeatherStore } from '../../store/store-weather';
     NgFor,
     MatOption,
     NgIf,
-    JsonPipe,
-    AsyncPipe,
     PluckPipe,
     MatFormField,
     MatLabel,

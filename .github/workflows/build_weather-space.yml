@@ -38,5 +38,6 @@ jobs:
       - name: Deploy to Firebase Hosting
         uses: w9jds/firebase-action@master
         with:
-          args: deploy --only hosting --project dom-weather-space
+          args: deploy --only hosting --project fir-hosting-55cc4
+
  

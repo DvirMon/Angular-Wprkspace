@@ -1,21 +1,14 @@
 {
   "targets": {
-    "angular-books-scape": {
+    "fir-hosting-55cc4": {
       "hosting": {
         "books-scape": [
-          "angular-books-scape"
-        ]
-      }
-    },
-    "dom-weather-app": {
-      "hosting": {
+          "fir-hosting-55cc4"
+        ],
         "weather-space": [
-          "dom-weather-app"
+          "fir-hosting-55cc4"
         ]
       }
     }
-  },
-  "projects": {
-    "default": "dom-weather-app"
   }
 }

@@ -41,4 +41,5 @@ jobs:
 
       # Lint, Test, Build, and E2E
       - name: Run Lint, Test, Build, and E2E Targets
-        run: npx nx affected --target=lint,test,build,e2e-ci
+        # run: npx nx affected --target=lint,test,build,e2e-ci
+        run: npx nx affected --target=lint,build

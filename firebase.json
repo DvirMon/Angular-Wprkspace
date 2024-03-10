@@ -1,7 +1,7 @@
 {
   "hosting": [
     {
-      "public": "public/apps/books-scape/browser",
+      "public": "public/apps/books-scape",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "target": "books-scape",
       "frameworksBackend": {
@@ -15,7 +15,7 @@
       ]
     },
     {
-      "public": "public/apps/weather-space/browser",
+      "public": "public/apps/weather-space",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "target": "weather-space",
       "frameworksBackend": {

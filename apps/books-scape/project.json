@@ -12,7 +12,7 @@
         "{options.outputPath}"
       ],
       "options": {
-        "outputPath": "public/apps/books-scape/browser",
+        "outputPath": "public/apps/books-scape",
         "index": "apps/books-scape/src/index.html",
         "main": "apps/books-scape/src/main.ts",
         "polyfills": [

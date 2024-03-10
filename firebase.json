@@ -1,13 +1,23 @@
 {
   "hosting": [
     {
-      "public": "public/apps/books-scape/browser",
-      "ignore": [
-        "firebase.json",
-        "**/.*",
-        "**/node_modules/**"
-      ],
+      "public": "public/apps/books-scape",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "target": "books-scape",
+      "frameworksBackend": {
+        "region": "europe-west1"
+      },
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    },
+    {
+      "public": "public/apps/weather-space",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "target": "weather-space",
       "frameworksBackend": {
         "region": "europe-west1"
       },

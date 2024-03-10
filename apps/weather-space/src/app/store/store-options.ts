@@ -5,7 +5,7 @@ import {
   signalStore,
   withComputed,
   withMethods,
-  withState
+  withState,
 } from '@ngrx/signals';
 import { AutocompleteOption } from '../shared/models/autocomplete-result';
 import { WeatherService } from '../shared/services/weather.service';
@@ -40,5 +40,5 @@ export const OptionsStore = signalStore(
 );
 
 function compareTo(option: AutocompleteOption, value: string): boolean {
-  return option.LocalizedName.toLowerCase() === value;
+  return option ? option.LocalizedName.toLowerCase() === value : false;
 }

@@ -23,8 +23,19 @@ export class WeatherHttpService {
 
   constructor(private http: HttpClient) {}
 
-  public getOptions(): Observable<AutocompleteResult[]> {
+  public loadOptions(query: string): Observable<AutocompleteResult[]> {
+    console.log(query);
     return of(LOCATIONS_AUTOCOMPLETE_RESULT);
+  }
+
+  public getOptions(query: string): Observable<AutocompleteResult[]> {
+    const params = new HttpParams()
+      .set('apikey', environment.accuWeatherAPIKey)
+      .set('q', query);
+    return this.http.get<AutocompleteResult[]>(
+      this._baseUrl + 'locations/v1/cities/autocomplete',
+      { params }
+    );
   }
 
   public loadCurrentWeatherLocal(
@@ -64,7 +75,7 @@ export class WeatherHttpService {
     locationKey: EntityId,
     metric: boolean
   ): Observable<FutureWeatherResult> {
-    console.log(locationKey, metric)
+    console.log(locationKey, metric);
     return of(FUTURE_WEATHER_RESULT);
   }
 

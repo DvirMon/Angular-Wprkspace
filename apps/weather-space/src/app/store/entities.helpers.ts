@@ -9,7 +9,7 @@ import { tapResponse } from '@ngrx/operators';
 import { StateSignal, patchState } from '@ngrx/signals';
 import { EntityId, addEntities, setAllEntities } from '@ngrx/signals/entities';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { Observable, pipe, switchMap } from 'rxjs';
+import { EMPTY, Observable, pipe, switchMap } from 'rxjs';
 
 export interface Entity {
   id: EntityId;
@@ -76,7 +76,7 @@ export function loadEntities<T>(
         loader(query).pipe(
           tapResponse({
             next: handleLoadSuccess(state, collection),
-            error: console.error,
+            error: () => EMPTY,
           })
         )
       )

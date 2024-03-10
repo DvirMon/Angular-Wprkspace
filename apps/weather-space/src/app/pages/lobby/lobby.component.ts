@@ -3,8 +3,11 @@ import {
   Component,
   OnInit,
   Signal,
+  WritableSignal,
   computed,
-  inject
+  effect,
+  inject,
+  signal,
 } from '@angular/core';
 import {
   FormControl,
@@ -68,8 +71,9 @@ export class LobbyComponent implements OnInit {
   #favoriteStore = inject(FavoriteStore);
 
   options: Signal<AutocompleteOption[]>;
+  filtered: Signal<AutocompleteOption[]>;
   optionSelected: Signal<AutocompleteOption>;
-  control!: Signal<FormControl<AutocompleteOption>>;
+  control!: FormControl<AutocompleteOption>;
 
   currentWeather: Signal<CurrentWeather>;
   futureWeather: Signal<FutureWeather>;
@@ -80,13 +84,18 @@ export class LobbyComponent implements OnInit {
 
   isWeatherData: Signal<boolean>;
 
+  searchTerm: WritableSignal<string> = signal('tel aviv');
+
   constructor() {
     this.options = this.#optionsStore.entities;
+
     this.optionSelected = this.#optionsStore.optionSelected;
 
-    this.control = computed(() => this.#nfb.control(this.optionSelected()));
-
     this.isMetric = this.#weatherStore.isMetric;
+
+    this.filtered = computed(() =>
+      this.options().filter((option) => this.predicate(option))
+    );
 
     this.currentWeather = computed(
       () =>
@@ -115,17 +124,22 @@ export class LobbyComponent implements OnInit {
     this.isFavorite = computed(
       () => !!this.#favoriteStore.entityMap()[this.#optionsStore.selectedId()]
     );
+
+    effect(() => {
+      this.#optionsStore.loadOptions(this.searchTerm());
+    });
   }
 
-  ngOnInit(): void {
-
+  async ngOnInit(): Promise<void> {
     if (this.options().length == 0) {
-      this.#optionsStore.loadOptions();
+      await this.#optionsStore.loadOptionAsync(this.searchTerm());
     }
 
     if (this.#optionsStore.selectedId() == -1) {
-      this.#optionsStore.setCurrentId('tel aviv');
+      this.#optionsStore.setCurrentId(this.searchTerm());
     }
+
+    this.control = this.#nfb.control(this.optionSelected());
 
     this.#weatherStore.loadCurrentWeather(this.#optionsStore.selectedId);
     this.#weatherStore.loadFutureWeather(this.futureArgs);
@@ -153,9 +167,19 @@ export class LobbyComponent implements OnInit {
     this.#weatherStore.updateIsMetric(metric);
   }
 
-  displayFn(option: AutocompleteOption): string {
-    return option
-      ? `${option.LocalizedName}, ${option.Country.LocalizedName}`
-      : '';
+  onQueryChanged(event: string) {
+    this.searchTerm.update(() => event);
+  }
+
+  displayFn(value: AutocompleteOption): string {
+    const option = value instanceof MatOption ? value.value : value;
+
+    return option != null ? `${option.LocalizedName}` : '';
+  }
+
+  predicate(option: AutocompleteOption) {
+    return option.LocalizedName.toLowerCase().includes(
+      this.searchTerm().toLowerCase()
+    );
   }
 }

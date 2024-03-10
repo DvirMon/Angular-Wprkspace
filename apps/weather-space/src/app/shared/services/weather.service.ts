@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import {
@@ -7,7 +6,6 @@ import {
 } from '../models/autocomplete-result';
 
 import { map, Observable } from 'rxjs';
-import { environment } from '../../../environments/environment';
 import { EntityResult } from '../../store/entities.helpers';
 import {
   CurrentWeather,
@@ -24,15 +22,12 @@ import { WeatherHttpService } from './weather-http.service';
   providedIn: 'root',
 })
 export class WeatherService {
-  private _baseUrl: string = environment.weatherEndpoint;
+  constructor(private weatherHttpService: WeatherHttpService) {}
 
-  constructor(
-    private http: HttpClient,
-    private weatherHttpService: WeatherHttpService
-  ) {}
-
-  public loadOptions(): Observable<EntityResult<AutocompleteOption>> {
-    return this.weatherHttpService.getOptions().pipe(
+  public loadOptions(
+    query: string
+  ): Observable<EntityResult<AutocompleteOption>> {
+    return this.weatherHttpService.loadOptions(query).pipe(
       map((results) => this._mapToAutocompleteResults(results)),
       map((options) => ({ content: options }))
     );

@@ -1,30 +1,22 @@
-import {
-  HttpErrorResponse,
-  HttpEvent,
-  HttpHandler,
-  HttpInterceptor,
-  HttpRequest,
-  HttpResponse,
-} from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable, catchError, map, throwError } from 'rxjs';
+import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
+import { catchError, throwError } from 'rxjs';
+import { ERROR_MESSAGE_CONTEXT } from './error-message.context';
+// import { MessageService } from '@app/shared/ui-messaging';
 
-@Injectable()
-export class HttpErrorInterceptor implements HttpInterceptor {
-  intercept(
-    request: HttpRequest<unknown>,
-    next: HttpHandler
-  ): Observable<HttpEvent<unknown>> {
-    return next.handle(request).pipe(
-      map((event: HttpEvent<unknown>) => {
-        if (event instanceof HttpResponse) {
-          return event;
-        }
-        return event;
-      }),
-      catchError((error: HttpErrorResponse) => {
-        return throwError(() => error);
-      })
-    );
-  }
-}
+export const errorInterceptor: HttpInterceptorFn = (req, handle) => {
+  // const uiMessage = inject(MessageService);
+
+  return handle(req).pipe(
+    catchError((err: HttpErrorResponse) => {
+      if (err.status == 503) {
+        console.log('forbidden');
+      }
+      const errorMessageContext = req.context.get(ERROR_MESSAGE_CONTEXT);
+      // uiMessage.error(errorMessageContext);
+      console.log(errorMessageContext);
+      return throwError(
+        () => new Error('Something bad happened; please try again later.')
+      );
+    })
+  );
+};

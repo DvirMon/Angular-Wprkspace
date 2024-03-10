@@ -6,9 +6,16 @@
           "angular-books-scape"
         ]
       }
+    },
+    "dom-weather-app": {
+      "hosting": {
+        "weather-space": [
+          "dom-weather-app"
+        ]
+      }
     }
   },
   "projects": {
-    "default": "angular-books-scape"
+    "default": "dom-weather-app"
   }
 }

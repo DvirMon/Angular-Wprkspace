@@ -1,14 +1,18 @@
 <div class="lobby-page-wrapper">
   <header>
+    @if(control) {
     <weather-space-autocomplete
       [label]="'Enter City'"
-      [options]="options()"
-      [control]="control()"
+      [defaultValue]="'tel aviv'"
+      [options]="filtered()"
+      [control]="control"
       (optionSelected)="onOptionSelected($event)"
+      (queryChanged)="onQueryChanged($event)"
       [displayFn]="displayFn"
       [optionTemplate]="optionTemplate"
     >
     </weather-space-autocomplete>
+    }
 
     <ng-template #optionTemplate let-option>
       {{ option | pluck : 'LocalizedName' }},
@@ -19,7 +23,6 @@
   <main>
     <section class="weather-space-result-wrapper">
       @if(isWeatherData()) {
-
       <weather-space-result-card
         [optionSelected]="optionSelected()"
         [currentWeather]="currentWeather()"

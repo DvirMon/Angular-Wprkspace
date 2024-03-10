@@ -43,7 +43,7 @@ export class SearchInputComponent implements OnInit {
     this.onTermChanged(this.searchControl.valueChanges);
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     // Set initial value if provided
 
     const value: string | undefined = this.initialValue();

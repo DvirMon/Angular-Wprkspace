@@ -1,5 +1,5 @@
-import { signalStoreFeature, withMethods } from '@ngrx/signals';
-import { withEntities } from '@ngrx/signals/entities';
+import { patchState, signalStoreFeature, withMethods } from '@ngrx/signals';
+import { addEntities, withEntities } from '@ngrx/signals/entities';
 import { AutocompleteOption } from '../shared/models/autocomplete-result';
 import {
   Entity,
@@ -8,8 +8,9 @@ import {
   createLoader,
   loadEntities,
 } from './entities.helpers';
+import { lastValueFrom } from 'rxjs';
 
-type OptionLoader = Loader<void, Entity, 'loadOptions'>;
+type OptionLoader = Loader<string, Entity, 'loadOptions'>;
 
 export function withOptions(Loader: LoaderService<OptionLoader>) {
   return signalStoreFeature(
@@ -18,6 +19,11 @@ export function withOptions(Loader: LoaderService<OptionLoader>) {
       const loader = createLoader(Loader, 'loadOptions');
       return {
         loadOptions: loadEntities(loader, state),
+        async loadOptionAsync(query: string) {
+          const res = await lastValueFrom(loader(query));
+          const options = res.content as AutocompleteOption[];
+          patchState(state, addEntities(options));
+        },
       };
     })
   );

@@ -5,10 +5,8 @@ import {
 } from '@angular/core';
 
 import {
-  HTTP_INTERCEPTORS,
   provideHttpClient,
-  withInterceptors,
-  withInterceptorsFromDi,
+  withInterceptors
 } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -16,10 +14,10 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideRouter } from '@angular/router';
 
 import { appRoutes } from './app.routs';
-import { HttpErrorInterceptor } from './shared/interceptors/error.interceptor';
 import { ErrorsService } from './shared/services/error.service';
 
 import { provideToastr } from 'ngx-toastr';
+import { errorInterceptor } from './shared/interceptors/error.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -27,13 +25,8 @@ export const appConfig: ApplicationConfig = {
     provideRouter(appRoutes),
     provideAnimations(),
     provideAnimationsAsync(),
-    provideHttpClient(withInterceptorsFromDi(), withInterceptors([])),
+    provideHttpClient(withInterceptors([errorInterceptor])),
     provideToastr(),
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: HttpErrorInterceptor,
-      multi: true,
-    },
     {
       provide: ErrorHandler,
       useClass: ErrorsService,

@@ -5,7 +5,7 @@ import {
   signalStore,
   withComputed,
   withMethods,
-  withState
+  withState,
 } from '@ngrx/signals';
 import { AutocompleteOption } from '../shared/models/autocomplete-result';
 import { WeatherService } from '../shared/services/weather.service';
@@ -14,7 +14,7 @@ import { withOptions } from './with-options.feature';
 export const OptionsStore = signalStore(
   { providedIn: 'root' },
   withDevtools('options'),
-  withState({ selectedId: -1 }),
+  withState({ selectedId: -1, searchTerm: 'tel aviv' }),
   withOptions(WeatherService),
   withComputed((store) => ({
     optionSelected: computed(() => store.entityMap()[store.selectedId()]),
@@ -29,6 +29,9 @@ export const OptionsStore = signalStore(
 
     updateCurrentId(id: number) {
       patchState(state, { selectedId: id });
+    },
+    updateSearchTerm(searchTerm: string) {
+      patchState(state, { searchTerm });
     },
   }))
   // withHooks({

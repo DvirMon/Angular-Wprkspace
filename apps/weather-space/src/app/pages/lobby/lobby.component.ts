@@ -3,8 +3,11 @@ import {
   Component,
   OnInit,
   Signal,
+  WritableSignal,
   computed,
-  inject
+  effect,
+  inject,
+  signal,
 } from '@angular/core';
 import {
   FormControl,
@@ -69,7 +72,7 @@ export class LobbyComponent implements OnInit {
 
   options: Signal<AutocompleteOption[]>;
   optionSelected: Signal<AutocompleteOption>;
-  control!: Signal<FormControl<AutocompleteOption>>;
+  control!: FormControl<AutocompleteOption>;
 
   currentWeather: Signal<CurrentWeather>;
   futureWeather: Signal<FutureWeather>;
@@ -80,11 +83,12 @@ export class LobbyComponent implements OnInit {
 
   isWeatherData: Signal<boolean>;
 
+  searchTerm: Signal<string>;
+
   constructor() {
+    this.searchTerm = this.#optionsStore.searchTerm;
     this.options = this.#optionsStore.entities;
     this.optionSelected = this.#optionsStore.optionSelected;
-
-    this.control = computed(() => this.#nfb.control(this.optionSelected()));
 
     this.isMetric = this.#weatherStore.isMetric;
 
@@ -115,17 +119,22 @@ export class LobbyComponent implements OnInit {
     this.isFavorite = computed(
       () => !!this.#favoriteStore.entityMap()[this.#optionsStore.selectedId()]
     );
+
+    effect(() => {
+      this.#optionsStore.loadOptions(this.searchTerm());
+    });
   }
 
-  ngOnInit(): void {
-
+  async ngOnInit(): Promise<void> {
     if (this.options().length == 0) {
-      this.#optionsStore.loadOptions();
+      await this.#optionsStore.loadOptionAsync(this.searchTerm());
     }
 
     if (this.#optionsStore.selectedId() == -1) {
-      this.#optionsStore.setCurrentId('tel aviv');
+      this.#optionsStore.setCurrentId(this.searchTerm());
     }
+
+    this.control = this.#nfb.control(this.optionSelected());
 
     this.#weatherStore.loadCurrentWeather(this.#optionsStore.selectedId);
     this.#weatherStore.loadFutureWeather(this.futureArgs);
@@ -151,6 +160,10 @@ export class LobbyComponent implements OnInit {
 
   onUnitTempChange({ metric }: UnitChangeEvent): void {
     this.#weatherStore.updateIsMetric(metric);
+  }
+
+  onQueryChanged(event: string) {
+    this.#optionsStore.updateSearchTerm(event);
   }
 
   displayFn(option: AutocompleteOption): string {

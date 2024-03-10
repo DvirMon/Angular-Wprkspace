@@ -1,25 +1,29 @@
-import { CommonModule, NgFor, NgIf, NgTemplateOutlet } from "@angular/common";
+import { CommonModule, NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
   Input,
+  OnInit,
   Output,
   TemplateRef,
+  effect,
   input,
-} from "@angular/core";
-import { FormControl, ReactiveFormsModule } from "@angular/forms";
+} from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import {
   MatAutocomplete,
   MatAutocompleteSelectedEvent,
   MatAutocompleteTrigger,
-} from "@angular/material/autocomplete";
-import { MatOption } from "@angular/material/core";
-import { MatFormField, MatLabel } from "@angular/material/form-field";
-import { MatInput } from "@angular/material/input";
+} from '@angular/material/autocomplete';
+import { MatOption } from '@angular/material/core';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { rxMethod } from '@ngrx/signals/rxjs-interop';
+import { pipe, debounceTime, distinctUntilChanged, tap, map } from 'rxjs';
 
 @Component({
-  selector: "weather-space-autocomplete",
+  selector: 'weather-space-autocomplete',
   standalone: true,
   imports: [
     CommonModule,
@@ -34,25 +38,40 @@ import { MatInput } from "@angular/material/input";
     MatAutocomplete,
     MatOption,
   ],
-  templateUrl: "./autocomplete.component.html",
-  styleUrl: "./autocomplete.component.scss",
+  templateUrl: './autocomplete.component.html',
+  styleUrl: './autocomplete.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AutocompleteComponent<T> {
-
-  label = input<string>("Search...");
+  label = input<string>('Search...');
+  defaultValue = input<string>();
   options = input.required<T[]>();
   control = input.required<FormControl<T>>();
-
   optionTemplate = input<TemplateRef<unknown>>();
 
-  @Input() displayFn: (option: T) => string = () => "";
+  @Input() displayFn: (option: T) => string = () => '';
 
   @Output() queryChanged = new EventEmitter<string>();
   @Output() optionSelected = new EventEmitter<T>();
 
-  onQueryChange(query: string): void {
-    this.queryChanged.emit(query);
+  private onQueryChange = rxMethod<T>(
+    pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      map((value) => (!value ? this.defaultValue() : value)),
+      tap((value) => this.queryChanged.emit(value as string))
+    )
+  );
+
+  constructor() {
+    effect(
+      () => {
+        if (this.control()) {
+          this.onQueryChange(this.control().valueChanges);
+        }
+      },
+      { allowSignalWrites: true }
+    );
   }
 
   onOptionSelected(event: MatAutocompleteSelectedEvent): void {

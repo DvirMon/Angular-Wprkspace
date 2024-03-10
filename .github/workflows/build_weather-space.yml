@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - apps/weather-space
   pull_request:
 
 permissions:

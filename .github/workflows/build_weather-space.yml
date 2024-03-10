@@ -40,7 +40,7 @@ jobs:
       - name: Deploy to Firebase Hosting
         uses: w9jds/firebase-action@master
         with:
-          args: deploy --only hosting --project dom-weather-sapce
+          args: deploy --only hosting --project dom-weather-space
         env:
           FIREBASE_CLI_EXPERIMENTS: webframeworks
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}

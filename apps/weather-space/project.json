@@ -8,19 +8,25 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/apps/weather-space",
         "index": "apps/weather-space/src/index.html",
         "main": "apps/weather-space/src/main.ts",
-        "polyfills": ["zone.js"],
+        "polyfills": [
+          "zone.js"
+        ],
         "tsConfig": "apps/weather-space/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
           "apps/weather-space/src/favicon.ico",
           "apps/weather-space/src/assets"
         ],
-        "styles": ["apps/weather-space/src//styles/styles.scss"],
+        "styles": [
+          "apps/weather-space/src//styles/styles.scss"
+        ],
         "scripts": []
       },
       "configurations": {
@@ -73,6 +79,23 @@
       "options": {
         "buildTarget": "weather-space:build"
       }
+    },
+    "deploy": {
+      "executor": "@angular/fire:deploy",
+      "options": {
+        "version": 2
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "weather-space:build:production",
+          "serveTarget": "weather-space:serve:production"
+        },
+        "development": {
+          "buildTarget": "weather-space:build:development",
+          "serveTarget": "weather-space:serve:development"
+        }
+      },
+      "defaultConfiguration": "production"
     }
   }
 }

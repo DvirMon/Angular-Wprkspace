@@ -16,7 +16,7 @@ import { map, shareReplay } from 'rxjs/operators';
 import { AppStore } from '../../store/store';
 
 @Component({
-  selector: 'book-scape-dashboard',
+  selector: 'books-scape-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
   standalone: true,

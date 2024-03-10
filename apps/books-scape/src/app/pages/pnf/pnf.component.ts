@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-pnf',
+  selector: 'books-scape-pnf',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './pnf.component.html',

@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, map, of, pipe, tap } from 'rxjs';
-import { Book, Item, Root, VolumeInfo } from './books';
+import { Observable, map } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { Book, Item, Root, VolumeInfo } from './books';
 
 export interface LoadResponse {
   content: Book[];
@@ -18,7 +18,7 @@ export class BooksService {
   constructor(private http: HttpClient) {}
 
   // function to fetch books from Google Books API}
-  public load(query?: string): Observable<LoadResponse> {
+  public loadBooks(query?: string): Observable<LoadResponse> {
     return this.fetchBooksFromApi(query as string).pipe(
       map((items) => this.filterItemsByLanguage(items, 'en')),
       map((items) => this.mapItemsToBooks(items)),

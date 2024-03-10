@@ -1,10 +1,10 @@
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import { signalStore, withHooks, withState } from '@ngrx/signals';
 import { Book } from '../books/books';
-import { withCart } from './with-cart';
-import { withLoadEntities } from './with-load-entity';
-import { withSearchTerm } from './with-search-term';
 import { BooksService } from '../books/books.service';
+import { withBooks } from './with-books.feature';
+import { withCart } from './with-cart';
+import { withSearchTerm } from './with-search-term';
 
 export interface AppState {
   book: Book | null;
@@ -20,12 +20,12 @@ export const AppStore = signalStore(
   { providedIn: 'root' },
   withDevtools('books'),
   withState(initialState),
-  withLoadEntities(BooksService),
+  withBooks(BooksService),
   withCart(),
   withSearchTerm(),
   withHooks({
     onInit(store) {
-      store.load(store.searchTerm);
+      store.loadBooks(store.searchTerm);
     },
   })
 );

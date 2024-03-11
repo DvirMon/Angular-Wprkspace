@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { environment } from '../../environments/environment';
 import { Book, Item, Root, VolumeInfo } from './books';
 
 export interface LoadResponse {
@@ -13,7 +12,6 @@ export interface LoadResponse {
 })
 export class BooksService {
   private readonly MAX_RESULTS: number = 12;
-  private readonly BOOKS_API_KEY = environment.googleApiKey;
 
   constructor(private http: HttpClient) {}
 
@@ -33,9 +31,9 @@ export class BooksService {
     const baseQuery = `q=intitle:${encodeURIComponent(query)}`;
     const languageRestrict = 'langRestrict=en';
     const maxResults = `maxResults=${this.MAX_RESULTS}`;
-    const apiKey = `key=${this.BOOKS_API_KEY}`;
+    // const apiKey = `key=${this.BOOKS_API_KEY}`;
 
-    return `?${baseQuery}&${languageRestrict}&${maxResults}&${apiKey}`;
+    return `?${baseQuery}&${languageRestrict}&${maxResults}`;
   }
 
   // Fetch data from Google Books API

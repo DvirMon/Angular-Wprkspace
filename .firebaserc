@@ -1,12 +1,15 @@
 {
+  "projects": {
+    "default": "angualr-momorepo"
+  },
   "targets": {
-    "fir-hosting-55cc4": {
+    "angular-momorepo": {
       "hosting": {
         "books-scape": [
-          "fir-hosting-55cc4"
+          "ng-books-scape"
         ],
         "weather-space": [
-          "fir-hosting-55cc4"
+          "ng-weather-space"
         ]
       }
     }

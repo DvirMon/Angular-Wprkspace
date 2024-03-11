@@ -12,7 +12,7 @@
         "{options.outputPath}"
       ],
       "options": {
-        "outputPath": "public/apps/weather-space",
+        "outputPath": "public/weather-space",
         "index": "apps/weather-space/src/index.html",
         "main": "apps/weather-space/src/main.ts",
         "polyfills": [

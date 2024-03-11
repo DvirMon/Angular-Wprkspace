@@ -2,14 +2,14 @@
   "hosting": [
     {
       "target": "books-scape",
-      "public": "public/apps/weather-space",
+      "public": "public/books-scape",
       "frameworksBackend": {
         "region": "europe-west1"
       }
     },
     {
       "target": "weather-space",
-      "public": "public/apps/books-scape",
+      "public": "public/weather-space",
       "frameworksBackend": {
         "region": "europe-west1"
       }

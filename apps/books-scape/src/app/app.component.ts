@@ -1,10 +1,9 @@
-/* eslint-disable @angular-eslint/component-selector */
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { DashboardComponent } from './layout/dashboard/dashboard.component';
 
 @Component({
-  selector: 'app-root',
+  selector: 'books-scape-root',
   standalone: true,
   imports: [RouterOutlet, DashboardComponent],
   templateUrl: './app.component.html',

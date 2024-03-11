@@ -3,16 +3,6 @@
     "default": "angualr-momorepo"
   },
   "targets": {
-    "angualr-momorepo": {
-      "hosting": {
-        "weather-space": [
-          "ng-weather-space"
-        ],
-        "books-scape": [
-          "ng-books-scape"
-        ]
-      }
-    },
     "angular-momorepo": {
       "hosting": {
         "books-scape": [

@@ -1,7 +1,5 @@
 {
-  "projects": {
-    "default": "angualr-momorepo"
-  },
+  "projects": {},
   "targets": {
     "angular-momorepo": {
       "hosting": {

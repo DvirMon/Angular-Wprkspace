@@ -1,0 +1,35 @@
+<mat-form-field appearance="outline">
+  <mat-label>{{ label() }}</mat-label>
+  <input
+    #input
+    type="text"
+    matInput
+    autocomplete="off"
+    [formControl]="control()"
+    [matAutocomplete]="auto"
+    (input)="onQueryChanged()"
+  />
+  <mat-autocomplete
+    (optionSelected)="onOptionSelected($event)"
+    autoActiveFirstOption
+    [displayWith]="displayFn"
+    #auto="matAutocomplete"
+  >
+    <ng-container *ngFor="let option of options()">
+      <mat-option [value]="option">
+        <ng-container *ngIf="optionTemplate(); else defaultTemplate">
+          <ng-container
+            *ngTemplateOutlet="
+              optionTemplate()!;
+              context: { $implicit: option }
+            "
+          ></ng-container>
+        </ng-container>
+
+        <ng-template #defaultTemplate>
+          {{ option }}
+        </ng-template>
+      </mat-option>
+    </ng-container>
+  </mat-autocomplete>
+</mat-form-field>

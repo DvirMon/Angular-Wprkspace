@@ -3,8 +3,8 @@ import { Component, Signal, inject } from '@angular/core';
 import { patchState } from '@ngrx/signals';
 import { BookCardComponent } from '../../books/book-card/book-card.component';
 import { Book } from '../../books/books';
-import { SearchInputComponent } from '@dom';
 import { AppStore } from '../../store/store';
+import { SearchInputComponent } from '@dom';
 
 @Component({
   selector: 'books-scape-home',

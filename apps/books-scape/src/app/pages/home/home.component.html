@@ -3,7 +3,8 @@
     <div class="search-wrapper">
       <books-scape-search-input
         [initialValue]="initialValue()"
-        (termChanged)="onTermChanged($event)"></books-scape-search-input>
+        (termChanged)="onTermChanged($event)"
+      ></books-scape-search-input>
     </div>
   </header>
 
@@ -12,7 +13,9 @@
     <div class="book-card-wrapper">
       <books-scape-book-card
         [book]="book"
-        (addToCart)="onAddToCart($event)"></books-scape-book-card>
+        (addToCart)="onAddToCart($event)"
+        [showCart]="true"
+      ></books-scape-book-card>
     </div>
 
     }

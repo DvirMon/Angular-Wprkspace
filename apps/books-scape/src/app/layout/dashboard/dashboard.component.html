@@ -21,6 +21,12 @@
         </button> -->
         <span class="brand">{{ title | titlecase }}</span>
         <span class="spacer"></span>
+
+        @if(showNavigation()){
+        <button mat-button [routerLink]="'/'">
+          {{ 'Continue Shopping' | uppercase }}
+        </button>
+        }
       </div>
     </mat-toolbar>
     } @else {

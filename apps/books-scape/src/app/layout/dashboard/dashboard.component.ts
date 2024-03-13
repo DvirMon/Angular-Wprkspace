@@ -18,7 +18,7 @@ import {
 import { MatToolbar } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 
-import { NgIf, TitleCasePipe } from '@angular/common';
+import { NgIf, TitleCasePipe, UpperCasePipe } from '@angular/common';
 import { AppStore } from '../../store/store';
 
 @Component({
@@ -30,6 +30,7 @@ import { AppStore } from '../../store/store';
     NgIf,
     RouterModule,
     TitleCasePipe,
+    UpperCasePipe,
     MatToolbar,
     MatButton,
     MatSidenav,

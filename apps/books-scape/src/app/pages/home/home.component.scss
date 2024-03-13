@@ -18,11 +18,11 @@ div.books-page {
   main.books-wrapper {
     display: flex;
     flex-wrap: wrap;
-    width: 80%;
-    gap: 16px;
+    justify-content: center;
+    width: 55%;
 
     div.book-card-wrapper {
-      width: 24%;
+      width: 320px;
     }
   }
 }

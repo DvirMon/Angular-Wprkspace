@@ -1,9 +1,9 @@
 <div class="books-page">
   <main class="books-wrapper">
     @for (book of cart(); track book) {
-      <div class="book-card-wrapper">
-        <books-scape-book-card [book]="book" [cartFlag]="true"></books-scape-book-card>
-      </div>
+    <div class="book-card-wrapper">
+      <books-scape-book-card [book]="book"></books-scape-book-card>
+    </div>
     }
   </main>
 </div>

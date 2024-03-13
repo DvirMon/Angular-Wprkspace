@@ -1,18 +1,16 @@
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { CommonModule } from '@angular/common';
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, Signal, inject } from '@angular/core';
 
-import { MatBadgeModule } from '@angular/material/badge';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatBadge, MatBadgeModule } from '@angular/material/badge';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { MatList, MatListItem, MatListModule, MatNavList } from '@angular/material/list';
+import { MatSidenav, MatSidenavContainer, MatSidenavContent } from '@angular/material/sidenav';
+import { MatToolbar } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 
-import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
 
+import { TitleCasePipe } from '@angular/common';
 import { AppStore } from '../../store/store';
 
 @Component({
@@ -21,14 +19,17 @@ import { AppStore } from '../../store/store';
   styleUrls: ['./dashboard.component.scss'],
   standalone: true,
   imports: [
-    CommonModule,
     RouterModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatListModule,
+    TitleCasePipe,
+    MatToolbar,
+    MatButton,
+    MatSidenav,
+    MatNavList,
+    MatSidenavContent,
+    MatSidenavContainer,
     MatIconModule,
-    MatBadgeModule,
+    MatIconButton,
+    MatBadgeModule
   ],
 })
 export class DashboardComponent {
@@ -39,10 +40,4 @@ export class DashboardComponent {
 
   public readonly selectedBooks: Signal<string> = this.#store.selectedBooks;
 
-  isHandset$: Observable<boolean> = this.#breakpointObserver
-    .observe(Breakpoints.Handset)
-    .pipe(
-      map((result) => result.matches),
-      shareReplay()
-    );
 }

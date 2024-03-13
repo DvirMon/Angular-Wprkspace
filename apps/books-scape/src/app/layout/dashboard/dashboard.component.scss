@@ -24,4 +24,12 @@
       cursor: pointer;
     }
   }
+
+  span.spacer {
+    flex-grow: .97;
+  }
+
+  span.cart {
+    justify-self: flex-end;
+  }
 }

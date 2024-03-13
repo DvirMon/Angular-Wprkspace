@@ -17,10 +17,10 @@
   >
     <ng-container *ngFor="let option of options()">
       <mat-option [value]="option">
-        <ng-container *ngIf="optionTemplate(); else defaultTemplate">
+        <ng-container *ngIf="optionContentDirective; else defaultTemplate">
           <ng-container
             *ngTemplateOutlet="
-              optionTemplate()!;
+              optionContentDirective.template;
               context: { $implicit: option }
             "
           ></ng-container>

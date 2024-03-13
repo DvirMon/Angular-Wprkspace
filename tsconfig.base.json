@@ -15,9 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@angular/*": ["./node_modules/@angular/*"],
       "@dom": ["libs/src/index.ts"],
-      "@dom/components": ["libs/src/components/index.ts"],
-      "@angular/*": ["./node_modules/@angular/*"]
+      "@dom/components": ["libs/src/components/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

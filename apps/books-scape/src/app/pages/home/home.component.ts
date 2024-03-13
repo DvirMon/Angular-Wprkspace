@@ -4,7 +4,7 @@ import { patchState } from '@ngrx/signals';
 import { BookCardComponent } from '../../books/book-card/book-card.component';
 import { Book } from '../../books/books';
 import { AppStore } from '../../store/store';
-import { SearchInputComponent } from '@dom';
+import { SearchInputComponent } from '@dom/components';
 
 @Component({
   selector: 'books-scape-home',

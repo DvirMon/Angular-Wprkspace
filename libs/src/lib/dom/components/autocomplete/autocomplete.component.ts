@@ -28,7 +28,7 @@ import {
   pipe,
   tap,
 } from 'rxjs';
-import { OptionContentDirective } from '../../directives/optionContent.directive';
+import { OptionContentDirective } from '../../directives';
 
 @Component({
   selector: 'dom-autocomplete',

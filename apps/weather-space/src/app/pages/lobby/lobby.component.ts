@@ -21,7 +21,8 @@ import {
 import { MatOption } from '@angular/material/core';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
-import { AutocompleteComponent, OptionContentDirective } from '@dom';
+import { OptionContentDirective } from '@dom';
+import { AutocompleteComponent } from '@dom/components';
 import { FavoriteEntity } from '../../features/weather-favorite-card/favorite-card.component';
 import {
   FavoriteChangeEvent,

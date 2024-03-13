@@ -1,6 +1,5 @@
-export * from './lib/dom/components/search-input/search-input.component';
-export * from './lib/dom/components/autocomplete/autocomplete.component';
+export * from './lib/dom/components/index';
 
-export * from './lib/dom/directives/optionContent.directive'
+export * from './lib/dom/directives/index'
 
-export * from './lib/dom/helpers/entities.helpers'
+export * from './lib/dom/helpers/index'

@@ -19,13 +19,15 @@ $books-scape-warn: mat.define-palette(mat.$red-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$books-scape-theme: mat.define-light-theme((
-  color: (
-    primary: $books-scape-primary,
-    accent: $books-scape-accent,
-    warn: $books-scape-warn,
+$books-scape-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $books-scape-primary,
+      accent: $books-scape-accent,
+      warn: $books-scape-warn,
+    ),
   )
-));
+);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
@@ -34,5 +36,19 @@ $books-scape-theme: mat.define-light-theme((
 
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Chantilly, sans-serif !important;
+}
+
+// body {
+//   overflow-y: hidden;
+// }
+
+// body::-webkit-scrollbar {
+//   display: none !important;
+// }

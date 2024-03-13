@@ -8,6 +8,7 @@
     </mat-nav-list> -->
   </mat-sidenav>
   <mat-sidenav-content>
+    @if(!showNavigation()){
     <mat-toolbar color="primary">
       <div class="toolbar-content">
         <!-- <button
@@ -18,17 +19,29 @@
         >
           <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
         </button> -->
-        <span>{{ title | titlecase }}</span>
+        <span class="brand">{{ title | titlecase }}</span>
         <span class="spacer"></span>
+      </div>
+    </mat-toolbar>
+    } @else {
+    <mat-toolbar color="primary">
+      <div class="toolbar-content">
         <mat-nav-list>
           <span mat-list-item routerLink="/">Home</span>
         </mat-nav-list>
+        <span class="spacer"></span>
         <button routerLink="cart" mat-icon-button>
           <mat-icon fontIcon="shopping_basket"></mat-icon>
-          <span [matBadge]="selectedBooks()" matBadgeOverlap="false"> </span>
+          <span
+            class="badge"
+            [matBadge]="selectedBooks()"
+            matBadgeOverlap="false"
+          >
+          </span>
         </button>
       </div>
     </mat-toolbar>
+    }
     <ng-content></ng-content>
   </mat-sidenav-content>
 </mat-sidenav-container>

@@ -9,7 +9,7 @@ export const appRoutes: Routes = [
   {
     path: 'cart',
     component: CartComponent,
-    canActivate: [cartGuard],
+    // canActivate: [cartGuard],
   },
   { path: '', redirectTo: '/', pathMatch: 'full' },
   { path: '**', component: PnfComponent },

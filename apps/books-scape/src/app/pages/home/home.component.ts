@@ -5,11 +5,12 @@ import { BookCardComponent } from '../../books/book-card/book-card.component';
 import { Book } from '../../books/books';
 import { SearchInputComponent } from '../../search-input/search-input.component';
 import { AppStore } from '../../store/store';
+import { DashboardComponent } from '../../layout/dashboard/dashboard.component';
 
 @Component({
   selector: 'books-scape-home',
   standalone: true,
-  imports: [BookCardComponent, SearchInputComponent],
+  imports: [DashboardComponent, BookCardComponent, SearchInputComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })

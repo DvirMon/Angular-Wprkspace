@@ -1,16 +1,24 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, Signal, inject } from '@angular/core';
+import { Component, Signal, inject, input } from '@angular/core';
 
 import { MatBadge, MatBadgeModule } from '@angular/material/badge';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
-import { MatList, MatListItem, MatListModule, MatNavList } from '@angular/material/list';
-import { MatSidenav, MatSidenavContainer, MatSidenavContent } from '@angular/material/sidenav';
+import {
+  MatList,
+  MatListItem,
+  MatListModule,
+  MatNavList,
+} from '@angular/material/list';
+import {
+  MatSidenav,
+  MatSidenavContainer,
+  MatSidenavContent,
+} from '@angular/material/sidenav';
 import { MatToolbar } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 
-
-import { TitleCasePipe } from '@angular/common';
+import { NgIf, TitleCasePipe } from '@angular/common';
 import { AppStore } from '../../store/store';
 
 @Component({
@@ -19,6 +27,7 @@ import { AppStore } from '../../store/store';
   styleUrls: ['./dashboard.component.scss'],
   standalone: true,
   imports: [
+    NgIf,
     RouterModule,
     TitleCasePipe,
     MatToolbar,
@@ -30,15 +39,16 @@ import { AppStore } from '../../store/store';
     MatSidenavContainer,
     MatIconModule,
     MatIconButton,
-    MatBadgeModule
+    MatBadgeModule,
   ],
 })
 export class DashboardComponent {
   #breakpointObserver = inject(BreakpointObserver);
   #store = inject(AppStore);
 
-  protected readonly title: string = 'books scape';
+  showNavigation = input<boolean>(false);
+
+  protected readonly title: string = 'the books scape';
 
   public readonly selectedBooks: Signal<string> = this.#store.selectedBooks;
-
 }

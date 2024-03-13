@@ -1,23 +1,25 @@
-<div class="books-page">
-  <header>
-    <div class="search-wrapper">
-      <books-scape-search-input
-        [initialValue]="initialValue()"
-        (termChanged)="onTermChanged($event)"
-      ></books-scape-search-input>
-    </div>
-  </header>
+<books-scape-dashboard [showNavigation]="true">
+  <div class="books-page">
+    <header>
+      <div class="search-wrapper">
+        <books-scape-search-input
+          [initialValue]="initialValue()"
+          (termChanged)="onTermChanged($event)"
+        ></books-scape-search-input>
+      </div>
+    </header>
 
-  <main class="books-wrapper">
-    @for (book of books(); track book.id) {
-    <div class="book-card-wrapper">
-      <books-scape-book-card
-        [book]="book"
-        (addToCart)="onAddToCart($event)"
-        [showCart]="true"
-      ></books-scape-book-card>
-    </div>
+    <main class="books-wrapper">
+      @for (book of books(); track book.id) {
+      <div class="book-card-wrapper">
+        <books-scape-book-card
+          [book]="book"
+          (addToCart)="onAddToCart($event)"
+          [showCart]="true"
+        ></books-scape-book-card>
+      </div>
 
-    }
-  </main>
-</div>
+      }
+    </main>
+  </div>
+</books-scape-dashboard>

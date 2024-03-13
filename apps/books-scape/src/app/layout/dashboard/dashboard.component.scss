@@ -1,5 +1,5 @@
 .sidenav-container {
-  height: 100%;
+  // height: 100%;
 }
 
 .sidenav {
@@ -32,12 +32,16 @@
       }
     }
 
+    span.brand {
+      font-size: xx-large;
+    }
+
     span.spacer {
       flex-grow: 0.97;
     }
 
-    span.cart {
-      justify-self: flex-end;
+    span.badge {
+      font-size: 16px;
     }
   }
 }

@@ -1,25 +1,43 @@
 @if (book()){
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>{{ book().title }}</mat-card-title>
-    <mat-card-subtitle>{{
-      book().description | truncate : 100
-    }}</mat-card-subtitle>
-  </mat-card-header>
-  <img
-    mat-card-image
-    [ngSrc]="book().imageLinks.thumbnail"
-    width="185"
-    height="280"
-    [alt]="book().description"
-  />
+<mat-card
+  class="book-card"
+  (mouseenter)="onToggleOverlay()"
+  (mouseleave)="onToggleOverlay()"
+>
+  <!-- <mat-card class="book-card"> -->
+  <div class="image-overlay-container">
+    <mat-card-content>
+      <img
+        mat-card-image
+        [src]="book().imageLinks.thumbnail"
+        width="185"
+        height="280"
+        [alt]="book().description"
+      />
+      <mat-card-title>{{ book().title }}</mat-card-title>
+    </mat-card-content>
+    <mat-card-actions></mat-card-actions>
+  </div>
+  @if (showCart()) {
 
-  <ng-container *ngIf="!cartFlag()">
-    <mat-card-actions>
-      <button color="primary" mat-raised-button (click)="onAddToCart(book())">
-        Add To Cart
-      </button>
-    </mat-card-actions>
-  </ng-container>
+  <div class="overlay" *ngIf="showOverlay()">
+    <mat-card class="overlay-card">
+      <mat-card-content>
+        <p>
+          {{ book().description | truncate : 300 }}
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <!-- <button mat-raised-button color="primary">Add to Cart</button> -->
+        <button mat-mini-fab color="primary">
+          <mat-icon fontIcon="info"></mat-icon>
+        </button>
+        <button (click)="onAddToCart(book())" mat-mini-fab color="primary">
+          <mat-icon fontIcon="shopping_bag"></mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  }
 </mat-card>
 }

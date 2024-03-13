@@ -1,7 +1,12 @@
-import { CommonModule, NgOptimizedImage } from '@angular/common';
-import { Component, EventEmitter, Output, input } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
+import { NgIf, NgOptimizedImage } from '@angular/common';
+import { Component, EventEmitter, Output, input, signal } from '@angular/core';
+import {
+  MatButton,
+  MatIconButton,
+  MatMiniFabButton,
+} from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatIcon } from '@angular/material/icon';
 import { TruncatePipe } from '../../shared/pipes/truncate.pipe';
 import { Book } from '../books';
 
@@ -9,10 +14,13 @@ import { Book } from '../books';
   selector: 'books-scape-book-card',
   standalone: true,
   imports: [
-    CommonModule,
-    MatCardModule,
-    MatButtonModule,
+    NgIf,
     NgOptimizedImage,
+    MatCardModule,
+    MatButton,
+    MatMiniFabButton,
+    MatIconButton,
+    MatIcon,
     TruncatePipe,
   ],
   templateUrl: './book-card.component.html',
@@ -20,11 +28,16 @@ import { Book } from '../books';
 })
 export class BookCardComponent {
   book = input.required<Book>();
-  cartFlag = input<boolean>(false);
+  showCart = input<boolean>(false);
+  showOverlay = signal(false);
 
   @Output() addToCart: EventEmitter<Book> = new EventEmitter();
 
   onAddToCart(value: Book) {
     this.addToCart.emit(value);
+  }
+
+  onToggleOverlay() {
+    this.showOverlay.update((value) => !value);
   }
 }

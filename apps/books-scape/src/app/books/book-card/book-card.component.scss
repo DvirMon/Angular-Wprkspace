@@ -1,9 +1,24 @@
-mat-card {
+.mat-mdc-card {
   height: 100%;
-  justify-content: space-between;
+  border-radius: 0%;
+  box-shadow: none;
+}
 
-  .mat-mdc-card-subtitle {
-    min-height: 57px;
+.mat-mdc-card.book-card {
+  justify-content: space-between;
+  cursor: pointer;
+
+  .overlay {
+    opacity: 1;
+  }
+
+  .mat-mdc-card-title {
+    font-weight: 500;
+    line-height: 24px;
+  }
+
+  img.mat-mdc-card-image {
+    margin-left: 0px;
   }
 
   .mdc-card__media {
@@ -13,5 +28,50 @@ mat-card {
 
   .mdc-card__actions {
     align-self: center;
+  }
+}
+
+.image-overlay-container {
+  position: relative;
+}
+.overlay {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(63, 81, 181, 0.6);
+  // background: rgba(224, 225, 226, 0.8);
+  color: white;
+  font-weight: 550;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+}
+
+.mat-mdc-card.overlay-card {
+  background: transparent;
+
+  .mat-mdc-card-content {
+    height: 100%;
+
+    display: flex;
+    // flex-direction: column;
+    justify-content: center;
+    align-items: baseline;
+
+    p {
+      width: 90%;
+      margin-top: 42px;
+      height: fit-content;
+    }
+  }
+
+  .mat-mdc-card-actions {
+    justify-content: space-between;
+    width: 90%;
   }
 }

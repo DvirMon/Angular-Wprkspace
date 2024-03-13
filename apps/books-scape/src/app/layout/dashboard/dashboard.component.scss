@@ -12,24 +12,32 @@
 
 .mat-toolbar.mat-primary {
   position: sticky;
+  justify-content: center;
   top: 0;
   z-index: 1;
   gap: 16px;
 
-  mat-nav-list {
+  div.toolbar-content {
     display: flex;
-    gap: 16px;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 50%;
 
-    span {
-      cursor: pointer;
+    mat-nav-list.menu {
+      display: flex;
+      gap: 16px;
+
+      span {
+        cursor: pointer;
+      }
     }
-  }
 
-  span.spacer {
-    flex-grow: .97;
-  }
+    span.spacer {
+      flex-grow: 0.97;
+    }
 
-  span.cart {
-    justify-self: flex-end;
+    span.cart {
+      justify-self: flex-end;
+    }
   }
 }

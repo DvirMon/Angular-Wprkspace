@@ -25,6 +25,7 @@ import { AppStore } from '../../store/store';
     MatButton,
     MatSidenav,
     MatNavList,
+    MatListItem,
     MatSidenavContent,
     MatSidenavContainer,
     MatIconModule,

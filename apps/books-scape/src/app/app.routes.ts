@@ -5,12 +5,12 @@ import { CartComponent } from './pages/cart/cart.component';
 import { cartGuard } from './pages/cart/cart.guard';
 
 export const appRoutes: Routes = [
-  { path: 'home', component: HomeComponent },
+  { path: '', component: HomeComponent },
   {
     path: 'cart',
     component: CartComponent,
     canActivate: [cartGuard],
   },
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '', redirectTo: '/', pathMatch: 'full' },
   { path: '**', component: PnfComponent },
 ];

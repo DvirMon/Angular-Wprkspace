@@ -16,8 +16,9 @@
   div.toolbar-content {
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-between;
     width: 50%;
+    font-size: 22px;
 
     mat-nav-list.menu {
       display: flex;
@@ -25,6 +26,12 @@
 
       span {
         cursor: pointer;
+      }
+    }
+
+    button.bookshelf-btn {
+      mat-icon {
+        scale: 1.2;
       }
     }
 

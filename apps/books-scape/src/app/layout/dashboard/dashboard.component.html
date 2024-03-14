@@ -19,8 +19,6 @@
           <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
         </button> -->
         <span class="brand">{{ title | titlecase }}</span>
-        <span class="spacer"></span>
-
         @if(showShopping()){
         <button class="shopping" mat-button [routerLink]="'/'">
           {{ 'continue browsing' | uppercase }}
@@ -35,8 +33,7 @@
         <mat-nav-list>
           <span mat-list-item routerLink="/">Home</span>
         </mat-nav-list>
-        <span class="spacer"></span>
-        <button routerLink="bookshelf" mat-icon-button>
+        <button class="bookshelf-btn" routerLink="bookshelf" mat-icon-button>
           <mat-icon fontIcon="shelves"></mat-icon>
           <span class="badge" [matBadge]="shelfSize()" matBadgeOverlap="false">
           </span>

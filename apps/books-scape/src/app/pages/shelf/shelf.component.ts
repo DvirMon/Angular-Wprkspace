@@ -1,3 +1,4 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import { TitleCasePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
@@ -9,7 +10,6 @@ import { Book } from '../../books/books';
 import { BookshelfCardComponent } from '../../bookshelf/bookshelf-card/bookshelf-card.component';
 import { DashboardComponent } from '../../layout/dashboard/dashboard.component';
 import { AppStore } from '../../store/store';
-import { trigger, transition, animate, style } from '@angular/animations';
 
 @Component({
   selector: 'books-scape-shelf-page',
@@ -25,8 +25,6 @@ import { trigger, transition, animate, style } from '@angular/animations';
   ],
 })
 export class BookshelfPageComponent {
-
-
   #store = inject(AppStore);
 
   public readonly bookshelf: Signal<Book[]>;

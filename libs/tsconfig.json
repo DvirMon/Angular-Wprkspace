@@ -9,6 +9,11 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true
   },
+  "paths" : {
+    "@lib/directives/*": [
+      "libs/src//lib/dom/*"
+    ],
+  },
   "files": [],
   "include": [],
   "references": [

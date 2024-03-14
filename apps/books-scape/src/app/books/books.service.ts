@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, map, tap } from 'rxjs';
 import { Book, Item, Root, VolumeInfo } from './books';
 
 export interface LoadResponse {
@@ -18,7 +18,8 @@ export class BooksService {
   // function to fetch books from Google Books API}
   public loadBooks(query?: string): Observable<LoadResponse> {
     return this.fetchBooksFromApi(query as string).pipe(
-      map((items) => this.filterItemsByLanguage(items, 'en')),
+      tap((items) => console.log(items)),
+      // map((items) => this.filterItemsByLanguage(items, 'en')),
       map((items) => this.mapItemsToBooks(items)),
       map((books) => this.filterBooksWithImages(books)),
       map((books: Book[]) => ({
@@ -29,11 +30,12 @@ export class BooksService {
 
   private constructUrlQuery(query: string): string {
     const baseQuery = `q=intitle:${encodeURIComponent(query)}`;
-    const languageRestrict = 'langRestrict=en';
+    const projection = `projection=lite`;
+    // const languageRestrict = 'langRestrict=en';
     const maxResults = `maxResults=${this.MAX_RESULTS}`;
     // const apiKey = `key=${this.BOOKS_API_KEY}`;
 
-    return `?${baseQuery}&${languageRestrict}&${maxResults}`;
+    return `?${baseQuery}&${projection}&${maxResults}`;
   }
 
   // Fetch data from Google Books API
@@ -63,7 +65,7 @@ export class BooksService {
     return {
       id,
       title: volumeInfo.title,
-      // authors: volumeInfo.authors || [],
+      authors: volumeInfo.authors || [],
       description: volumeInfo.description,
       // publishedDate: volumeInfo.publishedDate,
       imageLinks: volumeInfo.imageLinks,

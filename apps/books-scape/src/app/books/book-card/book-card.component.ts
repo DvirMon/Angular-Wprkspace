@@ -28,7 +28,6 @@ import { Book } from '../books';
 })
 export class BookCardComponent {
   book = input.required<Book>();
-  showCart = input<boolean>(false);
   showOverlay = signal(false);
 
   @Output() addToCart: EventEmitter<Book> = new EventEmitter();

@@ -8,7 +8,6 @@
     </mat-nav-list> -->
   </mat-sidenav>
   <mat-sidenav-content>
-    @if(!showNavigation()){
     <mat-toolbar color="primary">
       <div class="toolbar-content">
         <!-- <button
@@ -22,14 +21,15 @@
         <span class="brand">{{ title | titlecase }}</span>
         <span class="spacer"></span>
 
-        @if(showNavigation()){
+        @if(showShopping()){
         <button mat-button [routerLink]="'/'">
           {{ 'Continue Shopping' | uppercase }}
         </button>
         }
       </div>
     </mat-toolbar>
-    } @else {
+    
+    @if(showNavigation()) {
     <mat-toolbar color="primary">
       <div class="toolbar-content">
         <mat-nav-list>

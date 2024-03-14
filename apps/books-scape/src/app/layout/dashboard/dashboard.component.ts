@@ -1,15 +1,10 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, Signal, inject, input } from '@angular/core';
 
-import { MatBadge, MatBadgeModule } from '@angular/material/badge';
+import { MatBadgeModule } from '@angular/material/badge';
 import { MatButton, MatIconButton } from '@angular/material/button';
-import { MatIcon, MatIconModule } from '@angular/material/icon';
-import {
-  MatList,
-  MatListItem,
-  MatListModule,
-  MatNavList,
-} from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListItem, MatNavList } from '@angular/material/list';
 import {
   MatSidenav,
   MatSidenavContainer,
@@ -48,6 +43,7 @@ export class DashboardComponent {
   #store = inject(AppStore);
 
   showNavigation = input<boolean>(false);
+  showShopping = input<boolean>(true);
 
   protected readonly title: string = 'the books scape';
 

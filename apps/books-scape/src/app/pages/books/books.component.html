@@ -1,4 +1,4 @@
-<books-scape-dashboard [showNavigation]="true">
+<books-scape-dashboard [showNavigation]="true" [showShopping]="false">
   <div class="books-page">
     <header>
       <div class="search-wrapper">
@@ -15,7 +15,6 @@
         <books-scape-book-card
           [book]="book"
           (addToCart)="onAddToCart($event)"
-          [showCart]="true"
         ></books-scape-book-card>
       </div>
 

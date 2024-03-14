@@ -21,7 +21,8 @@ import {
 import { MatOption } from '@angular/material/core';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
-import { AutocompleteComponent } from '../../features/weather-autocomplete/autocomplete.component';
+import { OptionContentDirective } from '@dom';
+import { AutocompleteComponent } from '@dom/components';
 import { FavoriteEntity } from '../../features/weather-favorite-card/favorite-card.component';
 import {
   FavoriteChangeEvent,
@@ -59,6 +60,8 @@ import { WeatherStore } from '../../store/store-weather';
     HighLightPipe,
     WeatherResultComponent,
     AutocompleteComponent,
+    OptionContentDirective
+
   ],
 })
 export class LobbyComponent implements OnInit {

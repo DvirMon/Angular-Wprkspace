@@ -21,7 +21,7 @@ export class BooksPageComponent {
   public readonly initialValue: Signal<string>;
 
   constructor() {
-    this.books = this.#store.entities;
+    this.books = this.#store.booksEntities;
     this.initialValue = this.#store.searchTerm;
   }
 

@@ -1,27 +1,25 @@
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
-import { signalStore, withHooks, withState } from '@ngrx/signals';
-import { Book } from '../books/books';
+import { signalStore, withHooks } from '@ngrx/signals';
 import { BooksService } from '../books/books.service';
+import { withBasket } from './with-basket.feature';
 import { withBooks } from './with-books.feature';
-import { withCart } from './with-cart';
 import { withSearchTerm } from './with-search-term';
 
-export interface AppState {
-  book: Book | null;
-  cart: Book[];
-}
+// export interface AppState {
+//   book: Book | null;
+//   cart: Book[];
+// }
 
-const initialState: AppState = {
-  book: null,
-  cart: [],
-};
+// const initialState: AppState = {
+//   book: null,
+//   cart: [],
+// };
 
 export const AppStore = signalStore(
   { providedIn: 'root' },
   withDevtools('books'),
-  withState(initialState),
+  withBasket(),
   withBooks(BooksService),
-  withCart(),
   withSearchTerm(),
   withHooks({
     onInit(store) {

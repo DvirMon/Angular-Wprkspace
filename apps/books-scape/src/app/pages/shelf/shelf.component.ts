@@ -1,19 +1,22 @@
-import { Component, Signal, inject } from '@angular/core';
+import { TitleCasePipe } from '@angular/common';
+import { ChangeDetectionStrategy, Component, Signal, inject } from '@angular/core';
 import { Book } from '../../books/books';
-import { AppStore } from '../../store/store';
 import { DashboardComponent } from '../../layout/dashboard/dashboard.component';
+import { AppStore } from '../../store/store';
 
 @Component({
   selector: 'books-scape-shelf-page',
   standalone: true,
-  imports: [DashboardComponent],
+  imports: [TitleCasePipe, DashboardComponent],
   templateUrl: './shelf.component.html',
   styleUrls: ['./shelf.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+
 })
-export class ShelfPageComponent {
-  public readonly shelf: Signal<Book[]>;
+export class BookshelfPageComponent {
+  public readonly bookshelf: Signal<Book[]>;
 
   constructor() {
-    this.shelf = inject(AppStore).shelfEntities;
+    this.bookshelf = inject(AppStore).shelfEntities;
   }
 }

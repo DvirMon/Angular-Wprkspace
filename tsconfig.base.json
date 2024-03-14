@@ -17,9 +17,9 @@
     "paths": {
       "@angular/*": ["./node_modules/@angular/*"],
       "@dom": ["libs/src/index.ts"],
-      "@dom/helpers": ["libs/src.lib/dom/helpers/index.ts"],
       "@dom/components": ["libs/src/lib/dom/components/index.ts"],
       "@dom/directives": ["libs/src.lib/dom/directives/index.ts"],
+      "@dom/helpers": ["libs/src.lib/dom/helpers/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

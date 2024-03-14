@@ -10,7 +10,7 @@ import { AppStore } from '../../store/store';
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss'],
 })
-export class CartComponent {
+export class CheckoutPageComponent {
   public readonly cart: Signal<Book[]>;
 
   constructor() {

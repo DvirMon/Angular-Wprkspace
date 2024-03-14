@@ -1,14 +1,13 @@
 import { Routes } from '@angular/router';
+import { BooksPageComponent } from './pages/books/books.component';
+import { CheckoutPageComponent } from './pages/cart/cart.component';
 import { PnfComponent } from './pages/pnf/pnf.component';
-import { HomeComponent } from './pages/home/home.component';
-import { CartComponent } from './pages/cart/cart.component';
-import { cartGuard } from './pages/cart/cart.guard';
 
 export const appRoutes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', component: BooksPageComponent },
   {
-    path: 'cart',
-    component: CartComponent,
+    path: 'checkout',
+    component: CheckoutPageComponent,
     // canActivate: [cartGuard],
   },
   { path: '', redirectTo: '/', pathMatch: 'full' },

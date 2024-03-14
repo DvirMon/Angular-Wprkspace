@@ -8,13 +8,13 @@ import { SearchInputComponent } from '@dom/components';
 import { DashboardComponent } from '../../layout/dashboard/dashboard.component';
 
 @Component({
-  selector: 'books-scape-home',
+  selector: 'books-scape-page',
   standalone: true,
   imports: [DashboardComponent, BookCardComponent, SearchInputComponent],
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+  templateUrl: './books.component.html',
+  styleUrls: ['./books.component.scss'],
 })
-export class HomeComponent {
+export class BooksPageComponent {
   #store = inject(AppStore);
 
   public readonly books: Signal<Book[]>;

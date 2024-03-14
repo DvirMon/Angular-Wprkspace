@@ -4,12 +4,13 @@ import { PnfComponent } from './pages/pnf/pnf.component';
 import { BookshelfPageComponent } from './pages/shelf/shelf.component';
 
 export const appRoutes: Routes = [
-  { path: '', component: VolumesPageComponent },
+  { path: '', component: VolumesPageComponent, title: 'The Boos Scape' },
   {
-    path: 'basket',
+    path: 'bookshelf',
     component: BookshelfPageComponent,
     // canActivate: [shelfGuard],
     resolve: [],
+    title: 'Bookshelf',
   },
   { path: '', redirectTo: '/', pathMatch: 'full' },
   { path: '**', component: PnfComponent },

@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -5,7 +6,7 @@ import {
   Output,
   input,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { MatIconButton } from '@angular/material/button';
 import {
   MatCard,
   MatCardActions,
@@ -15,9 +16,8 @@ import {
   MatCardSubtitle,
   MatCardTitle,
 } from '@angular/material/card';
-import { Book } from '../../books/books';
-import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
+import { Book } from '../../books/books';
 
 @Component({
   selector: 'books-scape-bookshelf-card',

@@ -5,8 +5,11 @@
     </header>
     <main class="bookshelf-container-wrapper">
       @for (book of bookshelf(); track book) {
-      <section class="bookshelf-card-wrapper">
-        <books-scape-bookshelf-card [book]="book" (clearFromShelf)="onRemoveFromShelf($event)"></books-scape-bookshelf-card>
+      <section class="bookshelf-card-wrapper" @fade>
+        <books-scape-bookshelf-card
+          [book]="book"
+          (clearFromShelf)="onRemoveFromShelf($event)"
+        ></books-scape-bookshelf-card>
       </section>
       }
     </main>

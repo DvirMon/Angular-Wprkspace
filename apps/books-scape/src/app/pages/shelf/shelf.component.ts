@@ -19,9 +19,17 @@ import { AppStore } from '../../store/store';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BookshelfPageComponent {
+
+
+  #store = inject(AppStore);
+
   public readonly bookshelf: Signal<Book[]>;
 
   constructor() {
-    this.bookshelf = inject(AppStore).booksEntities;
+    this.bookshelf = this.#store.booksEntities;
+  }
+
+  onRemoveFromShelf(event: Book) {
+    this.#store.RemoveFromShelf(event.id);
   }
 }

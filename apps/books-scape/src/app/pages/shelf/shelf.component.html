@@ -6,7 +6,7 @@
     <main class="bookshelf-container-wrapper">
       @for (book of bookshelf(); track book) {
       <section class="bookshelf-card-wrapper">
-        <books-scape-bookshelf-card [book]="book"></books-scape-bookshelf-card>
+        <books-scape-bookshelf-card [book]="book" (clearFromShelf)="onRemoveFromShelf($event)"></books-scape-bookshelf-card>
       </section>
       }
     </main>

@@ -15,7 +15,7 @@
     <mat-card-subtitle>{{ book().authors[0] }}</mat-card-subtitle>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-icon-button>
+    <button mat-icon-button (click)="onClear()">
       <mat-icon fontIcon="clear"></mat-icon>
     </button>
   </mat-card-actions>

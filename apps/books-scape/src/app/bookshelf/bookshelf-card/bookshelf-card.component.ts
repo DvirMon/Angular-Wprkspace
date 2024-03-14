@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Output,
+  input,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   MatCard,
@@ -26,13 +32,18 @@ import { MatIcon } from '@angular/material/icon';
     MatCardActions,
     MatCardImage,
     MatIconButton,
-    MatIcon
+    MatIcon,
   ],
   templateUrl: './bookshelf-card.component.html',
   styleUrl: './bookshelf-card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BookshelfCardComponent {
-
   book = input.required<Book>();
+
+  @Output() clearFromShelf: EventEmitter<Book> = new EventEmitter();
+
+  onClear() {
+    this.clearFromShelf.emit(this.book());
+  }
 }

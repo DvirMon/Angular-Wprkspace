@@ -5,7 +5,7 @@ import {
   withComputed,
   withMethods,
 } from '@ngrx/signals';
-import { addEntity, withEntities } from '@ngrx/signals/entities';
+import { addEntity, removeEntity, withEntities } from '@ngrx/signals/entities';
 
 import { computed } from '@angular/core';
 import { Book } from '../books/books';
@@ -18,6 +18,9 @@ export function withBookshelf() {
     withMethods((store) => ({
       AddToShelf(newBook: Book) {
         patchState(store, addEntity(newBook, { collection: COLLECTION }));
+      },
+      RemoveFromShelf(id: string) {
+        patchState(store, removeEntity(id, { collection: COLLECTION }));
       },
     })),
     withComputed(({ shelfEntities }) => ({

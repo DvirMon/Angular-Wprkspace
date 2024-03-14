@@ -1,0 +1,19 @@
+:host {
+  .mat-mdc-card.bookshelf-card {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+
+    .mat-mdc-card-header {
+      padding: 16px;
+    }
+
+    .mat-mdc-card-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 16px;
+      flex-grow: 1;
+    }
+  }
+}

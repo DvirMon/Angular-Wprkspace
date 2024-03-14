@@ -1,1 +1,23 @@
-<p>bookshelf-card works!</p>
+@if (book()){
+<mat-card class="bookshelf-card">
+  <!-- <mat-card class="book-card"> -->
+  <mat-card-header>
+    <img
+      mat-card-image
+      [src]="book().imageLinks.thumbnail"
+      width="60"
+      height="80"
+      [alt]="book().description"
+    />
+  </mat-card-header>
+  <mat-card-content>
+    <mat-card-title>{{ book().title }}</mat-card-title>
+    <mat-card-subtitle>{{ book().authors[0] }}</mat-card-subtitle>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-icon-button>
+      <mat-icon fontIcon="clear"></mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>
+}

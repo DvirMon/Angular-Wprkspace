@@ -1,12 +1,14 @@
 <books-scape-dashboard [showShopping]="true">
-  <div class="bookshelf-page">
-    <main class="bookshelf-wrapper">
+  <div class="bookshelf-page-wrapper">
+    <header>
       <h1>{{ 'bookshelf' | titlecase }}</h1>
-      <!-- @for (book of bookshelf(); track book) {
-        <div class="book-card-wrapper">
-          <books-scape-book-card [book]="book"></books-scape-book-card>
-        </div>
-      } -->
+    </header>
+    <main class="bookshelf-container-wrapper">
+      @for (book of bookshelf(); track book) {
+      <section class="bookshelf-card-wrapper">
+        <books-scape-bookshelf-card [book]="book"></books-scape-bookshelf-card>
+      </section>
+      }
     </main>
   </div>
 </books-scape-dashboard>

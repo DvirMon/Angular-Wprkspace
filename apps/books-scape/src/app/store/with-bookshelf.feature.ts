@@ -12,7 +12,7 @@ import { Book } from '../books/books';
 
 const COLLECTION = 'shelf';
 
-export function withShelf() {
+export function withBookshelf() {
   return signalStoreFeature(
     withEntities({ entity: type<Book>(), collection: COLLECTION }),
     withMethods((store) => ({

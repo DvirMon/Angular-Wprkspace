@@ -11,7 +11,7 @@ export interface SearchResultsData {
 }
 
 @Component({
-  selector: 'books-scape-search-input',
+  selector: 'dom-search-input',
   standalone: true,
   imports: [
     CommonModule,

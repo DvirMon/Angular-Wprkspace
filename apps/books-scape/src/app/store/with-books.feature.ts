@@ -1,13 +1,8 @@
 import { signalStoreFeature, withMethods } from '@ngrx/signals';
 import { withEntities } from '@ngrx/signals/entities';
-import {
-  Entity,
-  Loader,
-  LoaderService,
-  createLoader,
-  loadEntities,
-} from './entities.helpers';
+
 import { Book } from '../books/books';
+import { Entity, Loader, LoaderService, createLoader, loadEntities } from '@dom';
 
 type BooksLoader = Loader<string, Entity, 'loadBooks'>;
 

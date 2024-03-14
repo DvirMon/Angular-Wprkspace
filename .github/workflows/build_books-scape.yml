@@ -41,7 +41,7 @@ jobs:
       - name: Deploy to Firebase Hosting
         uses: w9jds/firebase-action@master
         with:
-          args: deploy --only hosting:books-scape --project angualr-monorepo
+          args: deploy --only hosting:books-scape --project angualr-momorepo
         env:
           FIREBASE_CLI_EXPERIMENTS: webframeworks
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}

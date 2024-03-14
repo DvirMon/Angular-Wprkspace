@@ -1,7 +1,8 @@
-import { CommonModule, NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
+import { NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  ContentChild,
   EventEmitter,
   Input,
   Output,
@@ -27,15 +28,15 @@ import {
   pipe,
   tap,
 } from 'rxjs';
+import { OptionContentDirective } from '../../directives';
 
 @Component({
-  selector: 'weather-space-autocomplete',
+  selector: 'dom-autocomplete',
   standalone: true,
   imports: [
-    CommonModule,
     NgFor,
-    ReactiveFormsModule,
     NgIf,
+    ReactiveFormsModule,
     NgTemplateOutlet,
     MatFormField,
     MatLabel,
@@ -43,6 +44,7 @@ import {
     MatAutocompleteTrigger,
     MatAutocomplete,
     MatOption,
+    OptionContentDirective,
   ],
   templateUrl: './autocomplete.component.html',
   styleUrl: './autocomplete.component.scss',
@@ -53,7 +55,11 @@ export class AutocompleteComponent<T> {
   defaultValue = input<string>();
   options = input.required<T[]>();
   control = input.required<FormControl<T>>();
+
   optionTemplate = input<TemplateRef<unknown>>();
+
+  @ContentChild(OptionContentDirective)
+  optionContentDirective!: OptionContentDirective;
 
   @Input() displayFn: (option: T) => string = () => '';
 

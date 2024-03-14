@@ -4,7 +4,7 @@
   (mouseenter)="onToggleOverlay()"
   (mouseleave)="onToggleOverlay()"
 >
-<!-- <mat-card class="book-card"> -->
+  <!-- <mat-card class="book-card"> -->
   <div class="image-overlay-container">
     <mat-card-content>
       <img
@@ -30,11 +30,11 @@
         </p>
       </mat-card-content>
       <mat-card-actions>
-        <!-- <button mat-raised-button color="primary">Add to Cart</button> -->
+        <!-- <button mat-raised-button color="primary">Add to Basket</button> -->
         <button mat-icon-button>
           <mat-icon fontIcon="info"></mat-icon>
         </button>
-        <button (click)="onAddToCart(book())" mat-icon-button>
+        <button (click)="onAddToBasket(book())" mat-icon-button>
           <mat-icon fontIcon="shopping_bag"></mat-icon>
         </button>
       </mat-card-actions>

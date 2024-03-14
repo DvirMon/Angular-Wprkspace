@@ -16,7 +16,7 @@ export function withBasket() {
   return signalStoreFeature(
     withEntities({ entity: type<Book>(), collection: COLLECTION }),
     withMethods((store) => ({
-      addToCart(newBook: Book) {
+      addToBasket(newBook: Book) {
         patchState(store, addEntity(newBook, { collection: COLLECTION }));
       },
     })),

@@ -30,10 +30,10 @@ export class BookCardComponent {
   book = input.required<Book>();
   showOverlay = signal(false);
 
-  @Output() addToCart: EventEmitter<Book> = new EventEmitter();
+  @Output() addToBasket: EventEmitter<Book> = new EventEmitter();
 
-  onAddToCart(value: Book) {
-    this.addToCart.emit(value);
+  onAddToBasket(value: Book) {
+    this.addToBasket.emit(value);
   }
 
   onToggleOverlay() {

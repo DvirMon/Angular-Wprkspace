@@ -7,12 +7,12 @@ import { withSearchTerm } from './with-search-term';
 
 // export interface AppState {
 //   book: Book | null;
-//   cart: Book[];
+//   basket: Book[];
 // }
 
 // const initialState: AppState = {
 //   book: null,
-//   cart: [],
+//   basket: [],
 // };
 
 export const AppStore = signalStore(

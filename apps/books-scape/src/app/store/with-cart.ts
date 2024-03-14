@@ -4,24 +4,24 @@ import {
   withComputed,
   withMethods,
   withState,
-} from "@ngrx/signals";
-import { Book } from "../books/books";
-import { computed } from "@angular/core";
+} from '@ngrx/signals';
+import { Book } from '../books/books';
+import { computed } from '@angular/core';
 
-export const withCart = () =>
+export const withbasket = () =>
   signalStoreFeature(
-    withState({ cart: [] as Book[] }),
+    withState({ basket: [] as Book[] }),
     withMethods((store) => ({
-      addToCart(newBook: Book) {
-        if (store.cart().some((book: Book) => book.id === newBook.id)) {
+      addTobasket(newBook: Book) {
+        if (store.basket().some((book: Book) => book.id === newBook.id)) {
           return;
         }
-        patchState(store, { cart: [...store.cart(), newBook] });
+        patchState(store, { basket: [...store.basket(), newBook] });
       },
     })),
-    withComputed(({ cart }) => ({
+    withComputed(({ basket }) => ({
       selectedBooks: computed(() =>
-        cart().length > 0 ? String(cart().length) : ""
+        basket().length > 0 ? String(basket().length) : ''
       ),
     }))
   );

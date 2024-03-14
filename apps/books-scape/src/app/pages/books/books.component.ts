@@ -29,7 +29,7 @@ export class BooksPageComponent {
     patchState(this.#store, { searchTerm: value });
   }
 
-  onAddToCart(newBook: Book): void {
-    this.#store.addToCart(newBook);
+  onAddToBasket(newBook: Book): void {
+    this.#store.addToBasket(newBook);
   }
 }

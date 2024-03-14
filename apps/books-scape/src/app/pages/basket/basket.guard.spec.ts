@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 import { CanActivateFn } from '@angular/router';
 
-import { cartGuard } from './checkout.guard';
+import { basketGuard } from './checkout.guard';
 
-describe('cartGuard', () => {
-  const executeGuard: CanActivateFn = (...guardParameters) => 
-      TestBed.runInInjectionContext(() => cartGuard(...guardParameters));
+describe('basketGuard', () => {
+  const executeGuard: CanActivateFn = (...guardParameters) =>
+    TestBed.runInInjectionContext(() => basketGuard(...guardParameters));
 
   beforeEach(() => {
     TestBed.configureTestingModule({});

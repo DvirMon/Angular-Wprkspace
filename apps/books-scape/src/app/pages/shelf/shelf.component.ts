@@ -4,16 +4,16 @@ import { AppStore } from '../../store/store';
 import { DashboardComponent } from '../../layout/dashboard/dashboard.component';
 
 @Component({
-  selector: 'books-scape-basket',
+  selector: 'books-scape-shelf-page',
   standalone: true,
   imports: [DashboardComponent],
-  templateUrl: './basket.component.html',
-  styleUrls: ['./basket.component.scss'],
+  templateUrl: './shelf.component.html',
+  styleUrls: ['./shelf.component.scss'],
 })
-export class BasketPageComponent {
-  public readonly basket: Signal<Book[]>;
+export class ShelfPageComponent {
+  public readonly shelf: Signal<Book[]>;
 
   constructor() {
-    this.basket = inject(AppStore).booksEntities;
+    this.shelf = inject(AppStore).shelfEntities;
   }
 }

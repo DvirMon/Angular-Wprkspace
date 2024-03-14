@@ -8,13 +8,13 @@ import { SearchInputComponent } from '@dom/components';
 import { DashboardComponent } from '../../layout/dashboard/dashboard.component';
 
 @Component({
-  selector: 'books-scape-page',
+  selector: 'books-scape-volume-page',
   standalone: true,
   imports: [DashboardComponent, BookCardComponent, SearchInputComponent],
-  templateUrl: './books.component.html',
-  styleUrls: ['./books.component.scss'],
+  templateUrl: './volumes.component.html',
+  styleUrls: ['./volumes.component.scss'],
 })
-export class BooksPageComponent {
+export class VolumesPageComponent {
   #store = inject(AppStore);
 
   public readonly books: Signal<Book[]>;
@@ -29,7 +29,7 @@ export class BooksPageComponent {
     patchState(this.#store, { searchTerm: value });
   }
 
-  onAddToBasket(newBook: Book): void {
-    this.#store.addToBasket(newBook);
+  onAddToShelf(newBook: Book): void {
+    this.#store.AddToShelf(newBook);
   }
 }

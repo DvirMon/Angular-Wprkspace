@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BasketPageComponent } from './basket.component';
+import { ShelfPageComponent } from './basket.component';
 
-describe('BasketPageComponent', () => {
-  let component: BasketPageComponent;
-  let fixture: ComponentFixture<BasketPageComponent>;
+describe('ShelfPageComponent', () => {
+  let component: ShelfPageComponent;
+  let fixture: ComponentFixture<ShelfPageComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [BasketPageComponent],
+      imports: [ShelfPageComponent],
     });
-    fixture = TestBed.createComponent(BasketPageComponent);
+    fixture = TestBed.createComponent(ShelfPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

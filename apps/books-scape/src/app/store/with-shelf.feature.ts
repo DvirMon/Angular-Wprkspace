@@ -10,19 +10,19 @@ import { addEntity, withEntities } from '@ngrx/signals/entities';
 import { computed } from '@angular/core';
 import { Book } from '../books/books';
 
-const COLLECTION = 'basket';
+const COLLECTION = 'shelf';
 
-export function withBasket() {
+export function withShelf() {
   return signalStoreFeature(
     withEntities({ entity: type<Book>(), collection: COLLECTION }),
     withMethods((store) => ({
-      addToBasket(newBook: Book) {
+      AddToShelf(newBook: Book) {
         patchState(store, addEntity(newBook, { collection: COLLECTION }));
       },
     })),
-    withComputed(({ basketEntities }) => ({
+    withComputed(({ shelfEntities }) => ({
       baskedSize: computed(() =>
-        basketEntities().length > 0 ? String(basketEntities().length) : ''
+        shelfEntities().length > 0 ? String(shelfEntities().length) : ''
       ),
     }))
   );

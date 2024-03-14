@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 import { CanActivateFn } from '@angular/router';
 
-import { basketGuard } from './checkout.guard';
+import { shelfGuard } from './checkout.guard';
 
-describe('basketGuard', () => {
+describe('shelfGuard', () => {
   const executeGuard: CanActivateFn = (...guardParameters) =>
-    TestBed.runInInjectionContext(() => basketGuard(...guardParameters));
+    TestBed.runInInjectionContext(() => shelfGuard(...guardParameters));
 
   beforeEach(() => {
     TestBed.configureTestingModule({});

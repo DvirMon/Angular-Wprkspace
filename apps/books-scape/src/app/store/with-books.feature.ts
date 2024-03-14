@@ -6,14 +6,13 @@ import {
   Loader,
   LoaderService,
   createLoader,
-  loadEntities
+  loadEntities,
 } from '@dom';
 import { Book } from '../books/books';
 
 const COLLECTION = 'books';
 
 type BooksLoader = Loader<string, Entity, 'loadBooks'>;
-
 
 export function withBooks(Loader: LoaderService<BooksLoader>) {
   return signalStoreFeature(

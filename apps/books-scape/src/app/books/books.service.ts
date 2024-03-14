@@ -18,8 +18,6 @@ export class BooksService {
   // function to fetch books from Google Books API}
   public loadBooks(query?: string): Observable<LoadResponse> {
     return this.fetchBooksFromApi(query as string).pipe(
-      tap((items) => console.log(items)),
-      // map((items) => this.filterItemsByLanguage(items, 'en')),
       map((items) => this.mapItemsToBooks(items)),
       map((books) => this.filterBooksWithImages(books)),
       map((books: Book[]) => ({

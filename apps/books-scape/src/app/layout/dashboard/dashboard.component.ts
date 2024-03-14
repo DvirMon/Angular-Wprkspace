@@ -47,5 +47,5 @@ export class DashboardComponent {
 
   protected readonly title: string = 'the books scape';
 
-  public readonly selectedBooks: Signal<string> = this.#store.selectedBooks;
+  public readonly baskedSize: Signal<string> = this.#store.baskedSize;
 }

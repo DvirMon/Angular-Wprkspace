@@ -28,7 +28,7 @@
         }
       </div>
     </mat-toolbar>
-    
+
     @if(showNavigation()) {
     <mat-toolbar color="primary">
       <div class="toolbar-content">
@@ -38,11 +38,7 @@
         <span class="spacer"></span>
         <button routerLink="checkout" mat-icon-button>
           <mat-icon fontIcon="shopping_basket"></mat-icon>
-          <span
-            class="badge"
-            [matBadge]="selectedBooks()"
-            matBadgeOverlap="false"
-          >
+          <span class="badge" [matBadge]="baskedSize()" matBadgeOverlap="false">
           </span>
         </button>
       </div>

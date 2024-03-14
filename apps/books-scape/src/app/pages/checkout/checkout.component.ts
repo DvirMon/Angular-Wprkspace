@@ -14,6 +14,6 @@ export class CheckoutPageComponent {
   public readonly cart: Signal<Book[]>;
 
   constructor() {
-    this.cart = inject(AppStore).cart;
+    this.cart = inject(AppStore).booksEntities;
   }
 }

@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { BooksPageComponent } from './pages/books/books.component';
-import { CheckoutPageComponent } from './pages/cart/cart.component';
+import { CheckoutPageComponent } from './pages/checkout/checkout.component';
 import { PnfComponent } from './pages/pnf/pnf.component';
 
 export const appRoutes: Routes = [

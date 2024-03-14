@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { Book, Item, Root, VolumeInfo } from './books';
+import { Book, Item, VolumeInfo } from './books';
+import { BooksHttpService } from './http.service';
 
 export interface LoadResponse {
   content: Book[];
@@ -10,42 +10,19 @@ export interface LoadResponse {
 @Injectable({
   providedIn: 'root',
 })
-export class BooksService {
-  private readonly MAX_RESULTS: number = 12;
+export class BooksDataService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private bookHttp: BooksHttpService) {}
 
   // function to fetch books from Google Books API}
   public loadBooks(query?: string): Observable<LoadResponse> {
-    return this.fetchBooksFromApi(query as string).pipe(
-      map((items) => this.filterItemsByLanguage(items, 'en')),
+    return this.bookHttp.fetchBooks(query as string).pipe(
       map((items) => this.mapItemsToBooks(items)),
       map((books) => this.filterBooksWithImages(books)),
       map((books: Book[]) => ({
         content: books,
       }))
     );
-  }
-
-  private constructUrlQuery(query: string): string {
-    const baseQuery = `q=intitle:${encodeURIComponent(query)}`;
-    const languageRestrict = 'langRestrict=en';
-    const maxResults = `maxResults=${this.MAX_RESULTS}`;
-    // const apiKey = `key=${this.BOOKS_API_KEY}`;
-
-    return `?${baseQuery}&${languageRestrict}&${maxResults}`;
-  }
-
-  // Fetch data from Google Books API
-  private fetchBooksFromApi(query: string): Observable<Item[]> {
-    return this.http
-      .get<Root>(this.constructUrlQuery(query))
-      .pipe(map((res) => res.items || []));
-  }
-
-  // Filter items by language
-  private filterItemsByLanguage(items: Item[], language: string): Item[] {
-    return items.filter((item) => item.volumeInfo.language === language);
   }
 
   // Map items to books
@@ -63,7 +40,7 @@ export class BooksService {
     return {
       id,
       title: volumeInfo.title,
-      // authors: volumeInfo.authors || [],
+      authors: volumeInfo.authors || [],
       description: volumeInfo.description,
       // publishedDate: volumeInfo.publishedDate,
       imageLinks: volumeInfo.imageLinks,

@@ -14,11 +14,13 @@
         height="280"
         [alt]="book().description"
       />
-      <mat-card-title>{{ book().title }}</mat-card-title>
+      <section class="book-card-text">
+        <mat-card-title>{{ book().title }}</mat-card-title>
+        <mat-card-subtitle>{{ book().authors[0] }}</mat-card-subtitle>
+      </section>
     </mat-card-content>
     <mat-card-actions></mat-card-actions>
   </div>
-  @if (showCart()) {
 
   <div class="overlay" *ngIf="showOverlay()">
     <mat-card class="overlay-card">
@@ -28,16 +30,15 @@
         </p>
       </mat-card-content>
       <mat-card-actions>
-        <!-- <button mat-raised-button color="primary">Add to Cart</button> -->
+        <!-- <button mat-raised-button color="primary">Add to Basket</button> -->
         <button mat-icon-button>
           <mat-icon fontIcon="info"></mat-icon>
         </button>
-        <button (click)="onAddToCart(book())" mat-icon-button>
-          <mat-icon fontIcon="shopping_bag"></mat-icon>
+        <button (click)="onAddToShelf(book())" mat-icon-button>
+          <mat-icon fontIcon="add"></mat-icon>
         </button>
       </mat-card-actions>
     </mat-card>
   </div>
-  }
 </mat-card>
 }

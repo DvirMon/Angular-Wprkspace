@@ -28,13 +28,12 @@ import { Book } from '../books';
 })
 export class BookCardComponent {
   book = input.required<Book>();
-  showCart = input<boolean>(false);
   showOverlay = signal(false);
 
-  @Output() addToCart: EventEmitter<Book> = new EventEmitter();
+  @Output() addToShelf: EventEmitter<Book> = new EventEmitter();
 
-  onAddToCart(value: Book) {
-    this.addToCart.emit(value);
+  onAddToShelf(value: Book) {
+    this.addToShelf.emit(value);
   }
 
   onToggleOverlay() {

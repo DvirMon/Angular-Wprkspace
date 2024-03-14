@@ -1,0 +1,17 @@
+<books-scape-dashboard [showShopping]="true">
+  <div class="bookshelf-page-wrapper">
+    <header>
+      <h1>{{ 'bookshelf' | titlecase }}</h1>
+    </header>
+    <main class="bookshelf-container-wrapper">
+      @for (book of bookshelf(); track book) {
+      <section class="bookshelf-card-wrapper" @fade>
+        <books-scape-bookshelf-card
+          [book]="book"
+          (clearFromShelf)="onRemoveFromShelf($event)"
+        ></books-scape-bookshelf-card>
+      </section>
+      }
+    </main>
+  </div>
+</books-scape-dashboard>

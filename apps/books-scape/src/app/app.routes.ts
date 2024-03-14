@@ -1,15 +1,16 @@
 import { Routes } from '@angular/router';
+import { VolumesPageComponent } from './pages/volumes/volumes.component';
 import { PnfComponent } from './pages/pnf/pnf.component';
-import { HomeComponent } from './pages/home/home.component';
-import { CartComponent } from './pages/cart/cart.component';
-import { cartGuard } from './pages/cart/cart.guard';
+import { BookshelfPageComponent } from './pages/shelf/shelf.component';
 
 export const appRoutes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', component: VolumesPageComponent, title: 'The Boos Scape' },
   {
-    path: 'cart',
-    component: CartComponent,
-    // canActivate: [cartGuard],
+    path: 'bookshelf',
+    component: BookshelfPageComponent,
+    // canActivate: [shelfGuard],
+    resolve: [],
+    title: 'Bookshelf',
   },
   { path: '', redirectTo: '/', pathMatch: 'full' },
   { path: '**', component: PnfComponent },

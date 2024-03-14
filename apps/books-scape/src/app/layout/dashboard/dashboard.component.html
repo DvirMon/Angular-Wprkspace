@@ -8,7 +8,6 @@
     </mat-nav-list> -->
   </mat-sidenav>
   <mat-sidenav-content>
-    @if(!showNavigation()){
     <mat-toolbar color="primary">
       <div class="toolbar-content">
         <!-- <button
@@ -20,29 +19,23 @@
           <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
         </button> -->
         <span class="brand">{{ title | titlecase }}</span>
-        <span class="spacer"></span>
-
-        @if(showNavigation()){
-        <button mat-button [routerLink]="'/'">
-          {{ 'Continue Shopping' | uppercase }}
+        @if(showShopping()){
+        <button class="shopping" mat-button [routerLink]="'/'">
+          {{ 'continue browsing' | uppercase }}
         </button>
         }
       </div>
     </mat-toolbar>
-    } @else {
+
+    @if(showNavigation()) {
     <mat-toolbar color="primary">
       <div class="toolbar-content">
         <mat-nav-list>
           <span mat-list-item routerLink="/">Home</span>
         </mat-nav-list>
-        <span class="spacer"></span>
-        <button routerLink="cart" mat-icon-button>
-          <mat-icon fontIcon="shopping_basket"></mat-icon>
-          <span
-            class="badge"
-            [matBadge]="selectedBooks()"
-            matBadgeOverlap="false"
-          >
+        <button class="bookshelf-btn" routerLink="bookshelf" mat-icon-button>
+          <mat-icon fontIcon="shelves"></mat-icon>
+          <span class="badge" [matBadge]="shelfSize()" matBadgeOverlap="false">
           </span>
         </button>
       </div>

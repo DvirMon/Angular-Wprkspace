@@ -21,7 +21,7 @@ export function withShelf() {
       },
     })),
     withComputed(({ shelfEntities }) => ({
-      baskedSize: computed(() =>
+      shelfSize: computed(() =>
         shelfEntities().length > 0 ? String(shelfEntities().length) : ''
       ),
     }))

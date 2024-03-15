@@ -11,13 +11,13 @@ import { addEntity, removeEntity } from '@ngrx/signals/entities';
 import { FavoriteEntity } from '../features/weather-favorite-card/favorite-card.component';
 import { AutocompleteOption } from '../shared/models/autocomplete-result';
 import { WeatherService } from '../shared/services/weather.service';
-import { updateIsLocal, updateIsMetric } from './updaters';
+import { updateIsMetric } from './updaters';
 import { withCurrentWeather } from './with-current.feature';
 import { withFavorites } from './with-favorites.feature';
 import { withFutureWeather } from './with-future.feature';
 import { withOptions } from './with-options.feature';
 
- interface State {
+interface State {
   isMetric: boolean;
   isGeolocation: boolean;
   selectedId: number;

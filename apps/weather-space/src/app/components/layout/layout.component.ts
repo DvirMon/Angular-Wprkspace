@@ -1,14 +1,17 @@
 import { TitleCasePipe } from '@angular/common';
-import { Component, WritableSignal, inject } from '@angular/core';
+import { Component, WritableSignal, computed, inject } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import {
   MatSidenavContainer,
   MatSidenavContent,
 } from '@angular/material/sidenav';
-import { MatSlideToggle, MatSlideToggleChange } from '@angular/material/slide-toggle';
+import {
+  MatSlideToggle,
+  MatSlideToggleChange,
+} from '@angular/material/slide-toggle';
 import { MatToolbar } from '@angular/material/toolbar';
 import { RouterLink } from '@angular/router';
-import { LocalService } from '../../shared/services/local.service';
+import { ServerService } from '../../shared/services/server.service';
 
 @Component({
   selector: 'weather-space-layout',
@@ -26,12 +29,13 @@ import { LocalService } from '../../shared/services/local.service';
   ],
 })
 export class LayoutComponent {
-  #localService = inject(LocalService);
+  #ServerService = inject(ServerService);
 
-  isLocal: WritableSignal<boolean> = this.#localService.getLocal();
+  isServer: WritableSignal<boolean> = this.#ServerService.getServer();
 
-  onValueChanged(event: MatSlideToggleChange)
-  {
-    this.#localService.setLocal(event.checked);
+  toggleLabel = computed(() => 'server ' + (this.isServer() ? "on" : 'off') )
+
+  onValueChanged(event: MatSlideToggleChange) {
+    this.#ServerService.setServer(event.checked);
   }
 }

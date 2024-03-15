@@ -17,12 +17,12 @@ export const OptionsStore = signalStore(
   withState({ selectedId: -1 }),
   withOptions(WeatherService),
   withComputed((store) => ({
-    optionSelected: computed(() => store.entityMap()[store.selectedId()]),
+    optionSelected: computed(() => store.optionsEntityMap()[store.selectedId()]),
   })),
   withMethods((state) => ({
     setCurrentId(value: string) {
       const option = state
-        .entities()
+        .optionsEntities()
         .find((option) => compareTo(option, value));
       patchState(state, { selectedId: option?.id });
     },

@@ -13,6 +13,7 @@ import { updateIsMetric } from './updaters';
 import { withCurrentWeather } from './with-current.feature';
 import { withFutureWeather } from './with-future.feature';
 import { withOptions } from './with-options.feature';
+import { withFavorites } from './with-favorites.feature';
 
 interface State {
   isLocal: boolean;
@@ -35,13 +36,17 @@ export const Store = signalStore(
   withOptions(WeatherService),
   withCurrentWeather(WeatherService),
   withFutureWeather(WeatherService),
+  withFavorites(),
   withComputed((store) => ({
-    optionSelected: computed(() => store.entityMap()[store.selectedId()]),
+    optionSelected: computed(
+      () => store.optionsEntityMap()[store.selectedId()]
+    ),
+    hasFavorites: computed(() => !!store.favoritesEntityMap),
   })),
   withMethods((state) => ({
     setCurrentId(value: string) {
       const option = state
-        .entities()
+        .optionsEntities()
         .find((option) => compareTo(option, value));
       patchState(state, { selectedId: option?.id });
     },

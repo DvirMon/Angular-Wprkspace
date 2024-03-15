@@ -88,7 +88,7 @@ export class LobbyComponent implements OnInit {
   searchTerm: WritableSignal<string> = signal('tel aviv');
 
   constructor() {
-    this.options = this.#optionsStore.entities;
+    this.options = this.#optionsStore.optionsEntities;
 
     this.optionSelected = this.#optionsStore.optionSelected;
 

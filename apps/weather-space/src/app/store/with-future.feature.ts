@@ -18,13 +18,15 @@ type FutureWeatherLoader = Loader<
   'loadFutureWeather'
 >;
 
+const COLLECTION = 'future';
+
 export function withFutureWeather(Loader: LoaderService<FutureWeatherLoader>) {
   return signalStoreFeature(
-    withEntities({ entity: type<FutureWeather>(), collection: 'future' }),
+    withEntities({ entity: type<FutureWeather>(), collection: COLLECTION }),
     withMethods((state) => {
       const loader = createLoader(Loader, 'loadFutureWeather');
       return {
-        loadFutureWeather: loadEntities(loader, state, 'future'),
+        loadFutureWeather: loadEntities(loader, state, COLLECTION),
       };
     })
   );

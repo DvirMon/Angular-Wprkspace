@@ -5,9 +5,10 @@ on:
     branches:
       - main
     paths:
-        - apps/weather-space
+      - apps/weather-space
   pull_request:
   workflow_dispatch:
+
 permissions:
   actions: read
   contents: read
@@ -36,12 +37,19 @@ jobs:
       - name: Build Specific Angular App
         run: npx nx build weather-space --prod --skip-nx-cache
 
+        # Connect Project to Firebase
+      - name: Configure Firebase Hosting Target
+        uses: w9jds/firebase-action@v12.9.0
+        with:
+          args: target:apply hosting weather-space ng-weather-space
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+
       # Deploy to Firebase Hosting
       - name: Deploy to Firebase Hosting
-        uses: w9jds/firebase-action@master
+        uses: w9jds/firebase-action@v12.9.0
         with:
           args: deploy --only hosting:weather-space --project angualr-momorepo
         env:
-            FIREBASE_CLI_EXPERIMENTS: webframeworks
-            GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
- 
+          FIREBASE_CLI_EXPERIMENTS: webframeworks
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}

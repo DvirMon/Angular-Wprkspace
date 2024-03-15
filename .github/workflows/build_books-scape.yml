@@ -39,7 +39,7 @@ jobs:
 
       # Deploy to Firebase Hosting
       - name: Deploy to Firebase Hosting
-        uses: w9jds/firebase-action@v13.5.0
+        uses: w9jds/firebase-action@master
         with:
           args: deploy --only hosting:books-scape --project angualr-momorepo
         env:

@@ -12,6 +12,13 @@
           "ng-weather-space"
         ]
       }
+    },
+    "angualr-momorepo": {
+      "hosting": {
+        "books-scape": [
+          "ng-books-scape"
+        ]
+      }
     }
   },
   "etags": {}

@@ -37,6 +37,7 @@ jobs:
       - name: Build Specific Angular App
         run: npx nx build books-scape --prod --skip-nx-cache
 
+        # Connect Project to Firebase
       - name: Configure Firebase Hosting Target
         uses: w9jds/firebase-action@v12.9.0
         with:

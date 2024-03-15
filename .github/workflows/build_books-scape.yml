@@ -41,7 +41,7 @@ jobs:
       - name: Configure Firebase Hosting Target
         uses: w9jds/firebase-action@v12.9.0
         with:
-          args: target:apply hosting books-scape ng-books-scape
+          args: target:apply hosting hosting books-scape ng-books-scape
         env:
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
 

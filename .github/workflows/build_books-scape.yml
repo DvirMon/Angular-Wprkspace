@@ -1,4 +1,4 @@
-name: Deploy books-scape to Firebase Hosting
+name: Deploy Books Scape to Firebase Hosting
 
 on:
   push:

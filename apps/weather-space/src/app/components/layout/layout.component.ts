@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MatButton } from '@angular/material/button';
 import { MatToolbar } from '@angular/material/toolbar';
@@ -6,6 +6,9 @@ import {
   MatSidenavContainer,
   MatSidenavContent,
 } from '@angular/material/sidenav';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { TitleCasePipe } from '@angular/common';
+import { Store } from '../../store/store';
 
 @Component({
   selector: 'weather-space-layout',
@@ -13,11 +16,19 @@ import {
   styleUrls: ['./layout.component.scss'],
   standalone: true,
   imports: [
+    RouterLink,
+    TitleCasePipe,
     MatSidenavContainer,
     MatSidenavContent,
     MatToolbar,
     MatButton,
-    RouterLink,
+    MatSlideToggle,
   ],
 })
-export class LayoutComponent {}
+export class LayoutComponent {
+
+  #store = inject(Store);
+
+  isLocally = true
+
+}

@@ -9,13 +9,32 @@ import {
 } from '@ngrx/signals';
 import { AutocompleteOption } from '../shared/models/autocomplete-result';
 import { WeatherService } from '../shared/services/weather.service';
+import { updateIsMetric } from './updaters';
+import { withCurrentWeather } from './with-current.feature';
+import { withFutureWeather } from './with-future.feature';
 import { withOptions } from './with-options.feature';
 
-export const OptionsStore = signalStore(
+interface State {
+  isLocal: boolean;
+  isMetric: boolean;
+  isGeolocation: boolean;
+  selectedId: number;
+}
+
+const initialState: State = {
+  isLocal: true,
+  isMetric: true,
+  isGeolocation: true,
+  selectedId: -1,
+};
+
+export const Store = signalStore(
   { providedIn: 'root' },
-  withDevtools('options'),
-  withState({ selectedId: -1 }),
+  withDevtools('store'),
+  withState(initialState),
   withOptions(WeatherService),
+  withCurrentWeather(WeatherService),
+  withFutureWeather(WeatherService),
   withComputed((store) => ({
     optionSelected: computed(() => store.entityMap()[store.selectedId()]),
   })),
@@ -29,6 +48,10 @@ export const OptionsStore = signalStore(
 
     updateCurrentId(id: number) {
       patchState(state, { selectedId: id });
+    },
+
+    updateIsMetric(isMetric: boolean) {
+      patchState(state, updateIsMetric(isMetric));
     },
   }))
 );

@@ -1,10 +1,5 @@
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
-import {
-  patchState,
-  signalStore,
-  withMethods,
-  withState
-} from '@ngrx/signals';
+import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 import { WeatherService } from '../shared/services/weather.service';
 import { updateIsMetric } from './updaters';
 import { withCurrentWeather } from './with-current.feature';
@@ -24,7 +19,7 @@ export const WeatherStore = signalStore(
   { providedIn: 'root' },
   withDevtools('weather'),
   withState(initialState),
-  withCurrentWeather(WeatherService, 'current'),
+  withCurrentWeather(WeatherService),
   withFutureWeather(WeatherService),
   withMethods((state) => ({
     updateIsMetric(isMetric: boolean) {

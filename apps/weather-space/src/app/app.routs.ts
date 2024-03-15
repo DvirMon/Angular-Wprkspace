@@ -6,8 +6,7 @@ export const appRoutes: Routes = [
   {
     path: "",
     component: LobbyComponent,
-    resolve: {
-    },
+    title : "Weather Space"
   },
   {
     path: "favorites",

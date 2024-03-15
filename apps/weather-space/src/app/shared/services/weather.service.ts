@@ -22,12 +22,12 @@ import { WeatherHttpService } from './weather-http.service';
   providedIn: 'root',
 })
 export class WeatherService {
-  constructor(private weatherHttpService: WeatherHttpService) {}
+  constructor(private weatherHttp: WeatherHttpService) {}
 
   public loadOptions(
     query: string
   ): Observable<EntityResult<AutocompleteOption>> {
-    return this.weatherHttpService.loadOptions(query).pipe(
+    return this.weatherHttp.loadOptions(query).pipe(
       map((results) => this._mapToAutocompleteResults(results)),
       map((options) => ({ content: options }))
     );
@@ -50,7 +50,7 @@ export class WeatherService {
   public loadCurrentWeather(
     locationKey: number
   ): Observable<EntityResult<CurrentWeather>> {
-    return this.weatherHttpService.loadCurrentWeatherLocal(locationKey).pipe(
+    return this.weatherHttp.loadCurrentWeatherLocal(locationKey).pipe(
       map((data: CurrentWeatherResult[]) => {
         return { id: locationKey, ...data[0] } as CurrentWeather;
       }),
@@ -62,7 +62,7 @@ export class WeatherService {
     args: FutureWeatherArgs
   ): Observable<EntityResult<FutureWeather>> {
     const { id, metric } = args;
-    return this.weatherHttpService.loadFutureWeather(id, metric).pipe(
+    return this.weatherHttp.loadFutureWeather(id, metric).pipe(
       map((data: FutureWeatherResult) => {
         return { id, ...data } as FutureWeather;
       }),

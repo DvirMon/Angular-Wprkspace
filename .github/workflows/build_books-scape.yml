@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-        - apps/books-scape
+      - apps/books-scape
   pull_request:
   workflow_dispatch:
 
@@ -37,9 +37,17 @@ jobs:
       - name: Build Specific Angular App
         run: npx nx build books-scape --prod --skip-nx-cache
 
+        # Connect Project to Firebase
+      - name: Configure Firebase Hosting Target
+        uses: w9jds/firebase-action@v12.9.0
+        with:
+          args: target:apply hosting hosting books-scape ng-books-scape
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+
       # Deploy to Firebase Hosting
       - name: Deploy to Firebase Hosting
-        uses: w9jds/firebase-action@master
+        uses: w9jds/firebase-action@v12.9.0
         with:
           args: deploy --only hosting:books-scape --project angualr-momorepo
         env:

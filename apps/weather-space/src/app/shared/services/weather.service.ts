@@ -6,7 +6,6 @@ import {
 } from '../models/autocomplete-result';
 
 import { map, Observable } from 'rxjs';
-import { EntityResult } from '../../store/entities.helpers';
 import {
   CurrentWeather,
   CurrentWeatherResult,
@@ -17,6 +16,7 @@ import {
   FutureWeatherResult,
 } from '../models/future-weather-result';
 import { WeatherHttpService } from './weather-http.service';
+import { EntityResult } from '@dom';
 
 @Injectable({
   providedIn: 'root',
@@ -50,7 +50,7 @@ export class WeatherService {
   public loadCurrentWeather(
     locationKey: number
   ): Observable<EntityResult<CurrentWeather>> {
-    return this.weatherHttp.loadCurrentWeatherLocal(locationKey).pipe(
+    return this.weatherHttp.loadCurrentWeather(locationKey).pipe(
       map((data: CurrentWeatherResult[]) => {
         return { id: locationKey, ...data[0] } as CurrentWeather;
       }),

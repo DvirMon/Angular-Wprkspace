@@ -7,3 +7,7 @@ export function updateSelectedId(option: AutocompleteOption) {
 export function updateIsMetric(isMetric: boolean) {
   return { isMetric };
 }
+
+export function updateIsLocal(isLocal: boolean) {
+  return { isLocal };
+}

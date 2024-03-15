@@ -14,19 +14,15 @@ import {
 import { CurrentWeatherResult } from '../models/current-weather-result';
 import { FutureWeatherResult } from '../models/future-weather-result';
 import { GeolocationWeatherResult } from '../models/geolocation-weather-result';
+import { LocalService } from './local.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WeatherHttpService {
-  private _baseUrl: string = environment.weatherEndpoint;
+  private readonly _baseUrl: string = environment.weatherEndpoint;
 
-  constructor(private http: HttpClient) {}
-
-  public loadOptions(query: string): Observable<AutocompleteResult[]> {
-    console.log(query);
-    return of(LOCATIONS_AUTOCOMPLETE_RESULT);
-  }
+  constructor(private localService: LocalService, private http: HttpClient) {}
 
   public getOptions(query: string): Observable<AutocompleteResult[]> {
     const params = new HttpParams()
@@ -38,11 +34,12 @@ export class WeatherHttpService {
     );
   }
 
-  public loadCurrentWeatherLocal(
-    locationKey: number
-  ): Observable<CurrentWeatherResult[]> {
-    console.log(locationKey);
-    return of(CURRENT_WEATHER_RESULT);
+  public loadOptions(query: string): Observable<AutocompleteResult[]> {
+    const isLocal = this.localService.getLocal();
+
+    return isLocal()
+      ? of(LOCATIONS_AUTOCOMPLETE_RESULT)
+      : this.getOptions(query);
   }
 
   public getCurrentWeather(
@@ -56,6 +53,16 @@ export class WeatherHttpService {
       this._baseUrl + 'currentconditions/v1/' + locationKey,
       { params }
     );
+  }
+
+  public loadCurrentWeather(
+    locationKey: number
+  ): Observable<CurrentWeatherResult[]> {
+    const isLocal = this.localService.getLocal();
+
+    return isLocal()
+      ? of(CURRENT_WEATHER_RESULT)
+      : this.getCurrentWeather(locationKey);
   }
 
   public getFutureWeather(
@@ -75,8 +82,11 @@ export class WeatherHttpService {
     locationKey: EntityId,
     metric: boolean
   ): Observable<FutureWeatherResult> {
-    console.log(locationKey, metric);
-    return of(FUTURE_WEATHER_RESULT);
+    const isLocal = this.localService.getLocal();
+
+    return isLocal()
+      ? of(FUTURE_WEATHER_RESULT)
+      : this.getFutureWeather(locationKey, metric);
   }
 
   private _getGeolocation(): Observable<GeolocationPosition> {

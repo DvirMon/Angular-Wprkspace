@@ -44,6 +44,7 @@ export function handleLoadSuccess<Entity extends { id: EntityId }>(
     const hasEntities = localState[key]()?.length > 0;
     const update = hasEntities ? setAllEntities : addEntities;
 
+
     if (key === 'entities') {
       patchState(state as StateSignal<object>, update(res.content));
     } else {
@@ -70,6 +71,7 @@ export function loadEntities<T>(
   state: StateSignal<object>,
   collection = 'entities'
 ) {
+
   return rxMethod<T>(
     pipe(
       switchMap((query) =>

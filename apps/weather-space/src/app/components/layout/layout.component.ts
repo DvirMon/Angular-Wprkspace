@@ -1,14 +1,14 @@
-import { Component, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { TitleCasePipe } from '@angular/common';
+import { Component, WritableSignal, inject } from '@angular/core';
 import { MatButton } from '@angular/material/button';
-import { MatToolbar } from '@angular/material/toolbar';
 import {
   MatSidenavContainer,
   MatSidenavContent,
 } from '@angular/material/sidenav';
-import { MatSlideToggle } from '@angular/material/slide-toggle';
-import { TitleCasePipe } from '@angular/common';
-import { Store } from '../../store/store';
+import { MatSlideToggle, MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { MatToolbar } from '@angular/material/toolbar';
+import { RouterLink } from '@angular/router';
+import { LocalService } from '../../shared/services/local.service';
 
 @Component({
   selector: 'weather-space-layout',
@@ -26,9 +26,12 @@ import { Store } from '../../store/store';
   ],
 })
 export class LayoutComponent {
+  #localService = inject(LocalService);
 
-  #store = inject(Store);
+  isLocal: WritableSignal<boolean> = this.#localService.getLocal();
 
-  isLocally = true
-
+  onValueChanged(event: MatSlideToggleChange)
+  {
+    this.#localService.setLocal(event.checked);
+  }
 }

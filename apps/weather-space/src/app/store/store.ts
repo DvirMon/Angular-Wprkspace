@@ -7,23 +7,23 @@ import {
   withMethods,
   withState,
 } from '@ngrx/signals';
+import { addEntity, removeEntity } from '@ngrx/signals/entities';
+import { FavoriteEntity } from '../features/weather-favorite-card/favorite-card.component';
 import { AutocompleteOption } from '../shared/models/autocomplete-result';
 import { WeatherService } from '../shared/services/weather.service';
-import { updateIsMetric } from './updaters';
+import { updateIsLocal, updateIsMetric } from './updaters';
 import { withCurrentWeather } from './with-current.feature';
+import { withFavorites } from './with-favorites.feature';
 import { withFutureWeather } from './with-future.feature';
 import { withOptions } from './with-options.feature';
-import { withFavorites } from './with-favorites.feature';
 
-interface State {
-  isLocal: boolean;
+ interface State {
   isMetric: boolean;
   isGeolocation: boolean;
   selectedId: number;
 }
 
 const initialState: State = {
-  isLocal: true,
   isMetric: true,
   isGeolocation: true,
   selectedId: -1,
@@ -47,7 +47,7 @@ export const Store = signalStore(
     setCurrentId(value: string) {
       const option = state
         .optionsEntities()
-        .find((option) => compareTo(option, value));
+        .find((option) => optionCompareTo(option, value));
       patchState(state, { selectedId: option?.id });
     },
 
@@ -58,9 +58,16 @@ export const Store = signalStore(
     updateIsMetric(isMetric: boolean) {
       patchState(state, updateIsMetric(isMetric));
     },
+
+    addFavorite(item: FavoriteEntity) {
+      patchState(state, addEntity(item, { collection: 'favorites' }));
+    },
+    removeFavorite(item: FavoriteEntity) {
+      patchState(state, removeEntity(item.id, { collection: 'favorites' }));
+    },
   }))
 );
 
-function compareTo(option: AutocompleteOption, value: string): boolean {
+function optionCompareTo(option: AutocompleteOption, value: string): boolean {
   return option ? option.LocalizedName.toLowerCase() === value : false;
 }

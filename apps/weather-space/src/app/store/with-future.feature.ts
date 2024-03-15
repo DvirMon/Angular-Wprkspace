@@ -10,7 +10,7 @@ import {
   LoaderService,
   createLoader,
   loadEntities,
-} from './entities.helpers';
+} from '@dom';
 
 type FutureWeatherLoader = Loader<
   FutureWeatherArgs,

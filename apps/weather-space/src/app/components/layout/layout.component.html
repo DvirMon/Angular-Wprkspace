@@ -4,7 +4,7 @@
       <div class="toolbar-container">
         <section class="logo">
           <h1>Weather Space</h1>
-          <mat-slide-toggle [checked]="isLocally">{{'locally' | titlecase}}</mat-slide-toggle>
+          <mat-slide-toggle [checked]="isLocal()" (change)="onValueChanged($event)">{{'locally' | titlecase}}</mat-slide-toggle>
         </section>
         <section class="navigation">
           <button mat-button [routerLink]="'/'">Home</button>

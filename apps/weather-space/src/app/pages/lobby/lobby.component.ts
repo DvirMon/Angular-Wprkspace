@@ -1,4 +1,4 @@
-import { NgFor, NgIf } from '@angular/common';
+import { JsonPipe, NgFor, NgIf } from '@angular/common';
 import {
   Component,
   OnInit,
@@ -37,6 +37,7 @@ import {
 } from '../../shared/models/future-weather-result';
 import { HighLightPipe } from '../../shared/pipes/high-light.pipe';
 import { PluckPipe } from '../../shared/pipes/pluck.pipe';
+import { Store } from '../../store/store';
 import { FavoriteStore } from '../../store/store-favorites';
 import { OptionsStore } from '../../store/store-options';
 import { WeatherStore } from '../../store/store-weather';
@@ -52,6 +53,7 @@ import { WeatherStore } from '../../store/store-weather';
     MatOption,
     NgIf,
     PluckPipe,
+    JsonPipe,
     MatFormField,
     MatLabel,
     MatInput,
@@ -60,13 +62,13 @@ import { WeatherStore } from '../../store/store-weather';
     HighLightPipe,
     WeatherResultComponent,
     AutocompleteComponent,
-    OptionContentDirective
-
+    OptionContentDirective,
   ],
 })
 export class LobbyComponent implements OnInit {
   #nfb = inject(NonNullableFormBuilder);
 
+  #store = inject(Store);
   #optionsStore = inject(OptionsStore);
   #weatherStore = inject(WeatherStore);
   #favoriteStore = inject(FavoriteStore);
@@ -88,31 +90,29 @@ export class LobbyComponent implements OnInit {
   searchTerm: WritableSignal<string> = signal('tel aviv');
 
   constructor() {
-    this.options = this.#optionsStore.optionsEntities;
+    this.options = this.#store.optionsEntities;
 
-    this.optionSelected = this.#optionsStore.optionSelected;
+    this.optionSelected = this.#store.optionSelected;
 
-    this.isMetric = this.#weatherStore.isMetric;
+    this.isMetric = this.#store.isMetric;
 
     this.filtered = computed(() =>
       this.options().filter((option) => this.predicate(option))
     );
 
     this.currentWeather = computed(
-      () =>
-        this.#weatherStore.currentEntityMap()[this.#optionsStore.selectedId()]
+      () => this.#store.currentEntityMap()[this.#store.selectedId()]
     );
 
     this.futureArgs = computed<FutureWeatherArgs>(() => {
       return {
-        id: this.#optionsStore.selectedId(),
-        metric: this.#weatherStore.isMetric(),
+        id: this.#store.selectedId(),
+        metric: this.#store.isMetric(),
       } as FutureWeatherArgs;
     });
 
     this.futureWeather = computed(
-      () =>
-        this.#weatherStore.futureEntityMap()[this.#optionsStore.selectedId()]
+      () => this.#store.futureEntityMap()[this.#store.selectedId()]
     );
 
     this.isWeatherData = computed(
@@ -123,31 +123,31 @@ export class LobbyComponent implements OnInit {
     );
 
     this.isFavorite = computed(
-      () => !!this.#favoriteStore.entityMap()[this.#optionsStore.selectedId()]
+      () => !!this.#store.favoritesEntityMap()[this.#store.selectedId()]
     );
 
     effect(() => {
-      this.#optionsStore.loadOptions(this.searchTerm());
+      this.#store.loadOptions(this.searchTerm());
     });
   }
 
   async ngOnInit(): Promise<void> {
     if (this.options().length == 0) {
-      await this.#optionsStore.loadOptionAsync(this.searchTerm());
+      await this.#store.loadOptionAsync(this.searchTerm());
     }
 
-    if (this.#optionsStore.selectedId() == -1) {
-      this.#optionsStore.setCurrentId(this.searchTerm());
+    if (this.#store.selectedId() == -1) {
+      this.#store.setCurrentId(this.searchTerm());
     }
 
     this.control = this.#nfb.control(this.optionSelected());
 
-    this.#weatherStore.loadCurrentWeather(this.#optionsStore.selectedId);
-    this.#weatherStore.loadFutureWeather(this.futureArgs);
+    this.#store.loadCurrentWeather(this.#store.selectedId);
+    this.#store.loadFutureWeather(this.futureArgs);
   }
 
   onOptionSelected(option: AutocompleteOption): void {
-    this.#optionsStore.updateCurrentId(option.id);
+    this.#store.updateCurrentId(option.id);
   }
 
   onFavoriteChanged(event: FavoriteChangeEvent): void {
@@ -158,14 +158,14 @@ export class LobbyComponent implements OnInit {
     } as FavoriteEntity;
 
     if (selected) {
-      this.#favoriteStore.addFavorite(favorite);
+      this.#store.addFavorite(favorite);
     } else {
-      this.#favoriteStore.removeFavorite(favorite);
+      this.#store.removeFavorite(favorite);
     }
   }
 
   onUnitTempChange({ metric }: UnitChangeEvent): void {
-    this.#weatherStore.updateIsMetric(metric);
+    this.#store.updateIsMetric(metric);
   }
 
   onQueryChanged(event: string) {

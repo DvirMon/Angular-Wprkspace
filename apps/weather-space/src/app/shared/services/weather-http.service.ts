@@ -14,19 +14,15 @@ import {
 import { CurrentWeatherResult } from '../models/current-weather-result';
 import { FutureWeatherResult } from '../models/future-weather-result';
 import { GeolocationWeatherResult } from '../models/geolocation-weather-result';
+import { ServerService } from './server.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WeatherHttpService {
-  private _baseUrl: string = environment.weatherEndpoint;
+  private readonly _baseUrl: string = environment.weatherEndpoint;
 
-  constructor(private http: HttpClient) {}
-
-  public loadOptions(query: string): Observable<AutocompleteResult[]> {
-    console.log(query);
-    return of(LOCATIONS_AUTOCOMPLETE_RESULT);
-  }
+  constructor(private ServerService: ServerService, private http: HttpClient) {}
 
   public getOptions(query: string): Observable<AutocompleteResult[]> {
     const params = new HttpParams()
@@ -38,11 +34,12 @@ export class WeatherHttpService {
     );
   }
 
-  public loadCurrentWeatherLocal(
-    locationKey: number
-  ): Observable<CurrentWeatherResult[]> {
-    console.log(locationKey);
-    return of(CURRENT_WEATHER_RESULT);
+  public loadOptions(query: string): Observable<AutocompleteResult[]> {
+    const isServer = this.ServerService.getServer();
+
+    return isServer()
+      ? this.getOptions(query)
+      : of(LOCATIONS_AUTOCOMPLETE_RESULT);
   }
 
   public getCurrentWeather(
@@ -56,6 +53,16 @@ export class WeatherHttpService {
       this._baseUrl + 'currentconditions/v1/' + locationKey,
       { params }
     );
+  }
+
+  public loadCurrentWeather(
+    locationKey: number
+  ): Observable<CurrentWeatherResult[]> {
+    const isServer = this.ServerService.getServer();
+
+    return isServer()
+      ? this.getCurrentWeather(locationKey)
+      : of(CURRENT_WEATHER_RESULT);
   }
 
   public getFutureWeather(
@@ -75,8 +82,11 @@ export class WeatherHttpService {
     locationKey: EntityId,
     metric: boolean
   ): Observable<FutureWeatherResult> {
-    console.log(locationKey, metric);
-    return of(FUTURE_WEATHER_RESULT);
+    const isServer = this.ServerService.getServer();
+
+    return isServer()
+      ? this.getFutureWeather(locationKey, metric)
+      : of(FUTURE_WEATHER_RESULT);
   }
 
   private _getGeolocation(): Observable<GeolocationPosition> {

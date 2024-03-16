@@ -1,4 +1,4 @@
-name: Deploy weather-space to Firebase Hosting
+name: Deploy Weather Space to Firebase Hosting
 
 on:
   push:

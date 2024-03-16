@@ -9,7 +9,6 @@ export const errorInterceptor: HttpInterceptorFn = (req, handle) => {
   return handle(req).pipe(
     catchError((err: HttpErrorResponse) => {
       if (err.status == 503) {
-        console.log('forbidden');
       }
       const errorMessageContext = req.context.get(ERROR_MESSAGE_CONTEXT);
       // uiMessage.error(errorMessageContext);

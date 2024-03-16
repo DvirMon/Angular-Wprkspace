@@ -11,6 +11,7 @@ import {
 import { FavoriteStore } from '../../store/store-favorites';
 import { OptionsStore } from '../../store/store-options';
 import { WeatherStore } from '../../store/store-weather';
+import { Store } from '../../store/store';
 
 @Component({
   selector: 'weather-space-favorites',
@@ -20,6 +21,7 @@ import { WeatherStore } from '../../store/store-weather';
   imports: [NgFor, FavoriteEntityComponent, KeyValuePipe, MatButton],
 })
 export class FavoritesLayoutComponent {
+  #store = inject(Store);
   #optionsStore = inject(OptionsStore);
   #favoriteStore = inject(FavoriteStore);
   #weatherStore = inject(WeatherStore);
@@ -34,7 +36,7 @@ export class FavoritesLayoutComponent {
 
 
   public onSelectionChanged({ id }: FavoriteEntity): void {
-    this.#optionsStore.updateCurrentId(id);
+    this.#store.updateCurrentId(id);
     this.router.navigateByUrl('/');
   }
 }

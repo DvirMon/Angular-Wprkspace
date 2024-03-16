@@ -1,28 +1,34 @@
-import { patchState, signalStoreFeature, withMethods } from '@ngrx/signals';
-import { addEntities, withEntities } from '@ngrx/signals/entities';
-import { AutocompleteOption } from '../shared/models/autocomplete-result';
 import {
-  Entity,
-  Loader,
-  LoaderService,
-  createLoader,
-  loadEntities,
-} from './entities.helpers';
+  patchState,
+  signalStoreFeature,
+  type,
+  withMethods,
+} from '@ngrx/signals';
+import { addEntities, withEntities } from '@ngrx/signals/entities';
 import { lastValueFrom } from 'rxjs';
+import { AutocompleteOption } from '../shared/models/autocomplete-result';
+import { Entity, Loader, LoaderService, createLoader, loadEntities } from '@dom';
 
 type OptionLoader = Loader<string, Entity, 'loadOptions'>;
 
+const COLLECTION = 'options';
+
 export function withOptions(Loader: LoaderService<OptionLoader>) {
   return signalStoreFeature(
-    withEntities<AutocompleteOption>(),
-    withMethods((state) => {
+    withEntities({
+      entity: type<AutocompleteOption>(),
+      collection: COLLECTION,
+    }),
+    withMethods((store) => {
       const loader = createLoader(Loader, 'loadOptions');
       return {
-        loadOptions: loadEntities(loader, state),
+
+        loadOptions: loadEntities(loader, store, COLLECTION),
+
         async loadOptionAsync(query: string) {
           const res = await lastValueFrom(loader(query));
           const options = res.content as AutocompleteOption[];
-          patchState(state, addEntities(options));
+          patchState(store, addEntities(options, { collection: COLLECTION }));
         },
       };
     })

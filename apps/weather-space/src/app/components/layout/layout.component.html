@@ -1,12 +1,20 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav-content>
     <mat-toolbar class="mat-elevation-z3">
-      <span>Weather App</span>
-      <span class="grow"></span>
-      <ng-container>
-        <button mat-button [routerLink]="'/'">Home</button>
-        <button mat-button [routerLink]="'/favorites'">Favorites</button>
-      </ng-container>
+      <div class="toolbar-container">
+        <section class="logo">
+          <h1>Weather Space</h1>
+          <mat-slide-toggle
+            [checked]="isServer()"
+            (change)="onValueChanged($event)"
+            >{{ toggleLabel() | titlecase }}</mat-slide-toggle
+          >
+        </section>
+        <section class="navigation">
+          <button mat-button [routerLink]="'/'">Home</button>
+          <button mat-button [routerLink]="'/favorites'">Favorites</button>
+        </section>
+      </div>
     </mat-toolbar>
 
     <ng-content></ng-content>

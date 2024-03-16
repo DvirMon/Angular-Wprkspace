@@ -5,22 +5,22 @@ import {
   LoaderService,
   createLoader,
   loadEntities,
-} from './entities.helpers';
+} from '@dom';
 import { withEntities } from '@ngrx/signals/entities';
 import { CurrentWeather } from '../shared/models/current-weather-result';
 
 type WeatherLoader = Loader<number, Entity, 'loadCurrentWeather'>;
 
+const COLLECTION = "current"
+
 export function withCurrentWeather(
-  Loader: LoaderService<WeatherLoader>,
-  collection: string
-) {
+  Loader: LoaderService<WeatherLoader>) {
   return signalStoreFeature(
-    withEntities({ entity: type<CurrentWeather>(), collection: 'current' }),
+    withEntities({ entity: type<CurrentWeather>(), collection: COLLECTION }),
     withMethods((state) => {
       const loader = createLoader(Loader, 'loadCurrentWeather');
       return {
-        loadCurrentWeather: loadEntities(loader, state, collection),
+        loadCurrentWeather: loadEntities(loader, state, COLLECTION),
       };
     })
   );

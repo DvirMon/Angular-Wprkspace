@@ -1,15 +1,16 @@
 @use "variables" as main;
 
 
-div.vacation-list-wrapper {
+div.places-list-wrapper {
+  width: 100%;
+  overflow-wrap: hidden;
+
   padding: main.spacing(2);
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
   gap: main.spacing(3);
 
-  section.vacation-card-wrapper {
-    width: 24%;
+  section.places-card-wrapper {
+    width: 31%;
   }
 }

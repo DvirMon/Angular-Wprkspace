@@ -1,16 +1,48 @@
-div {
-  height: 100%;
-}
+@use 'variables' as main;
 
 div.places-wrapper {
-  background-image: url("../../../assets/images/backgrounds/user.jpg");
-  background-repeat: no-repeat;
+  // height: 100%;
+  // background-repeat: no-repeat;
+  // background-size: cover;
+  // background-position: center;
+  // background-attachment: fixed;
+
+  position: relative;
+  overflow: hidden;
+  height: 100vh; /* Adjust based on your needs */
+}
+
+.parallax-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../../../assets/images/backgrounds/user.jpg');
   background-size: cover;
   background-position: center;
-  display: flex;
-  flex-direction: column;
+  transform: translateZ(0); /* GPU acceleration */
+}
 
-  header {
-    flex: 0.3;
-  }
+div.spacer {
+  height: 150px;
+}
+
+div.content
+{
+  height: 100%;
+  justify-content: center;
+  display: flex;
+  width: 100%;
+}
+
+div.places-list-container {
+  // height: 400px;
+
+  // position: absolute;
+  top: 0;
+  left: 0;
+  width: 90%;
+  height: 80%;
+  overflow-y: scroll;
 }

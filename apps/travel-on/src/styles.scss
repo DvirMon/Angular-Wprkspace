@@ -1,4 +1,4 @@
-@use "theme" as main;
+@use 'theme' as main;
 
 @include main.travel-on-theme();
 
@@ -8,10 +8,11 @@ html,
 body,
 to-root {
   height: 100%;
+  scroll-behavior: smooth;
 }
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
 
 button {

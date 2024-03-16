@@ -25,7 +25,7 @@ export class PlacesService {
   }
 
   getPlaces$(): Observable<Places[]> {
-    const queryRef = query(this.vacationsRef, limit(4));
+    const queryRef = query(this.vacationsRef);
     return from(getDocs(queryRef)).pipe(
       map((querySnapshot) =>
         querySnapshot.docs.map((doc) => {
@@ -34,4 +34,6 @@ export class PlacesService {
       )
     );
   }
+
+  
 }

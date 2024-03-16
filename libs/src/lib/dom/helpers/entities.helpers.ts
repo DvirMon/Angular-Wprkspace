@@ -34,7 +34,7 @@ function getKey(collection: string): string {
 }
 
 // Function to handle the success response of loading entities
-export function handleLoadSuccess<Entity extends { id: EntityId }>(
+export function handleLoadEntitiesSuccess<Entity extends { id: EntityId }>(
   state: unknown,
   collection: string
 ) {
@@ -75,7 +75,7 @@ export function loadEntities<T>(
       switchMap((query) =>
         loader(query).pipe(
           tapResponse({
-            next: handleLoadSuccess(state, collection),
+            next: handleLoadEntitiesSuccess(state, collection),
             error: () => EMPTY,
           })
         )
@@ -83,17 +83,28 @@ export function loadEntities<T>(
     )
   );
 }
+
+export function createSliceLoader<T>(
+  Loader: LoadService<Loader<T, Entity, string>>,
+  methodName: string
+): (args: T) => Observable<EntityResult<Entity>> {
+  return runInInjectionContext(inject(Injector), () => {
+    const loader = inject(Loader);
+    return (query: T) => loader[methodName](query);
+  });
+}
+
 export function loadSlice<T>(
-  loader: (query: T) => Observable<Entity[]>,
+  loader: (query: T) => Observable<EntityResult<Entity>>,
   slice: string,
-  state: StateSignal<object>
+  state: StateSignal<object>,
 ) {
   return rxMethod<T>(
     pipe(
       switchMap((query) =>
         loader(query).pipe(
           tapResponse({
-            next: (value) => patchState(state, { [slice]: value }),
+            next: (res) => patchState(state, { [slice]: res.content }),
             error: () => EMPTY,
           })
         )

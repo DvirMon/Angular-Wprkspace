@@ -1,15 +1,6 @@
-import {
-  patchState,
-  signalStoreFeature,
-  withMethods,
-  withState,
-} from '@ngrx/signals';
+import { Entity, Loader, LoaderService, createLoader, createSliceLoader, loadSlice } from '@dom';
+import { signalStoreFeature, withMethods, withState } from '@ngrx/signals';
 import { Places } from '../places/places.model';
-import { inject } from '@angular/core';
-import { PlacesService } from '../../places/places.service';
-import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { pipe, switchMap } from 'rxjs';
-import { tapResponse } from '@ngrx/operators';
 
 interface PlacesState {
   places: Places[];
@@ -17,22 +8,18 @@ interface PlacesState {
 
 const initialState: PlacesState = { places: [] };
 
-export function withPlaces() {
+const SLICE = 'places';
+
+type PlacesLoader = Loader<void, Entity, 'loadPlaces'>;
+
+export function withPlaces(Loader: LoaderService<PlacesLoader>) {
   return signalStoreFeature(
     withState(initialState),
-    withMethods((state, placesService = inject(PlacesService)) => ({
-      loadPlaces: rxMethod<void>(
-        pipe(
-          switchMap(() =>
-            placesService.getPlaces$().pipe(
-              tapResponse({
-                next: (places) => patchState(state, { places }),
-                error: console.error,
-              })
-            )
-          )
-        )
-      ),
-    }))
+    withMethods((store) => {
+      const loader = createLoader(Loader, 'loadPlaces');
+      return {
+        loadPlaces: loadSlice<void>(loader, SLICE, store),
+      };
+    })
   );
 }

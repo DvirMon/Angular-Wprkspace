@@ -96,8 +96,8 @@ export function createSliceLoader<T>(
 
 export function loadSlice<T>(
   loader: (query: T) => Observable<EntityResult<Entity>>,
-  slice: string,
   state: StateSignal<object>,
+  slice: string,
 ) {
   return rxMethod<T>(
     pipe(

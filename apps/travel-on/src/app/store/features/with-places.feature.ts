@@ -1,4 +1,10 @@
-import { Entity, Loader, LoaderService, createLoader, createSliceLoader, loadSlice } from '@dom';
+import {
+  Entity,
+  Loader,
+  LoaderService,
+  createSliceLoader,
+  loadSlice
+} from '@dom';
 import { signalStoreFeature, withMethods, withState } from '@ngrx/signals';
 import { Places } from '../places/places.model';
 
@@ -16,9 +22,9 @@ export function withPlaces(Loader: LoaderService<PlacesLoader>) {
   return signalStoreFeature(
     withState(initialState),
     withMethods((store) => {
-      const loader = createLoader(Loader, 'loadPlaces');
+      const loader = createSliceLoader(Loader, 'loadPlaces');
       return {
-        loadPlaces: loadSlice<void>(loader, SLICE, store),
+        loadPlaces: loadSlice<void>(loader, store, SLICE),
       };
     })
   );

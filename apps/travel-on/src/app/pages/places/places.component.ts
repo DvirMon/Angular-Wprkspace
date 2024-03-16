@@ -60,7 +60,9 @@ export class PlacesComponent implements OnInit {
 
   constructor() {
     this.places = this.#store.places;
-    this.selection = this._getSelectionFromRoute();
+    this.selection = this.#store.favoriteMap
+
+    
   }
 
   

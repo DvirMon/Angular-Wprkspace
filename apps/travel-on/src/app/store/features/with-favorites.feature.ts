@@ -1,21 +1,47 @@
-import { Entity, Loader, LoaderService, createLoader, loadEntities } from '@dom';
-import { signalStoreFeature, type, withMethods } from '@ngrx/signals';
-import { withEntities } from '@ngrx/signals/entities';
+import { computed } from '@angular/core';
+import {
+  Entity,
+  Loader,
+  LoaderService,
+  createSliceLoader,
+  loadSlice,
+} from '@dom';
+import {
+  signalStoreFeature,
+  withComputed,
+  withMethods,
+  withState,
+} from '@ngrx/signals';
 import { Favorite } from '../favorites/favorite.model';
 
-
-const COLLECTION = 'favorites';
+const SLICE = 'favorite';
 
 type FavoritesLoader = Loader<string, Entity, 'loadFavorites'>;
 
 export function withFavorites(Loader: LoaderService<FavoritesLoader>) {
   return signalStoreFeature(
-    withEntities({ entity : type<Favorite>(), collection : COLLECTION}),
+    withState({ favorite: [] }),
     withMethods((store) => {
-      const loader = createLoader(Loader, 'loadFavorites');
+      const loader = createSliceLoader(Loader, 'loadFavorites');
       return {
-        loadFavorites: loadEntities(loader, store, COLLECTION)
+        loadFavorites: loadSlice(loader, store, SLICE),
       };
-    })
+    }),
+    withComputed(({ favorite }) => ({
+      favoriteMap: computed(() => mapIds(favorite()[0])),
+    }))
   );
+}
+
+function mapIds(favorite: Favorite) {
+  if (favorite) {
+    return favorite.vacationIds.reduce((acc, value) => {
+      return {
+        ...acc,
+        [value]: true,
+      };
+    }, {} as Record<string, boolean>);
+  } else {
+    return {};
+  }
 }

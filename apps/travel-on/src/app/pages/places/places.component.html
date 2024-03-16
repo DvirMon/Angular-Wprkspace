@@ -8,17 +8,13 @@
       (clicked)="onButtonClick()"
     ></to-floating-button>
   </header>
-  <div class="content">
-    <div
-      class="places-list-container"
-      #scrollContent
-      (scroll)="onContentScroll()"
-    >
+  <div class="places-list-container">
+    <main class="content" #scrollContent (scroll)="onContentScroll()">
       <to-places-list
         [places]="places()"
         [selection]="selection()"
         (selectionChanged)="onSelectionChanged($event)"
       ></to-places-list>
-    </div>
+    </main>
   </div>
 </div>

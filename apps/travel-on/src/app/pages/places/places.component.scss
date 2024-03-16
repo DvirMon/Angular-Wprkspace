@@ -1,12 +1,6 @@
 @use 'variables' as main;
 
 div.places-wrapper {
-  // height: 100%;
-  // background-repeat: no-repeat;
-  // background-size: cover;
-  // background-position: center;
-  // background-attachment: fixed;
-
   position: relative;
   overflow: hidden;
   height: 100vh; /* Adjust based on your needs */
@@ -28,18 +22,14 @@ div.spacer {
   height: 150px;
 }
 
-div.content
-{
+div.places-list-container {
   height: 100%;
   justify-content: center;
   display: flex;
   width: 100%;
 }
 
-div.places-list-container {
-  // height: 400px;
-
-  // position: absolute;
+main.content {
   top: 0;
   left: 0;
   width: 90%;

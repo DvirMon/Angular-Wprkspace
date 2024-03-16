@@ -1,0 +1,38 @@
+<div class="login-page-wrapper">
+  <div class="login-wrapper">
+    <to-flip-container>
+      <to-login-form
+        class="front"
+        [serverError]="serverError()"
+        (login)="onSignIn($event)"
+        (google)="onSignIn($event)"
+        (otp)="onOtpSignIn($event)"
+        (emailLink)="onEmailLinkSignIn($event)"
+        (forget)="onForgetPassword()">
+      </to-login-form>
+
+      @if(showOtp()){
+
+      <ng-container class="back">
+        <to-otp-login-form
+          (otpSignIn)="onSignIn($event)"
+          (signInWithEmailAndPassword)="onEmailAndPassword()">
+        </to-otp-login-form>
+      </ng-container>
+      } @else {
+
+      <ng-container class="back">
+        <to-email-link-form
+          (emailLinkSignIn)="onEmailLink($event)"></to-email-link-form>
+      </ng-container>
+      }
+    </to-flip-container>
+
+    <to-card-button
+      class="front"
+      [routerLink]="'/register'"
+      label="Don't have an account?"
+      boldLabel="Sign up"></to-card-button>
+  </div>
+  <div class="login-info-card"></div>
+</div>

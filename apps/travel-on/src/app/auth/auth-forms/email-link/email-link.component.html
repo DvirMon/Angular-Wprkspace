@@ -1,0 +1,45 @@
+<mat-card-header class="center-header">
+  <img
+    ngSrc="../../../assets/images/logo2.png"
+    width="60"
+    height="60"
+    priority
+    alt="logo" />
+</mat-card-header>
+<mat-card-content>
+  <to-divider-header label="Sign In"></to-divider-header>
+  <div class="login-form-wrapper">
+    <section class="email-password-wrapper">
+      <button
+        mat-raised-button
+        color="accent"
+        type="submit"
+        [disableRipple]="true">
+        Sign-In with Email and Password
+      </button>
+    </section>
+
+    <to-divider-header label="or"></to-divider-header>
+    <section class="email-link-wrapper">
+      <header class="header">
+        <to-info-card text="Enter Your Email Address"></to-info-card>
+      </header>
+      <form>
+        <to-form-input
+          [control]="formControl"
+          key="email"
+          [label]="'email' | titlecase">
+        </to-form-input>
+
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disableRipple]="true"
+          (click)="onSubmit(formControl.value)">
+          Sign-In with Email Link
+        </button>
+      </form>
+    </section>
+  </div>
+</mat-card-content>

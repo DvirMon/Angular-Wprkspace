@@ -1,0 +1,21 @@
+@use "variables" as main;
+
+:host {
+  div.reset-page-wrapper {
+    height: 100%;
+    background-image: url("../../../assets/images/backgrounds/reset.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  div.reset-wrapper {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: main.spacing(2);
+  }
+}

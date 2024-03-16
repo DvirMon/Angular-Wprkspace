@@ -25,6 +25,7 @@ import { FloatingButtonComponent } from '../../shared/components/floating-button
 import { FavoriteStore } from '../../store/favorites/favorite.store.service';
 import { Places } from '../../store/places/places.model';
 import { VacationsStore } from '../../store/places/places.store.service';
+import { PlacesStore } from '../../store/store.places';
 
 @Component({
   selector: 'to-places',
@@ -41,6 +42,8 @@ import { VacationsStore } from '../../store/places/places.store.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlacesComponent {
+
+  #storePlaces = inject(PlacesStore);
   
   parallaxImage =
     viewChild.required<ElementRef<HTMLDivElement>>('parallaxImage');
@@ -53,11 +56,11 @@ export class PlacesComponent {
   #favoriteStore: FavoriteStore = inject(FavoriteStore);
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
 
-  protected readonly places: Signal<Places[]>;
-  protected readonly selection: Signal<Record<string, boolean>>;
+  public readonly places: Signal<Places[]>;
+  public readonly selection: Signal<Record<string, boolean>>;
 
   constructor() {
-    this.places = inject(VacationsStore).getPlaces();
+    this.places = this.#storePlaces.places;
     this.selection = this._getSelectionFromRoute();
   }
 

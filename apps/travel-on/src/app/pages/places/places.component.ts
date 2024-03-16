@@ -1,11 +1,12 @@
-import { CommonModule, ViewportScroller } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  HostListener,
   Injector,
+  OnInit,
   Signal,
+  effect,
   inject,
   input,
   runInInjectionContext,
@@ -24,8 +25,7 @@ import {
 import { FloatingButtonComponent } from '../../shared/components/floating-button/floating-button.component';
 import { FavoriteStore } from '../../store/favorites/favorite.store.service';
 import { Places } from '../../store/places/places.model';
-import { VacationsStore } from '../../store/places/places.store.service';
-import { PlacesStore } from '../../store/store.places';
+import { SignalStore } from '../../store/store';
 
 @Component({
   selector: 'to-places',
@@ -41,27 +41,31 @@ import { PlacesStore } from '../../store/store.places';
   styleUrls: ['./places.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PlacesComponent {
+export class PlacesComponent implements OnInit {
+  private readonly injector = inject(Injector);
+  #store = inject(SignalStore);
+  private readonly route: ActivatedRoute = inject(ActivatedRoute);
 
-  #storePlaces = inject(PlacesStore);
-  
   parallaxImage =
     viewChild.required<ElementRef<HTMLDivElement>>('parallaxImage');
   scrollContent =
     viewChild.required<ElementRef<HTMLDivElement>>('parallaxImage');
 
-  userId = input<string>;
-  private readonly injector = inject(Injector);
+  userId = input.required<string>();
 
   #favoriteStore: FavoriteStore = inject(FavoriteStore);
-  private readonly route: ActivatedRoute = inject(ActivatedRoute);
 
   public readonly places: Signal<Places[]>;
   public readonly selection: Signal<Record<string, boolean>>;
 
   constructor() {
-    this.places = this.#storePlaces.places;
+    this.places = this.#store.places;
     this.selection = this._getSelectionFromRoute();
+  }
+
+  
+  ngOnInit(): void {
+    this.#store.loadFavorites(this.userId)
   }
 
   private _getSelectionFromRoute(): Signal<Record<string, boolean>> {
@@ -85,7 +89,6 @@ export class PlacesComponent {
     const offset = this.scrollContent().nativeElement.scrollTop;
     this.parallaxImage().nativeElement.style.transform = `translateY(${
       offset * 0.5
-      }px)`;
-    
+    }px)`;
   }
 }

@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import {
   CollectionReference,
   DocumentData,
@@ -13,16 +13,17 @@ import {
   query,
   updateDoc,
   where,
-} from "@angular/fire/firestore";
-import { Observable, from, iif, of, switchMap } from "rxjs";
-import { mapQuerySnapshotDoc } from "../../shared/helpers";
-import { Favorite } from "./favorite.model";
+} from '@angular/fire/firestore';
+import { Observable, from, iif, map, of, switchMap } from 'rxjs';
+import { mapQuerySnapshotDoc } from '../../shared/helpers';
+import { Favorite } from './favorite.model';
+import { EntityResult } from '@dom';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class FavoriteHttpService {
-  private readonly FAVORITES_COLLECTION = "favorites";
+  private readonly FAVORITES_COLLECTION = 'favorites';
   private readonly favoritesRef: CollectionReference<Favorite>;
 
   constructor(private readonly firestore: Firestore) {
@@ -34,7 +35,7 @@ export class FavoriteHttpService {
 
   public getFavorite$(userId: string): Observable<Favorite> {
     const querySnapshot$ = from(
-      getDocs(query(this.favoritesRef, where("userId", "==", userId)))
+      getDocs(query(this.favoritesRef, where('userId', '==', userId)))
     );
 
     const trueResult$ = querySnapshot$.pipe(
@@ -49,6 +50,29 @@ export class FavoriteHttpService {
       switchMap((querySnapshot: QuerySnapshot<Favorite>) =>
         iif(() => querySnapshot.empty, trueResult$, falseResult$)
       )
+    );
+  }
+
+  public loadFavorites(userId: string): Observable<EntityResult<Favorite>> {
+    const querySnapshot$ = from(
+      getDocs(query(this.favoritesRef, where('userId', '==', userId)))
+    );
+
+    const trueResult$ = querySnapshot$.pipe(
+      switchMap(() =>
+        this._createNewFavoriteDocument$(this.favoritesRef, userId)
+      )
+    );
+
+    const falseResult$ = querySnapshot$.pipe(mapQuerySnapshotDoc<Favorite>());
+
+    return querySnapshot$.pipe(
+      switchMap((querySnapshot: QuerySnapshot<Favorite>) =>
+        iif(() => querySnapshot.empty, trueResult$, falseResult$)
+      ),
+      map((res) => {
+        return { content: [res] };
+      })
     );
   }
 
@@ -72,7 +96,7 @@ export class FavoriteHttpService {
     userId: string
   ): Observable<QuerySnapshot<Favorite>> {
     return from(
-      getDocs(query(this.favoritesRef, where("userId", "==", userId)))
+      getDocs(query(this.favoritesRef, where('userId', '==', userId)))
     );
   }
 

@@ -1,0 +1,83 @@
+@use "color-palettes" as palettes;
+
+$colors: (
+  primary: primary(50),
+  accent: accent(50),
+);
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 840px,
+  lg: 992px,
+  xl: 1200px,
+);
+
+@function primary($code) {
+  @return map-get(palettes.primary-palette(), $code);
+}
+
+@function accent($code) {
+  @return map-get(palettes.accent-palette(), $code);
+}
+
+@function spacing($padding) {
+  @return $padding * 8px;
+}
+
+@function size($breakpoints) {
+  @return map-get($grid-breakpoints, $breakpoints);
+}
+
+@mixin flex-center($direction: row, $gap: 1) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: center;
+  align-items: center;
+  gap: #{$gap * 8 + "px"}; // Include "px" here, as it will be used in the "gap" CSS property
+}
+
+@mixin cardForm {
+  mat-card {
+    padding: spacing(2);
+
+    mat-card-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: spacing(3);
+
+      section {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+
+        mat-icon {
+          scale: 1.5;
+        }
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: spacing(3);
+      }
+    }
+  }
+}
+
+// Mixin for flexbox layout
+@mixin flexLayout(
+  $direction: column,
+  $justify: center,
+  $align: center,
+  $gap: null
+) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  @if $gap != null {
+    gap: spacing($gap);
+  }
+}

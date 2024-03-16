@@ -15,7 +15,7 @@ import {
   ContactSubmitEvent,
   MessageType,
 } from "../otp-contact-form/otp-contact-form.component";
-import { CodeInputModule } from "angular-code-input";
+// import { CodeInputModule } from "angular-code-input";
 import { OtpFormTemplateComponent } from "../otp-form-template/otp-form-template.component";
 
 @Component({
@@ -30,7 +30,7 @@ import { OtpFormTemplateComponent } from "../otp-form-template/otp-form-template
     MatInputModule,
     MatButtonModule,
     MatIconModule,
-    CodeInputModule,
+    // CodeInputModule,
     OtpFormTemplateComponent,
   ],
   templateUrl: "./otp-form.component.html",

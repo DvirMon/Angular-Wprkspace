@@ -7,11 +7,11 @@ import {
 import { CommonModule } from "@angular/common";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
-import { AuthStore } from "src/app/auth/store/auth.store.service";
-import { getFromStorage } from "src/app/shared/helpers";
-import { SignInEvent, SignInMethod } from "src/app/auth";
-import { InfoCardComponent } from "src/app/shared/components/info-card/info-card.component";
-import { StorageKey } from "src/app/shared/constants";
+import { SignInEvent, SignInMethod } from "../../auth";
+import { AuthStore } from "../../auth/store/auth.store.service";
+import { InfoCardComponent } from "../../shared/components/info-card/info-card.component";
+import { StorageKey } from "../../shared/constants";
+import { getFromStorage } from "../../shared/helpers";
 
 @Component({
   selector: "to-verify",

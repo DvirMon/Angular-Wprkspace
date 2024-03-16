@@ -16,10 +16,11 @@ import {
 import { MatButton } from "@angular/material/button";
 import { MatCard, MatCardContent } from "@angular/material/card";
 import { MatIcon } from "@angular/material/icon";
-import { DividerHeaderComponent } from "src/app/shared/components/divider-header/divider-header.component";
-import { FormInputComponent } from "src/app/shared/components/form-input/form-input.component";
-import { getFormKeys } from "src/app/shared/components/form-input/form.helper";
-import { DEFAULT_EMAIL } from "src/app/shared/constants";
+import { DividerHeaderComponent } from "apps/travel-on/src/app/shared/components/divider-header/divider-header.component";
+import { FormInputComponent } from "apps/travel-on/src/app/shared/components/form-input/form-input.component";
+import { getFormKeys } from "apps/travel-on/src/app/shared/components/form-input/form.helper";
+import { DEFAULT_EMAIL } from "apps/travel-on/src/app/shared/constants";
+
 
 interface ResetContactForm {
   email: FormControl<string>;

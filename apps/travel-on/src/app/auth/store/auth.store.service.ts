@@ -11,11 +11,11 @@ import {
   of,
   switchMap,
 } from "rxjs";
-import { getFromStorage } from "src/app/shared/helpers";
 import { AuthServerError, SignInEvent, User } from "../utils/auth.model";
 import { AuthActions } from "./auth.actions";
 import { AuthSelectors } from "./auth.selectors";
-import { StorageKey } from "src/app/shared/constants";
+import { StorageKey } from "../../shared/constants";
+import { getFromStorage } from "../../shared/helpers";
 
 @Injectable({
   providedIn: "root",

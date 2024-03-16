@@ -16,9 +16,9 @@ import {
 import { MatButton } from "@angular/material/button";
 import { MatCard, MatCardContent } from "@angular/material/card";
 import { MatIcon } from "@angular/material/icon";
-import { DividerHeaderComponent } from "src/app/shared/components/divider-header/divider-header.component";
-import { FormInputComponent } from "src/app/shared/components/form-input/form-input.component";
-import { getFormKeys } from "src/app/shared/components/form-input/form.helper";
+import { DividerHeaderComponent } from "apps/travel-on/src/app/shared/components/divider-header/divider-header.component";
+import { FormInputComponent } from "apps/travel-on/src/app/shared/components/form-input/form-input.component";
+import { getFormKeys } from "apps/travel-on/src/app/shared/components/form-input/form.helper";
 
 interface ResetPasswordForm {
   newPassword: FormControl<string>;

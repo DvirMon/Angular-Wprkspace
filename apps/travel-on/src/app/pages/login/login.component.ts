@@ -1,4 +1,4 @@
-import { CommonModule } from "@angular/common";
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -8,13 +8,9 @@ import {
   inject,
   runInInjectionContext,
   signal,
-} from "@angular/core";
-
-import { FlipCardComponent } from "src/app/shared/components/flip-container/flip-container.component";
-import { FloatingButtonComponent } from "src/app/shared/components/floating-button/floating-button.component";
-
-import { MatButtonModule } from "@angular/material/button";
-import { Router } from "@angular/router";
+} from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { Router } from '@angular/router';
 import {
   AuthServerError,
   EmailLinkFormComponent,
@@ -22,13 +18,15 @@ import {
   OtpLoginFormComponent,
   SignInEvent,
   SignInMethod,
-} from "src/app/auth";
-import { AuthStore } from "src/app/auth/store/auth.store.service";
-import { CardButtonComponent } from "src/app/shared/components/card-button/card-button.component";
-import { FlipContainerService } from "src/app/shared/components/flip-container/flip-container.service";
+} from '../../auth';
+import { AuthStore } from '../../auth/store/auth.store.service';
+import { CardButtonComponent } from '../../shared/components/card-button/card-button.component';
+import { FlipCardComponent } from '../../shared/components/flip-container/flip-container.component';
+import { FlipContainerService } from '../../shared/components/flip-container/flip-container.service';
+import { FloatingButtonComponent } from '../../shared/components/floating-button/floating-button.component';
 
 @Component({
-  selector: "to-login-page",
+  selector: 'to-login-page',
   standalone: true,
   imports: [
     CommonModule,
@@ -40,8 +38,8 @@ import { FlipContainerService } from "src/app/shared/components/flip-container/f
     EmailLinkFormComponent,
     CardButtonComponent,
   ],
-  templateUrl: "./login.component.html",
-  styleUrls: ["./login.component.scss"],
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [FlipContainerService],
 })
@@ -85,7 +83,7 @@ export class LoginPageComponent {
 
   public onForgetPassword() {
     runInInjectionContext(this.#injector, () => {
-      inject(Router).navigateByUrl("reset");
+      inject(Router).navigateByUrl('reset');
     });
   }
 

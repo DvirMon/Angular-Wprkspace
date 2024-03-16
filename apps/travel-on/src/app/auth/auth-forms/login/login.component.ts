@@ -25,21 +25,11 @@ import { MatIconModule, MatIconRegistry } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { DomSanitizer } from "@angular/platform-browser";
 import { RouterModule } from "@angular/router";
-import { DividerHeaderComponent } from "src/app/shared/components/divider-header/divider-header.component";
-import { FormInputComponent } from "src/app/shared/components/form-input/form-input.component";
-
-import {
-  FormServerError,
-  getFormKeys,
-  handleServerError,
-} from "src/app/shared/components/form-input/form.helper";
-import {
-  AuthServerError,
-  EmailAndPasswordSignIn,
-  SignInEvent,
-  SignInMethod,
-} from "../../index";
-import { DEFAULT_EMAIL } from "src/app/shared/constants";
+import { DividerHeaderComponent } from "../../../shared/components/divider-header/divider-header.component";
+import { FormInputComponent } from "../../../shared/components/form-input/form-input.component";
+import { getFormKeys, handleServerError, FormServerError } from "../../../shared/components/form-input/form.helper";
+import { DEFAULT_EMAIL } from "../../../shared/constants";
+import { AuthServerError, SignInEvent, EmailAndPasswordSignIn, SignInMethod } from "../../utils";
 
 interface LoginForm {
   email: FormControl<string>;

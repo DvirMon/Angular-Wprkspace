@@ -57,6 +57,7 @@ export class LoginPageComponent {
   }
 
   public onSignIn(event: SignInEvent) {
+    console.log(event)
     this.#authStore.signIn(event);
   }
 

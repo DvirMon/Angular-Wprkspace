@@ -1,0 +1,22 @@
+@use "variables" as main;
+
+mat-card {
+  img {
+    height: 300px;
+    width: inherit;
+  }
+
+  .mat-mdc-card-header {
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .mat-mdc-card-content {
+    padding: main.spacing(2);
+  }
+
+  section.schedule {
+    display: flex;
+    flex-direction: column;
+    gap: main.spacing(1);
+  }
+}

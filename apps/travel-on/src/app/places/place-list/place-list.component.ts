@@ -22,7 +22,7 @@ export interface SelectionListChange {
 })
 export class PlacesListComponent {
   places = input.required<Places[]>();
-  selection = input.required<Record<string, number>>();
+  selection = input.required<Record<string, boolean>>();
 
   @Output() readonly selectionChanged: EventEmitter<SelectionListChange> =
     new EventEmitter<SelectionListChange>();

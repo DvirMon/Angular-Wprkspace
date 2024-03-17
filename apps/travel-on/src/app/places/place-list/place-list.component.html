@@ -3,7 +3,7 @@
     <section class="places-card-wrapper">
       <to-places-card
         [place]="v"
-        [selected]="!!selection()[v.id]"
+        [selected]="selection()[v.id]"
         (selectedChanged)="onSelectedChanged($event)"
       >
       </to-places-card>

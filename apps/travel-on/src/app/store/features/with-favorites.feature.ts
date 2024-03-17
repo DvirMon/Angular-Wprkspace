@@ -13,8 +13,8 @@ import {
   withMethods,
   withState,
 } from '@ngrx/signals';
-import { Favorite } from '../favorites/favorite.model';
 import { FavoriteHttpService } from '../favorites/favorite.https.ervice';
+import { Favorite } from '../favorites/favorite.model';
 
 const SLICE = 'favorite';
 
@@ -24,58 +24,55 @@ type FavoriteSelection = { placeId: string; selected: boolean };
 
 export function withFavorites(Loader: LoaderService<FavoritesLoader>) {
   return signalStoreFeature(
-    withState({ favorite: [] }),
+    withState<{ favorite: Favorite[] }>({ favorite: [] }),
     withMethods((store, service = inject(FavoriteHttpService)) => {
       const loader = createSliceLoader(Loader, 'loadFavorites');
       return {
         loadFavorites: loadSlice(loader, store, SLICE),
-        updateFavorite: (
-          currentSelection: FavoriteSelection,
-        ) => {
-          // const vacationIds = updateFavoriteMap(currentSelection);
+        updateFavorite: (currentSelection: FavoriteSelection) => {
+          const { placeId, selected } = currentSelection;
+          const { vacationIds } = store.favorite()[0];
 
-          // patchState(store, (state) => ({
-          //   favorite: { ...state.favorite, vacationIds },
-          // }));
+          if (selected) {
+            addPlaceIdToVacationIds(placeId, vacationIds);
+          } else {
+            removePlaceIdFromVacationIds(placeId, vacationIds);
+          }
+
+          patchState(store, (state) => ({
+            favorite: { ...state.favorite, vacationIds },
+          }));
         },
       };
     }),
     withComputed(({ favorite }) => ({
-      favoriteMap: computed(() => mapIds(favorite()[0])),
+      favoriteMap: computed(() => mapVacationIdsToRecord(favorite()[0])),
     }))
   );
 }
 
-function mapIds(favorite: Favorite) {
+function mapVacationIdsToRecord(favorite: Favorite): Record<string, boolean> {
   if (favorite) {
-    return favorite.vacationIds.reduce((acc, value, index) => {
+    return favorite.vacationIds.reduce((acc, value) => {
       return {
         ...acc,
-        [value]: index,
+        [value]: true,
       };
-    }, {} as Record<string, number>);
+    }, {} as Record<string, boolean>);
   } else {
     return {};
   }
 }
 
-function updateFavoriteMap(
-  currentSelection: FavoriteSelection,
-  favoriteMap: Record<string, boolean>
-) {
-  const { placeId, selected } = currentSelection;
-  let newSelection = { ...favoriteMap };
+// Function to add a placeId to vacationIds if selected
+function addPlaceIdToVacationIds(placeId: string, vacationIds: string[]) {
+  vacationIds.push(placeId);
+}
 
-  if (selected) {
-    newSelection = {
-      ...favoriteMap,
-      [placeId]: selected,
-    };
-  } else {
-    delete newSelection[placeId];
+// Function to remove a placeId from vacationIds if deselected
+function removePlaceIdFromVacationIds(placeId: string, vacationIds: string[]) {
+  const index = vacationIds.indexOf(placeId);
+  if (index !== -1) {
+    vacationIds.splice(index, 1);
   }
-
-  console.log(newSelection);
-
-  return Object.keys(newSelection);
 }

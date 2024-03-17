@@ -52,7 +52,7 @@ export class PlacesComponent implements OnInit {
   #favoriteStore: FavoriteStore = inject(FavoriteStore);
 
   public readonly places: Signal<Places[]>;
-  public readonly selection: Signal<Record<string, number>>;
+  public readonly selection: Signal<Record<string, boolean>>;
 
   constructor() {
     this.places = this.#store.places;

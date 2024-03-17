@@ -24,7 +24,8 @@
             "prefix": "to",
             "style": "kebab-case"
           }
-        ]
+        ],
+        "@ngrx/avoid-cyclic-effects": "error"
       }
     },
     {

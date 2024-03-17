@@ -1,6 +1,6 @@
-import { Injectable } from "@angular/core";
-import { Router } from "@angular/router";
-import { Actions, createEffect, ofType } from "@ngrx/effects";
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import {
   EMPTY,
   catchError,
@@ -10,17 +10,17 @@ import {
   of,
   switchMap,
   tap,
-} from "rxjs";
+} from 'rxjs';
 
-import { AuthDialogEvent, authDialogMap } from "../auth-dialogs";
-import { mapFirebaseCredentials } from "../utils/auth.helpers";
-import { AuthEvent } from "../utils/auth.model";
-import { AuthService } from "../utils/auth.service";
-import { FirebaseError } from "../utils/fireauth.service";
-import { AuthActions } from "./auth.actions";
-import { StorageKey } from "../../shared/constants";
-import { DialogService } from "../../shared/dialog/dialog.service";
-import { setToStorage, clearStorage } from "../../shared/helpers";
+import { StorageKey } from '../../shared/constants';
+import { DialogService } from '../../shared/dialog/dialog.service';
+import { clearStorage, setToStorage } from '../../shared/helpers';
+import { AuthDialogEvent, authDialogMap } from '../auth-dialogs';
+import { mapFirebaseCredentials } from '../utils/auth.helpers';
+import { AuthEvent } from '../utils/auth.model';
+import { AuthService } from '../utils/auth.service';
+import { FirebaseError } from '../utils/fireauth.service';
+import { AuthActions } from './auth.actions';
 
 @Injectable()
 export class AuthEffects {
@@ -81,7 +81,7 @@ export class AuthEffects {
           this.authService
             .addDocument(user)
             .pipe(
-              tap((user) => this.router.navigate(["/places/", user.userId]))
+              tap((user) => this.router.navigate(['/places/', user.userId]))
             )
         )
       ),
@@ -122,7 +122,7 @@ export class AuthEffects {
       ofType(AuthActions.sendResetEmail),
       switchMap(({ email }) =>
         // this.resetService.sendResetEmail(email).pipe(
-        of("email").pipe(
+        of('email').pipe(
           map(() =>
             AuthActions.sendResetEmailSuccess({
               email,
@@ -147,10 +147,10 @@ export class AuthEffects {
       ofType(AuthActions.confirmResetPassword),
       switchMap(({ oobCode, newPassword }) =>
         // this.resetService.confirmPasswordReset(oobCode, newPassword).pipe(
-        of("eil").pipe(
+        of('eil').pipe(
           map(() =>
             AuthActions.confirmResetPasswordSuccess({
-              email: "test",
+              email: 'test',
               event: AuthDialogEvent.RESET_PASSWORD,
             })
           ),
@@ -189,7 +189,7 @@ export class AuthEffects {
       this.actions$.pipe(
         ofType(AuthActions.logout),
         tap(() => clearStorage()),
-        tap(() => this.router.navigateByUrl("/"))
+        tap(() => this.router.navigateByUrl('/'))
       ),
     { dispatch: false }
   );

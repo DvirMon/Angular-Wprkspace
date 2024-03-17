@@ -42,19 +42,13 @@ export class ResetPageComponent {
   }
 
   public onResetEmail(email: string) {
-    // runInInjectionContext(this.#injector, () => {
-    //   inject(Router).navigateByUrl(
-    //     "reset?mode=resetPassword&oobCode=gWBFAp0v3FTiDu8tbLLudvfqddTZ3_jEmiB0y2kqLz4AAAGOHee8YA & apiKey=AIzaSyAWE61Vm0CpfUtHq4G48aJVMbdY6REEtrA & lang=en"
-    //   );
-    // });
-
     this.#authStore.sendResetEmail(email);
   }
 
   public onResetPassword(newPassword: string) {
     const oobCode = this.paramsSignal()["oobCode"];
-    // this.#authStore.confirmResetPassword(newPassword, oobCode);
-    this.#authStore.sendResetEmail("email");
+    this.#authStore.confirmResetPassword(newPassword, oobCode);
+    // this.#authStore.sendResetEmail("email");
 
     // runInInjectionContext(this.#injector, () => {
     //   inject(Router).navigateByUrl("reset");

@@ -70,12 +70,9 @@ export class PlacesComponent implements OnInit {
   //   );
   // }
 
-  onSelectionChanged(event: SelectionListChange) {
+  async onSelectionChanged(event: SelectionListChange) {
     const { currentSelection } = event;
-    // this.#favoriteStore.updateSelection(selection);
-    // this.#favoriteStore.updateFavorites();
-
-    this.#store.updateFavorite(currentSelection);
+    await this.#store.updateFavorite(currentSelection);
   }
 
   onLogout(): void {

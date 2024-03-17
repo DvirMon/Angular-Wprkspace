@@ -11,13 +11,14 @@ import {
   doc,
   getDocs,
   query,
+  setDoc,
   updateDoc,
   where,
 } from '@angular/fire/firestore';
+import { EntityResult } from '@dom';
 import { Observable, from, iif, map, of, switchMap } from 'rxjs';
 import { mapQuerySnapshotDoc } from '../../shared/helpers';
 import { Favorite } from './favorite.model';
-import { EntityResult } from '@dom';
 
 @Injectable({
   providedIn: 'root',
@@ -133,5 +134,11 @@ export class FavoriteHttpService {
       id: favoriteDocId,
     };
     return from(updateDoc(favoriteDocRef, updatedFavorite));
+  }
+
+
+  public updateFavoriteDoc(docId: string, data: Favorite) {
+    const favoriteDocRef = doc(this.favoritesRef, docId);
+    return setDoc<Favorite, DocumentData>(favoriteDocRef, data);
   }
 }

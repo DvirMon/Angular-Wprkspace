@@ -3,10 +3,10 @@ import {
   Loader,
   LoaderService,
   createSliceLoader,
-  loadSlice
+  loadSlice,
 } from '@dom';
 import { signalStoreFeature, withMethods, withState } from '@ngrx/signals';
-import { Places } from '../places/places.model';
+import { Places } from '../../places/places.model';
 
 interface PlacesState {
   places: Places[];

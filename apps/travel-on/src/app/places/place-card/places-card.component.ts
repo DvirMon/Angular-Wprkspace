@@ -1,18 +1,18 @@
-import { CommonModule, NgOptimizedImage } from "@angular/common";
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
   Output,
   input,
-} from "@angular/core";
-import { MatCardModule } from "@angular/material/card";
+} from '@angular/core';
+import { MatCardModule } from '@angular/material/card';
 import {
   ButtonSelectionChangedEvent,
   PlaceCardButtonComponent,
-} from "../place-card-button/place-card-button.component";
-import { Places } from "../../store/places/places.model";
-import { DateTimestampPipe } from "../../shared/pipes/date.pipe";
+} from '../place-card-button/place-card-button.component';
+import { Places } from '../places.model';
+import { DateTimestampPipe } from '../../shared/pipes/date.pipe';
 
 export interface SelectChangedEvent {
   /** The source button of the event. */
@@ -21,7 +21,7 @@ export interface SelectChangedEvent {
   selected: boolean;
 }
 @Component({
-  selector: "to-places-card",
+  selector: 'to-places-card',
   standalone: true,
   imports: [
     CommonModule,
@@ -30,8 +30,8 @@ export interface SelectChangedEvent {
     MatCardModule,
     PlaceCardButtonComponent,
   ],
-  templateUrl: "./places-card.component.html",
-  styleUrls: ["./places-card.component.scss"],
+  templateUrl: './places-card.component.html',
+  styleUrls: ['./places-card.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlacesCardComponent {

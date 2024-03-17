@@ -8,7 +8,7 @@ import {
   limit,
 } from '@angular/fire/firestore';
 import { Observable, from, map } from 'rxjs';
-import { Places } from '../store/places/places.model';
+import { Places } from './places.model';
 import { EntityResult } from '@dom';
 
 @Injectable({

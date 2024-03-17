@@ -18,7 +18,7 @@ import {
 } from '../../places/place-list/place-list.component';
 import { FloatingButtonComponent } from '../../shared/components/floating-button/floating-button.component';
 import { scrollAnimation } from '../../shared/helpers';
-import { Places } from '../../store/places/places.model';
+import { Places } from '../../places/places.model';
 import { SignalStore } from '../../store/store';
 
 @Component({

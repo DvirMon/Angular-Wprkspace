@@ -4,7 +4,7 @@ import {
   SelectChangedEvent,
   PlacesCardComponent,
 } from '../place-card/places-card.component';
-import { Places } from '../../store/places/places.model';
+import { Places } from '../places.model';
 
 type PlaceSelection = { placeId: string; selected: boolean };
 

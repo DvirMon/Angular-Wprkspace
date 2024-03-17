@@ -5,6 +5,7 @@ import {
   EventEmitter,
   Output,
   input,
+  signal,
 } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import {
@@ -39,15 +40,12 @@ export class PlacesCardComponent {
 
   selected = input.required<boolean>();
 
+  showOverlay = signal(false);
+
   @Output() readonly selectedChanged: EventEmitter<SelectChangedEvent> =
     new EventEmitter();
 
-  public onSelectedChanged(value: ButtonSelectionChangedEvent): void {
-    const event = this._createChangeEvent(value);
-    this.selectedChanged.emit(event);
-  }
-
-  private _createChangeEvent(
+  private _createChangedEvent(
     value: ButtonSelectionChangedEvent
   ): SelectChangedEvent {
     const event: SelectChangedEvent = {
@@ -55,5 +53,14 @@ export class PlacesCardComponent {
       source: this,
     };
     return event;
+  }
+
+  public onSelectedChanged(value: ButtonSelectionChangedEvent): void {
+    const event = this._createChangedEvent(value);
+    this.selectedChanged.emit(event);
+  }
+
+  onToggleOverlay() {
+    this.showOverlay.update((value) => !value);
   }
 }

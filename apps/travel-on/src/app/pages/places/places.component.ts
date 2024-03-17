@@ -6,16 +6,12 @@ import {
   Injector,
   OnInit,
   Signal,
-  effect,
   inject,
   input,
   runInInjectionContext,
   viewChild,
 } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { MatToolbar } from '@angular/material/toolbar';
-import { ActivatedRoute, Data } from '@angular/router';
-import { map } from 'rxjs';
 import { AuthStore } from '../../auth/store/auth.store.service';
 import { PlacesCardComponent } from '../../places/place-card/places-card.component';
 import {
@@ -44,7 +40,7 @@ import { SignalStore } from '../../store/store';
 export class PlacesComponent implements OnInit {
   private readonly injector = inject(Injector);
   #store = inject(SignalStore);
-  private readonly route: ActivatedRoute = inject(ActivatedRoute);
+  // private readonly route: ActivatedRoute = inject(ActivatedRoute);
 
   parallaxImage =
     viewChild.required<ElementRef<HTMLDivElement>>('parallaxImage');
@@ -56,34 +52,33 @@ export class PlacesComponent implements OnInit {
   #favoriteStore: FavoriteStore = inject(FavoriteStore);
 
   public readonly places: Signal<Places[]>;
-  public readonly selection: Signal<Record<string, boolean>>;
+  public readonly selection: Signal<Record<string, number>>;
 
   constructor() {
     this.places = this.#store.places;
-    this.selection = this.#store.favoriteMap
-
-    
+    this.selection = this.#store.favoriteMap;
   }
 
-  
   ngOnInit(): void {
-    this.#store.loadFavorites(this.userId)
+    this.#store.loadFavorites(this.userId);
   }
 
-  private _getSelectionFromRoute(): Signal<Record<string, boolean>> {
-    return toSignal(
-      this.route.data.pipe(map((data: Data) => data['placesResolver'])),
-      { initialValue: {} }
-    );
-  }
+  // private _getSelectionFromRoute(): Signal<Record<string, boolean>> {
+  //   return toSignal(
+  //     this.route.data.pipe(map((data: Data) => data['placesResolver'])),
+  //     { initialValue: {} }
+  //   );
+  // }
 
   onSelectionChanged(event: SelectionListChange) {
-    const { selection } = event;
-    this.#favoriteStore.updateSelection(selection);
-    this.#favoriteStore.updateFavorites();
+    const { currentSelection } = event;
+    // this.#favoriteStore.updateSelection(selection);
+    // this.#favoriteStore.updateFavorites();
+
+    this.#store.updateFavorite(currentSelection);
   }
 
-  onButtonClick(): void {
+  onLogout(): void {
     runInInjectionContext(this.injector, () => inject(AuthStore).logout());
   }
 

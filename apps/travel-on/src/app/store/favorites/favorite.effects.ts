@@ -35,7 +35,6 @@ export class FavoritesEffects {
         this.store
           .select(FavoritesSelectors.selectFavorite)
           .pipe(
-            tap((value) => console.log(value)),
             switchMap((favorite) =>
               this.favoriteService.updateFavorite$(
                 favorite?.userId as string,

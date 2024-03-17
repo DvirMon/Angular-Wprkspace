@@ -1,16 +1,14 @@
 <div class="places-wrapper">
-  <div class="parallax-image" #parallaxImage></div>
-
+  <div class="parallax-image"></div>
   <header>
-    <div class="spacer">
-    </div>
+    <div class="spacer"></div>
     <to-floating-button
       [label]="'Logout'"
       (clicked)="onLogout()"
     ></to-floating-button>
   </header>
   <div class="places-list-container">
-    <main class="content" #scrollContent (scroll)="onContentScroll()">
+    <main class="content" [@scrollAnimation]>
       <to-places-list
         [places]="places()"
         [selection]="selection()"

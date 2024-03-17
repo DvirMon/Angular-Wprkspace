@@ -1,6 +1,13 @@
-import { QuerySnapshot } from "@angular/fire/firestore";
-import { OperatorFunction, catchError, map, throwError } from "rxjs";
-import { StorageKey } from "./constants";
+import { QuerySnapshot } from '@angular/fire/firestore';
+import { OperatorFunction, catchError, map, throwError } from 'rxjs';
+import { StorageKey } from './constants';
+import {
+  trigger,
+  transition,
+  style,
+  animate,
+  query,
+} from '@angular/animations';
 
 function setRecordItem(
   record: Record<string, boolean>,
@@ -66,8 +73,36 @@ export function mapQuerySnapshotDoc<T>(): OperatorFunction<
             id: doc.id,
           } as T;
         }
-        throw new Error("Document not found"); // Throw an error when no document is found
+        throw new Error('Document not found'); // Throw an error when no document is found
       }),
       catchError((error) => throwError(() => new Error(error)))
     );
 }
+
+export const scrollAnimation = trigger('scrollAnimation', [
+  transition('* => *', [
+    query(
+      ':enter, :leave',
+      [
+        style({
+          position: 'absolute',
+          left: 0,
+          width: '100%',
+          opacity: 0,
+          transform: 'translateY(100px)',
+        }),
+      ],
+      { optional: true }
+    ),
+    query(
+      ':enter',
+      [
+        animate(
+          '1500ms ease',
+          style({ opacity: 1, transform: 'translateY(0)' })
+        ),
+      ],
+      { optional: true }
+    ),
+  ]),
+]);

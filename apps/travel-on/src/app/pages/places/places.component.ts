@@ -1,17 +1,15 @@
-import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  ElementRef,
   Injector,
   OnInit,
   Signal,
   inject,
   input,
   runInInjectionContext,
-  viewChild,
 } from '@angular/core';
 import { MatToolbar } from '@angular/material/toolbar';
+import { ParallaxDirective } from '@dom';
 import { AuthStore } from '../../auth/store/auth.store.service';
 import { PlacesCardComponent } from '../../places/place-card/places-card.component';
 import {
@@ -19,6 +17,7 @@ import {
   SelectionListChange,
 } from '../../places/place-list/place-list.component';
 import { FloatingButtonComponent } from '../../shared/components/floating-button/floating-button.component';
+import { scrollAnimation } from '../../shared/helpers';
 import { Places } from '../../store/places/places.model';
 import { SignalStore } from '../../store/store';
 
@@ -26,28 +25,21 @@ import { SignalStore } from '../../store/store';
   selector: 'to-places',
   standalone: true,
   imports: [
-    CommonModule,
     MatToolbar,
     PlacesListComponent,
     PlacesCardComponent,
     FloatingButtonComponent,
+    ParallaxDirective,
   ],
   templateUrl: './places.component.html',
   styleUrls: ['./places.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlacesComponent implements OnInit {
-  private readonly injector = inject(Injector);
+  #injector = inject(Injector);
   #store = inject(SignalStore);
-  // private readonly route: ActivatedRoute = inject(ActivatedRoute);
-
-  parallaxImage =
-    viewChild.required<ElementRef<HTMLDivElement>>('parallaxImage');
-  scrollContent =
-    viewChild.required<ElementRef<HTMLDivElement>>('parallaxImage');
 
   userId = input.required<string>();
-
 
   public readonly places: Signal<Places[]>;
   public readonly selection: Signal<Record<string, boolean>>;
@@ -61,26 +53,12 @@ export class PlacesComponent implements OnInit {
     this.#store.loadFavorites(this.userId);
   }
 
-  // private _getSelectionFromRoute(): Signal<Record<string, boolean>> {
-  //   return toSignal(
-  //     this.route.data.pipe(map((data: Data) => data['placesResolver'])),
-  //     { initialValue: {} }
-  //   );
-  // }
-
   async onSelectionChanged(event: SelectionListChange) {
     const { currentSelection } = event;
     await this.#store.updateFavorite(currentSelection);
   }
 
   onLogout(): void {
-    runInInjectionContext(this.injector, () => inject(AuthStore).logout());
-  }
-
-  onContentScroll() {
-    const offset = this.scrollContent().nativeElement.scrollTop;
-    this.parallaxImage().nativeElement.style.transform = `translateY(${
-      offset * 0.5
-    }px)`;
+    runInInjectionContext(this.#injector, () => inject(AuthStore).logout());
   }
 }

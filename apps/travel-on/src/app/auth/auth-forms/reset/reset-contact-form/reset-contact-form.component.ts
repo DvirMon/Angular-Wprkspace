@@ -1,33 +1,34 @@
-import { JsonPipe, TitleCasePipe } from "@angular/common";
+import { JsonPipe, TitleCasePipe } from '@angular/common';
 import {
   Component,
   EventEmitter,
   Output,
   WritableSignal,
   inject,
-} from "@angular/core";
+} from '@angular/core';
 import {
   FormControl,
   FormGroup,
   NonNullableFormBuilder,
   ReactiveFormsModule,
   Validators,
-} from "@angular/forms";
-import { MatButton } from "@angular/material/button";
-import { MatCard, MatCardContent } from "@angular/material/card";
-import { MatIcon } from "@angular/material/icon";
-import { DividerHeaderComponent } from "apps/travel-on/src/app/shared/components/divider-header/divider-header.component";
-import { FormInputComponent } from "apps/travel-on/src/app/shared/components/form-input/form-input.component";
-import { getFormKeys } from "apps/travel-on/src/app/shared/components/form-input/form.helper";
-import { DEFAULT_EMAIL } from "apps/travel-on/src/app/shared/constants";
-
+} from '@angular/forms';
+import { MatButton } from '@angular/material/button';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { MatIcon } from '@angular/material/icon';
+import { DEFAULT_EMAIL } from '../../../utils/constants';
+import {
+  FormInputComponent,
+  DividerHeaderComponent,
+  getFormKeys,
+} from '../../../../shared/components';
 
 interface ResetContactForm {
   email: FormControl<string>;
 }
 
 @Component({
-  selector: "to-reset-contact-form",
+  selector: 'to-reset-contact-form',
   standalone: true,
   imports: [
     ReactiveFormsModule,
@@ -40,8 +41,8 @@ interface ResetContactForm {
     FormInputComponent,
     DividerHeaderComponent,
   ],
-  templateUrl: "./reset-contact-form.component.html",
-  styleUrl: "./reset-contact-form.component.scss",
+  templateUrl: './reset-contact-form.component.html',
+  styleUrl: './reset-contact-form.component.scss',
 })
 export class ResetContactFormComponent {
   public readonly resetFormGroup: FormGroup<ResetContactForm>;

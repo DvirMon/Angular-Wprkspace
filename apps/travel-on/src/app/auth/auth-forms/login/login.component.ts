@@ -1,4 +1,4 @@
-import { CommonModule, NgOptimizedImage, TitleCasePipe } from "@angular/common";
+import { CommonModule, NgOptimizedImage, TitleCasePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -8,7 +8,7 @@ import {
   effect,
   inject,
   input,
-} from "@angular/core";
+} from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -17,19 +17,28 @@ import {
   ReactiveFormsModule,
   ValidationErrors,
   Validators,
-} from "@angular/forms";
-import { MatButtonModule } from "@angular/material/button";
-import { MatCardModule } from "@angular/material/card";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatIconModule, MatIconRegistry } from "@angular/material/icon";
-import { MatInputModule } from "@angular/material/input";
-import { DomSanitizer } from "@angular/platform-browser";
-import { RouterModule } from "@angular/router";
-import { DividerHeaderComponent } from "../../../shared/components/divider-header/divider-header.component";
-import { FormInputComponent } from "../../../shared/components/form-input/form-input.component";
-import { getFormKeys, handleServerError, FormServerError } from "../../../shared/components/form-input/form.helper";
-import { DEFAULT_EMAIL } from "../../../shared/constants";
-import { AuthServerError, SignInEvent, EmailAndPasswordSignIn, SignInMethod } from "../../utils";
+} from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { DomSanitizer } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
+import { DividerHeaderComponent } from '../../../shared/components/divider-header/divider-header.component';
+import { FormInputComponent } from '../../../shared/components/form-input/form-input.component';
+import {
+  FormServerError,
+  getFormKeys,
+  handleServerError,
+} from '../../../shared/components/form-input/form.helper';
+import {
+  AuthServerError,
+  EmailAndPasswordSignIn,
+  SignInEvent,
+  SignInMethod,
+} from '../../utils';
+import { DEFAULT_EMAIL } from '../../utils/constants';
 
 interface LoginForm {
   email: FormControl<string>;
@@ -37,7 +46,7 @@ interface LoginForm {
 }
 
 @Component({
-  selector: "to-login-form",
+  selector: 'to-login-form',
   standalone: true,
   imports: [
     CommonModule,
@@ -54,8 +63,8 @@ interface LoginForm {
     DividerHeaderComponent,
     FormInputComponent,
   ],
-  templateUrl: "./login.component.html",
-  styleUrls: ["./login.component.scss"],
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginFormComponent {
@@ -67,8 +76,8 @@ export class LoginFormComponent {
 
   public readonly errorsMap: { [key: string]: ValidationErrors } = {
     password: {
-      minlength: "password is to short",
-      maxlength: "password is to long",
+      minlength: 'password is to short',
+      maxlength: 'password is to long',
     },
   };
 
@@ -99,9 +108,9 @@ export class LoginFormComponent {
 
   private _setGoogleIcon(): void {
     inject(MatIconRegistry).addSvgIcon(
-      "google",
+      'google',
       inject(DomSanitizer).bypassSecurityTrustResourceUrl(
-        "assets/icons/google-icon.svg"
+        'assets/icons/google-icon.svg'
       )
     );
   }
@@ -110,7 +119,7 @@ export class LoginFormComponent {
     return inject(NonNullableFormBuilder).group({
       email: [DEFAULT_EMAIL, [Validators.required, Validators.email]],
       password: [
-        "",
+        '',
         [
           Validators.required,
           Validators.minLength(8),

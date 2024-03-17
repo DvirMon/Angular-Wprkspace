@@ -13,8 +13,7 @@ import {
   withMethods,
   withState,
 } from '@ngrx/signals';
-import { FavoriteHttpService } from '../favorites/favorite.https.ervice';
-import { Favorite } from '../favorites/favorite.model';
+import { Favorite, FavoriteHttpService } from '../../favorites';
 
 const SLICE = 'favorite';
 

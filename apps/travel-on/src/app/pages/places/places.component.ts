@@ -19,7 +19,6 @@ import {
   SelectionListChange,
 } from '../../places/place-list/place-list.component';
 import { FloatingButtonComponent } from '../../shared/components/floating-button/floating-button.component';
-import { FavoriteStore } from '../../store/favorites/favorite.store.service';
 import { Places } from '../../store/places/places.model';
 import { SignalStore } from '../../store/store';
 
@@ -49,7 +48,6 @@ export class PlacesComponent implements OnInit {
 
   userId = input.required<string>();
 
-  #favoriteStore: FavoriteStore = inject(FavoriteStore);
 
   public readonly places: Signal<Places[]>;
   public readonly selection: Signal<Record<string, boolean>>;

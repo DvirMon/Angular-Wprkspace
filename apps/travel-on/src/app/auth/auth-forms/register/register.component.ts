@@ -1,4 +1,4 @@
-import { TitleCasePipe } from "@angular/common";
+import { TitleCasePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -8,7 +8,7 @@ import {
   effect,
   inject,
   input,
-} from "@angular/core";
+} from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -16,16 +16,18 @@ import {
   ReactiveFormsModule,
   ValidationErrors,
   Validators,
-} from "@angular/forms";
-import { MatButton } from "@angular/material/button";
-import { MatCard, MatCardContent } from "@angular/material/card";
-
-
-import { AuthServerError, EmailAndPasswordSignIn } from "../../index";
-import { DividerHeaderComponent } from "../../../shared/components/divider-header/divider-header.component";
-import { FormInputComponent } from "../../../shared/components/form-input/form-input.component";
-import { getFormKeys, handleServerError, FormServerError } from "../../../shared/components/form-input/form.helper";
-import { DEFAULT_EMAIL } from "../../../shared/constants";
+} from '@angular/forms';
+import { MatButton } from '@angular/material/button';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { AuthServerError, EmailAndPasswordSignIn } from '../../index';
+import { DividerHeaderComponent } from '../../../shared/components/divider-header/divider-header.component';
+import { FormInputComponent } from '../../../shared/components/form-input/form-input.component';
+import {
+  getFormKeys,
+  handleServerError,
+  FormServerError,
+} from '../../../shared/components/form-input/form.helper';
+import { DEFAULT_EMAIL } from '../../utils/constants';
 
 interface RegisterForm {
   email: FormControl<string>;
@@ -33,7 +35,7 @@ interface RegisterForm {
 }
 
 @Component({
-  selector: "to-register-form",
+  selector: 'to-register-form',
   standalone: true,
   imports: [
     ReactiveFormsModule,
@@ -44,8 +46,8 @@ interface RegisterForm {
     FormInputComponent,
     DividerHeaderComponent,
   ],
-  templateUrl: "./register.component.html",
-  styleUrls: ["./register.component.scss"],
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterFormComponent {
@@ -56,8 +58,8 @@ export class RegisterFormComponent {
 
   public readonly errorsMap: { [key: string]: ValidationErrors } = {
     password: {
-      minlength: "password is to short",
-      maxlength: "password is to long",
+      minlength: 'password is to short',
+      maxlength: 'password is to long',
     },
   };
 
@@ -84,7 +86,7 @@ export class RegisterFormComponent {
     return inject(NonNullableFormBuilder).group({
       email: [DEFAULT_EMAIL, [Validators.required, Validators.email]],
       password: [
-        "",
+        '',
         [
           Validators.required,
           Validators.minLength(8),

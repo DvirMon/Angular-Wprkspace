@@ -4,7 +4,6 @@ import { LoginPageComponent } from './pages/login/login.component';
 import { verifyGuard } from './pages/verify/verify.guard';
 import { authLoadUserResolver } from './auth';
 import { placesGuard } from './pages/places/places.guard';
-import { placesResolver } from './pages/places/places.resolver';
 
 export const appRoutes: Routes = [
   {
@@ -37,14 +36,14 @@ export const appRoutes: Routes = [
     canDeactivate: [authCleanupGuard],
     title: 'Reset Password',
   },
-    {
-      path: "places/:userId",
-      loadComponent: () =>
-        import("./pages/places/places.component").then((m) => m.PlacesComponent),
-      canActivate: [placesGuard],
-      resolve: { authLoadUserResolver, placesResolver },
-      title: "Travel-On",
-    },
+  {
+    path: 'places/:userId',
+    loadComponent: () =>
+      import('./pages/places/places.component').then((m) => m.PlacesComponent),
+    canActivate: [placesGuard],
+    resolve: { authLoadUserResolver },
+    title: 'Travel-On',
+  },
 
   {
     path: '',

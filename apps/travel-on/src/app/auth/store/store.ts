@@ -49,6 +49,10 @@ export const AuthStore = signalStore(
         )
       )
     ),
+
+    login(): void {
+      service.login(store.user());
+    },
     logout(): void {
       patchState(store, initialState);
       service.logout();

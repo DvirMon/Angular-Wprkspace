@@ -15,10 +15,12 @@ import {
   clearStorage,
   mapQuerySnapshotDoc,
   navigate,
+  setToStorage,
 } from '../../shared/helpers';
 import { FireAuthService } from './fireauth.service';
 import { SignInEvent, SignInMethod, User } from './auth.model';
 import { Router } from '@angular/router';
+import { StorageKey } from '../../shared/constants';
 
 interface EmailLinkData {
   email: string;
@@ -140,8 +142,13 @@ export class AuthService {
     return this.fireAuthService.isSignInWithEmailLink$(emailLink);
   }
 
-  public logout() {
+  public logout() :void {
     clearStorage();
     navigate('/');
+  }
+
+  public login(user : User): void {
+    setToStorage(StorageKey.LOGGED, true);
+    this.router.navigateByUrl('places/' + user.userId)
   }
 }

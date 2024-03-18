@@ -33,25 +33,6 @@ export class AuthEffects {
     private dialogService: DialogService
   ) {}
 
-  signIn$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(AuthActions.signIn),
-      switchMap(({ signInEvent }) =>
-        this.authService.signIn$(signInEvent).pipe(
-          mapFirebaseCredentials(),
-          map((user) => AuthActions.loadUserSuccess({ user })),
-          catchError((err: FirebaseError) => {
-            return of(
-              AuthActions.loadUserFailure({
-                code: err.code,
-                event: AuthEvent.LOGIN,
-              })
-            );
-          })
-        )
-      )
-    )
-  );
 
   register$ = createEffect(() =>
     this.actions$.pipe(
@@ -184,13 +165,4 @@ export class AuthEffects {
     { dispatch: false }
   );
 
-  logout$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(AuthActions.logout),
-        tap(() => clearStorage()),
-        tap(() => this.router.navigateByUrl('/'))
-      ),
-    { dispatch: false }
-  );
 }

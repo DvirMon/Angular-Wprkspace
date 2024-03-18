@@ -7,12 +7,9 @@ import {
   WritableSignal,
   effect,
   inject,
-  runInInjectionContext,
   signal,
-  untracked,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { Router } from '@angular/router';
 import {
   AuthServerError,
   EmailLinkFormComponent,
@@ -23,7 +20,6 @@ import {
 import { AuthStore } from '../../auth/store/store';
 import { CardButtonComponent } from '../../shared/components/card-button/card-button.component';
 import { FlipCardComponent } from '../../shared/components/flip-container/flip-container.component';
-import { FlipContainerService } from '../../shared/components/flip-container/flip-container.service';
 import { FloatingButtonComponent } from '../../shared/components/floating-button/floating-button.component';
 import { navigate } from '../../shared/helpers';
 
@@ -43,11 +39,9 @@ import { navigate } from '../../shared/helpers';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [FlipContainerService],
 })
 export class LoginPageComponent {
   #injector = inject(Injector);
-  #router = inject(Router);
   #authStore = inject(AuthStore);
 
   public readonly showOtp: WritableSignal<boolean>;
@@ -59,7 +53,7 @@ export class LoginPageComponent {
 
     effect(() => {
       if (this.#authStore.loaded()) {
-        this.navigate('places/' + untracked(this.#authStore.user).userId);
+        this.#authStore.login();
       }
     });
   }
@@ -69,10 +63,6 @@ export class LoginPageComponent {
   }
 
   public onForgetPassword() {
-    this.navigate('reset');
-  }
-
-  private navigate(path: string): void {
-    navigate(path, this.#injector);
+    navigate('reset', this.#injector);
   }
 }

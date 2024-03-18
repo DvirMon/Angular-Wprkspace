@@ -1,0 +1,18 @@
+<div class="login-page-wrapper">
+  <div class="login-wrapper">
+    <to-login-form
+      [serverError]="serverError()"
+      (login)="onSignIn($event)"
+      (google)="onSignIn($event)"
+      (forget)="onForgetPassword()"
+    >
+    </to-login-form>
+
+    <dom-card-button
+      [routerLink]="'/register'"
+      label="Don't have an account?"
+      boldLabel="Sign up"
+    ></dom-card-button>
+  </div>
+  <div class="login-info-card"></div>
+</div>

@@ -99,6 +99,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 @dom/directives
 
+@dom/helpers
+
 @ngrx/operators
 MIT
 The MIT License (MIT)

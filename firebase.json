@@ -6,7 +6,11 @@
       "frameworksBackend": {
         "region": "europe-west1"
       },
-      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ]
     },
     {
       "target": "weather-space",
@@ -14,7 +18,16 @@
       "frameworksBackend": {
         "region": "europe-west1"
       },
-      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ]
+    },
+    {
+      "target": "travel-on",
+      "public": "public/travel-on",
+      "frameworksBackend": {}
     }
   ]
 }

@@ -1,0 +1,100 @@
+import { TitleCasePipe } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Injector,
+  Output,
+  WritableSignal,
+  inject,
+  input,
+} from '@angular/core';
+import {
+  FormControl,
+  FormGroup,
+  NonNullableFormBuilder,
+  ReactiveFormsModule,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
+import { MatButton } from '@angular/material/button';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import {
+  DividerHeaderComponent,
+  FormInputComponent,
+  FormServerError,
+  getFormKeys,
+  handleServerErrorEffect,
+} from '@dom/components';
+import { Register } from '../../index';
+import { DEFAULT_EMAIL } from '../../utils/constants';
+
+interface RegisterForm {
+  email: FormControl<string>;
+  password: FormControl<string>;
+}
+
+@Component({
+  selector: 'to-register-form',
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    TitleCasePipe,
+    MatCard,
+    MatCardContent,
+    MatButton,
+    FormInputComponent,
+    DividerHeaderComponent,
+  ],
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class RegisterFormComponent {
+  #injector = inject(Injector);
+
+  serverError = input<FormServerError>();
+
+  public readonly registerFormGroup: FormGroup<RegisterForm>;
+  public readonly formKeys: WritableSignal<string[]>;
+
+  public readonly errorsMap: { [key: string]: ValidationErrors } = {
+    password: {
+      minlength: 'password is to short',
+      maxlength: 'password is to long',
+    },
+  };
+
+  @Output() register: EventEmitter<Register> = new EventEmitter();
+
+  constructor() {
+    this.registerFormGroup = this._buildRegisterForm();
+    this.formKeys = getFormKeys(this.registerFormGroup);
+
+    handleServerErrorEffect(
+      this.#injector,
+      this.serverError,
+      this.registerFormGroup
+    );
+  }
+
+  private _buildRegisterForm(): FormGroup<RegisterForm> {
+    return inject(NonNullableFormBuilder).group({
+      email: [DEFAULT_EMAIL, [Validators.required, Validators.email]],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.maxLength(16),
+        ],
+      ],
+      // confirmPassword: ['',
+      //   [Validators.required, Validators.pattern(this.validationService.regex.password)]],
+    });
+  }
+
+  public onSubmit(value: Partial<Register>): void {
+    this.register.emit(value as Register);
+  }
+}

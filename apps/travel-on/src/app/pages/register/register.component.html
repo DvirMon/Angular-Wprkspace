@@ -1,0 +1,13 @@
+<div class="register-page-wrapper">
+  <div class="register-wrapper">
+    <to-register-form
+      (register)="onRegister($event)"
+      [serverError]="serverError()"
+    ></to-register-form>
+    <dom-card-button
+      routerLink="/"
+      label="Have an account?"
+      boldLabel="Log in"
+    ></dom-card-button>
+  </div>
+</div>

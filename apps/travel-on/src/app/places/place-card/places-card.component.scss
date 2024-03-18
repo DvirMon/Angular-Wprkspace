@@ -1,0 +1,45 @@
+@use 'variables' as main;
+
+mat-card {
+  img {
+    height: 300px;
+    width: 100%;
+  }
+
+  .mat-mdc-card-header {
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .mat-mdc-card-content {
+    padding: main.spacing(2);
+  }
+
+  section.schedule {
+    display: flex;
+    flex-direction: column;
+    gap: main.spacing(1);
+  }
+}
+
+div.image-overlay-container {
+  position: relative;
+}
+
+
+div.overlay {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(63, 81, 181, 0.6);
+  color: white;
+  font-weight: 550;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+}
+

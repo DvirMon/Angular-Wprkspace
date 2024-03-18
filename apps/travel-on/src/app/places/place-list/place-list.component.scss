@@ -1,0 +1,16 @@
+@use "variables" as main;
+
+
+div.places-list-wrapper {
+  width: 100%;
+  overflow-wrap: hidden;
+
+  padding: main.spacing(2);
+  display: flex;
+  flex-wrap: wrap;
+  gap: main.spacing(3);
+
+  section.places-card-wrapper {
+    width: 30%;
+  }
+}

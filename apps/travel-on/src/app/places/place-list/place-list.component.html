@@ -1,0 +1,12 @@
+<div class="places-list-wrapper">
+  <ng-container *ngFor="let v of places()">
+    <section class="places-card-wrapper">
+      <to-places-card
+        [place]="v"
+        [selected]="selection()[v.id]"
+        (selectedChanged)="onSelectedChanged($event)"
+      >
+      </to-places-card>
+    </section>
+  </ng-container>
+</div>

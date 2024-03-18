@@ -1,15 +1,8 @@
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
-import { computed } from '@angular/core';
 import {
-  patchState,
-  signalStore,
-  withComputed,
-  withMethods,
-  withState,
+  signalStore
 } from '@ngrx/signals';
 import { AutocompleteOption } from '../shared/models/autocomplete-result';
-import { WeatherService } from '../shared/services/weather.service';
-import { withOptions } from './with-options.feature';
 
 export const OptionsStore = signalStore(
   { providedIn: 'root' },

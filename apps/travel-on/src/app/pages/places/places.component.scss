@@ -1,0 +1,67 @@
+@use 'variables' as main;
+
+div.places-wrapper {
+  position: relative;
+  overflow: hidden;
+  height: 100vh; /* Adjust based on your needs */
+}
+
+.parallax-image {
+  background-image: url('../../../assets/images/backgrounds/user.jpg');
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+}
+
+div.spacer {
+  height: 150px;
+}
+
+div.places-list-container {
+  height: 100%;
+  justify-content: center;
+  display: flex;
+  width: 100%;
+}
+
+main.content {
+  top: 0;
+  left: 0;
+  width: 90%;
+  height: 80%;
+  overflow-y: scroll;
+}
+
+// .parallax-image {
+//   background-image: url('../../../assets/images/backgrounds/user.jpg');
+//   background-size: cover;
+//   background-attachment: fixed; /* Ensure fixed background */
+//   position: absolute;
+//   width: 100%;
+//   height: 100vh; /* Set height to viewport height */
+//   top: 0;
+//   left: 0;
+//   background-position: center;
+// }
+
+// div.spacer {
+//   height: 150px;
+// }
+
+// div.places-list-container {
+//   justify-content: center;
+//   display: flex;
+//   width: 100%;
+// }
+
+// main.content {
+//   position: relative;
+//   z-index: 1;
+//   width: 90%;
+//   height: 80%;
+//   overflow-y: scroll; /* Enable scrolling if content overflows */
+// }

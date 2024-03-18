@@ -20,7 +20,7 @@ import { Store } from '../../store/store';
   standalone: true,
   imports: [NgFor, FavoriteEntityComponent, KeyValuePipe, MatButton],
 })
-export class FavoritesLayoutComponent {
+export class FavoritesPageComponent {
   #store = inject(Store);
   #optionsStore = inject(OptionsStore);
   #favoriteStore = inject(FavoriteStore);

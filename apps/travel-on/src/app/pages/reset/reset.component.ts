@@ -5,6 +5,7 @@ import {
   Signal,
   computed,
   inject,
+  input,
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Params } from '@angular/router';
@@ -37,19 +38,23 @@ export class ResetPageComponent {
   #authStore = inject(AuthStore);
   #activatedRoute = inject(ActivatedRoute);
 
-  public readonly paramsSignal: Signal<Params>;
+  // public readonly paramsSignal: Signal<Params>;
 
   public readonly showNewPassword: Signal<boolean>;
 
   public readonly serverError: Signal<FormServerError | undefined>;
 
+  mode = input.required<string>();
+  oobCode = input.required<string>();
 
+  
   constructor() {
-    this.paramsSignal = toSignal(this.#activatedRoute.queryParams, {
-      initialValue: { mode: '' } as Params,
-    });
-
-    this.showNewPassword = computed(() => !!this.paramsSignal()['mode']);
+    // this.paramsSignal = toSignal(this.#activatedRoute.queryParams, {
+    //   initialValue: { mode: '' } as Params,
+    // });
+    
+    this.showNewPassword = computed(() => !!this.mode());
+    // this.showNewPassword = computed(() => !!this.paramsSignal()['mode']);
 
     this.serverError = this.#authStore.resetError;
   }
@@ -62,7 +67,7 @@ export class ResetPageComponent {
   }
 
   public onResetPassword(newPassword: string) {
-    const oobCode = this.paramsSignal()['oobCode'];
+    // const oobCode = this.paramsSignal()['oobCode'];
     // this.#AuthStoreService.confirmResetPassword(newPassword, oobCode);
     // this.#AuthStoreService.sendResetEmail("email");
 

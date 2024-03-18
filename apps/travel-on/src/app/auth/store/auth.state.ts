@@ -1,4 +1,4 @@
-import { FormServerError } from "../../shared/components";
+import { FormServerError } from "@dom/components";
 import { AuthEvent, User } from "../utils/auth.model";
 
 export const authFeatureKey = "auth";

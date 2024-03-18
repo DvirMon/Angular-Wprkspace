@@ -14,8 +14,8 @@ import {
   ResetPasswordFormComponent,
 } from '../../auth';
 import { AuthStore } from '../../auth/store/store';
-import { FormServerError } from '../../shared/components';
 import { CardButtonComponent } from '../../shared/components/card-button/card-button.component';
+import { FormServerError } from '@dom';
 
 @Component({
   selector: 'to-reset',

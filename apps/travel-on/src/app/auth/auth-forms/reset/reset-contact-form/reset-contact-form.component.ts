@@ -18,14 +18,14 @@ import {
 import { MatButton } from '@angular/material/button';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
-import { DEFAULT_EMAIL } from '../../../utils/constants';
 import {
   FormInputComponent,
-  DividerHeaderComponent,
+  FormServerError,
   getFormKeys,
   handleServerErrorEffect,
-  FormServerError,
-} from '../../../../shared/components';
+} from '@dom';
+import { DividerHeaderComponent } from '../../../../shared/components';
+import { DEFAULT_EMAIL } from '../../../utils/constants';
 
 interface ResetContactForm {
   email: FormControl<string>;
@@ -49,11 +49,9 @@ interface ResetContactForm {
   styleUrl: './reset-contact-form.component.scss',
 })
 export class ResetContactFormComponent {
-
   #injector = inject(Injector);
 
   serverError = input<FormServerError>();
-
 
   public readonly resetFormGroup: FormGroup<ResetContactForm>;
   public readonly formKeys: WritableSignal<string[]>;

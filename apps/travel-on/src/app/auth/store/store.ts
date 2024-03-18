@@ -7,7 +7,6 @@ import {
   withMethods,
   withState,
 } from '@ngrx/signals';
-import { FormServerError } from '../../shared/components';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { AuthEvent, AuthService, User } from '../utils';
 import {
@@ -17,6 +16,7 @@ import {
   sendResetEmail,
   signIn,
 } from './store.helpers';
+import { FormServerError } from '@dom/components';
 
 export interface AuthState {
   user: User;

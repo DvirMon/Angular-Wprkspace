@@ -1,4 +1,4 @@
-import { CommonModule, NgOptimizedImage } from "@angular/common";
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -6,27 +6,27 @@ import {
   Injector,
   Output,
   inject,
-} from "@angular/core";
+} from '@angular/core';
 import {
   FormControl,
   FormsModule,
   NonNullableFormBuilder,
   ReactiveFormsModule,
   Validators,
-} from "@angular/forms";
-import { MatButtonModule } from "@angular/material/button";
-import { MatCardModule } from "@angular/material/card";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatIconModule } from "@angular/material/icon";
-import { MatInputModule } from "@angular/material/input";
-import { MatTabsModule } from "@angular/material/tabs";
-import { DividerHeaderComponent } from "../../../shared/components/divider-header/divider-header.component";
-import { FormInputComponent } from "../../../shared/components/form-input/form-input.component";
-import { InfoCardComponent } from "../../../shared/components/info-card/info-card.component";
-import { SignInEvent, SignInMethod } from "../../utils";
+} from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatTabsModule } from '@angular/material/tabs';
+import { DividerHeaderComponent } from '../../../shared/components/divider-header/divider-header.component';
+import { InfoCardComponent } from '../../../shared/components/info-card/info-card.component';
+import { SignInEvent, SignInMethod } from '../../utils';
+import { FormInputComponent } from '@dom/components';
 
 @Component({
-  selector: "to-email-link-form",
+  selector: 'to-email-link-form',
   standalone: true,
   imports: [
     CommonModule,
@@ -43,8 +43,8 @@ import { SignInEvent, SignInMethod } from "../../utils";
     InfoCardComponent,
     FormInputComponent,
   ],
-  templateUrl: "./email-link.component.html",
-  styleUrls: ["./email-link.component.scss"],
+  templateUrl: './email-link.component.html',
+  styleUrls: ['./email-link.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EmailLinkFormComponent {
@@ -58,7 +58,7 @@ export class EmailLinkFormComponent {
   }
 
   private _getEmailControl(): FormControl<string> {
-    return inject(NonNullableFormBuilder).control("dmenajem@gmail.com", [
+    return inject(NonNullableFormBuilder).control('dmenajem@gmail.com', [
       Validators.required,
       Validators.email,
     ]);

@@ -23,7 +23,7 @@ import { Observable, map, startWith } from "rxjs";
 import { errorMessageMap } from "./form.helper";
 
 @Component({
-  selector: "to-form-input",
+  selector: "dom-form-input",
   standalone: true,
   imports: [
     CommonModule,

@@ -7,7 +7,7 @@ import {
   Output,
   WritableSignal,
   inject,
-  input
+  input,
 } from '@angular/core';
 import {
   FormControl,
@@ -26,17 +26,13 @@ import { MatInputModule } from '@angular/material/input';
 import { DomSanitizer } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { DividerHeaderComponent } from '../../../shared/components/divider-header/divider-header.component';
-import { FormInputComponent } from '../../../shared/components/form-input/form-input.component';
+import { FormInputComponent } from '../../../../../../../libs/src/lib/dom/components/form-input/form-input.component';
 import {
   FormServerError,
   getFormKeys,
-  handleServerErrorEffect
-} from '../../../shared/components/form-input/form.helper';
-import {
-  EmailAndPasswordSignIn,
-  SignInEvent,
-  SignInMethod
-} from '../../utils';
+  handleServerErrorEffect,
+} from '../../../../../../../libs/src/lib/dom/components/form-input/form.helper';
+import { EmailAndPasswordSignIn, SignInEvent, SignInMethod } from '../../utils';
 import { DEFAULT_EMAIL } from '../../utils/constants';
 
 interface LoginForm {
@@ -95,8 +91,11 @@ export class LoginFormComponent {
 
     this.formKeys = getFormKeys(this.loginFormGroup);
 
-    handleServerErrorEffect(this.#injector, this.serverError, this.loginFormGroup);
-
+    handleServerErrorEffect(
+      this.#injector,
+      this.serverError,
+      this.loginFormGroup
+    );
   }
 
   private _setGoogleIcon(): void {

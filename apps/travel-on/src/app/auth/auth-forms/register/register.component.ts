@@ -20,14 +20,12 @@ import {
 import { MatButton } from '@angular/material/button';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { DividerHeaderComponent } from '../../../shared/components/divider-header/divider-header.component';
-
 import {
   FormInputComponent,
   FormServerError,
   getFormKeys,
   handleServerErrorEffect,
-} from '../../../shared/components/form-input';
-
+} from '@dom';
 import { Register } from '../../index';
 import { DEFAULT_EMAIL } from '../../utils/constants';
 

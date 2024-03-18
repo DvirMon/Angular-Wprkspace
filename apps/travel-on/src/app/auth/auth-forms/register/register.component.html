@@ -6,12 +6,12 @@
       (ngSubmit)="onSubmit(registerFormGroup.value)">
       @for (key of formKeys(); track key) {
 
-      <to-form-input
+      <dom-form-input
         [control]="registerFormGroup.get(key)"
         [key]="key"
         [label]="key | titlecase"
         [errorsMap]="errorsMap[key]">
-      </to-form-input>
+      </dom-form-input>
       }
 
       <button

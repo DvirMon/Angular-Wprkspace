@@ -10,11 +10,11 @@
       (ngSubmit)="onSubmit(resetFormGroup.value)">
       @for (key of formKeys(); track key) {
 
-      <to-form-input
+      <dom-form-input
         [control]="resetFormGroup.get(key)"
         [key]="key"
         [label]="key | titlecase">
-      </to-form-input>
+      </dom-form-input>
       }
 
       <button

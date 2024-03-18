@@ -16,7 +16,8 @@ import {
 import { MatButton } from "@angular/material/button";
 import { MatCard, MatCardContent } from "@angular/material/card";
 import { MatIcon } from "@angular/material/icon";
-import { FormInputComponent, DividerHeaderComponent, getFormKeys } from "../../../../shared/components";
+import {  DividerHeaderComponent } from "../../../../shared/components";
+import { FormInputComponent, getFormKeys } from "@dom/components";
 
 
 interface ResetPasswordForm {

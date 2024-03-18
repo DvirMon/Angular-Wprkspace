@@ -18,13 +18,13 @@
     >
       @for (key of formKeys(); track key) {
 
-      <to-form-input
+      <dom-form-input
         [control]="loginFormGroup.get(key)"
         [key]="key"
         [label]="key | titlecase"
         [errorsMap]="errorsMap[key]"
       >
-      </to-form-input>
+      </dom-form-input>
       }
       <button
         class="login-btn"

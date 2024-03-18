@@ -4,7 +4,8 @@
     width="60"
     height="60"
     priority
-    alt="logo" />
+    alt="logo"
+  />
 </mat-card-header>
 <mat-card-content>
   <to-divider-header label="Sign In"></to-divider-header>
@@ -14,7 +15,8 @@
         mat-raised-button
         color="accent"
         type="submit"
-        [disableRipple]="true">
+        [disableRipple]="true"
+      >
         Sign-In with Email and Password
       </button>
     </section>
@@ -25,18 +27,20 @@
         <to-info-card text="Enter Your Email Address"></to-info-card>
       </header>
       <form>
-        <to-form-input
+        <dom-form-input
           [control]="formControl"
           key="email"
-          [label]="'email' | titlecase">
-        </to-form-input>
+          [label]="'email' | titlecase"
+        >
+        </dom-form-input>
 
         <button
           mat-raised-button
           color="primary"
           type="submit"
           [disableRipple]="true"
-          (click)="onSubmit(formControl.value)">
+          (click)="onSubmit(formControl.value)"
+        >
           Sign-In with Email Link
         </button>
       </form>

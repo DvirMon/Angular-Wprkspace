@@ -65,7 +65,7 @@ import { WeatherStore } from '../../store/store-weather';
     OptionContentDirective,
   ],
 })
-export class LobbyComponent implements OnInit {
+export class LobbyPageComponent implements OnInit {
   #nfb = inject(NonNullableFormBuilder);
 
   #store = inject(Store);

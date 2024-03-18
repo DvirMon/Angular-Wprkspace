@@ -1,27 +1,29 @@
-import { Routes } from "@angular/router";
-import { LobbyComponent } from "./pages/lobby/lobby.component";
-import { PageNotFoundComponent } from "./pages/page-not-found/page-not-found.component";
+import { Routes } from '@angular/router';
 
 export const appRoutes: Routes = [
   {
-    path: "",
-    component: LobbyComponent,
-    title : "Weather Space"
+    path: '',
+    loadComponent: () =>
+      import('./pages/lobby/lobby.component').then((m) => m.LobbyPageComponent),
+    title: 'Weather Space',
   },
   {
-    path: "favorites",
+    path: 'favorites',
     loadComponent: () =>
-      import("./pages/favorites/favorites.component").then(
-        (m) => m.FavoritesLayoutComponent
+      import('./pages/favorites/favorites.component').then(
+        (m) => m.FavoritesPageComponent
       ),
   },
   {
-    path: "",
-    redirectTo: "lobby",
-    pathMatch: "full",
+    path: '**',
+    loadComponent: () =>
+      import('./pages/page-not-found/page-not-found.component').then(
+        (m) => m.PageNotFoundComponent
+      ),
   },
   {
-    path: "**",
-    component: PageNotFoundComponent,
+    path: '',
+    redirectTo: '/',
+    pathMatch: 'full',
   },
 ];

@@ -6,24 +6,18 @@ import {
   WritableSignal,
   effect,
   inject,
+  runInInjectionContext,
   signal,
 } from '@angular/core';
-import {
-  CardButtonComponent,
-  FormServerError
-} from '@dom/components';
+import { CardButtonComponent, FormServerError } from '@dom/components';
 import { LoginFormComponent, SignInEvent } from '../../auth';
 import { AuthStore } from '../../auth/store/store';
-
-import { navigate } from '../../shared/helpers';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'to-login-page',
   standalone: true,
-  imports: [
-    LoginFormComponent,
-    CardButtonComponent,
-  ],
+  imports: [LoginFormComponent, CardButtonComponent],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -51,6 +45,8 @@ export class LoginPageComponent {
   }
 
   public onForgetPassword() {
-    navigate('reset', this.#injector);
+    runInInjectionContext(this.#injector || inject(Injector), () => {
+      inject(Router).navigateByUrl('reset');
+    });
   }
 }

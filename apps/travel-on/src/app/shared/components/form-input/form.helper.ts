@@ -1,4 +1,10 @@
-import { WritableSignal, signal } from '@angular/core';
+import {
+  Injector,
+  Signal,
+  WritableSignal,
+  effect,
+  signal,
+} from '@angular/core';
 import { FormGroup, ValidationErrors } from '@angular/forms';
 
 export interface FormServerError {
@@ -23,10 +29,7 @@ export const errorMessageMap: ValidationErrors = {
   email: 'invalid email format',
 };
 
-export function handleServerError(
-  group: FormGroup,
-  error: FormServerError
-): void {
+export function setFormError(group: FormGroup, error: FormServerError): void {
   if (group !== null && error !== null) {
     const control = group.get(error.control as string);
 
@@ -34,4 +37,21 @@ export function handleServerError(
       control.setErrors({ serverError: error.message });
     }
   }
+}
+
+export function handleServerErrorEffect(
+  injector: Injector,
+  serverError: Signal<FormServerError | undefined>,
+  form: FormGroup
+): void {
+  effect(
+    () => {
+      const error = serverError();
+
+      if (error) {
+        setFormError(form, error);
+      }
+    },
+    { allowSignalWrites: true, injector }
+  );
 }

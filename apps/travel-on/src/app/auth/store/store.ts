@@ -61,6 +61,7 @@ export const AuthStore = signalStore(
 
   withComputed((store) => ({
     loginError: computed(() => store.authError()[AuthEvent.LOGIN]),
+    registerError: computed(() => store.authError()[AuthEvent.REGISTER]),
   }))
 );
 

@@ -5,11 +5,11 @@ import {
   inject,
 } from '@angular/core';
 import {
-  AuthServerError,
   Register,
   RegisterFormComponent
 } from '../../auth';
 import { AuthStore } from '../../auth/store/store';
+import { FormServerError } from '../../shared/components';
 import { CardButtonComponent } from '../../shared/components/card-button/card-button.component';
 
 @Component({
@@ -25,10 +25,10 @@ import { CardButtonComponent } from '../../shared/components/card-button/card-bu
 export class RegisterPageComponent {
   #authStore = inject(AuthStore);
 
-  public readonly serverError: Signal<AuthServerError | null>;
+  public readonly serverError: Signal<FormServerError | undefined>;
 
   constructor() {
-    this.serverError = this.#authStore.serverError;
+    this.serverError = this.#authStore.registerError;
   }
   onRegister(value: Register): void {
     this.#authStore.register(value);

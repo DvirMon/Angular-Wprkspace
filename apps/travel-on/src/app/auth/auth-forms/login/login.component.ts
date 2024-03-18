@@ -3,11 +3,11 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
+  Injector,
   Output,
   WritableSignal,
-  effect,
   inject,
-  input,
+  input
 } from '@angular/core';
 import {
   FormControl,
@@ -30,13 +30,12 @@ import { FormInputComponent } from '../../../shared/components/form-input/form-i
 import {
   FormServerError,
   getFormKeys,
-  handleServerError,
+  handleServerErrorEffect
 } from '../../../shared/components/form-input/form.helper';
 import {
-  AuthServerError,
   EmailAndPasswordSignIn,
   SignInEvent,
-  SignInMethod,
+  SignInMethod
 } from '../../utils';
 import { DEFAULT_EMAIL } from '../../utils/constants';
 
@@ -68,6 +67,8 @@ interface LoginForm {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginFormComponent {
+  #injector = inject(Injector);
+
   public readonly loginFormGroup: FormGroup<LoginForm>;
 
   public readonly serverError = input<FormServerError>();
@@ -94,16 +95,8 @@ export class LoginFormComponent {
 
     this.formKeys = getFormKeys(this.loginFormGroup);
 
-    effect(
-      () => {
-        const serverError = this.serverError();
+    handleServerErrorEffect(this.#injector, this.serverError, this.loginFormGroup);
 
-        if (serverError) {
-          handleServerError(this.loginFormGroup, serverError);
-        }
-      },
-      { allowSignalWrites: true }
-    );
   }
 
   private _setGoogleIcon(): void {

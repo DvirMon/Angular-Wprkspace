@@ -3,9 +3,9 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
+  Injector,
   Output,
   WritableSignal,
-  effect,
   inject,
   input,
 } from '@angular/core';
@@ -19,14 +19,16 @@ import {
 } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatCard, MatCardContent } from '@angular/material/card';
-import { AuthServerError, EmailAndPasswordSignIn, Register } from '../../index';
 import { DividerHeaderComponent } from '../../../shared/components/divider-header/divider-header.component';
-import { FormInputComponent } from '../../../shared/components/form-input/form-input.component';
+
 import {
-  getFormKeys,
-  handleServerError,
+  FormInputComponent,
   FormServerError,
-} from '../../../shared/components/form-input/form.helper';
+  getFormKeys,
+  handleServerErrorEffect,
+} from '../../../shared/components/form-input';
+
+import { Register } from '../../index';
 import { DEFAULT_EMAIL } from '../../utils/constants';
 
 interface RegisterForm {
@@ -51,7 +53,9 @@ interface RegisterForm {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterFormComponent {
-  serverError = input<AuthServerError | null>({} as AuthServerError);
+  #injector = inject(Injector);
+
+  serverError = input<FormServerError>();
 
   public readonly registerFormGroup: FormGroup<RegisterForm>;
   public readonly formKeys: WritableSignal<string[]>;
@@ -69,16 +73,10 @@ export class RegisterFormComponent {
     this.registerFormGroup = this._buildRegisterForm();
     this.formKeys = getFormKeys(this.registerFormGroup);
 
-    effect(
-      () => {
-        const serverError = this.serverError();
-
-        handleServerError(
-          this.registerFormGroup,
-          serverError as FormServerError
-        );
-      },
-      { allowSignalWrites: true }
+    handleServerErrorEffect(
+      this.#injector,
+      this.serverError,
+      this.registerFormGroup
     );
   }
 

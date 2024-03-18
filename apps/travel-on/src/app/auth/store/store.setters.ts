@@ -1,5 +1,5 @@
 import { AuthEvent, User, mapAuthServerError } from '../utils';
-import { AuthState } from './store';
+import { AuthState } from './auth.state';
 
 export function setUser(user: User): Partial<AuthState> {
   return { user, loaded: true };

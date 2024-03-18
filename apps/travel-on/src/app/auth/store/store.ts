@@ -8,7 +8,7 @@ import {
   withState,
 } from '@ngrx/signals';
 import { DialogService } from '../../shared/dialog/dialog.service';
-import { AuthEvent, AuthService, User } from '../utils';
+import { AuthEvent, AuthService } from '../utils';
 import {
   confirmPasswordReset,
   loadUserById,
@@ -16,21 +16,7 @@ import {
   sendResetEmail,
   signIn,
 } from './store.helpers';
-import { FormServerError } from '@dom/components';
-
-export interface AuthState {
-  user: User;
-  loaded: boolean;
-  email: string;
-  authError: Partial<Record<AuthEvent, FormServerError>>;
-}
-
-const initialState: AuthState = {
-  user: {} as User,
-  loaded: false,
-  email: '',
-  authError: {} as Record<AuthEvent, FormServerError>,
-};
+import { initialState } from './auth.state';
 
 export const AuthStore = signalStore(
   { providedIn: 'root' },

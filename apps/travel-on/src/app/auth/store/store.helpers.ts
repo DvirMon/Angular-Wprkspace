@@ -14,8 +14,8 @@ import {
   User,
   mapFirebaseCredentials,
 } from '../utils';
-import { AuthState } from './auth.state';
 import { setAuthError, setUser } from './store.setters';
+import { AuthState } from './auth.state';
 
 export function signIn(
   service: AuthService,
@@ -72,6 +72,31 @@ export function sendResetEmail(
           tapResponse({
             next: () =>
               dialog.openDialog(authDialogMap[event], { email, event }),
+            error: (err: FirebaseError) =>
+              patchState(store, setAuthError(err.code, authEvent)),
+          })
+        )
+      )
+    )
+  );
+}
+export function confirmPasswordReset(
+  store: StateSignal<AuthState>,
+  authEvent: AuthEvent,
+  service: AuthService,
+  dialog: DialogService
+) {
+  return rxMethod<{
+    newPassword: string;
+    oobCode: string;
+    event: AuthDialogEvent;
+  }>(
+    pipe(
+      switchMap(({ newPassword, oobCode, event }) =>
+        service.confirmPasswordReset$({ newPassword, oobCode }).pipe(
+          tapResponse({
+            next: () =>
+              dialog.openDialog(authDialogMap[event], { email: '', event }),
             error: (err: FirebaseError) =>
               patchState(store, setAuthError(err.code, authEvent)),
           })

@@ -10,7 +10,7 @@ import {
 import { FormServerError } from '../../shared/components';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { AuthEvent, AuthService, User } from '../utils';
-import { register, sendResetEmail, signIn } from './store.helpers';
+import { confirmPasswordReset, register, sendResetEmail, signIn } from './store.helpers';
 
 export interface AuthState {
   user: User;
@@ -35,6 +35,7 @@ export const AuthStore = signalStore(
       signIn: signIn(service, store, AuthEvent.LOGIN),
       register: register(service, store, AuthEvent.REGISTER),
       sendResetEmail: sendResetEmail(store, AuthEvent.RESET, service, dialog),
+      confirmPasswordReset: confirmPasswordReset(store, AuthEvent.RESET, service, dialog),
     })
   ),
   withMethods((store, service = inject(AuthService)) => ({

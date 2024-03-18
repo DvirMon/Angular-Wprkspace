@@ -55,8 +55,6 @@ export function mapFirebaseCredentials(): OperatorFunction<
     );
 }
 
-
-
 function mapUser(user: UserFirebase): User {
   return {
     userId: user.uid,
@@ -97,6 +95,11 @@ export function mapAuthServerError(
     'auth/wrong-password': {
       control: 'password',
       message: 'Password is not match.',
+    },
+
+    'auth/invalid-action-code': {
+      control: 'newPassword',
+      message: 'action code provided may have expired or already been used.',
     },
   };
 

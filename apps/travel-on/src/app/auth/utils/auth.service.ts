@@ -18,7 +18,13 @@ import {
   setToStorage,
 } from '../../shared/helpers';
 import { FireAuthService } from './fireauth.service';
-import { Register, SignInEvent, SignInMethod, User } from './auth.model';
+import {
+  ConfirmPasswordReset,
+  Register,
+  SignInEvent,
+  SignInMethod,
+  User,
+} from './auth.model';
 import { Router } from '@angular/router';
 import { StorageKey } from '../../shared/constants';
 
@@ -145,7 +151,13 @@ export class AuthService {
   public sendResetEmail$(email: string): Observable<void> {
     return this.fireAuthService.sendPasswordResetEmail(email);
   }
-  
+
+  public confirmPasswordReset$({
+    oobCode,
+    newPassword,
+  }: ConfirmPasswordReset): Observable<void> {
+    return this.fireAuthService.confirmPasswordReset(oobCode, newPassword);
+  }
 
   public logout(): void {
     clearStorage();

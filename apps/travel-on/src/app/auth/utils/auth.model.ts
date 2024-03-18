@@ -21,6 +21,11 @@ export interface Register {
   last_name: string;
 }
 
+export interface ConfirmPasswordReset {
+  oobCode: string;
+  newPassword: string;
+}
+
 export enum SignInMethod {
   OPT = 'oneTimePassword',
   EMAIL_LINK = 'emailLink',

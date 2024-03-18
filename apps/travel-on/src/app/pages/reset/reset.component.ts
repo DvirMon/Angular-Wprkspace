@@ -7,18 +7,16 @@ import {
   inject,
   input,
 } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import {
   AuthDialogEvent,
-  AuthEvent,
   ResetContactFormComponent,
   ResetPasswordFormComponent,
 } from '../../auth';
 import { AuthStoreService } from '../../auth/store/auth.store.service';
-import { CardButtonComponent } from '../../shared/components/card-button/card-button.component';
 import { AuthStore } from '../../auth/store/store';
 import { FormServerError } from '../../shared/components';
+import { CardButtonComponent } from '../../shared/components/card-button/card-button.component';
 
 @Component({
   selector: 'to-reset',
@@ -47,15 +45,12 @@ export class ResetPageComponent {
   mode = input.required<string>();
   oobCode = input.required<string>();
 
-  
   constructor() {
     // this.paramsSignal = toSignal(this.#activatedRoute.queryParams, {
     //   initialValue: { mode: '' } as Params,
     // });
-    
-    this.showNewPassword = computed(() => !!this.mode());
-    // this.showNewPassword = computed(() => !!this.paramsSignal()['mode']);
 
+    this.showNewPassword = computed(() => !!this.mode());
     this.serverError = this.#authStore.resetError;
   }
 
@@ -68,7 +63,11 @@ export class ResetPageComponent {
 
   public onResetPassword(newPassword: string) {
     // const oobCode = this.paramsSignal()['oobCode'];
-    // this.#AuthStoreService.confirmResetPassword(newPassword, oobCode);
+    this.#authStore.confirmPasswordReset({
+      newPassword,
+      oobCode: this.oobCode(),
+      event: AuthDialogEvent.RESET_PASSWORD,
+    });
     // this.#AuthStoreService.sendResetEmail("email");
 
     // runInInjectionContext(this.#injector, () => {

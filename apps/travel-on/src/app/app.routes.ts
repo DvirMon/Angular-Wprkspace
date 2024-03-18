@@ -1,11 +1,11 @@
 import { Routes } from '@angular/router';
 import { authLoadUserResolver } from './auth';
-import { LoginPageComponent } from './pages/login/login.component';
 
 export const appRoutes: Routes = [
   {
-    path: '',
-    component: LoginPageComponent,
+    path: 'login',
+    loadComponent: () =>
+      import('./pages/login/login.component').then((m) => m.LoginPageComponent),
     title: 'Login',
   },
   {

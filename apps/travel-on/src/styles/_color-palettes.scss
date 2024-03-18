@@ -66,8 +66,6 @@ $plt-accent: (
   ),
 );
 
-// $primary-palette: map.merge($plt-primary, map.get($plt-primary, 'contrast'));
-// $accent-palette: map.merge($plt-accent, map.get($plt-accent, 'contrast'));
 
 @function primary-palette() {
   @return $plt-primary;

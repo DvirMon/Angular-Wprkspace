@@ -1,4 +1,4 @@
-import { FormServerError } from '../../../../../../libs/src/lib/dom/components/form-input/form.helper';
+import { FormServerError } from "@dom";
 
 export interface User {
   userId: string;

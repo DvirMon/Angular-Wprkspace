@@ -4,8 +4,8 @@ import { UserCredential, User as UserFirebase } from '@angular/fire/auth';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Observable, OperatorFunction } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { FormServerError } from '../../../../../../libs/src/lib/dom/components/form-input/form.helper';
 import { AuthEvent, AuthServerError, User } from './auth.model';
+import { FormServerError } from '@dom';
 
 // Function to generate a valid URL for the email verification link
 export function generateVerificationLink(

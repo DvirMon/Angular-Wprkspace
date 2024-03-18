@@ -1,16 +1,17 @@
 import { CommonModule, NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
 import * as i0 from '@angular/core';
-import { input, EventEmitter, Component, Output, Directive, HostListener, effect, ChangeDetectionStrategy, ContentChild, Input, runInInjectionContext, inject, Injector } from '@angular/core';
+import { input, EventEmitter, Component, Output, Directive, HostListener, effect, ChangeDetectionStrategy, ContentChild, Input, signal, inject, Injector, computed, runInInjectionContext } from '@angular/core';
 import * as i1 from '@angular/forms';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import * as i3 from '@angular/material/form-field';
+import * as i2$1 from '@angular/material/form-field';
 import { MatFormFieldModule, MatFormField, MatLabel } from '@angular/material/form-field';
 import * as i2 from '@angular/material/input';
 import { MatInputModule, MatInput } from '@angular/material/input';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { pipe, debounceTime, distinctUntilChanged, tap, Subject, map, switchMap, EMPTY } from 'rxjs';
+import { pipe, debounceTime, distinctUntilChanged, tap, Subject, map, startWith, switchMap, EMPTY } from 'rxjs';
 import { MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
 import { MatOption } from '@angular/material/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { tapResponse } from '@ngrx/operators';
 import { patchState } from '@ngrx/signals';
 import { setAllEntities, addEntities } from '@ngrx/signals/entities';
@@ -32,7 +33,7 @@ class SearchInputComponent {
         }
     }
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "17.2.2", ngImport: i0, type: SearchInputComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "17.2.2", type: SearchInputComponent, isStandalone: true, selector: "dom-search-input", inputs: { initialValue: { classPropertyName: "initialValue", publicName: "initialValue", isSignal: true, isRequired: false, transformFunction: null }, searchResultsData: { classPropertyName: "searchResultsData", publicName: "searchResultsData", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { termChanged: "termChanged" }, ngImport: i0, template: "<mat-form-field>\n  <input matInput type=\"text\" [formControl]=\"searchControl\" />\n  <!-- @if (searchResultsData()!.totalResults !== 0) {\n    <span matSuffix\n      >{{ searchResultsData()!.totalResults }} results\n    </span>\n  } -->\n</mat-form-field>\n", styles: ["mat-form-field{width:100%;font-size:24px}mat-form-field span[matSuffix]{padding:8px}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "ngmodule", type: FormsModule }, { kind: "directive", type: i1.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i1.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "ngmodule", type: ReactiveFormsModule }, { kind: "directive", type: i1.FormControlDirective, selector: "[formControl]", inputs: ["formControl", "disabled", "ngModel"], outputs: ["ngModelChange"], exportAs: ["ngForm"] }, { kind: "ngmodule", type: MatInputModule }, { kind: "directive", type: i2.MatInput, selector: "input[matInput], textarea[matInput], select[matNativeControl],      input[matNativeControl], textarea[matNativeControl]", inputs: ["disabled", "id", "placeholder", "name", "required", "type", "errorStateMatcher", "aria-describedby", "value", "readonly"], exportAs: ["matInput"] }, { kind: "component", type: i3.MatFormField, selector: "mat-form-field", inputs: ["hideRequiredMarker", "color", "floatLabel", "appearance", "subscriptSizing", "hintLabel"], exportAs: ["matFormField"] }, { kind: "ngmodule", type: MatFormFieldModule }] }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "17.2.2", type: SearchInputComponent, isStandalone: true, selector: "dom-search-input", inputs: { initialValue: { classPropertyName: "initialValue", publicName: "initialValue", isSignal: true, isRequired: false, transformFunction: null }, searchResultsData: { classPropertyName: "searchResultsData", publicName: "searchResultsData", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { termChanged: "termChanged" }, ngImport: i0, template: "<mat-form-field>\n  <input matInput type=\"text\" [formControl]=\"searchControl\" />\n  <!-- @if (searchResultsData()!.totalResults !== 0) {\n    <span matSuffix\n      >{{ searchResultsData()!.totalResults }} results\n    </span>\n  } -->\n</mat-form-field>\n", styles: ["mat-form-field{width:100%;font-size:24px}mat-form-field span[matSuffix]{padding:8px}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "ngmodule", type: FormsModule }, { kind: "directive", type: i1.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i1.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "ngmodule", type: ReactiveFormsModule }, { kind: "directive", type: i1.FormControlDirective, selector: "[formControl]", inputs: ["formControl", "disabled", "ngModel"], outputs: ["ngModelChange"], exportAs: ["ngForm"] }, { kind: "ngmodule", type: MatInputModule }, { kind: "directive", type: i2.MatInput, selector: "input[matInput], textarea[matInput], select[matNativeControl],      input[matNativeControl], textarea[matNativeControl]", inputs: ["disabled", "id", "placeholder", "name", "required", "type", "errorStateMatcher", "aria-describedby", "value", "readonly"], exportAs: ["matInput"] }, { kind: "component", type: i2$1.MatFormField, selector: "mat-form-field", inputs: ["hideRequiredMarker", "color", "floatLabel", "appearance", "subscriptSizing", "hintLabel"], exportAs: ["matFormField"] }, { kind: "ngmodule", type: MatFormFieldModule }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "17.2.2", ngImport: i0, type: SearchInputComponent, decorators: [{
             type: Component,
@@ -139,6 +140,100 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "17.2.2", ngImpor
                 type: Output
             }] } });
 
+function getFormKeys(obj) {
+    return signal(Object.keys(obj.controls));
+}
+var FormErrorType;
+(function (FormErrorType) {
+    FormErrorType["Required"] = "required";
+    FormErrorType["Pattern"] = "pattern";
+    FormErrorType["EmailPattern"] = "email";
+    FormErrorType["Server"] = "serverError";
+})(FormErrorType || (FormErrorType = {}));
+const errorMessageMap = {
+    required: 'required',
+    pattern: 'invalid pattern',
+    email: 'invalid email format',
+};
+function setFormError(group, error) {
+    if (group !== null && error !== null) {
+        const control = group.get(error.control);
+        if (control != null) {
+            control.setErrors({ serverError: error.message });
+        }
+    }
+}
+function handleServerErrorEffect(injector, serverError, form) {
+    effect(() => {
+        const error = serverError();
+        if (error) {
+            setFormError(form, error);
+        }
+    }, { allowSignalWrites: true, injector });
+}
+
+class FormInputComponent {
+    constructor() {
+        this._injector = inject(Injector);
+        this.control = input.required();
+        this.key = input.required();
+        this.type = input();
+        this.label = input();
+        this.hint = input();
+        this.errorsMap = input();
+    }
+    ngOnInit() {
+        this.formControl = computed(() => this.control());
+        this.hasError = this._setHasErrorSignal(this.formControl());
+        this.errorMessage = this._setErrorMessageSignal(this.formControl());
+    }
+    _setErrorMessageSignal(formControl) {
+        return runInInjectionContext(this._injector, () => toSignal(this._setErrorObservable(formControl), {
+            initialValue: this._getErrorMessage(formControl),
+        }));
+    }
+    _setErrorObservable(formControl) {
+        return formControl.statusChanges.pipe(map(() => this._getErrorMessage(formControl)));
+    }
+    _setHasErrorSignal(formControl) {
+        return runInInjectionContext(this._injector, () => toSignal(this._setHasErrorObservable(formControl), {
+            initialValue: false,
+        }));
+    }
+    _setHasErrorObservable(formControl) {
+        return formControl.statusChanges.pipe(startWith(formControl.status), map(() => formControl.errors), map((errors) => !!errors));
+    }
+    // handle input error messages
+    _getErrorMessage(control) {
+        const errors = { ...control.errors };
+        if (errors) {
+            const errorKeys = Object.keys(errors);
+            for (const error of errorKeys) {
+                if (control.hasError(error)) {
+                    const errorMap = {
+                        ...errors,
+                        ...errorMessageMap,
+                        ...this.errorsMap(),
+                    };
+                    return errorMap[error];
+                }
+            }
+        }
+        return "";
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "17.2.2", ngImport: i0, type: FormInputComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "17.2.2", type: FormInputComponent, isStandalone: true, selector: "dom-form-input", inputs: { control: { classPropertyName: "control", publicName: "control", isSignal: true, isRequired: true, transformFunction: null }, key: { classPropertyName: "key", publicName: "key", isSignal: true, isRequired: true, transformFunction: null }, type: { classPropertyName: "type", publicName: "type", isSignal: true, isRequired: false, transformFunction: null }, label: { classPropertyName: "label", publicName: "label", isSignal: true, isRequired: false, transformFunction: null }, hint: { classPropertyName: "hint", publicName: "hint", isSignal: true, isRequired: false, transformFunction: null }, errorsMap: { classPropertyName: "errorsMap", publicName: "errorsMap", isSignal: true, isRequired: false, transformFunction: null } }, ngImport: i0, template: "<mat-form-field class=\"full-width\">\n  <mat-label>{{ label() }}</mat-label>\n  <input\n    #input\n    matInput\n    [type]=\"type() || 'text'\"\n    [formControl]=\"formControl()\"\n    autocomplete=\"off\"\n    [name]=\"key()\"\n  />\n\n  @if (hint()) {\n\n  <!-- <mat-hint> {{ \"Please enter your \" + hint() }}</mat-hint> -->\n  <mat-hint> {{ formControl().errors }}</mat-hint>\n  } @if (hasError()) {\n  <mat-error>{{ errorMessage() }}</mat-error>\n  }\n</mat-form-field>\n", styles: ["mat-form-field{width:100%;display:inline-block}input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "ngmodule", type: ReactiveFormsModule }, { kind: "directive", type: i1.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i1.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i1.FormControlDirective, selector: "[formControl]", inputs: ["formControl", "disabled", "ngModel"], outputs: ["ngModelChange"], exportAs: ["ngForm"] }, { kind: "ngmodule", type: MatFormFieldModule }, { kind: "component", type: i2$1.MatFormField, selector: "mat-form-field", inputs: ["hideRequiredMarker", "color", "floatLabel", "appearance", "subscriptSizing", "hintLabel"], exportAs: ["matFormField"] }, { kind: "directive", type: i2$1.MatLabel, selector: "mat-label" }, { kind: "directive", type: i2$1.MatHint, selector: "mat-hint", inputs: ["align", "id"] }, { kind: "directive", type: i2$1.MatError, selector: "mat-error, [matError]", inputs: ["id"] }, { kind: "ngmodule", type: MatInputModule }, { kind: "directive", type: i2.MatInput, selector: "input[matInput], textarea[matInput], select[matNativeControl],      input[matNativeControl], textarea[matNativeControl]", inputs: ["disabled", "id", "placeholder", "name", "required", "type", "errorStateMatcher", "aria-describedby", "value", "readonly"], exportAs: ["matInput"] }], changeDetection: i0.ChangeDetectionStrategy.OnPush }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "17.2.2", ngImport: i0, type: FormInputComponent, decorators: [{
+            type: Component,
+            args: [{ selector: "dom-form-input", standalone: true, imports: [
+                        CommonModule,
+                        ReactiveFormsModule,
+                        MatFormFieldModule,
+                        MatInputModule,
+                    ], changeDetection: ChangeDetectionStrategy.OnPush, template: "<mat-form-field class=\"full-width\">\n  <mat-label>{{ label() }}</mat-label>\n  <input\n    #input\n    matInput\n    [type]=\"type() || 'text'\"\n    [formControl]=\"formControl()\"\n    autocomplete=\"off\"\n    [name]=\"key()\"\n  />\n\n  @if (hint()) {\n\n  <!-- <mat-hint> {{ \"Please enter your \" + hint() }}</mat-hint> -->\n  <mat-hint> {{ formControl().errors }}</mat-hint>\n  } @if (hasError()) {\n  <mat-error>{{ errorMessage() }}</mat-error>\n  }\n</mat-form-field>\n", styles: ["mat-form-field{width:100%;display:inline-block}input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}\n"] }]
+        }] });
+
 function getKey(collection) {
     return collection == 'entities' ? collection : collection + 'Entities';
 }
@@ -202,5 +297,5 @@ function loadMethod(input) {
  * Generated bundle index. Do not edit.
  */
 
-export { AutocompleteComponent, OptionContentDirective, ParallaxDirective, SearchInputComponent, createLoader, createSliceLoader, handleLoadEntitiesSuccess, loadEntities, loadMethod, loadSlice };
+export { AutocompleteComponent, FormErrorType, FormInputComponent, OptionContentDirective, ParallaxDirective, SearchInputComponent, createLoader, createSliceLoader, errorMessageMap, getFormKeys, handleLoadEntitiesSuccess, handleServerErrorEffect, loadEntities, loadMethod, loadSlice, setFormError };
 //# sourceMappingURL=dom.mjs.map

@@ -98,10 +98,9 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-@dom/helpers
+@dom/components
 
-@firebase/analytics
-Apache-2.0
+@dom/helpers
 
 @firebase/app
 Apache-2.0
@@ -115,13 +114,7 @@ Apache-2.0
 @firebase/firestore
 Apache-2.0
 
-@firebase/installations
-Apache-2.0
-
 @firebase/logger
-Apache-2.0
-
-@firebase/messaging
 Apache-2.0
 
 @firebase/util
@@ -188,15 +181,11 @@ https://github.com/cartant/rxjs-etc by Nicholas Jamieson, MIT licensed. See the
 file header for details.
 
 
-firebase/analytics
-
 firebase/app
 
 firebase/auth
 
 firebase/firestore
-
-firebase/messaging
 
 idb
 ISC
@@ -207,8 +196,6 @@ Permission to use, copy, modify, and/or distribute this software for any purpose
 
 THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-
-rxfire/auth
 
 rxjs
 Apache-2.0

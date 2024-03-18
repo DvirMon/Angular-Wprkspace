@@ -1,4 +1,4 @@
-import { CommonModule, NgOptimizedImage, TitleCasePipe } from '@angular/common';
+import { NgOptimizedImage, TitleCasePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -25,13 +25,9 @@ import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { DomSanitizer } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
+
+import { FormInputComponent, FormServerError, getFormKeys, handleServerErrorEffect } from '@dom/components';
 import { DividerHeaderComponent } from '../../../shared/components/divider-header/divider-header.component';
-import { FormInputComponent } from '../../../../../../../libs/src/lib/dom/components/form-input/form-input.component';
-import {
-  FormServerError,
-  getFormKeys,
-  handleServerErrorEffect,
-} from '../../../../../../../libs/src/lib/dom/components/form-input/form.helper';
 import { EmailAndPasswordSignIn, SignInEvent, SignInMethod } from '../../utils';
 import { DEFAULT_EMAIL } from '../../utils/constants';
 
@@ -44,7 +40,6 @@ interface LoginForm {
   selector: 'to-login-form',
   standalone: true,
   imports: [
-    CommonModule,
     RouterModule,
     FormsModule,
     ReactiveFormsModule,

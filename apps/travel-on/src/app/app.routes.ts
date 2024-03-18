@@ -1,21 +1,12 @@
 import { Routes } from '@angular/router';
 import { authLoadUserResolver } from './auth';
 import { LoginPageComponent } from './pages/login/login.component';
-import { verifyGuard } from './pages/verify/verify.guard';
 
 export const appRoutes: Routes = [
   {
     path: '',
     component: LoginPageComponent,
     title: 'Login',
-  },
-  {
-    path: 'verify-email',
-    loadComponent: () =>
-      import('./pages/verify/verify.component').then(
-        (m) => m.VerifyPageComponent
-      ),
-    canActivate: [verifyGuard],
   },
   {
     path: 'register',

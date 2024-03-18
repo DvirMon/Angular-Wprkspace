@@ -10,10 +10,9 @@ import {
   signal,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { FormServerError } from '@dom';
 import {
-  EmailLinkFormComponent,
   LoginFormComponent,
-  OtpLoginFormComponent,
   SignInEvent
 } from '../../auth';
 import { AuthStore } from '../../auth/store/store';
@@ -21,7 +20,6 @@ import { CardButtonComponent } from '../../shared/components/card-button/card-bu
 import { FlipCardComponent } from '../../shared/components/flip-container/flip-container.component';
 import { FloatingButtonComponent } from '../../shared/components/floating-button/floating-button.component';
 import { navigate } from '../../shared/helpers';
-import { FormServerError } from '@dom';
 
 @Component({
   selector: 'to-login-page',
@@ -32,8 +30,6 @@ import { FormServerError } from '@dom';
     FloatingButtonComponent,
     FlipCardComponent,
     LoginFormComponent,
-    OtpLoginFormComponent,
-    EmailLinkFormComponent,
     CardButtonComponent,
   ],
   templateUrl: './login.component.html',

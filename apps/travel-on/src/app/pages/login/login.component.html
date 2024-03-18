@@ -6,7 +6,8 @@
         [serverError]="serverError()"
         (login)="onSignIn($event)"
         (google)="onSignIn($event)"
-        (forget)="onForgetPassword()">
+        (forget)="onForgetPassword()"
+      >
       </to-login-form>
 
       <!-- @if(showOtp()){
@@ -30,7 +31,8 @@
       class="front"
       [routerLink]="'/register'"
       label="Don't have an account?"
-      boldLabel="Sign up"></to-card-button>
+      boldLabel="Sign up"
+    ></to-card-button>
   </div>
   <div class="login-info-card"></div>
 </div>

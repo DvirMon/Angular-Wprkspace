@@ -1,5 +1,5 @@
-import { WritableSignal, signal } from "@angular/core";
-import { FormGroup, ValidationErrors } from "@angular/forms";
+import { WritableSignal, signal } from '@angular/core';
+import { FormGroup, ValidationErrors } from '@angular/forms';
 
 export interface FormServerError {
   control: string;
@@ -11,27 +11,27 @@ export function getFormKeys(obj: FormGroup): WritableSignal<string[]> {
 }
 
 export enum FormErrorType {
-  Required = "required",
-  Pattern = "pattern",
-  EmailPattern = "email",
-  Server = "serverError",
+  Required = 'required',
+  Pattern = 'pattern',
+  EmailPattern = 'email',
+  Server = 'serverError',
 }
 
 export const errorMessageMap: ValidationErrors = {
-  required: "required",
-  pattern: "invalid pattern",
-  email: "invalid email format",
+  required: 'required',
+  pattern: 'invalid pattern',
+  email: 'invalid email format',
 };
 
 export function handleServerError(
   group: FormGroup,
-  server: FormServerError
+  error: FormServerError
 ): void {
-  if (group !== null && server !== null) {
-    const control = group.get(server.control as string);
+  if (group !== null && error !== null) {
+    const control = group.get(error.control as string);
 
     if (control != null) {
-      control.setErrors({ serverError: server.message });
+      control.setErrors({ serverError: error.message });
     }
   }
 }

@@ -1,11 +1,13 @@
-import { Location } from "@angular/common";
-import { Injector, inject, runInInjectionContext } from "@angular/core";
-import { UserCredential, User as UserFirebase } from "@angular/fire/auth";
-import { ActivatedRoute, Params, Router } from "@angular/router";
-import { Observable, OperatorFunction } from "rxjs";
-import { map } from "rxjs/operators";
-import { FormServerError } from "../../shared/components/form-input/form.helper";
-import { AuthEvent, AuthServerError, User } from "./auth.model";
+import { Location } from '@angular/common';
+import { Injector, inject, runInInjectionContext } from '@angular/core';
+import { UserCredential, User as UserFirebase } from '@angular/fire/auth';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Observable, OperatorFunction } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
+import { FormServerError } from '../../shared/components/form-input/form.helper';
+import { AuthEvent, AuthServerError, User } from './auth.model';
+import { patchState } from '@ngrx/signals';
+import { FirebaseError } from './fireauth.service';
 
 // Function to generate a valid URL for the email verification link
 export function generateVerificationLink(
@@ -16,8 +18,8 @@ export function generateVerificationLink(
     const baseUrl = inject(Location).normalize(location.origin);
 
     // Create the URL tree with the desired route and any necessary query parameters
-    const urlTree = inject(Router).createUrlTree(["/verify-email"], {
-      queryParams: { token: "verification_token", ...param },
+    const urlTree = inject(Router).createUrlTree(['/verify-email'], {
+      queryParams: { token: 'verification_token', ...param },
     });
 
     // Convert the URL tree to a string
@@ -53,6 +55,8 @@ export function mapFirebaseCredentials(): OperatorFunction<
     );
 }
 
+
+
 function mapUser(user: UserFirebase): User {
   return {
     userId: user.uid,
@@ -68,31 +72,31 @@ export function mapAuthServerError(
   event: AuthEvent
 ): AuthServerError {
   const authErrorMessages: { [errorCode: string]: FormServerError } = {
-    "auth/user-not-found": {
-      control: "email",
-      message: "This email is not register.",
+    'auth/user-not-found': {
+      control: 'email',
+      message: 'This email is not register.',
     },
 
-    "auth/email-already-in-use": {
-      control: "email",
-      message: "This email is already exist.",
+    'auth/email-already-in-use': {
+      control: 'email',
+      message: 'This email is already exist.',
     },
 
-    "auth/invalid-email": {
-      control: "email",
-      message: "The email address is not valid.",
+    'auth/invalid-email': {
+      control: 'email',
+      message: 'The email address is not valid.',
     },
-    "auth/invalid-password": {
-      control: "password",
-      message: "The password is not valid.",
+    'auth/invalid-password': {
+      control: 'password',
+      message: 'The password is not valid.',
     },
-    "auth/missing-password": {
-      control: "password",
-      message: "The password is not valid.",
+    'auth/missing-password': {
+      control: 'password',
+      message: 'The password is not valid.',
     },
-    "auth/wrong-password": {
-      control: "password",
-      message: "Password is not match.",
+    'auth/wrong-password': {
+      control: 'password',
+      message: 'Password is not match.',
     },
   };
 

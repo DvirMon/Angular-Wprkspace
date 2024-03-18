@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import {
+  AuthEvent,
   AuthServerError,
   EmailLinkFormComponent,
   LoginFormComponent,
@@ -22,6 +23,7 @@ import { CardButtonComponent } from '../../shared/components/card-button/card-bu
 import { FlipCardComponent } from '../../shared/components/flip-container/flip-container.component';
 import { FloatingButtonComponent } from '../../shared/components/floating-button/floating-button.component';
 import { navigate } from '../../shared/helpers';
+import { FormServerError } from '../../shared/components';
 
 @Component({
   selector: 'to-login-page',
@@ -45,11 +47,11 @@ export class LoginPageComponent {
   #authStore = inject(AuthStore);
 
   public readonly showOtp: WritableSignal<boolean>;
-  public readonly serverError: Signal<AuthServerError | null>;
+  public readonly serverError: Signal<FormServerError | undefined>;
 
   constructor() {
     this.showOtp = signal(false);
-    this.serverError = this.#authStore.serverError;
+    this.serverError = this.#authStore.loginError;
 
     effect(() => {
       if (this.#authStore.loaded()) {

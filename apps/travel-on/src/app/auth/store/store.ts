@@ -1,32 +1,36 @@
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
-import { inject } from '@angular/core';
+import { computed, inject, signal } from '@angular/core';
+import { UserCredential } from '@angular/fire/auth';
 import { tapResponse } from '@ngrx/operators';
 import {
   StateSignal,
   patchState,
   signalStore,
+  withComputed,
   withMethods,
   withState,
 } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { EMPTY, pipe, switchMap } from 'rxjs';
+import { Observable, pipe, switchMap } from 'rxjs';
 import {
   AuthEvent,
   AuthServerError,
   AuthService,
   FirebaseError,
+  Register,
   SignInEvent,
   User,
   mapFirebaseCredentials,
 } from '../utils';
-import { setServerError, setUser } from './store.setters';
-import { clearStorage } from '../../shared/helpers';
+import { setAuthError, setServerError, setUser } from './store.setters';
+import { FormServerError } from '../../shared/components';
 
 export interface AuthState {
   user: User;
   loaded: boolean;
   email: string;
   serverError: AuthServerError | null;
+  authError: Partial<Record<AuthEvent, FormServerError>>;
 }
 
 const initialState: AuthState = {
@@ -34,6 +38,7 @@ const initialState: AuthState = {
   loaded: false,
   email: '',
   serverError: null,
+  authError: {} as Record<AuthEvent, FormServerError>,
 };
 
 export const AuthStore = signalStore(
@@ -41,8 +46,10 @@ export const AuthStore = signalStore(
   withDevtools('auth'),
   withState(initialState),
   withMethods((store, service = inject(AuthService)) => ({
-    signIn: loadUser(service, store, AuthEvent.LOGIN),
-
+    signIn: signIn(service, store, AuthEvent.LOGIN),
+    register: register(service, store, AuthEvent.REGISTER),
+  })),
+  withMethods((store, service = inject(AuthService)) => ({
     login(): void {
       service.login(store.user());
     },
@@ -50,10 +57,14 @@ export const AuthStore = signalStore(
       patchState(store, initialState);
       service.logout();
     },
+  })),
+
+  withComputed((store) => ({
+    loginError: computed(() => store.authError()[AuthEvent.LOGIN]),
   }))
 );
 
-function loadUser(
+function signIn(
   service: AuthService,
   store: StateSignal<AuthState>,
   event: AuthEvent
@@ -61,13 +72,48 @@ function loadUser(
   return rxMethod<SignInEvent>(
     pipe(
       switchMap((value) =>
-        service.signIn$(value).pipe(
+        service
+          .signIn$(value)
+          .pipe(mapFirebaseCredentials(), handleLoadUser(store, event))
+      )
+    )
+  );
+}
+function register(
+  service: AuthService,
+  store: StateSignal<AuthState>,
+  event: AuthEvent
+) {
+  return rxMethod<Register>(
+    pipe(
+      switchMap((value) =>
+        service
+          .register$(value)
+          .pipe(mapFirebaseCredentials(), handleLoadUser(store, event))
+      )
+    )
+  );
+}
+
+function handleLoadUser(store: StateSignal<AuthState>, event: AuthEvent) {
+  return tapResponse({
+    next: (user: User) => patchState(store, setUser(user)),
+    error: (err: FirebaseError) =>
+      patchState(store, setAuthError(err.code, event)),
+  });
+}
+
+function authenticate<T>(
+  store: StateSignal<AuthState>,
+  event: AuthEvent,
+  authActionFn: (value: T) => Observable<UserCredential>
+) {
+  return rxMethod<T>(
+    pipe(
+      switchMap((value) =>
+        authActionFn(value).pipe(
           mapFirebaseCredentials(),
-          tapResponse({
-            next: (user: User) => patchState(store, setUser(user)),
-            error: (err: FirebaseError) =>
-              patchState(store, setServerError(err.code, event)),
-          })
+          handleLoadUser(store, event)
         )
       )
     )

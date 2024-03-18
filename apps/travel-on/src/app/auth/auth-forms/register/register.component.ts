@@ -19,7 +19,7 @@ import {
 } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatCard, MatCardContent } from '@angular/material/card';
-import { AuthServerError, EmailAndPasswordSignIn } from '../../index';
+import { AuthServerError, EmailAndPasswordSignIn, Register } from '../../index';
 import { DividerHeaderComponent } from '../../../shared/components/divider-header/divider-header.component';
 import { FormInputComponent } from '../../../shared/components/form-input/form-input.component';
 import {
@@ -63,7 +63,7 @@ export class RegisterFormComponent {
     },
   };
 
-  @Output() register: EventEmitter<EmailAndPasswordSignIn> = new EventEmitter();
+  @Output() register: EventEmitter<Register> = new EventEmitter();
 
   constructor() {
     this.registerFormGroup = this._buildRegisterForm();
@@ -98,7 +98,7 @@ export class RegisterFormComponent {
     });
   }
 
-  public onSubmit(value: Partial<EmailAndPasswordSignIn>): void {
-    this.register.emit(value as EmailAndPasswordSignIn);
+  public onSubmit(value: Partial<Register>): void {
+    this.register.emit(value as Register);
   }
 }

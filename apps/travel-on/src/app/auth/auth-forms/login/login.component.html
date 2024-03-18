@@ -6,21 +6,24 @@
       width="60"
       height="60"
       priority
-      alt="logo" />
+      alt="logo"
+    />
     <to-divider-header label="Sign In"></to-divider-header>
   </mat-card-header>
 
   <mat-card-content class="login-form-wrapper">
     <form
       [formGroup]="loginFormGroup"
-      (ngSubmit)="onSubmit(loginFormGroup.value)">
+      (ngSubmit)="onSubmit(loginFormGroup.value)"
+    >
       @for (key of formKeys(); track key) {
 
       <to-form-input
         [control]="loginFormGroup.get(key)"
         [key]="key"
         [label]="key | titlecase"
-        [errorsMap]="errorsMap[key]">
+        [errorsMap]="errorsMap[key]"
+      >
       </to-form-input>
       }
       <button
@@ -28,7 +31,8 @@
         mat-raised-button
         type="submit"
         color="primary"
-        [disabled]="!loginFormGroup.valid">
+        [disabled]="!loginFormGroup.valid"
+      >
         Login
       </button>
     </form>
@@ -40,7 +44,8 @@
         mat-stroked-button
         class="google-btn"
         [disableRipple]="true"
-        (click)="oGoogleSignIn()">
+        (click)="oGoogleSignIn()"
+      >
         <mat-icon svgIcon="google" class="google-icon"></mat-icon>
         Continue with Google
       </button>
@@ -49,7 +54,8 @@
         [disableRipple]="true"
         mat-button
         type="button"
-        (click)="onForgetPassword()">
+        (click)="onForgetPassword()"
+      >
         Forget your password ?
       </button>
       <!-- <section class="forget-btn">

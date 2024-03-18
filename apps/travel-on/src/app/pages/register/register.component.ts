@@ -5,11 +5,11 @@ import {
   inject,
 } from '@angular/core';
 import {
-  RegisterFormComponent,
   AuthServerError,
-  EmailAndPasswordSignIn,
+  Register,
+  RegisterFormComponent
 } from '../../auth';
-import { AuthStoreService } from '../../auth/store/auth.store.service';
+import { AuthStore } from '../../auth/store/store';
 import { CardButtonComponent } from '../../shared/components/card-button/card-button.component';
 
 @Component({
@@ -19,17 +19,18 @@ import { CardButtonComponent } from '../../shared/components/card-button/card-bu
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [AuthStore],
+
 })
 export class RegisterPageComponent {
-  #AuthStoreService = inject(AuthStoreService);
+  #authStore = inject(AuthStore);
 
   public readonly serverError: Signal<AuthServerError | null>;
 
   constructor() {
-    this.serverError = this.#AuthStoreService.loginServerError();
+    this.serverError = this.#authStore.serverError;
   }
-  onRegister(value: EmailAndPasswordSignIn): void {
-    const { email, password } = value;
-    this.#AuthStoreService.register(email, password);
+  onRegister(value: Register): void {
+    this.#authStore.register(value);
   }
 }

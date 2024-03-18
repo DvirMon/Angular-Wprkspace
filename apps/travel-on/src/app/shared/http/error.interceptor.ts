@@ -13,6 +13,8 @@ import { catchError, throwError } from "rxjs";
 export const errorInterceptor: HttpInterceptorFn = (req, handle) => {
   // const uiMessage = inject(MessageService);
 
+  console.log(req)
+
   return handle(req).pipe(
     catchError((err: HttpErrorResponse) => {
       console.log(err);

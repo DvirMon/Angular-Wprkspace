@@ -70,9 +70,7 @@ interface LoginForm {
 export class LoginFormComponent {
   public readonly loginFormGroup: FormGroup<LoginForm>;
 
-  public readonly serverError = input<AuthServerError | null>(
-    {} as AuthServerError
-  );
+  public readonly serverError = input<FormServerError>();
 
   public readonly errorsMap: { [key: string]: ValidationErrors } = {
     password: {
@@ -100,7 +98,9 @@ export class LoginFormComponent {
       () => {
         const serverError = this.serverError();
 
-        handleServerError(this.loginFormGroup, serverError as FormServerError);
+        if (serverError) {
+          handleServerError(this.loginFormGroup, serverError);
+        }
       },
       { allowSignalWrites: true }
     );

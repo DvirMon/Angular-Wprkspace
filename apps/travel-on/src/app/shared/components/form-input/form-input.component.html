@@ -6,11 +6,13 @@
     [type]="type() || 'text'"
     [formControl]="formControl()"
     autocomplete="off"
-    [name]="key()" />
+    [name]="key()"
+  />
 
   @if (hint()) {
 
-  <mat-hint> {{ "Please enter your " + hint() }}</mat-hint>
+  <!-- <mat-hint> {{ "Please enter your " + hint() }}</mat-hint> -->
+  <mat-hint> {{ formControl().errors }}</mat-hint>
   } @if (hasError()) {
   <mat-error>{{ errorMessage() }}</mat-error>
   }

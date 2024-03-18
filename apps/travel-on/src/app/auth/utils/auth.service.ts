@@ -18,7 +18,7 @@ import {
   setToStorage,
 } from '../../shared/helpers';
 import { FireAuthService } from './fireauth.service';
-import { SignInEvent, SignInMethod, User } from './auth.model';
+import { Register, SignInEvent, SignInMethod, User } from './auth.model';
 import { Router } from '@angular/router';
 import { StorageKey } from '../../shared/constants';
 
@@ -47,7 +47,7 @@ export class AuthService {
     ) as CollectionReference<User>;
   }
 
-  public register$(email: string, password: string) {
+  public register$({ password, email }: Register) {
     return this.fireAuthService.createInWithEmailAndPassword$(email, password);
   }
 
@@ -142,13 +142,13 @@ export class AuthService {
     return this.fireAuthService.isSignInWithEmailLink$(emailLink);
   }
 
-  public logout() :void {
+  public logout(): void {
     clearStorage();
     navigate('/');
   }
 
-  public login(user : User): void {
+  public login(user: User): void {
     setToStorage(StorageKey.LOGGED, true);
-    this.router.navigateByUrl('places/' + user.userId)
+    this.router.navigateByUrl('places/' + user.userId);
   }
 }

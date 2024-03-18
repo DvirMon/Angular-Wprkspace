@@ -1,4 +1,4 @@
-import { FormServerError } from "../../shared/components/form-input/form.helper";
+import { FormServerError } from '../../shared/components/form-input/form.helper';
 
 export interface User {
   userId: string;
@@ -7,6 +7,7 @@ export interface User {
   displayName: string;
   photoURL: string;
 }
+
 export interface EmailAndPasswordSignIn {
   email: string;
   password: string;
@@ -14,20 +15,21 @@ export interface EmailAndPasswordSignIn {
 
 export interface Register {
   email: string;
+  password: string;
   phone: string;
   first_name: string;
   last_name: string;
 }
 
 export enum SignInMethod {
-  OPT = "oneTimePassword",
-  EMAIL_LINK = "emailLink",
-  EMAIL_PASSWORD = "password",
-  FACEBOOK = "facebook.com",
-  GITHUB = "github.com",
-  GOOGLE = "google.com",
-  PHONE = "phone",
-  TWITTER = "twitter.com",
+  OPT = 'oneTimePassword',
+  EMAIL_LINK = 'emailLink',
+  EMAIL_PASSWORD = 'password',
+  FACEBOOK = 'facebook.com',
+  GITHUB = 'github.com',
+  GOOGLE = 'google.com',
+  PHONE = 'phone',
+  TWITTER = 'twitter.com',
 }
 
 export interface SignInEvent {
@@ -36,10 +38,10 @@ export interface SignInEvent {
 }
 
 export enum AuthEvent {
-  LOGIN = "login",
-  REGISTER = "register",
-  RESET = "reset",
-  EMAIL_LINK = "emailLink",
+  LOGIN = 'login',
+  REGISTER = 'register',
+  RESET = 'reset',
+  EMAIL_LINK = 'emailLink',
 }
 
 export interface AuthServerError extends FormServerError {

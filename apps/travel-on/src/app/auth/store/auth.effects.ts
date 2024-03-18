@@ -15,7 +15,7 @@ import { DialogService } from '../../shared/dialog/dialog.service';
 import { AuthDialogEvent, authDialogMap } from '../auth-dialogs';
 import { ResetService } from '../auth-forms';
 import { mapFirebaseCredentials } from '../utils/auth.helpers';
-import { AuthEvent } from '../utils/auth.model';
+import { AuthEvent, Register } from '../utils/auth.model';
 import { AuthService } from '../utils/auth.service';
 import { FirebaseError } from '../utils/fireauth.service';
 import { AuthActions } from './auth.actions';
@@ -35,7 +35,7 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(AuthActions.createUser),
       concatMap(({ email, password }) =>
-        this.authService.register$(email, password).pipe(
+        this.authService.register$({email, password} as Register).pipe(
           mapFirebaseCredentials(),
           map((user) => AuthActions.loadUserSuccess({ user })),
           catchError((err: FirebaseError) => {

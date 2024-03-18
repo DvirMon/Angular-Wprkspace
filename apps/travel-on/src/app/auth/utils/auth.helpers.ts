@@ -3,11 +3,9 @@ import { Injector, inject, runInInjectionContext } from '@angular/core';
 import { UserCredential, User as UserFirebase } from '@angular/fire/auth';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Observable, OperatorFunction } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { FormServerError } from '../../shared/components/form-input/form.helper';
 import { AuthEvent, AuthServerError, User } from './auth.model';
-import { patchState } from '@ngrx/signals';
-import { FirebaseError } from './fireauth.service';
 
 // Function to generate a valid URL for the email verification link
 export function generateVerificationLink(

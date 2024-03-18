@@ -32,6 +32,7 @@ export class VerifyPageComponent {
       method: SignInMethod.EMAIL_LINK,
       data: { email, emailLink },
     };
+    console.log(event)
     // this.AuthStoreService.signIn(event);
   }
 }

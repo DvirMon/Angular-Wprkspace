@@ -21,12 +21,14 @@ import { AuthEvent } from '../utils/auth.model';
 import { AuthService } from '../utils/auth.service';
 import { FirebaseError } from '../utils/fireauth.service';
 import { AuthActions } from './auth.actions';
+import { ResetService } from '../auth-forms';
 
 @Injectable()
 export class AuthEffects {
   constructor(
     private actions$: Actions,
     private authService: AuthService,
+    private resetService: ResetService,
     private router: Router,
     private dialogService: DialogService
   ) {}
@@ -36,7 +38,6 @@ export class AuthEffects {
       ofType(AuthActions.signIn),
       switchMap(({ signInEvent }) =>
         this.authService.signIn$(signInEvent).pipe(
-          tap(() => console.log(signInEvent)),
           mapFirebaseCredentials(),
           map((user) => AuthActions.loadUserSuccess({ user })),
           catchError((err: FirebaseError) => {
@@ -121,8 +122,7 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(AuthActions.sendResetEmail),
       switchMap(({ email }) =>
-        // this.resetService.sendResetEmail(email).pipe(
-        of('email').pipe(
+        this.resetService.sendResetEmail(email).pipe(
           map(() =>
             AuthActions.sendResetEmailSuccess({
               email,
@@ -146,8 +146,8 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(AuthActions.confirmResetPassword),
       switchMap(({ oobCode, newPassword }) =>
-        // this.resetService.confirmPasswordReset(oobCode, newPassword).pipe(
-        of('eil').pipe(
+        this.resetService.confirmPasswordReset(oobCode, newPassword).pipe(
+          // of('eil').pipe(
           map(() =>
             AuthActions.confirmResetPasswordSuccess({
               email: 'test',

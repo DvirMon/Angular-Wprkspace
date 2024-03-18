@@ -11,6 +11,7 @@ export class ResetService {
   public sendResetEmail(email: string): Observable<void> {
     return this.fireAuthService.sendPasswordResetEmail(email);
   }
+  
   public confirmPasswordReset(
     oobCode: string,
     newPassword: string

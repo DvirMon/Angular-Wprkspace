@@ -3,7 +3,7 @@ import { authLoadUserResolver } from './auth';
 
 export const appRoutes: Routes = [
   {
-    path: 'login',
+    path: '',
     loadComponent: () =>
       import('./pages/login/login.component').then((m) => m.LoginPageComponent),
     title: 'Login',
@@ -29,11 +29,5 @@ export const appRoutes: Routes = [
     // canActivate: [placesGuard],
     resolve: { authLoadUserResolver },
     title: 'Travel-On',
-  },
-
-  {
-    path: '',
-    pathMatch: 'full',
-    redirectTo: '/',
   },
 ];

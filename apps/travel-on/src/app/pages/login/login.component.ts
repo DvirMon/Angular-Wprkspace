@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -9,8 +8,10 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { CardButtonComponent, FlipCardComponent, FloatingButtonComponent, FormServerError } from '@dom/components';
+import {
+  CardButtonComponent,
+  FormServerError
+} from '@dom/components';
 import { LoginFormComponent, SignInEvent } from '../../auth';
 import { AuthStore } from '../../auth/store/store';
 
@@ -20,10 +21,6 @@ import { navigate } from '../../shared/helpers';
   selector: 'to-login-page',
   standalone: true,
   imports: [
-    CommonModule,
-    MatButtonModule,
-    FloatingButtonComponent,
-    FlipCardComponent,
     LoginFormComponent,
     CardButtonComponent,
   ],

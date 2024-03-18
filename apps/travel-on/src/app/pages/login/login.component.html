@@ -1,18 +1,14 @@
 <div class="login-page-wrapper">
   <div class="login-wrapper">
-    <dom-flip-container>
-      <to-login-form
-        class="front"
-        [serverError]="serverError()"
-        (login)="onSignIn($event)"
-        (google)="onSignIn($event)"
-        (forget)="onForgetPassword()"
-      >
-      </to-login-form>
-    </dom-flip-container>
+    <to-login-form
+      [serverError]="serverError()"
+      (login)="onSignIn($event)"
+      (google)="onSignIn($event)"
+      (forget)="onForgetPassword()"
+    >
+    </to-login-form>
 
     <dom-card-button
-      class="front"
       [routerLink]="'/register'"
       label="Don't have an account?"
       boldLabel="Sign up"

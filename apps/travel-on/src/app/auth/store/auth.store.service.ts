@@ -1,6 +1,6 @@
-import { Injectable, Signal } from "@angular/core";
-import { toSignal } from "@angular/core/rxjs-interop";
-import { Store } from "@ngrx/store";
+import { Injectable, Signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { Store } from '@ngrx/store';
 import {
   EMPTY,
   Observable,
@@ -10,17 +10,17 @@ import {
   map,
   of,
   switchMap,
-} from "rxjs";
-import { AuthServerError, SignInEvent, User } from "../utils/auth.model";
-import { AuthActions } from "./auth.actions";
-import { AuthSelectors } from "./auth.selectors";
-import { StorageKey } from "../../shared/constants";
-import { getFromStorage } from "../../shared/helpers";
+} from 'rxjs';
+import { AuthServerError, SignInEvent, User } from '../utils/auth.model';
+import { AuthActions } from './auth.actions';
+import { AuthSelectors } from './auth.selectors';
+import { StorageKey } from '../../shared/constants';
+import { getFromStorage } from '../../shared/helpers';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
-export class AuthStore {
+export class AuthStoreService {
   private readonly loginSource: Subject<SignInEvent> =
     new Subject<SignInEvent>();
 

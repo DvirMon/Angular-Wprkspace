@@ -1,13 +1,13 @@
-import { inject } from "@angular/core";
-import { ResolveFn } from "@angular/router";
-import { AuthStore } from "../store/auth.store.service";
+import { inject } from '@angular/core';
+import { ResolveFn } from '@angular/router';
+import { AuthStoreService } from '../store/auth.store.service';
 
 export const authLoadUserResolver: ResolveFn<boolean> = (
   route,
   state,
-  authStore: AuthStore = inject(AuthStore)
+  authStoreService: AuthStoreService = inject(AuthStoreService)
 ) => {
-  const userId = route.paramMap.get("userId") as string;
-  authStore.loadUserById(userId);
+  const userId = route.paramMap.get('userId') as string;
+  authStoreService.loadUserById(userId);
   return true;
 };

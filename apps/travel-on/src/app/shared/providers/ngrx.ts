@@ -11,6 +11,6 @@ export function provideNgRx() {
     provideStore({
       [authFeatureKey]: authReducer,
     }),
-    provideEffects(AuthEffects),
+    // provideEffects(AuthEffects),
   ];
 }

@@ -5,28 +5,31 @@ import {
   Signal,
   computed,
   inject,
-} from "@angular/core";
-import { toSignal } from "@angular/core/rxjs-interop";
-import { ActivatedRoute, Params } from "@angular/router";
-import { ResetContactFormComponent, ResetPasswordFormComponent } from "../../auth";
-import { AuthStore } from "../../auth/store/auth.store.service";
-import { CardButtonComponent } from "../../shared/components/card-button/card-button.component";
+} from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { ActivatedRoute, Params } from '@angular/router';
+import {
+  ResetContactFormComponent,
+  ResetPasswordFormComponent,
+} from '../../auth';
+import { AuthStoreService } from '../../auth/store/auth.store.service';
+import { CardButtonComponent } from '../../shared/components/card-button/card-button.component';
 
 @Component({
-  selector: "to-reset",
+  selector: 'to-reset',
   standalone: true,
   imports: [
     ResetContactFormComponent,
     ResetPasswordFormComponent,
     CardButtonComponent,
   ],
-  templateUrl: "./reset.component.html",
-  styleUrl: "./reset.component.scss",
+  templateUrl: './reset.component.html',
+  styleUrl: './reset.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ResetPageComponent {
   #injector = inject(Injector);
-  #authStore = inject(AuthStore);
+  #AuthStoreService = inject(AuthStoreService);
   #activatedRoute = inject(ActivatedRoute);
 
   public readonly paramsSignal: Signal<Params>;
@@ -35,20 +38,20 @@ export class ResetPageComponent {
 
   constructor() {
     this.paramsSignal = toSignal(this.#activatedRoute.queryParams, {
-      initialValue: { mode: "" } as Params,
+      initialValue: { mode: '' } as Params,
     });
 
-    this.showNewPassword = computed(() => !!this.paramsSignal()["mode"]);
+    this.showNewPassword = computed(() => !!this.paramsSignal()['mode']);
   }
 
   public onResetEmail(email: string) {
-    this.#authStore.sendResetEmail(email);
+    this.#AuthStoreService.sendResetEmail(email);
   }
 
   public onResetPassword(newPassword: string) {
-    const oobCode = this.paramsSignal()["oobCode"];
-    this.#authStore.confirmResetPassword(newPassword, oobCode);
-    // this.#authStore.sendResetEmail("email");
+    const oobCode = this.paramsSignal()['oobCode'];
+    this.#AuthStoreService.confirmResetPassword(newPassword, oobCode);
+    // this.#AuthStoreService.sendResetEmail("email");
 
     // runInInjectionContext(this.#injector, () => {
     //   inject(Router).navigateByUrl("reset");

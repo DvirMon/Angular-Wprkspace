@@ -5,9 +5,11 @@ import {
   Injector,
   Signal,
   WritableSignal,
+  effect,
   inject,
   runInInjectionContext,
   signal,
+  untracked,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
@@ -19,11 +21,12 @@ import {
   SignInEvent,
   SignInMethod,
 } from '../../auth';
-import { AuthStore } from '../../auth/store/auth.store.service';
+import { AuthStoreService } from '../../auth/store/auth.store.service';
 import { CardButtonComponent } from '../../shared/components/card-button/card-button.component';
 import { FlipCardComponent } from '../../shared/components/flip-container/flip-container.component';
 import { FlipContainerService } from '../../shared/components/flip-container/flip-container.service';
 import { FloatingButtonComponent } from '../../shared/components/floating-button/floating-button.component';
+import { AuthStore } from '../../auth/store/store';
 
 @Component({
   selector: 'to-login-page',
@@ -45,6 +48,8 @@ import { FloatingButtonComponent } from '../../shared/components/floating-button
 })
 export class LoginPageComponent {
   #injector = inject(Injector);
+  #router = inject(Router);
+  #authStoreService = inject(AuthStoreService);
   #authStore = inject(AuthStore);
 
   public readonly showOtp: WritableSignal<boolean>;
@@ -52,12 +57,21 @@ export class LoginPageComponent {
 
   constructor() {
     this.showOtp = signal(false);
-    this.#authStore.loadUser();
-    this.serverError = this.#authStore.loginServerError();
+    // this.#authStoreService.loadUser();
+    this.serverError = this.#authStore.serverError;
+
+    effect(() => {
+      if (this.#authStore.loaded()) {
+
+        console.log('navigate')
+        this.#router.navigateByUrl(
+          'places/' + untracked(this.#authStore.user).userId
+        );
+      }
+    });
   }
 
   public onSignIn(event: SignInEvent) {
-    console.log(event)
     this.#authStore.signIn(event);
   }
 
@@ -79,7 +93,7 @@ export class LoginPageComponent {
 
   public onEmailLink(event: SignInEvent) {
     const { data } = event;
-    this.#authStore.sendEmailLink(data as string);
+    this.#authStoreService.sendEmailLink(data as string);
   }
 
   public onForgetPassword() {

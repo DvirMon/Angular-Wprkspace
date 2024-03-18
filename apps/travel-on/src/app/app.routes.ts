@@ -40,7 +40,7 @@ export const appRoutes: Routes = [
     path: 'places/:userId',
     loadComponent: () =>
       import('./pages/places/places.component').then((m) => m.PlacesComponent),
-    canActivate: [placesGuard],
+    // canActivate: [placesGuard],
     resolve: { authLoadUserResolver },
     title: 'Travel-On',
   },

@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { MatToolbar } from '@angular/material/toolbar';
 import { ParallaxDirective } from '@dom';
-import { AuthStore } from '../../auth/store/auth.store.service';
+import { AuthStoreService } from '../../auth/store/auth.store.service';
 import { PlacesCardComponent } from '../../places/place-card/places-card.component';
 import {
   PlacesListComponent,
@@ -58,6 +58,8 @@ export class PlacesComponent implements OnInit {
   }
 
   onLogout(): void {
-    runInInjectionContext(this.#injector, () => inject(AuthStore).logout());
+    runInInjectionContext(this.#injector, () =>
+      inject(AuthStoreService).logout()
+    );
   }
 }

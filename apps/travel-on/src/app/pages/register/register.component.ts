@@ -9,7 +9,7 @@ import {
   AuthServerError,
   EmailAndPasswordSignIn,
 } from '../../auth';
-import { AuthStore } from '../../auth/store/auth.store.service';
+import { AuthStoreService } from '../../auth/store/auth.store.service';
 import { CardButtonComponent } from '../../shared/components/card-button/card-button.component';
 
 @Component({
@@ -21,15 +21,15 @@ import { CardButtonComponent } from '../../shared/components/card-button/card-bu
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterPageComponent {
-  #authStore = inject(AuthStore);
+  #AuthStoreService = inject(AuthStoreService);
 
   public readonly serverError: Signal<AuthServerError | null>;
 
   constructor() {
-    this.serverError = this.#authStore.loginServerError();
+    this.serverError = this.#AuthStoreService.loginServerError();
   }
   onRegister(value: EmailAndPasswordSignIn): void {
     const { email, password } = value;
-    this.#authStore.register(email, password);
+    this.#AuthStoreService.register(email, password);
   }
 }

@@ -1,9 +1,9 @@
-import { inject } from "@angular/core";
-import { CanDeactivateFn } from "@angular/router";
-import { AuthStore } from "../store/auth.store.service";
+import { inject } from '@angular/core';
+import { CanDeactivateFn } from '@angular/router';
+import { AuthStoreService } from '../store/auth.store.service';
 
 export const authCleanupGuard: CanDeactivateFn<unknown> = () => {
-  inject(AuthStore).cleanup();
+  inject(AuthStoreService).cleanup();
 
   return true;
 };

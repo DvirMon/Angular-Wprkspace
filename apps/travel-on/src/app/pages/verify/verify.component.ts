@@ -3,22 +3,22 @@ import {
   Component,
   Input,
   inject,
-} from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { MatButtonModule } from "@angular/material/button";
-import { MatCardModule } from "@angular/material/card";
-import { SignInEvent, SignInMethod } from "../../auth";
-import { AuthStore } from "../../auth/store/auth.store.service";
-import { InfoCardComponent } from "../../shared/components/info-card/info-card.component";
-import { StorageKey } from "../../shared/constants";
-import { getFromStorage } from "../../shared/helpers";
+} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { SignInEvent, SignInMethod } from '../../auth';
+import { AuthStoreService } from '../../auth/store/auth.store.service';
+import { InfoCardComponent } from '../../shared/components/info-card/info-card.component';
+import { StorageKey } from '../../shared/constants';
+import { getFromStorage } from '../../shared/helpers';
 
 @Component({
-  selector: "to-verify",
+  selector: 'to-verify',
   standalone: true,
   imports: [CommonModule, MatCardModule, MatButtonModule, InfoCardComponent],
-  templateUrl: "./verify.component.html",
-  styleUrls: ["./verify.component.scss"],
+  templateUrl: './verify.component.html',
+  styleUrls: ['./verify.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VerifyPageComponent {
@@ -26,7 +26,7 @@ export class VerifyPageComponent {
 
   @Input() email!: string;
 
-  authStore: AuthStore = inject(AuthStore);
+  AuthStoreService: AuthStoreService = inject(AuthStoreService);
 
   onEmailLinkSignIn(emailLink: string) {
     const email: string | null = getFromStorage(StorageKey.EMAIL);
@@ -34,6 +34,6 @@ export class VerifyPageComponent {
       method: SignInMethod.EMAIL_LINK,
       data: { email, emailLink },
     };
-    this.authStore.signIn(event);
+    this.AuthStoreService.signIn(event);
   }
 }

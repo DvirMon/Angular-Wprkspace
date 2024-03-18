@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { MatToolbar } from '@angular/material/toolbar';
 import { ParallaxDirective } from '@dom';
+import { FloatingButtonComponent } from '@dom/components';
 import { AuthStore } from '../../auth/store/store';
 import { PlacesCardComponent } from '../../places/place-card/places-card.component';
 import {
@@ -17,7 +18,6 @@ import {
   SelectionListChange,
 } from '../../places/place-list/place-list.component';
 import { Places } from '../../places/places.model';
-import { FloatingButtonComponent } from '../../shared/components/floating-button/floating-button.component';
 import { SignalStore } from '../../store/store';
 
 @Component({

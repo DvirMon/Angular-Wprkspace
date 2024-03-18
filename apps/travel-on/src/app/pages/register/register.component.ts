@@ -5,13 +5,9 @@ import {
   effect,
   inject,
 } from '@angular/core';
-import {
-  Register,
-  RegisterFormComponent
-} from '../../auth';
+import { Register, RegisterFormComponent } from '../../auth';
 import { AuthStore } from '../../auth/store/store';
-import { CardButtonComponent } from '../../shared/components/card-button/card-button.component';
-import { FormServerError } from '@dom';
+import { CardButtonComponent, FormServerError } from '@dom';
 
 @Component({
   selector: 'to-register-page',
@@ -21,7 +17,6 @@ import { FormServerError } from '@dom';
   styleUrls: ['./register.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [AuthStore],
-
 })
 export class RegisterPageComponent {
   #authStore = inject(AuthStore);

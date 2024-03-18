@@ -26,8 +26,13 @@ import { MatInputModule } from '@angular/material/input';
 import { DomSanitizer } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 
-import { FormInputComponent, FormServerError, getFormKeys, handleServerErrorEffect } from '@dom/components';
-import { DividerHeaderComponent } from '../../../shared/components/divider-header/divider-header.component';
+import {
+  DividerHeaderComponent,
+  FormInputComponent,
+  FormServerError,
+  getFormKeys,
+  handleServerErrorEffect,
+} from '@dom/components';
 import { EmailAndPasswordSignIn, SignInEvent, SignInMethod } from '../../utils';
 import { DEFAULT_EMAIL } from '../../utils/constants';
 

@@ -19,13 +19,13 @@ import {
 } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatCard, MatCardContent } from '@angular/material/card';
-import { DividerHeaderComponent } from '../../../shared/components/divider-header/divider-header.component';
 import {
+  DividerHeaderComponent,
   FormInputComponent,
   FormServerError,
   getFormKeys,
   handleServerErrorEffect,
-} from '@dom';
+} from '@dom/components';
 import { Register } from '../../index';
 import { DEFAULT_EMAIL } from '../../utils/constants';
 

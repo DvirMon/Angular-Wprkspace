@@ -16,7 +16,7 @@ import {
 import { FlipContainerService } from "./flip-container.service";
 
 @Component({
-  selector: "to-flip-container",
+  selector: "dom-flip-container",
   standalone: true,
   template: `
     <div

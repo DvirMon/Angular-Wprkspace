@@ -10,15 +10,10 @@ import {
   signal,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { FormServerError } from '@dom';
-import {
-  LoginFormComponent,
-  SignInEvent
-} from '../../auth';
+import { CardButtonComponent, FlipCardComponent, FloatingButtonComponent, FormServerError } from '@dom/components';
+import { LoginFormComponent, SignInEvent } from '../../auth';
 import { AuthStore } from '../../auth/store/store';
-import { CardButtonComponent } from '../../shared/components/card-button/card-button.component';
-import { FlipCardComponent } from '../../shared/components/flip-container/flip-container.component';
-import { FloatingButtonComponent } from '../../shared/components/floating-button/floating-button.component';
+
 import { navigate } from '../../shared/helpers';
 
 @Component({

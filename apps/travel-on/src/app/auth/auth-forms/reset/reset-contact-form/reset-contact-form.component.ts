@@ -19,12 +19,12 @@ import { MatButton } from '@angular/material/button';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import {
+  DividerHeaderComponent,
   FormInputComponent,
   FormServerError,
   getFormKeys,
   handleServerErrorEffect,
 } from '@dom';
-import { DividerHeaderComponent } from '../../../../shared/components';
 import { DEFAULT_EMAIL } from '../../../utils/constants';
 
 interface ResetContactForm {

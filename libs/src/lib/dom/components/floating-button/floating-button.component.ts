@@ -13,7 +13,7 @@ import { RouterModule } from "@angular/router";
 export type Side = "left" | "right" | { error: string };
 
 @Component({
-  selector: "to-floating-button",
+  selector: "dom-floating-button",
   standalone: true,
   imports: [CommonModule, RouterModule, MatButtonModule, MatIconModule],
   template: `

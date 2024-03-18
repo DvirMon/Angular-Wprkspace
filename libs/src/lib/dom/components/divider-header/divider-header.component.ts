@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
-  selector: 'to-divider-header',
+  selector: 'dom-divider-header',
   standalone: true,
   imports: [CommonModule, MatDividerModule],
   template: `

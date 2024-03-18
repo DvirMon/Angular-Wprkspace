@@ -10,7 +10,7 @@ import { MatCard, MatCardContent } from "@angular/material/card";
 import { RouterModule } from "@angular/router";
 
 @Component({
-  selector: "to-card-button",
+  selector: "dom-card-button",
   standalone: true,
   imports: [RouterModule, MatButtonModule, MatCard, MatCardContent],
   

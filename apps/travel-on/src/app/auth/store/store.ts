@@ -1,9 +1,15 @@
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import { inject } from '@angular/core';
 import { tapResponse } from '@ngrx/operators';
-import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
+import {
+  StateSignal,
+  patchState,
+  signalStore,
+  withMethods,
+  withState,
+} from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { pipe, switchMap } from 'rxjs';
+import { EMPTY, pipe, switchMap } from 'rxjs';
 import {
   AuthEvent,
   AuthServerError,
@@ -35,20 +41,7 @@ export const AuthStore = signalStore(
   withDevtools('auth'),
   withState(initialState),
   withMethods((store, service = inject(AuthService)) => ({
-    signIn: rxMethod<SignInEvent>(
-      pipe(
-        switchMap((value: SignInEvent) =>
-          service.signIn$(value).pipe(
-            mapFirebaseCredentials(),
-            tapResponse({
-              next: (user: User) => patchState(store, setUser(user)),
-              error: (err: FirebaseError) =>
-                patchState(store, setServerError(err.code, AuthEvent.LOGIN)),
-            })
-          )
-        )
-      )
-    ),
+    signIn: loadUser(service, store, AuthEvent.LOGIN),
 
     login(): void {
       service.login(store.user());
@@ -59,3 +52,24 @@ export const AuthStore = signalStore(
     },
   }))
 );
+
+function loadUser(
+  service: AuthService,
+  store: StateSignal<AuthState>,
+  event: AuthEvent
+) {
+  return rxMethod<SignInEvent>(
+    pipe(
+      switchMap((value) =>
+        service.signIn$(value).pipe(
+          mapFirebaseCredentials(),
+          tapResponse({
+            next: (user: User) => patchState(store, setUser(user)),
+            error: (err: FirebaseError) =>
+              patchState(store, setServerError(err.code, event)),
+          })
+        )
+      )
+    )
+  );
+}

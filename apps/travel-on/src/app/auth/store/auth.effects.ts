@@ -6,22 +6,19 @@ import {
   catchError,
   concatMap,
   map,
-  mergeMap,
   of,
   switchMap,
-  tap,
+  tap
 } from 'rxjs';
 
-import { StorageKey } from '../../shared/constants';
 import { DialogService } from '../../shared/dialog/dialog.service';
-import { clearStorage, setToStorage } from '../../shared/helpers';
 import { AuthDialogEvent, authDialogMap } from '../auth-dialogs';
+import { ResetService } from '../auth-forms';
 import { mapFirebaseCredentials } from '../utils/auth.helpers';
 import { AuthEvent } from '../utils/auth.model';
 import { AuthService } from '../utils/auth.service';
 import { FirebaseError } from '../utils/fireauth.service';
 import { AuthActions } from './auth.actions';
-import { ResetService } from '../auth-forms';
 
 @Injectable()
 export class AuthEffects {
@@ -54,43 +51,12 @@ export class AuthEffects {
     )
   );
 
-  login$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(AuthActions.loadUserSuccess),
-        tap(() => setToStorage(StorageKey.LOGGED, true)),
-        mergeMap(({ user }) =>
-          this.authService
-            .addDocument(user)
-            .pipe(
-              tap((user) => this.router.navigate(['/places/', user.userId]))
-            )
-        )
-      ),
-    { dispatch: false }
-  );
-
   loadUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.loadUser),
       switchMap(({ userId }) =>
         this.authService.getUserById(userId).pipe(
           map((user) => AuthActions.loadUserSuccess({ user })),
-          catchError(() => {
-            return EMPTY;
-          })
-        )
-      )
-    )
-  );
-
-  emailLink$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(AuthActions.sendEmailLink),
-      switchMap(({ email }) =>
-        this.authService.sendSignInLinkToEmail$(email).pipe(
-          tap((email: string) => setToStorage(StorageKey.EMAIL, email)),
-          map((email) => AuthActions.sendEmailLinkSuccess({ email })),
           catchError(() => {
             return EMPTY;
           })

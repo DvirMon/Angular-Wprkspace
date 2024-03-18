@@ -11,6 +11,5 @@ export function setAuthError(
   event: AuthEvent
 ): Partial<AuthState> {
   const { control, message } = mapAuthServerError(code, event);
-  console.log(code)
   return { authError: { [event]: { message, control } } };
 }

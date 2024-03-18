@@ -2,7 +2,7 @@ import { UserCredential } from '@angular/fire/auth';
 import { tapResponse } from '@ngrx/operators';
 import { StateSignal, patchState } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { Observable, pipe, switchMap } from 'rxjs';
+import { Observable, pipe, switchMap, tap } from 'rxjs';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { AuthDialogEvent, authDialogMap } from '../auth-dialogs';
 import {
@@ -43,6 +43,24 @@ export function register(
         service
           .register$(value)
           .pipe(mapFirebaseCredentials(), handleLoadUser(store, event))
+      )
+    )
+  );
+}
+export function loadUserById(
+  service: AuthService,
+  store: StateSignal<AuthState>,
+  event: AuthEvent
+) {
+  return rxMethod<string>(
+    pipe(
+      switchMap((userId) =>
+        service.loadUserById$(userId).pipe(
+          tapResponse({
+            next: (user: User) => console.log(user),
+            error: (err: FirebaseError) => console.log(err),
+          })
+        )
       )
     )
   );

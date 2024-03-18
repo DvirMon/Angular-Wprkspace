@@ -1,14 +1,12 @@
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
-  inject,
+  Input
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { SignInEvent, SignInMethod } from '../../auth';
-import { AuthStoreService } from '../../auth/store/auth.store.service';
 import { InfoCardComponent } from '../../shared/components/info-card/info-card.component';
 import { StorageKey } from '../../shared/constants';
 import { getFromStorage } from '../../shared/helpers';
@@ -26,7 +24,7 @@ export class VerifyPageComponent {
 
   @Input() email!: string;
 
-  AuthStoreService: AuthStoreService = inject(AuthStoreService);
+  // AuthStoreService: AuthStoreService = inject(AuthStoreService);
 
   onEmailLinkSignIn(emailLink: string) {
     const email: string | null = getFromStorage(StorageKey.EMAIL);
@@ -34,6 +32,6 @@ export class VerifyPageComponent {
       method: SignInMethod.EMAIL_LINK,
       data: { email, emailLink },
     };
-    this.AuthStoreService.signIn(event);
+    // this.AuthStoreService.signIn(event);
   }
 }

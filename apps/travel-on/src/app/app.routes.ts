@@ -1,15 +1,12 @@
 import { Routes } from '@angular/router';
-import { authCleanupGuard } from './auth/utils/auth-cleanup.guard';
+import { authLoadUserResolver } from './auth';
 import { LoginPageComponent } from './pages/login/login.component';
 import { verifyGuard } from './pages/verify/verify.guard';
-import { authLoadUserResolver } from './auth';
-import { placesGuard } from './pages/places/places.guard';
 
 export const appRoutes: Routes = [
   {
     path: '',
     component: LoginPageComponent,
-    canDeactivate: [authCleanupGuard],
     title: 'Login',
   },
   {
@@ -26,14 +23,12 @@ export const appRoutes: Routes = [
       import('./pages/register/register.component').then(
         (m) => m.RegisterPageComponent
       ),
-    canDeactivate: [authCleanupGuard],
     title: 'Register',
   },
   {
     path: 'reset',
     loadComponent: () =>
       import('./pages/reset/reset.component').then((m) => m.ResetPageComponent),
-    canDeactivate: [authCleanupGuard],
     title: 'Reset Password',
   },
   {

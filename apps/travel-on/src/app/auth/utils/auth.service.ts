@@ -61,6 +61,10 @@ export class AuthService {
     const querySnapshot$ = this.getUserQuerySnapshot$('userId', userId);
     return querySnapshot$.pipe(mapQuerySnapshotDoc<User>());
   }
+  public loadUserById$(userId: string): Observable<User> {
+    const querySnapshot$ = this.getUserQuerySnapshot$('userId', userId);
+    return querySnapshot$.pipe(mapQuerySnapshotDoc<User>());
+  }
 
   public saveUser(user: User): void {
     from(addDoc(this.usersRef, user));

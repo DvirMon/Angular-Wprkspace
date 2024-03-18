@@ -13,7 +13,6 @@ import {
   ResetContactFormComponent,
   ResetPasswordFormComponent,
 } from '../../auth';
-import { AuthStoreService } from '../../auth/store/auth.store.service';
 import { AuthStore } from '../../auth/store/store';
 import { FormServerError } from '../../shared/components';
 import { CardButtonComponent } from '../../shared/components/card-button/card-button.component';
@@ -32,7 +31,6 @@ import { CardButtonComponent } from '../../shared/components/card-button/card-bu
 })
 export class ResetPageComponent {
   #injector = inject(Injector);
-  #AuthStoreService = inject(AuthStoreService);
   #authStore = inject(AuthStore);
   #activatedRoute = inject(ActivatedRoute);
 

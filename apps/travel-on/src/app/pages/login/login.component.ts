@@ -11,19 +11,17 @@ import {
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import {
-  AuthEvent,
-  AuthServerError,
   EmailLinkFormComponent,
   LoginFormComponent,
   OtpLoginFormComponent,
-  SignInEvent,
+  SignInEvent
 } from '../../auth';
 import { AuthStore } from '../../auth/store/store';
+import { FormServerError } from '../../shared/components';
 import { CardButtonComponent } from '../../shared/components/card-button/card-button.component';
 import { FlipCardComponent } from '../../shared/components/flip-container/flip-container.component';
 import { FloatingButtonComponent } from '../../shared/components/floating-button/floating-button.component';
 import { navigate } from '../../shared/helpers';
-import { FormServerError } from '../../shared/components';
 
 @Component({
   selector: 'to-login-page',

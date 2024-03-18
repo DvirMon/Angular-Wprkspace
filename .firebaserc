@@ -1,6 +1,6 @@
 {
   "projects": {
-    "angualr worksapce": "angualr-momorepo"
+    "default": "angualr-momorepo"
   },
   "targets": {
     "angular-momorepo": {
@@ -10,13 +10,9 @@
         ],
         "weather-space": [
           "ng-weather-space"
-        ]
-      }
-    },
-    "angualr-momorepo": {
-      "hosting": {
-        "books-scape": [
-          "ng-books-scape"
+        ],
+        "travel-on": [
+          "ng-travel-on"
         ]
       }
     }

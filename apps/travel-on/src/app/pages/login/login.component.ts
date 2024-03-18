@@ -19,14 +19,13 @@ import {
   LoginFormComponent,
   OtpLoginFormComponent,
   SignInEvent,
-  SignInMethod,
 } from '../../auth';
-import { AuthStoreService } from '../../auth/store/auth.store.service';
+import { AuthStore } from '../../auth/store/store';
 import { CardButtonComponent } from '../../shared/components/card-button/card-button.component';
 import { FlipCardComponent } from '../../shared/components/flip-container/flip-container.component';
 import { FlipContainerService } from '../../shared/components/flip-container/flip-container.service';
 import { FloatingButtonComponent } from '../../shared/components/floating-button/floating-button.component';
-import { AuthStore } from '../../auth/store/store';
+import { navigate } from '../../shared/helpers';
 
 @Component({
   selector: 'to-login-page',
@@ -49,7 +48,6 @@ import { AuthStore } from '../../auth/store/store';
 export class LoginPageComponent {
   #injector = inject(Injector);
   #router = inject(Router);
-  #authStoreService = inject(AuthStoreService);
   #authStore = inject(AuthStore);
 
   public readonly showOtp: WritableSignal<boolean>;
@@ -57,16 +55,11 @@ export class LoginPageComponent {
 
   constructor() {
     this.showOtp = signal(false);
-    // this.#authStoreService.loadUser();
     this.serverError = this.#authStore.serverError;
 
     effect(() => {
       if (this.#authStore.loaded()) {
-
-        console.log('navigate')
-        this.#router.navigateByUrl(
-          'places/' + untracked(this.#authStore.user).userId
-        );
+        this.navigate('places/' + untracked(this.#authStore.user).userId);
       }
     });
   }
@@ -75,41 +68,11 @@ export class LoginPageComponent {
     this.#authStore.signIn(event);
   }
 
-  public onOtpSignIn(event: SignInEvent) {
-    const { method } = event;
-    this._updateShowOtp(method);
-    this._flipCard();
-  }
-
-  public onEmailLinkSignIn(event: SignInEvent) {
-    const { method } = event;
-    this._updateShowOtp(method);
-    this._flipCard();
-  }
-
-  public onEmailAndPassword() {
-    this._flipCard();
-  }
-
-  public onEmailLink(event: SignInEvent) {
-    const { data } = event;
-    this.#authStoreService.sendEmailLink(data as string);
-  }
-
   public onForgetPassword() {
-    runInInjectionContext(this.#injector, () => {
-      inject(Router).navigateByUrl('reset');
-    });
+    this.navigate('reset');
   }
 
-  private _flipCard() {
-    runInInjectionContext(this.#injector, () => {
-      inject(FlipContainerService).flip();
-    });
-  }
-
-  private _updateShowOtp(method: SignInMethod): void {
-    const show: boolean = method === SignInMethod.OPT;
-    this.showOtp.set(show);
+  private navigate(path: string): void {
+    navigate(path, this.#injector);
   }
 }

@@ -6,12 +6,10 @@
         [serverError]="serverError()"
         (login)="onSignIn($event)"
         (google)="onSignIn($event)"
-        (otp)="onOtpSignIn($event)"
-        (emailLink)="onEmailLinkSignIn($event)"
         (forget)="onForgetPassword()">
       </to-login-form>
 
-      @if(showOtp()){
+      <!-- @if(showOtp()){
 
       <ng-container class="back">
         <to-otp-login-form
@@ -25,7 +23,7 @@
         <to-email-link-form
           (emailLinkSignIn)="onEmailLink($event)"></to-email-link-form>
       </ng-container>
-      }
+      } -->
     </to-flip-container>
 
     <to-card-button

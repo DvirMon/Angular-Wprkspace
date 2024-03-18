@@ -5,30 +5,30 @@ import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { pipe, switchMap } from 'rxjs';
 import {
-    AuthEvent,
-    AuthServerError,
-    AuthService,
-    FirebaseError,
-    SignInEvent,
-    User,
-    mapFirebaseCredentials,
+  AuthEvent,
+  AuthServerError,
+  AuthService,
+  FirebaseError,
+  SignInEvent,
+  User,
+  mapFirebaseCredentials,
 } from '../utils';
 import { setServerError, setUser } from './store.setters';
-
+import { clearStorage } from '../../shared/helpers';
 
 export interface AuthState {
-    user: User;
-    loaded: boolean;
-    email: string;
-    serverError: AuthServerError | null;
-  }
-  
-   const initialState: AuthState = {
-    user: {} as User,
-    loaded: false,
-    email: "",
-    serverError: null,
-  };
+  user: User;
+  loaded: boolean;
+  email: string;
+  serverError: AuthServerError | null;
+}
+
+const initialState: AuthState = {
+  user: {} as User,
+  loaded: false,
+  email: '',
+  serverError: null,
+};
 
 export const AuthStore = signalStore(
   { providedIn: 'root' },
@@ -49,5 +49,9 @@ export const AuthStore = signalStore(
         )
       )
     ),
+    logout(): void {
+      patchState(store, initialState);
+      service.logout();
+    },
   }))
 );

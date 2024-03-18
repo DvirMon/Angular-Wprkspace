@@ -1,5 +1,5 @@
-import { Injectable } from "@angular/core";
-import { ConfirmationResult, UserCredential } from "@angular/fire/auth";
+import { Injectable } from '@angular/core';
+import { ConfirmationResult, UserCredential } from '@angular/fire/auth';
 import {
   CollectionReference,
   Firestore,
@@ -9,11 +9,16 @@ import {
   getDocs,
   query,
   where,
-} from "@angular/fire/firestore";
-import { Observable, from, map, of, switchMap } from "rxjs";
-import { mapQuerySnapshotDoc } from "../../shared/helpers";
-import { FireAuthService } from "./fireauth.service";
-import { SignInEvent, SignInMethod, User } from "./auth.model";
+} from '@angular/fire/firestore';
+import { Observable, from, map, of, switchMap } from 'rxjs';
+import {
+  clearStorage,
+  mapQuerySnapshotDoc,
+  navigate,
+} from '../../shared/helpers';
+import { FireAuthService } from './fireauth.service';
+import { SignInEvent, SignInMethod, User } from './auth.model';
+import { Router } from '@angular/router';
 
 interface EmailLinkData {
   email: string;
@@ -24,14 +29,15 @@ interface EmailPasswordData {
   password: string;
 }
 
-@Injectable({ providedIn: "root" })
+@Injectable({ providedIn: 'root' })
 export class AuthService {
-  private readonly USERS_COLLECTION = "users";
+  private readonly USERS_COLLECTION = 'users';
   private readonly usersRef: CollectionReference<User>;
 
   constructor(
     private readonly firestore: Firestore,
-    private readonly fireAuthService: FireAuthService
+    private readonly fireAuthService: FireAuthService,
+    private router: Router
   ) {
     this.usersRef = collection(
       this.firestore,
@@ -44,7 +50,7 @@ export class AuthService {
   }
 
   public getUserById(userId: string): Observable<User> {
-    const querySnapshot$ = this.getUserQuerySnapshot$("userId", userId);
+    const querySnapshot$ = this.getUserQuerySnapshot$('userId', userId);
     return querySnapshot$.pipe(mapQuerySnapshotDoc<User>());
   }
 
@@ -67,7 +73,7 @@ export class AuthService {
   }
 
   private _checkDocumentExists(userId: string): Observable<boolean> {
-    const querySnapshot$ = this.getUserQuerySnapshot$("userId", userId);
+    const querySnapshot$ = this.getUserQuerySnapshot$('userId', userId);
     return querySnapshot$.pipe(map((querySnapshot) => querySnapshot.empty));
   }
 
@@ -75,7 +81,7 @@ export class AuthService {
     getBy: keyof User,
     value: string
   ): Observable<QuerySnapshot<User>> {
-    return from(getDocs(query(this.usersRef, where(getBy, "==", value))));
+    return from(getDocs(query(this.usersRef, where(getBy, '==', value))));
   }
 
   // Sign in with different authentication methods based on the provided event.
@@ -132,5 +138,10 @@ export class AuthService {
   // Check if the provided email link is a valid sign-in link.
   public isSignInWithEmailLink(emailLink: string): Observable<boolean> {
     return this.fireAuthService.isSignInWithEmailLink$(emailLink);
+  }
+
+  public logout() {
+    clearStorage();
+    navigate('/');
   }
 }

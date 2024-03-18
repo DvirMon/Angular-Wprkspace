@@ -19,6 +19,7 @@ import {
 import { Places } from '../../places/places.model';
 import { FloatingButtonComponent } from '../../shared/components/floating-button/floating-button.component';
 import { SignalStore } from '../../store/store';
+import { AuthStore } from '../../auth/store/store';
 
 @Component({
   selector: 'to-places',
@@ -58,8 +59,6 @@ export class PlacesComponent implements OnInit {
   }
 
   onLogout(): void {
-    runInInjectionContext(this.#injector, () =>
-      inject(AuthStoreService).logout()
-    );
+    runInInjectionContext(this.#injector, () => inject(AuthStore).logout());
   }
 }

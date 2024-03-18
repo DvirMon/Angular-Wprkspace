@@ -1,13 +1,15 @@
+import {
+  animate,
+  query,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
+import { Injector, inject, runInInjectionContext } from '@angular/core';
 import { QuerySnapshot } from '@angular/fire/firestore';
 import { OperatorFunction, catchError, map, throwError } from 'rxjs';
 import { StorageKey } from './constants';
-import {
-  trigger,
-  transition,
-  style,
-  animate,
-  query,
-} from '@angular/animations';
+import { Router } from '@angular/router';
 
 function setRecordItem(
   record: Record<string, boolean>,
@@ -77,6 +79,12 @@ export function mapQuerySnapshotDoc<T>(): OperatorFunction<
       }),
       catchError((error) => throwError(() => new Error(error)))
     );
+}
+
+export function navigate(path: string, injector?: Injector): void {
+  runInInjectionContext(injector || inject(Injector), () => {
+    inject(Router).navigateByUrl(path);
+  });
 }
 
 export const scrollAnimation = trigger('scrollAnimation', [

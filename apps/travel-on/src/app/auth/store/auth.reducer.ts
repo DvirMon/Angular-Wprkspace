@@ -36,14 +36,6 @@ export const authReducer = createReducer(
   ),
 
   on(
-    AuthActions.cleanup,
-    (state): AuthState => ({
-      ...state,
-      serverError: null,
-    })
-  ),
-
-  on(
     AuthActions.logout,
     (): AuthState => ({
       ...initialState,

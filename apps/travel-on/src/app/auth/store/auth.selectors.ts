@@ -18,14 +18,8 @@ export const selectEmailLink = createSelector(
   (state: fromAuth.AuthState) => state.email
 )
 
-export const selectServerError = createSelector(
-  selectState,
-  (state: fromAuth.AuthState) => state.serverError
-)
-
 export const AuthSelectors = {
   selectLoaded,
   selectUser,
   selectEmailLink,
-  selectServerError
 }

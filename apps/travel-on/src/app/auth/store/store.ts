@@ -8,15 +8,14 @@ import {
   withState,
 } from '@ngrx/signals';
 import { FormServerError } from '../../shared/components';
-import { AuthEvent, AuthServerError, AuthService, User } from '../utils';
-import { register, sendResetEmail, signIn } from './store.helpers';
 import { DialogService } from '../../shared/dialog/dialog.service';
+import { AuthEvent, AuthService, User } from '../utils';
+import { register, sendResetEmail, signIn } from './store.helpers';
 
 export interface AuthState {
   user: User;
   loaded: boolean;
   email: string;
-  serverError: AuthServerError | null;
   authError: Partial<Record<AuthEvent, FormServerError>>;
 }
 
@@ -24,7 +23,6 @@ const initialState: AuthState = {
   user: {} as User,
   loaded: false,
   email: '',
-  serverError: null,
   authError: {} as Record<AuthEvent, FormServerError>,
 };
 
@@ -52,5 +50,6 @@ export const AuthStore = signalStore(
   withComputed((store) => ({
     loginError: computed(() => store.authError()[AuthEvent.LOGIN]),
     registerError: computed(() => store.authError()[AuthEvent.REGISTER]),
+    resetError: computed(() => store.authError()[AuthEvent.RESET]),
   }))
 );

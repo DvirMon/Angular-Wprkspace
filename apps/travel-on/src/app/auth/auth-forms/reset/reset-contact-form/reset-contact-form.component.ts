@@ -2,9 +2,11 @@ import { JsonPipe, TitleCasePipe } from '@angular/common';
 import {
   Component,
   EventEmitter,
+  Injector,
   Output,
   WritableSignal,
   inject,
+  input,
 } from '@angular/core';
 import {
   FormControl,
@@ -21,6 +23,8 @@ import {
   FormInputComponent,
   DividerHeaderComponent,
   getFormKeys,
+  handleServerErrorEffect,
+  FormServerError,
 } from '../../../../shared/components';
 
 interface ResetContactForm {
@@ -45,6 +49,12 @@ interface ResetContactForm {
   styleUrl: './reset-contact-form.component.scss',
 })
 export class ResetContactFormComponent {
+
+  #injector = inject(Injector);
+
+  serverError = input<FormServerError>();
+
+
   public readonly resetFormGroup: FormGroup<ResetContactForm>;
   public readonly formKeys: WritableSignal<string[]>;
 
@@ -53,6 +63,12 @@ export class ResetContactFormComponent {
   constructor() {
     this.resetFormGroup = this._buildResetForm();
     this.formKeys = getFormKeys(this.resetFormGroup);
+
+    handleServerErrorEffect(
+      this.#injector,
+      this.serverError,
+      this.resetFormGroup
+    );
   }
 
   private _buildResetForm(): FormGroup<ResetContactForm> {

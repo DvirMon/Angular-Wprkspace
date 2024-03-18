@@ -17,6 +17,7 @@ import {
 import { AuthStoreService } from '../../auth/store/auth.store.service';
 import { CardButtonComponent } from '../../shared/components/card-button/card-button.component';
 import { AuthStore } from '../../auth/store/store';
+import { FormServerError } from '../../shared/components';
 
 @Component({
   selector: 'to-reset',
@@ -40,12 +41,17 @@ export class ResetPageComponent {
 
   public readonly showNewPassword: Signal<boolean>;
 
+  public readonly serverError: Signal<FormServerError | undefined>;
+
+
   constructor() {
     this.paramsSignal = toSignal(this.#activatedRoute.queryParams, {
       initialValue: { mode: '' } as Params,
     });
 
     this.showNewPassword = computed(() => !!this.paramsSignal()['mode']);
+
+    this.serverError = this.#authStore.resetError;
   }
 
   public onResetEmail(email: string) {

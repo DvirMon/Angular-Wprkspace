@@ -2,15 +2,19 @@
   <div class="reset-wrapper">
     @if(showNewPassword()) {
     <to-reset-password-form
-      (resetPassword)="onResetPassword($event)"></to-reset-password-form>
+      (resetPassword)="onResetPassword($event)"
+    ></to-reset-password-form>
     } @else {
     <to-reset-contact-form
-      (resetEmail)="onResetEmail($event)"></to-reset-contact-form>
+      [serverError]="serverError()"
+      (resetEmail)="onResetEmail($event)"
+    ></to-reset-contact-form>
     <to-card-button
       class="front"
       [routerLink]="'/register'"
       label="Don't have an account?"
-      boldLabel="Sign up"></to-card-button>
+      boldLabel="Sign up"
+    ></to-card-button>
 
     }
   </div>

@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   Signal,
+  effect,
   inject,
 } from '@angular/core';
 import {
@@ -29,6 +30,12 @@ export class RegisterPageComponent {
 
   constructor() {
     this.serverError = this.#authStore.registerError;
+
+    effect(() => {
+      if (this.#authStore.loaded()) {
+        this.#authStore.login();
+      }
+    });
   }
   onRegister(value: Register): void {
     this.#authStore.register(value);

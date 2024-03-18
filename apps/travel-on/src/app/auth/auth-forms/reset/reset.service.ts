@@ -8,7 +8,7 @@ import { FireAuthService } from "../../utils/fireauth.service";
 export class ResetService {
   constructor(private readonly fireAuthService: FireAuthService) {}
 
-  public sendResetEmail(email: string): Observable<void> {
+  public sendResetEmail$(email: string): Observable<void> {
     return this.fireAuthService.sendPasswordResetEmail(email);
   }
   

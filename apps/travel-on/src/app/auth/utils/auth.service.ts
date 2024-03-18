@@ -142,6 +142,11 @@ export class AuthService {
     return this.fireAuthService.isSignInWithEmailLink$(emailLink);
   }
 
+  public sendResetEmail$(email: string): Observable<void> {
+    return this.fireAuthService.sendPasswordResetEmail(email);
+  }
+  
+
   public logout(): void {
     clearStorage();
     navigate('/');

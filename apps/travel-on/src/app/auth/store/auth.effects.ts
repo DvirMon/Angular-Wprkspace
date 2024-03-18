@@ -69,7 +69,7 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(AuthActions.sendResetEmail),
       switchMap(({ email }) =>
-        this.resetService.sendResetEmail(email).pipe(
+        this.resetService.sendResetEmail$(email).pipe(
           map(() =>
             AuthActions.sendResetEmailSuccess({
               email,

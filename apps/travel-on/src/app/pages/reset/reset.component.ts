@@ -9,11 +9,14 @@ import {
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Params } from '@angular/router';
 import {
+  AuthDialogEvent,
+  AuthEvent,
   ResetContactFormComponent,
   ResetPasswordFormComponent,
 } from '../../auth';
 import { AuthStoreService } from '../../auth/store/auth.store.service';
 import { CardButtonComponent } from '../../shared/components/card-button/card-button.component';
+import { AuthStore } from '../../auth/store/store';
 
 @Component({
   selector: 'to-reset',
@@ -30,6 +33,7 @@ import { CardButtonComponent } from '../../shared/components/card-button/card-bu
 export class ResetPageComponent {
   #injector = inject(Injector);
   #AuthStoreService = inject(AuthStoreService);
+  #authStore = inject(AuthStore);
   #activatedRoute = inject(ActivatedRoute);
 
   public readonly paramsSignal: Signal<Params>;
@@ -45,12 +49,15 @@ export class ResetPageComponent {
   }
 
   public onResetEmail(email: string) {
-    this.#AuthStoreService.sendResetEmail(email);
+    this.#authStore.sendResetEmail({
+      email,
+      event: AuthDialogEvent.CONFIRM_EMAIL,
+    });
   }
 
   public onResetPassword(newPassword: string) {
     const oobCode = this.paramsSignal()['oobCode'];
-    this.#AuthStoreService.confirmResetPassword(newPassword, oobCode);
+    // this.#AuthStoreService.confirmResetPassword(newPassword, oobCode);
     // this.#AuthStoreService.sendResetEmail("email");
 
     // runInInjectionContext(this.#injector, () => {

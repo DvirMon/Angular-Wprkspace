@@ -4,7 +4,7 @@ import {
   Firestore,
   collection,
   getDocs,
-  query
+  query,
 } from '@angular/fire/firestore';
 import { EntityResult } from '@dom';
 import { Observable, from, map } from 'rxjs';

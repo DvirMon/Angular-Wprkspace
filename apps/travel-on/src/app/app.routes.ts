@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { authLoadUserResolver } from './auth';
+import { placesGuard } from './pages/places/places.guard';
 
 export const appRoutes: Routes = [
   {
@@ -26,8 +26,9 @@ export const appRoutes: Routes = [
     path: 'places/:userId',
     loadComponent: () =>
       import('./pages/places/places.component').then((m) => m.PlacesComponent),
-    // canActivate: [placesGuard],
-    resolve: { authLoadUserResolver },
+    canActivate: [placesGuard],
     title: 'Travel-On',
   },
+  { path: '', redirectTo: '/', pathMatch: 'full' },
+
 ];

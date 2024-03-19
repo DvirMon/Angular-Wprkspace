@@ -8,11 +8,12 @@ import {
 import { Register, RegisterFormComponent } from '../../auth';
 import { AuthStore } from '../../auth/store/store';
 import { CardButtonComponent, FormServerError } from '@dom';
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'to-register-page',
   standalone: true,
-  imports: [RegisterFormComponent, CardButtonComponent],
+  imports: [NgOptimizedImage, RegisterFormComponent, CardButtonComponent],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,9 +1,9 @@
-@use "variables" as main;
+@use 'variables' as main;
 
 :host {
   div.register-page-wrapper {
     height: 100%;
-    background-image: url("../../../assets/images/backgrounds/register.jpg");
+    // background-image: url("../../../assets/images/backgrounds/register.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;

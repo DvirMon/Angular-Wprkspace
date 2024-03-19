@@ -13,6 +13,7 @@ import {
 import { Observable, from, map, of, switchMap } from 'rxjs';
 import {
   clearStorage,
+  getFromStorage,
   mapQuerySnapshotDoc,
   navigate,
   setToStorage,
@@ -171,5 +172,9 @@ export class AuthService {
   public login(user: User): void {
     setToStorage(StorageKey.LOGGED, true);
     this.router.navigateByUrl('places/' + user.userId);
+  }
+
+  public isStorageLogged(): boolean {
+    return getFromStorage<boolean>(StorageKey.LOGGED) || false;
   }
 }

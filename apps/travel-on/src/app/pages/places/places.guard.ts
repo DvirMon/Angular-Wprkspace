@@ -1,25 +1,18 @@
 import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivateFn, Router } from '@angular/router';
-import { Observable, from, of, switchMap } from 'rxjs';
-import { AuthStoreService } from '../../auth/store/auth.store.service';
+import { AuthService } from '../../auth';
+import { AuthStore } from '../../auth/store/store';
 
 export const placesGuard: CanActivateFn = (
   route: ActivatedRouteSnapshot,
   state,
-  authStoreService: AuthStoreService = inject(AuthStoreService),
+  authStore = inject(AuthStore),
+  authService = inject(AuthService),
   router: Router = inject(Router)
 ) => {
-  return authStoreService.isStorageLogged().pipe(
-    switchMap((logged: boolean) =>
-      logged ? onLoggedTrue() : onLoggedFalse(router)
-    )
-  );
+  const userId = route.paramMap.get('userId') as string;
+
+  authService.isStorageLogged() && authStore.loadUserById(userId);
+
+  return authStore.loaded() || router.navigateByUrl('');
 };
-
-function onLoggedTrue() {
-  return of(true);
-}
-
-function onLoggedFalse(router: Router): Observable<boolean> {
-  return from(router.navigateByUrl('/'));
-}

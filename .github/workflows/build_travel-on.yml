@@ -1,4 +1,4 @@
-name: Deploy Books Scape to Firebase Hosting
+name: Deploy Travel On to Firebase Hosting
 
 on:
   push:

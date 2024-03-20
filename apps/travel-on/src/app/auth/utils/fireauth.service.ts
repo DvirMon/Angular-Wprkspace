@@ -6,6 +6,7 @@ import {
   GoogleAuthProvider,
   RecaptchaVerifier,
   UserCredential,
+  confirmPasswordReset,
   createUserWithEmailAndPassword,
   isSignInWithEmailLink,
   sendPasswordResetEmail,
@@ -14,7 +15,6 @@ import {
   signInWithEmailLink,
   signInWithPhoneNumber,
   signInWithPopup,
-  confirmPasswordReset,
 } from "@angular/fire/auth";
 import { Observable, from, map, of } from "rxjs";
 import { generateVerificationLink } from "./auth.helpers";
@@ -30,11 +30,6 @@ export interface FirebaseError {
 export class FireAuthService {
   private readonly injector = inject(Injector);
   private readonly auth = inject(Auth);
-
-  private authErrorMessages: { [errorCode: string]: string } = {
-    "auth/invalid-email": "The email address is not valid.",
-    "auth/invalid-password": "The password is not valid.",
-  };
 
   // Create a new user account with the provided email and password.
   public createInWithEmailAndPassword$(

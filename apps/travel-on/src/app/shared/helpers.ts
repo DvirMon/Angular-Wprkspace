@@ -7,9 +7,9 @@ import {
 } from '@angular/animations';
 import { Injector, inject, runInInjectionContext } from '@angular/core';
 import { QuerySnapshot } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 import { OperatorFunction, catchError, map, throwError } from 'rxjs';
 import { StorageKey } from './constants';
-import { Router } from '@angular/router';
 
 function setRecordItem(
   record: Record<string, boolean>,

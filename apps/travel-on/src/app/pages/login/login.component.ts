@@ -34,7 +34,7 @@ export class LoginPageComponent {
     this.serverError = this.#authStore.loginError;
 
     effect(() => {
-      if (this.#authStore.loaded()) {
+      if (this.#authStore.isLoaded()) {
         this.#authStore.login();
       }
     });

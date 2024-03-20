@@ -5,12 +5,12 @@ export const authFeatureKey = "auth";
 
 export interface AuthState {
   user: User;
-  loaded: boolean;
+  isLoaded: boolean;
   authError: Partial<Record<AuthEvent, FormServerError>>;
 }
 
 export const initialState: AuthState = {
   user: {} as User,
-  loaded: false,
+  isLoaded: false,
   authError: {} as Record<AuthEvent, FormServerError>,
 };

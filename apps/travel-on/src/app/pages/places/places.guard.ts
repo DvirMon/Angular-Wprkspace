@@ -14,5 +14,5 @@ export const placesGuard: CanActivateFn = (
 
   authService.isStorageLogged() && authStore.loadUserById(userId);
 
-  return authStore.loaded() || router.navigateByUrl('');
+  return authStore.isLoaded() || router.navigateByUrl('');
 };

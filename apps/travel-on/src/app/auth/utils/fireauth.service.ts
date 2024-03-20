@@ -5,7 +5,7 @@ import {
   UserCredential
 } from '@angular/fire/auth';
 import { Observable, from } from 'rxjs';
-import { getFireauth } from './auth.imports';
+import { getFireAuth } from './auth.imports';
 
 export interface FirebaseError {
   code: string;
@@ -34,7 +34,7 @@ export class FireAuthService {
 
   public signInWithGoogle$(): Observable<UserCredential> {
     return from(
-      getFireauth().then(({ getAuth, signInWithPopup }) => {
+      getFireAuth().then(({ getAuth, signInWithPopup }) => {
         const auth: Auth = getAuth();
         return signInWithPopup(auth, new GoogleAuthProvider());
       })

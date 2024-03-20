@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ConfirmationResult, UserCredential } from '@angular/fire/auth';
+import { UserCredential } from '@angular/fire/auth';
 import {
   CollectionReference,
   Firestore,
@@ -10,7 +10,9 @@ import {
   query,
   where,
 } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 import { Observable, from, map, of, switchMap } from 'rxjs';
+import { StorageKey } from '../../shared/constants';
 import {
   clearStorage,
   getFromStorage,
@@ -18,7 +20,6 @@ import {
   navigate,
   setToStorage,
 } from '../../shared/helpers';
-import { FireAuthService } from './fireauth.service';
 import {
   ConfirmPasswordReset,
   Register,
@@ -26,13 +27,9 @@ import {
   SignInMethod,
   User,
 } from './auth.model';
-import { Router } from '@angular/router';
-import { StorageKey } from '../../shared/constants';
+import { FireAuthService } from './fireauth.service';
 
-interface EmailLinkData {
-  email: string;
-  emailLink: string;
-}
+
 interface EmailPasswordData {
   email: string;
   password: string;
@@ -107,13 +104,7 @@ export class AuthService {
           case SignInMethod.GOOGLE:
             return this.fireAuthService.signInWithGoogle$();
 
-          case SignInMethod.EMAIL_LINK: {
-            const emailLinkData = data as EmailLinkData;
-            return this.fireAuthService.signInWithEmailLink$(
-              emailLinkData.email,
-              emailLinkData.emailLink
-            );
-          }
+
 
           case SignInMethod.EMAIL_PASSWORD: {
             const emailPasswordData = data as EmailPasswordData;
@@ -138,20 +129,6 @@ export class AuthService {
     return this.fireAuthService.signInWithEmailAndPassword$(email, password);
   }
 
-  // Sign in with phone number and recaptcha verification.
-  public signInWithPhone$(phone: string): Observable<ConfirmationResult> {
-    return this.fireAuthService.signInWithPhone$(phone);
-  }
-
-  // Send a sign-in link (magic link) to the provided email.
-  public sendSignInLinkToEmail$(email: string): Observable<string> {
-    return this.fireAuthService.sendSignInLinkToEmail$(email);
-  }
-
-  // Check if the provided email link is a valid sign-in link.
-  public isSignInWithEmailLink(emailLink: string): Observable<boolean> {
-    return this.fireAuthService.isSignInWithEmailLink$(emailLink);
-  }
 
   public sendResetEmail$(email: string): Observable<void> {
     return this.fireAuthService.sendPasswordResetEmail(email);

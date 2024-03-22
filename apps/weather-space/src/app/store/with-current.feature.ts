@@ -7,14 +7,13 @@ import {
   loadEntities,
 } from '@dom';
 import { withEntities } from '@ngrx/signals/entities';
-import { CurrentWeather } from '../shared/models/current-weather-result';
+import { CurrentWeather } from '../weather/models/current-weather-result';
 
 type WeatherLoader = Loader<number, Entity, 'loadCurrentWeather'>;
 
-const COLLECTION = "current"
+const COLLECTION = 'current';
 
-export function withCurrentWeather(
-  Loader: LoaderService<WeatherLoader>) {
+export function withCurrentWeather(Loader: LoaderService<WeatherLoader>) {
   return signalStoreFeature(
     withEntities({ entity: type<CurrentWeather>(), collection: COLLECTION }),
     withMethods((state) => {

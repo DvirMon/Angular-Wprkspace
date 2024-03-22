@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@angular/*": ["./node_modules/@angular/*"],
+      "@app/*": ["src/app/*"],
       "@dom": ["libs/src/index.ts"],
       "@dom/components": ["libs/src/lib/dom/components/index.ts"],
       "@dom/directives": ["libs/src.lib/dom/directives/index.ts"],

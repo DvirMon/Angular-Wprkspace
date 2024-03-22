@@ -6,8 +6,14 @@ import {
 } from '@ngrx/signals';
 import { addEntities, withEntities } from '@ngrx/signals/entities';
 import { lastValueFrom } from 'rxjs';
-import { AutocompleteOption } from '../shared/models/autocomplete-result';
-import { Entity, Loader, LoaderService, createLoader, loadEntities } from '@dom';
+import { AutocompleteOption } from '../weather/models/autocomplete-result';
+import {
+  Entity,
+  Loader,
+  LoaderService,
+  createLoader,
+  loadEntities,
+} from '@dom';
 
 type OptionLoader = Loader<string, Entity, 'loadOptions'>;
 
@@ -22,7 +28,6 @@ export function withOptions(Loader: LoaderService<OptionLoader>) {
     withMethods((store) => {
       const loader = createLoader(Loader, 'loadOptions');
       return {
-
         loadOptions: loadEntities(loader, store, COLLECTION),
 
         async loadOptionAsync(query: string) {

@@ -1,40 +1,33 @@
-import { ComponentType } from "@angular/cdk/portal";
-import { Inject, Injectable } from "@angular/core";
+import { ComponentType } from '@angular/cdk/portal';
+import { Inject, Injectable, inject } from '@angular/core';
 import {
   MatDialog,
   MAT_DIALOG_DEFAULT_OPTIONS,
   MatDialogConfig,
   MatDialogRef,
-} from "@angular/material/dialog";
+} from '@angular/material/dialog';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class DialogService {
-  constructor(
-    private dialog: MatDialog,
-    @Inject(MAT_DIALOG_DEFAULT_OPTIONS) private dialogConfig: MatDialogConfig
-  ) {}
-
+  constructor(private dialog: MatDialog) {}
 
   // open spinner dialog
   public openDialog<T>(
     component: ComponentType<T>,
     data: unknown
   ): MatDialogRef<T, unknown> {
-    return this.dialog.open<T>(component, this._getConfig(data));
+    return this.dialog.open<T>(component, this.setConfig(data));
   }
 
-
-  private _getConfig(data?: unknown): MatDialogConfig {
-    const dialogConfig: MatDialogConfig = { ...this.dialogConfig };
-
-    dialogConfig.data = data;
-    dialogConfig.autoFocus = true;
-    dialogConfig.hasBackdrop = true;
-    dialogConfig.disableClose = true;
-    dialogConfig.panelClass = "dialog";
-
-    return dialogConfig;
+  private setConfig(data?: unknown): MatDialogConfig {
+    return {
+      data,
+      autoFocus: true,
+      hasBackdrop: true,
+      disableClose: true,
+      panelClass: 'dialog',
+    };
   }
 }

@@ -1,11 +1,5 @@
 import { DatePipe, NgFor, NgIf, TitleCasePipe } from '@angular/common';
-import {
-  Component,
-  EventEmitter,
-  Output,
-  input,
-  model
-} from '@angular/core';
+import { Component, EventEmitter, Output, input, model } from '@angular/core';
 import { MatIconButton } from '@angular/material/button';
 import {
   MatButtonToggle,
@@ -20,9 +14,9 @@ import {
   MatCardTitle,
 } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { AutocompleteOption } from '../../shared/models/autocomplete-result';
-import { CurrentWeather } from '../../shared/models/current-weather-result';
-import { FutureWeather } from '../../shared/models/future-weather-result';
+import { AutocompleteOption } from '../models/autocomplete-result';
+import { CurrentWeather } from '../models/current-weather-result';
+import { FutureWeather } from '../models/future-weather-result';
 import { DailyTemperaturePipe } from '../../shared/pipes/daily-temperature.pipe';
 import { TemperaturePipe } from '../../shared/pipes/temperature.pipe';
 import { IsUnitPipe } from '../../shared/pipes/unit-temperature.pipe';

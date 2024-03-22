@@ -1,6 +1,6 @@
 import { signalStoreFeature, type } from '@ngrx/signals';
 import { withEntities } from '@ngrx/signals/entities';
-import { FavoriteEntity } from '../features/weather-favorite-card/favorite-card.component';
+import { FavoriteEntity } from '../weather/weather-favorite-card/favorite-card.component';
 
 const COLLECTION = 'favorites';
 

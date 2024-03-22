@@ -1,10 +1,9 @@
-import { AutocompleteOption } from '../shared/models/autocomplete-result';
+import { State } from './store';
 
-export function updateSelectedId(option: AutocompleteOption) {
-  return { selectedId: option.id };
+export function updateSelectedId(id: number): Partial<State> {
+  return { selectedId: id };
 }
 
-export function updateIsMetric(isMetric: boolean) {
+export function updateIsMetric(isMetric: boolean): Partial<State> {
   return { isMetric };
 }
-

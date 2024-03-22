@@ -3,18 +3,18 @@ import { Injectable } from '@angular/core';
 import {
   AutocompleteOption,
   AutocompleteResult,
-} from '../models/autocomplete-result';
+} from './models/autocomplete-result';
 
 import { map, Observable } from 'rxjs';
 import {
   CurrentWeather,
   CurrentWeatherResult,
-} from '../models/current-weather-result';
+} from './models/current-weather-result';
 import {
   FutureWeather,
   FutureWeatherArgs,
   FutureWeatherResult,
-} from '../models/future-weather-result';
+} from './models/future-weather-result';
 import { WeatherHttpService } from './weather-http.service';
 import { EntityResult } from '@dom';
 

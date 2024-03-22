@@ -8,7 +8,7 @@ import {
   MatCardSubtitle,
   MatCardTitle,
 } from '@angular/material/card';
-import { Temperature } from '../../shared/models/current-weather-result';
+import { Temperature } from '../models/current-weather-result';
 import { TemperaturePipe } from '../../shared/pipes/temperature.pipe';
 import { IsUnitPipe } from '../../shared/pipes/unit-temperature.pipe';
 

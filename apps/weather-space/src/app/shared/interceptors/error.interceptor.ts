@@ -4,19 +4,12 @@ import { ERROR_MESSAGE_CONTEXT } from './error-message.context';
 // import { MessageService } from '@app/shared/ui-messaging';
 
 export const errorInterceptor: HttpInterceptorFn = (req, handle) => {
-  // const uiMessage = inject(MessageService);
-
   return handle(req).pipe(
     catchError((err: HttpErrorResponse) => {
-      if (err.status == 503) {
-        console.log("error")
-      }
-      const errorMessageContext = req.context.get(ERROR_MESSAGE_CONTEXT);
-      // uiMessage.error(errorMessageContext);
-      console.log(errorMessageContext);
-      return throwError(
-        () => new Error('Something bad happened; please try again later.')
-      );
+      const message = req.context.get(ERROR_MESSAGE_CONTEXT);
+
+
+      return throwError(() => err);
     })
   );
 };

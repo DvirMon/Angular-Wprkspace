@@ -22,7 +22,7 @@ import { ServerService } from './server.service';
 export class WeatherHttpService {
   private readonly _baseUrl: string = environment.weatherEndpoint;
 
-  constructor(private ServerService: ServerService, private http: HttpClient) {}
+  constructor(private serverService: ServerService, private http: HttpClient) {}
 
   public getOptions(query: string): Observable<AutocompleteResult[]> {
     const params = new HttpParams()
@@ -35,7 +35,7 @@ export class WeatherHttpService {
   }
 
   public loadOptions(query: string): Observable<AutocompleteResult[]> {
-    const isServer = this.ServerService.getServer();
+    const isServer = this.serverService.getServer();
 
     return isServer()
       ? this.getOptions(query)
@@ -58,7 +58,7 @@ export class WeatherHttpService {
   public loadCurrentWeather(
     locationKey: number
   ): Observable<CurrentWeatherResult[]> {
-    const isServer = this.ServerService.getServer();
+    const isServer = this.serverService.getServer();
 
     return isServer()
       ? this.getCurrentWeather(locationKey)
@@ -82,7 +82,7 @@ export class WeatherHttpService {
     locationKey: EntityId,
     metric: boolean
   ): Observable<FutureWeatherResult> {
-    const isServer = this.ServerService.getServer();
+    const isServer = this.serverService.getServer();
 
     return isServer()
       ? this.getFutureWeather(locationKey, metric)

@@ -3,7 +3,7 @@ import { withEntities } from '@ngrx/signals/entities';
 import {
   FutureWeather,
   FutureWeatherArgs,
-} from '../shared/models/future-weather-result';
+} from '../weather/models/future-weather-result';
 import {
   Entity,
   Loader,

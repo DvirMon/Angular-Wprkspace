@@ -8,9 +8,9 @@ import {
   withState,
 } from '@ngrx/signals';
 import { addEntity, removeEntity } from '@ngrx/signals/entities';
-import { FavoriteEntity } from '../features/weather-favorite-card/favorite-card.component';
-import { AutocompleteOption } from '../shared/models/autocomplete-result';
-import { WeatherService } from '../shared/services/weather.service';
+import { FavoriteEntity } from '../weather/weather-favorite-card/favorite-card.component';
+import { AutocompleteOption } from '../weather/models/autocomplete-result';
+import { WeatherService } from '../weather/weather.service';
 import { updateIsMetric } from './updaters';
 import { withCurrentWeather } from './with-current.feature';
 import { withFavorites } from './with-favorites.feature';

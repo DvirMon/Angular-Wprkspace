@@ -7,7 +7,7 @@ import { EntityMap } from '@ngrx/signals/entities';
 import {
   FavoriteEntity,
   FavoriteEntityComponent,
-} from '../../features/weather-favorite-card/favorite-card.component';
+} from '../../weather/weather-favorite-card/favorite-card.component';
 import { FavoriteStore } from '../../store/store-favorites';
 import { OptionsStore } from '../../store/store-options';
 import { WeatherStore } from '../../store/store-weather';
@@ -33,7 +33,6 @@ export class FavoritesPageComponent {
     this.items = this.#favoriteStore.entityMap;
     this.isMetric = this.#weatherStore.isMetric;
   }
-
 
   public onSelectionChanged({ id }: FavoriteEntity): void {
     this.#store.updateCurrentId(id);

@@ -1,20 +1,21 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { AutocompleteResult } from '../models/autocomplete-result';
+import { AutocompleteResult } from './models/autocomplete-result';
 
 import { EntityId } from '@ngrx/signals/entities';
 import { distinctUntilChanged, map, Observable, of, switchMap } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../environments/environment';
+
+import { ServerService } from '../shared/services/server.service';
 import {
   CURRENT_WEATHER_RESULT,
   FUTURE_WEATHER_RESULT,
   LOCATIONS_AUTOCOMPLETE_RESULT,
-} from '../mock_data/data';
-import { CurrentWeatherResult } from '../models/current-weather-result';
-import { FutureWeatherResult } from '../models/future-weather-result';
-import { GeolocationWeatherResult } from '../models/geolocation-weather-result';
-import { ServerService } from './server.service';
+} from './mock/data';
+import { CurrentWeatherResult } from './models/current-weather-result';
+import { FutureWeatherResult } from './models/future-weather-result';
+import { GeolocationWeatherResult } from './models/geolocation-weather-result';
 
 @Injectable({
   providedIn: 'root',

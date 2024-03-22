@@ -1,12 +1,10 @@
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
-import {
-  signalStore
-} from '@ngrx/signals';
-import { AutocompleteOption } from '../shared/models/autocomplete-result';
+import { signalStore } from '@ngrx/signals';
+import { AutocompleteOption } from '../weather/models/autocomplete-result';
 
 export const OptionsStore = signalStore(
   { providedIn: 'root' },
-  withDevtools('options'),
+  withDevtools('options')
   // withState({ selectedId: -1 }),
   // withOptions(WeatherService, {}),
   // withComputed((store) => ({

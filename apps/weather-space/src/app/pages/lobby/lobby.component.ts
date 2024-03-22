@@ -23,18 +23,18 @@ import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { OptionContentDirective } from '@dom';
 import { AutocompleteComponent } from '@dom/components';
-import { FavoriteEntity } from '../../features/weather-favorite-card/favorite-card.component';
+import { FavoriteEntity } from '../../weather/weather-favorite-card/favorite-card.component';
 import {
   FavoriteChangeEvent,
   UnitChangeEvent,
   WeatherResultComponent,
-} from '../../features/weather-result-card/weather-result.component';
-import { AutocompleteOption } from '../../shared/models/autocomplete-result';
-import { CurrentWeather } from '../../shared/models/current-weather-result';
+} from '../../weather/weather-result-card/weather-result.component';
+import { AutocompleteOption } from '../../weather/models/autocomplete-result';
+import { CurrentWeather } from '../../weather/models/current-weather-result';
 import {
   FutureWeather,
   FutureWeatherArgs,
-} from '../../shared/models/future-weather-result';
+} from '../../weather/models/future-weather-result';
 import { HighLightPipe } from '../../shared/pipes/high-light.pipe';
 import { PluckPipe } from '../../shared/pipes/pluck.pipe';
 import { Store } from '../../store/store';

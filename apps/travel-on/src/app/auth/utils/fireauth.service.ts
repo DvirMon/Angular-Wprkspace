@@ -1,11 +1,6 @@
 import { Injectable } from '@angular/core';
-import {
-  Auth,
-  GoogleAuthProvider,
-  UserCredential
-} from '@angular/fire/auth';
+import { Auth, GoogleAuthProvider, UserCredential } from '@angular/fire/auth';
 import { Observable, from } from 'rxjs';
-import { getFireAuth } from './auth.imports';
 
 export interface FirebaseError {
   code: string;
@@ -16,7 +11,6 @@ export interface FirebaseError {
 
 @Injectable({ providedIn: 'root' })
 export class FireAuthService {
-
   // Create a new user account with the provided email and password.
   public createInWithEmailAndPassword$(
     email: string,
@@ -34,7 +28,7 @@ export class FireAuthService {
 
   public signInWithGoogle$(): Observable<UserCredential> {
     return from(
-      getFireAuth().then(({ getAuth, signInWithPopup }) => {
+      import('firebase/auth').then(({ getAuth, signInWithPopup }) => {
         const auth: Auth = getAuth();
         return signInWithPopup(auth, new GoogleAuthProvider());
       })

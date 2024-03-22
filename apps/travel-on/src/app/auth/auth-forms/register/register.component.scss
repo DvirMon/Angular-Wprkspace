@@ -1,5 +1,16 @@
-@use "variables" as main;
+@use 'variables' as main;
 
 :host {
   @include main.cardForm;
+
+  .mat-mdc-card.register-wrapper {
+    display: flex;
+    flex-direction: row;
+    padding: 0px;
+    
+    .mat-mdc-card-content {
+      width: 300px;
+      padding: 32px;
+    }
+  }
 }

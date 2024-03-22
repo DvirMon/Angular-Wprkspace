@@ -1,7 +1,6 @@
 <mat-card class="login-form">
   <mat-card-header class="center-header">
     <img
-      mat-card-sm-image
       ngSrc="../../../assets/images/logo2.png"
       width="60"
       height="60"
@@ -12,6 +11,7 @@
   </mat-card-header>
 
   <mat-card-content class="login-form-wrapper">
+
     <form
       [formGroup]="loginFormGroup"
       (ngSubmit)="onSubmit(loginFormGroup.value)"

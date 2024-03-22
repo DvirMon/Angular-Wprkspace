@@ -1,16 +1,26 @@
-<mat-card>
+<mat-card class="register-wrapper">
+  <img
+    mat-card-img
+    ngSrc="../../../../assets/images/backgrounds/register_2.jpeg"
+    height="600"
+    width="480"
+    alt=""
+  />
   <mat-card-content>
     <dom-divider-header label="Register"></dom-divider-header>
+
     <form
       [formGroup]="registerFormGroup"
-      (ngSubmit)="onSubmit(registerFormGroup.value)">
+      (ngSubmit)="onSubmit(registerFormGroup.value)"
+    >
       @for (key of formKeys(); track key) {
 
       <dom-form-input
         [control]="registerFormGroup.get(key)"
         [key]="key"
         [label]="key | titlecase"
-        [errorsMap]="errorsMap[key]">
+        [errorsMap]="errorsMap[key]"
+      >
       </dom-form-input>
       }
 
@@ -19,7 +29,8 @@
         mat-raised-button
         type="submit"
         color="primary"
-        [disabled]="!registerFormGroup.valid">
+        [disabled]="!registerFormGroup.valid"
+      >
         Register
       </button>
     </form>

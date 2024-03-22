@@ -1,4 +1,4 @@
-import { TitleCasePipe } from '@angular/common';
+import { NgOptimizedImage, TitleCasePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -18,7 +18,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
-import { MatCard, MatCardContent } from '@angular/material/card';
+import { MatCard, MatCardContent, MatCardImage } from '@angular/material/card';
 import {
   DividerHeaderComponent,
   FormInputComponent,
@@ -38,9 +38,11 @@ interface RegisterForm {
   selector: 'to-register-form',
   standalone: true,
   imports: [
+    NgOptimizedImage,
     ReactiveFormsModule,
     TitleCasePipe,
     MatCard,
+    MatCardImage,
     MatCardContent,
     MatButton,
     FormInputComponent,

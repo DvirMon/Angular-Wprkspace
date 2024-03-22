@@ -20,7 +20,7 @@ export interface ConfirmationData {
   standalone: true,
   imports: [MatDialogModule, MatButtonModule],
 })
-export class ConfirmationComponent {
-  dialogRef = inject(MatDialogRef<ConfirmationComponent>);
+export class DialogComponent {
+  dialogRef = inject(MatDialogRef<DialogComponent>);
   data = inject(MAT_DIALOG_DATA);
 }

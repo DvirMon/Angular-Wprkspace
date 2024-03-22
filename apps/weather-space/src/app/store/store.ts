@@ -17,7 +17,7 @@ import { withFavorites } from './with-favorites.feature';
 import { withFutureWeather } from './with-future.feature';
 import { withOptions } from './with-options.feature';
 
-interface State {
+export interface State {
   isMetric: boolean;
   isGeolocation: boolean;
   selectedId: number;

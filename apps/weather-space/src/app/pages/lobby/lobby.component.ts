@@ -87,7 +87,7 @@ export class LobbyPageComponent implements OnInit {
 
   isWeatherData: Signal<boolean>;
 
-  searchTerm: WritableSignal<string> = signal('tel aviv');
+  searchTerm: WritableSignal<string> = signal('');
 
   constructor() {
     this.options = this.#store.optionsEntities;
@@ -127,17 +127,19 @@ export class LobbyPageComponent implements OnInit {
     );
 
     effect(() => {
-      this.#store.loadOptions(this.searchTerm());
+      if (this.searchTerm()) {
+        this.#store.loadOptions(this.searchTerm());
+      }
     });
   }
 
   async ngOnInit(): Promise<void> {
     if (this.options().length == 0) {
-      await this.#store.loadOptionAsync(this.searchTerm());
+      await this.#store.loadOptionAsync('tel aviv');
     }
 
     if (this.#store.selectedId() == -1) {
-      this.#store.setCurrentId(this.searchTerm());
+      this.#store.setCurrentId('tel aviv');
     }
 
     this.control = this.#nfb.control(this.optionSelected());

@@ -28,7 +28,7 @@ export class RegisterPageComponent {
     this.serverError = this.#authStore.registerError;
 
     effect(() => {
-      if (this.#authStore.loaded()) {
+      if (this.#authStore.isLoaded()) {
         this.#authStore.login();
       }
     });

@@ -5,7 +5,7 @@ import { Injectable, signal } from '@angular/core';
 })
 export class ServerService {
 
-  private readonly server = signal(true);
+  private readonly server = signal(false);
 
   public getServer() {
     return this.server;

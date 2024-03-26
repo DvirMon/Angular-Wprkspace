@@ -12,15 +12,15 @@ import { Book } from '../books/books';
 
 const COLLECTION = 'books';
 
-type BooksLoader = Loader<string, Entity, 'loadBooks'>;
+type BooksLoader = Loader<string, Entity, 'loadVolumes'>;
 
 export function withBooks(Loader: LoaderService<BooksLoader>) {
   return signalStoreFeature(
     withEntities({ entity: type<Book>(), collection: COLLECTION }),
     withMethods((state) => {
-      const loader = createLoader(Loader, 'loadBooks');
+      const loader = createLoader(Loader, 'loadVolumes');
       return {
-        loadBooks: loadEntities(loader, state, COLLECTION),
+        loadVolumes: loadEntities(loader, state, COLLECTION),
       };
     })
   );

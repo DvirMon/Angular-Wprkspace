@@ -18,11 +18,17 @@ export const appRoutes: Routes = [
     title: 'Bookshelf',
   },
   {
+    path: 'info/:volId',
+    loadComponent: () =>
+      import('./pages/info/info-page.component').then(
+        (m) => m.InfoPageComponent
+      ),
+    title: 'Info',
+  },
+  {
     path: '**',
     loadComponent: () =>
-      import('./pages/pnf/pnf.component').then(
-        (m) => m.PnfComponent
-      ),
+      import('./pages/pnf/pnf.component').then((m) => m.PnfComponent),
     title: 'The Boos Scape',
   },
   { path: '', redirectTo: '/', pathMatch: 'full' },

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { Book, Item, VolumeInfo } from './books';
-import { BooksHttpService } from './http.service';
+import { VolumesHttpService } from './http.service';
 
 export interface LoadResponse {
   content: Book[];
@@ -10,13 +10,12 @@ export interface LoadResponse {
 @Injectable({
   providedIn: 'root',
 })
-export class BooksDataService {
-
-  constructor(private bookHttp: BooksHttpService) {}
+export class VolumesDataService {
+  constructor(private bookHttp: VolumesHttpService) {}
 
   // function to fetch books from Google Books API}
-  public loadBooks(query?: string): Observable<LoadResponse> {
-    return this.bookHttp.fetchBooks(query as string).pipe(
+  public loadVolumes(query?: string): Observable<LoadResponse> {
+    return this.bookHttp.fetchVolumes(query as string).pipe(
       map((items) => this.mapItemsToBooks(items)),
       map((books) => this.filterBooksWithImages(books)),
       map((books: Book[]) => ({

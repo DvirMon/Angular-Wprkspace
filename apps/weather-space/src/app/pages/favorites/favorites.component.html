@@ -1,4 +1,6 @@
 <main>
+  @if (hasFavorites()){
+
   <ng-container *ngFor="let item of items() | keyvalue">
     <div class="favorite-card-wrapper">
       <weather-space-favorite-card
@@ -8,4 +10,9 @@
       ></weather-space-favorite-card>
     </div>
   </ng-container>
+  } @else {
+  <section>
+    <p>No favorites has been selected</p>
+  </section>
+  }
 </main>

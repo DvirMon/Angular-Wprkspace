@@ -12,7 +12,11 @@
         </section>
         <section class="navigation">
           <button mat-button [routerLink]="'/'">Home</button>
-          <button mat-button [routerLink]="'/favorites'">Favorites</button>
+          <button mat-button [routerLink]="'/favorites'">
+            <span matBadgeOverlap="false" [matBadge]="favoriteCount()">
+              Favorites
+            </span>
+          </button>
         </section>
       </div>
     </mat-toolbar>

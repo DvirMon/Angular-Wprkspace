@@ -1,5 +1,6 @@
 import { TitleCasePipe } from '@angular/common';
-import { Component, WritableSignal, computed, inject } from '@angular/core';
+import { Component, Signal, WritableSignal, computed, inject } from '@angular/core';
+import { MatBadge } from '@angular/material/badge';
 import { MatButton } from '@angular/material/button';
 import {
   MatSidenavContainer,
@@ -12,6 +13,7 @@ import {
 import { MatToolbar } from '@angular/material/toolbar';
 import { RouterLink } from '@angular/router';
 import { ServerService } from '../../shared/services/server.service';
+import { Store } from '../../store/store';
 
 @Component({
   selector: 'weather-space-layout',
@@ -26,16 +28,21 @@ import { ServerService } from '../../shared/services/server.service';
     MatToolbar,
     MatButton,
     MatSlideToggle,
+    MatBadge,
   ],
 })
 export class LayoutComponent {
-  #ServerService = inject(ServerService);
+  #serverService = inject(ServerService);
 
-  isServer: WritableSignal<boolean> = this.#ServerService.getServer();
+  #store = inject(Store);
 
-  toggleLabel = computed(() => 'server ' + (this.isServer() ? "on" : 'off') )
+  isServer: WritableSignal<boolean> = this.#serverService.getServer();
+
+  toggleLabel = computed(() => 'server ' + (this.isServer() ? 'on' : 'off'));
+
+  favoriteCount: Signal<string> = this.#store.favoritesCount;
 
   onValueChanged(event: MatSlideToggleChange) {
-    this.#ServerService.setServer(event.checked);
+    this.#serverService.setServer(event.checked);
   }
 }

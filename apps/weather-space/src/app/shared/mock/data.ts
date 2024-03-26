@@ -1,7 +1,9 @@
-import { AutocompleteResult } from '../models/autocomplete-result';
-import { CurrentWeatherResult } from '../models/current-weather-result';
-import { FutureWeatherResult } from '../models/future-weather-result';
-import { GeolocationWeatherResult } from '../models/geolocation-weather-result';
+import { EntityMap } from '@ngrx/signals/entities';
+import { AutocompleteResult } from '../../weather/models/autocomplete-result';
+import { CurrentWeatherResult } from '../../weather/models/current-weather-result';
+import { FutureWeatherResult } from '../../weather/models/future-weather-result';
+import { GeolocationWeatherResult } from '../../weather/models/geolocation-weather-result';
+import { FavoriteEntity } from '../../weather/weather-favorite-card/favorite-card.component';
 
 export const LOCATIONS_AUTOCOMPLETE_RESULT: AutocompleteResult[] = [
   {
@@ -410,8 +412,8 @@ export const GEOLOCATION_DATA: GeolocationWeatherResult = {
   },
 };
 
-export const FAVORITES = [
-  {
+export const FAVORITES :EntityMap<FavoriteEntity>= {
+  212575 : {
     id: 212575,
     WeatherText: 'Partly cloudy',
     LocalizedName: 'San Francisco',
@@ -428,7 +430,7 @@ export const FAVORITES = [
       },
     },
   },
-  {
+  226396 : {
     id: 226396,
     WeatherText: 'Partly cloudy',
     LocalizedName: 'San Francisco',
@@ -445,7 +447,7 @@ export const FAVORITES = [
       },
     },
   },
-  {
+  106770 : {
     id: 106770,
     WeatherText: 'Partly cloudy',
     LocalizedName: 'San Francisco',
@@ -462,8 +464,8 @@ export const FAVORITES = [
       },
     },
   },
-  {
-    id: 106770,
+  106775 : {
+    id: 106775,
     WeatherText: 'Partly cloudy',
     LocalizedName: 'San Francisco',
     Temperature: {
@@ -479,8 +481,8 @@ export const FAVORITES = [
       },
     },
   },
-  {
-    id: 212575,
+  213575 : {
+    id: 232575,
     WeatherText: 'Partly cloudy',
     LocalizedName: 'San Francisco',
     Temperature: {
@@ -496,21 +498,4 @@ export const FAVORITES = [
       },
     },
   },
-  {
-    id: 212575,
-    WeatherText: 'Partly cloudy',
-    LocalizedName: 'San Francisco',
-    Temperature: {
-      Metric: {
-        Value: 15.6,
-        Unit: 'C',
-        UnitType: 17,
-      },
-      Imperial: {
-        Value: 60.1,
-        Unit: 'F',
-        UnitType: 18,
-      },
-    },
-  },
-];
+};

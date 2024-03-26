@@ -12,7 +12,7 @@ import {
   CURRENT_WEATHER_RESULT,
   FUTURE_WEATHER_RESULT,
   LOCATIONS_AUTOCOMPLETE_RESULT,
-} from './mock/data';
+} from '../shared/mock/data';
 import { CurrentWeatherResult } from './models/current-weather-result';
 import { FutureWeatherResult } from './models/future-weather-result';
 import { GeolocationWeatherResult } from './models/geolocation-weather-result';

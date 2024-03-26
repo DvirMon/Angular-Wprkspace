@@ -39,7 +39,6 @@ import { AppStore } from '../../store/store';
   ],
 })
 export class DashboardComponent {
-  #breakpointObserver = inject(BreakpointObserver);
   #store = inject(AppStore);
 
   showNavigation = input<boolean>(false);

@@ -41,7 +41,12 @@ export const Store = signalStore(
     optionSelected: computed(
       () => store.optionsEntityMap()[store.selectedId()]
     ),
-    hasFavorites: computed(() => !!store.favoritesEntityMap),
+    hasFavorites: computed(() => store.favoritesEntities().length !== 0),
+    favoritesCount: computed(() =>
+      store.favoritesEntities().length > 0
+        ? String(store.favoritesEntities().length)
+        : ''
+    ),
   })),
   withMethods((state) => ({
     setCurrentId(value: string) {

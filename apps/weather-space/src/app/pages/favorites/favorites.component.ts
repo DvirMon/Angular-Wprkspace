@@ -1,4 +1,4 @@
-import { Component, Signal, inject } from '@angular/core';
+import { Component, Signal, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { KeyValuePipe, NgFor } from '@angular/common';
@@ -9,6 +9,7 @@ import {
   FavoriteEntity,
   FavoriteEntityComponent,
 } from '../../weather/weather-favorite-card/favorite-card.component';
+import { FAVORITES } from '../../shared/mock/data';
 
 @Component({
   selector: 'weather-space-favorites',
@@ -20,13 +21,14 @@ import {
 export class FavoritesPageComponent {
   #store = inject(Store);
 
-
   items: Signal<EntityMap<FavoriteEntity>>;
   isMetric: Signal<boolean>;
+  hasFavorites: Signal<boolean>;
 
   constructor(private router: Router) {
     this.items = this.#store.favoritesEntityMap;
     this.isMetric = this.#store.isMetric;
+    this.hasFavorites = this.#store.hasFavorites
   }
 
   public onSelectionChanged({ id }: FavoriteEntity): void {

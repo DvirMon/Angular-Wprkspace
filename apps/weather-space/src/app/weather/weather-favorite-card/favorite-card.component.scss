@@ -8,13 +8,13 @@
       background-color: #a1dfff;
     }
 
-    flex-direction: row;
-    align-items: center;
+    // flex-direction: row;
+    // align-items: center;
     vertical-align: center;
 
-    mat-card-header,
-    mat-card-content {
-      padding: 16px;
+    mat-card-header {
+      padding-bottom: 8px;
+      justify-content: space-between;
     }
   }
 }

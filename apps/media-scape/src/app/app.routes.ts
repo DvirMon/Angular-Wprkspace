@@ -9,4 +9,18 @@ export const appRoutes: Route[] = [
       ),
     title: 'The Media Scape',
   },
+  {
+    path: 'media/:id',
+    loadComponent: () =>
+      import('./pages/media/media-page.component').then(
+        (m) => m.MediaPageComponent
+      ),
+  },
+  {
+    path: '**',
+    loadComponent: () =>
+      import('./pages/pnf/pnf.component').then(
+        (m) => m.PnfComponent
+      ),
+  },
 ];

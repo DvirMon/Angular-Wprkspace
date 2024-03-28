@@ -24,7 +24,7 @@ interface State {
 const initialState: State = {
   totalResults: 0,
   sortDir: SortDir.ASC,
-  searchTerm: '1990',
+  searchTerm: '',
 };
 
 export const AppStore = signalStore(
@@ -54,8 +54,21 @@ export const AppStore = signalStore(
         )
       )
     ),
+    updateSort() {
+      const sortDir = store.sortDir() ^ SortDir.ASC ^ SortDir.DESC;
+      patchState(store, { sortDir });
+    },
+    updateSearchTerm(value: string) {
+      patchState(store, { searchTerm: value });
+    },
   })),
   withComputed((store) => ({
+    media: computed(() =>
+      store
+        .entities()
+        .filter(isTitleOrDate(store.searchTerm()))
+        .sort((a, b) => compareTitle(a, b, store.sortDir()))
+    ),
     movies: computed(() =>
       store
         .entities()

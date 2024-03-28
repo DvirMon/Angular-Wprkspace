@@ -10,14 +10,14 @@ import { Result } from '../../shared/types';
 import { JsonPipe } from '@angular/common';
 
 @Component({
-  selector: 'ms-media-layout',
+  selector: 'ms-media-content',
   standalone: true,
   imports: [JsonPipe],
-  templateUrl: './media-layout.component.html',
-  styleUrl: './media-layout.component.scss',
+  templateUrl: './media-content.component.html',
+  styleUrl: './media-content.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MediaLayoutComponent implements OnInit {
+export class MediaContentComponent implements OnInit {
   #store = inject(AppStore);
 
   media: Signal<Result[]>;
@@ -26,7 +26,7 @@ export class MediaLayoutComponent implements OnInit {
   games: Signal<Result[]>;
 
   constructor() {
-    this.media = this.#store.entities;
+    this.media = this.#store.media;
     this.movies = this.#store.movies;
     this.series = this.#store.series;
     this.games = this.#store.games;

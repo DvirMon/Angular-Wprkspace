@@ -6,6 +6,7 @@ import { Book } from '../../books/books';
 import { AppStore } from '../../store/store';
 import { SearchInputComponent } from '@dom/components';
 import { DashboardComponent } from '../../layout/dashboard/dashboard.component';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'books-scape-volume-page',
@@ -16,6 +17,9 @@ import { DashboardComponent } from '../../layout/dashboard/dashboard.component';
 })
 export class VolumesPageComponent {
   #store = inject(AppStore);
+
+  searchControl = new FormControl<string>('', { nonNullable: true });
+
 
   public readonly books: Signal<Book[]>;
   public readonly initialValue: Signal<string>;

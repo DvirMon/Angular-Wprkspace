@@ -18,6 +18,6 @@ export enum MediaType {
 }
 
 export enum SortDir {
-  ASC = 'asc',
-  DESC = 'desc',
+  ASC = 0,
+  DESC = 1,
 }

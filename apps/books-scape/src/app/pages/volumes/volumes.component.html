@@ -3,6 +3,7 @@
     <header>
       <div class="search-wrapper">
         <dom-search-input
+          [control]="searchControl"
           [initialValue]="initialValue()"
           (termChanged)="onTermChanged($event)"
         ></dom-search-input>

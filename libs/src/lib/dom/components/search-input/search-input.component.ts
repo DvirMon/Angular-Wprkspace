@@ -1,10 +1,17 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output, input } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  effect,
+  input,
+} from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { debounceTime, distinctUntilChanged, pipe, tap } from 'rxjs';
+import { Subject, debounceTime, distinctUntilChanged, pipe, tap } from 'rxjs';
 
 export interface SearchResultsData {
   totalResults: number;
@@ -23,11 +30,13 @@ export interface SearchResultsData {
   templateUrl: './search-input.component.html',
   styleUrls: ['./search-input.component.scss'],
 })
-export class SearchInputComponent implements OnInit {
+export class SearchInputComponent {
+  label = input<string>();
   initialValue = input<string>();
   searchResultsData = input<SearchResultsData>();
+  control = input.required<FormControl<string>>();
 
-  searchControl: FormControl<string> = new FormControl();
+  #valueChanged: Subject<string> = new Subject();
 
   @Output() termChanged = new EventEmitter<string>();
 
@@ -40,16 +49,17 @@ export class SearchInputComponent implements OnInit {
   );
 
   constructor() {
-    this.onTermChanged(this.searchControl.valueChanges);
+    effect(
+      () => {
+        if (this.control()) {
+          this.onTermChanged(this.#valueChanged.asObservable());
+        }
+      },
+      { allowSignalWrites: true }
+    );
   }
 
-  ngOnInit(): void {
-    // Set initial value if provided
-
-    const value: string | undefined = this.initialValue();
-
-    if (value != undefined) {
-      this.searchControl.setValue(value);
-    }
+  onInputChanged() {
+    this.#valueChanged.next(this.control().value as string);
   }
 }

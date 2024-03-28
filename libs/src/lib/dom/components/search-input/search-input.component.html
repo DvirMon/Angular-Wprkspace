@@ -1,5 +1,11 @@
 <mat-form-field>
-  <input matInput type="text" [formControl]="searchControl" />
+  <label for="">{{ label() }}</label>
+  <input
+    matInput
+    type="text"
+    [formControl]="control()"
+    (input)="onInputChanged()"
+  />
   <!-- @if (searchResultsData()!.totalResults !== 0) {
     <span matSuffix
       >{{ searchResultsData()!.totalResults }} results

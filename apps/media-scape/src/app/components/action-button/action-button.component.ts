@@ -1,12 +1,15 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'ms-action-button',
   standalone: true,
-  imports: [CommonModule],
-  templateUrl: './action-button.component.html',
+  imports: [MatButton],
+  template: `<button mat-button>{{ label() }}</button>`,
   styleUrl: './action-button.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ActionButtonComponent {}
+export class ActionButtonComponent {
+  label = input.required();
+  
+}

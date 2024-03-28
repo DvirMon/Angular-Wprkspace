@@ -31,7 +31,6 @@ import {
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { OptionContentDirective } from '../../directives';
 
-
 @Component({
   selector: 'dom-autocomplete',
   standalone: true,
@@ -68,9 +67,9 @@ export class AutocompleteComponent<T> {
   @Output() queryChanged = new EventEmitter<string>();
   @Output() optionSelected = new EventEmitter<T>();
 
-  valueChanged: Subject<string> = new Subject();
+  #valueChanged: Subject<string> = new Subject();
 
-  private onQueryChange = rxMethod<string>(
+  private onTermChanged = rxMethod<string>(
     pipe(
       debounceTime(300),
       distinctUntilChanged(),
@@ -83,7 +82,7 @@ export class AutocompleteComponent<T> {
     effect(
       () => {
         if (this.control()) {
-          this.onQueryChange(this.valueChanged.asObservable());
+          this.onTermChanged(this.#valueChanged.asObservable());
         }
       },
       { allowSignalWrites: true }
@@ -95,7 +94,7 @@ export class AutocompleteComponent<T> {
     this.optionSelected.emit(option);
   }
 
-  onQueryChanged() {
-    this.valueChanged.next(this.control().value as string);
+  onInputChanged() {
+    this.#valueChanged.next(this.control().value as string);
   }
 }

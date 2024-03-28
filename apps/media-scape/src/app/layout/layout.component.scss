@@ -1,15 +1,11 @@
-.sidenav {
-  width: 200px;
-}
-
 .mat-toolbar.nav {
   position: sticky;
   top: 0;
   z-index: 1;
 
   div.container {
-    width: calc(100% - 200px);
-    margin-left: 200px;
+    width: calc(100% - 300px);
+    margin-left: 300px;
   }
 
   span {

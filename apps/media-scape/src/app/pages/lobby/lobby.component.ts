@@ -8,7 +8,8 @@ import {
   MatSidenavContent,
 } from '@angular/material/sidenav';
 import { MatToolbar } from '@angular/material/toolbar';
-import { MediaLayoutComponent } from '../../media/media-layout/media-layout.component';
+import { MediaContentComponent } from '../../media';
+import { MediaHeaderComponent } from '../../media/media-header/media-header.component';
 
 @Component({
   selector: 'ms-lobby-page',
@@ -22,7 +23,8 @@ import { MediaLayoutComponent } from '../../media/media-layout/media-layout.comp
     MatListItem,
     MatSidenavContent,
     MatSidenavContainer,
-    MediaLayoutComponent
+    MediaContentComponent,
+    MediaHeaderComponent
   ],
   templateUrl: './lobby.component.html',
   styleUrl: './lobby.component.scss',

@@ -25,11 +25,7 @@ export const appRoutes: Routes = [
         (m) => m.InfoPageComponent
       ),
     title: 'Info',
-    resolve: [
-      {
-        info: infoResolver,
-      },
-    ],
+    resolve: { info: infoResolver },
   },
   {
     path: '**',

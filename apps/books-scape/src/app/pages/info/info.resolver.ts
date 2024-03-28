@@ -1,8 +1,8 @@
 import { inject } from '@angular/core';
 import {
-    ActivatedRouteSnapshot,
-    ResolveFn,
-    RouterStateSnapshot,
+  ActivatedRouteSnapshot,
+  ResolveFn,
+  RouterStateSnapshot,
 } from '@angular/router';
 import { Info } from '../../books/info.t';
 import { AppStore } from '../../store/store';

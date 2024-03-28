@@ -49,7 +49,7 @@ export class VolumesPageComponent {
 
   onInfo(volId: string): void {
     runInInjectionContext(this.#injector, () =>
-      inject(Router).navigateByUrl('info/' + volId)
+      inject(Router).navigateByUrl(`info/${volId}`)
     );
   }
 }

@@ -1,13 +1,30 @@
 {
-    "version": "0.2.0",
-    "configurations": [
-      {
-        "type": "msedge",
-        "request": "launch",
-        "name": "Launch Edge against localhost",
-        "url": "http://localhost:4200",
-        "webRoot": "${workspaceFolder}",
-        "runtimeExecutable": "apps/weather-space"
-      }
-    ]
-  }
+  // "configurations": [
+  //   {
+  //     "type": "msedge",
+  //     "request": "launch",
+  //     "name": "Launch Edge against localhost",
+  //     "url": "http://localhost:4200",
+  //     "webRoot": "${workspaceFolder}",
+  //     "runtimeExecutable": "apps/books-scape/src/app"
+  //   }
+  // ]
+
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "ng serve",
+      "type": "msedge",
+      "request": "launch",
+      "preLaunchTask": "npm: start",
+      "url": "http://localhost:4200/"
+    },
+    {
+      "name": "ng test",
+      "type": "chrome",
+      "request": "launch",
+      "preLaunchTask": "npm: test",
+      "url": "http://localhost:9876/debug.html"
+    }
+  ]
+}

@@ -7,7 +7,7 @@
         "name": "Launch Edge against localhost",
         "url": "http://localhost:4200",
         "webRoot": "${workspaceFolder}",
-        "runtimeExecutable": "apps/weather-space"
+        "runtimeExecutable": "apps/media-scape"
       }
     ]
   }

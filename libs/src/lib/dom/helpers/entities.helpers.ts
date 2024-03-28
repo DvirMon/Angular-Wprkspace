@@ -9,7 +9,7 @@ import { tapResponse } from '@ngrx/operators';
 import { StateSignal, patchState } from '@ngrx/signals';
 import { EntityId, addEntities, setAllEntities } from '@ngrx/signals/entities';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { EMPTY, Observable, pipe, switchMap } from 'rxjs';
+import { EMPTY, Observable, pipe, switchMap, tap } from 'rxjs';
 
 export interface Entity {
   id: EntityId;

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { Item, Root } from './books';
 import { environment } from '../../environments/environment';
+import { Info } from './info.t';
 
 @Injectable({
   providedIn: 'root',
@@ -29,11 +30,11 @@ export class VolumesHttpService {
       .pipe(map((res) => res.items || []));
   }
 
-  public fetchVolumeInfo(volumeId: string) {
+  public fetchVolumeInfo(volumeId: string): Observable<Info> {
     const projection = `projection=lite`;
 
     const url = `${environment.apiUrl}/${volumeId}?${projection}`;
-    
-    return this.http.get(url);
+
+    return this.http.get<Info>(url);
   }
 }

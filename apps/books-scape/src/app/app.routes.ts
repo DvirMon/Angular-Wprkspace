@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { infoResolver } from './pages/info/info.resolver';
 
 export const appRoutes: Routes = [
   {
@@ -24,6 +25,11 @@ export const appRoutes: Routes = [
         (m) => m.InfoPageComponent
       ),
     title: 'Info',
+    resolve: [
+      {
+        info: infoResolver,
+      },
+    ],
   },
   {
     path: '**',

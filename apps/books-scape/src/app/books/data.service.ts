@@ -2,10 +2,9 @@ import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { Book, Item, VolumeInfo } from './books';
 import { VolumesHttpService } from './http.service';
-
-export interface LoadResponse {
-  content: Book[];
-}
+import { EntityResult } from '@dom';
+import { Entity } from '@angular-architects/ngrx-toolkit';
+import { Info } from './info.t';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +13,7 @@ export class VolumesDataService {
   constructor(private bookHttp: VolumesHttpService) {}
 
   // function to fetch books from Google Books API}
-  public loadVolumes(query?: string): Observable<LoadResponse> {
+  public loadVolumes(query?: string): Observable<EntityResult<Book>> {
     return this.bookHttp.fetchVolumes(query as string).pipe(
       map((items) => this.mapItemsToBooks(items)),
       map((books) => this.filterBooksWithImages(books)),
@@ -45,5 +44,13 @@ export class VolumesDataService {
       imageLinks: volumeInfo.imageLinks,
       // categories: volumeInfo.categories
     };
+  }
+
+  public loadVolumeInfo(volId: string): Observable<EntityResult<Info>> {
+    return this.bookHttp.fetchVolumeInfo(volId).pipe(
+      map((info: Info) => ({
+        content: [info],
+      }))
+    );
   }
 }

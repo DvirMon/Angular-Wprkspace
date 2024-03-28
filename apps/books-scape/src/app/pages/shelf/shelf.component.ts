@@ -34,6 +34,6 @@ export class BookshelfPageComponent {
   }
 
   onRemoveFromShelf(event: Book) {
-    this.#store.RemoveFromShelf(event.id);
+    this.#store.removeFromShelf(event.id);
   }
 }

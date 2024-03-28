@@ -19,12 +19,6 @@ export class MediaHeaderComponent {
 
   searchControl = new FormControl<string>('', { nonNullable: true });
 
-  buttonGrid = [
-    { label: 'clear', fn: this.onClear },
-    { label: 'refresh', fn: this.onRefresh },
-    { label: 'sort', fn: this.onSort },
-  ];
-
   onTermChanged(value: string): void {
     this.#store.updateSearchTerm(value);
   }
@@ -34,7 +28,7 @@ export class MediaHeaderComponent {
   }
 
   onRefresh(): void {
-    console.log('onRefresh');
+    this.#store.loadMedia();
   }
 
   onSort(): void {

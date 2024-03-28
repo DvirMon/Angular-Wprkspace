@@ -13,16 +13,24 @@ import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { EMPTY, pipe, switchMap } from 'rxjs';
 import { MediaService } from '../media/media.service';
 import { MediaType, Result, SortDir } from '../shared/types';
+import { isTypeEqual, compareTitle, isTitleOrDate } from './helper';
 
 interface State {
   totalResults: number;
   sortDir: SortDir;
+  searchTerm: string;
 }
+
+const initialState: State = {
+  totalResults: 0,
+  sortDir: SortDir.ASC,
+  searchTerm: '1990',
+};
 
 export const AppStore = signalStore(
   { providedIn: 'root' },
   withDevtools('store'),
-  withState<State>({ totalResults: 0, sortDir: SortDir.ASC }),
+  withState<State>(initialState),
   withEntities<Result>(),
   withMethods((store, service = inject(MediaService)) => ({
     loadMedia: rxMethod<void>(
@@ -51,52 +59,23 @@ export const AppStore = signalStore(
     movies: computed(() =>
       store
         .entities()
-        .filter(compareType(MediaType.MOVIE))
-        .sort((a, b) => compareName(a, b, store.sortDir()))
+        .filter(isTypeEqual(MediaType.MOVIE))
+        .filter(isTitleOrDate(store.searchTerm()))
+        .sort((a, b) => compareTitle(a, b, store.sortDir()))
     ),
     series: computed(() =>
-      store.entities().filter(compareType(MediaType.SERIES)).sort(compareName)
+      store
+        .entities()
+        .filter(isTypeEqual(MediaType.SERIES))
+        .filter(isTitleOrDate(store.searchTerm()))
+        .sort(compareTitle)
     ),
     games: computed(() =>
-      store.entities().filter(compareType(MediaType.GAME)).sort(compareName)
+      store
+        .entities()
+        .filter(isTypeEqual(MediaType.GAME))
+        .filter(isTitleOrDate(store.searchTerm()))
+        .sort(compareTitle)
     ),
   }))
 );
-
-// function compareType(item: Result, value: MediaType) {
-//   return item.Type === value;
-// }
-
-function compareType(value: MediaType) {
-  return function (item: Result): boolean {
-    return item.Type === value;
-  };
-}
-
-function compareName(
-  item1: Result,
-  item2: Result,
-  mode: SortDir = SortDir.ASC
-): number {
-  const title1 = item1.Title.toUpperCase();
-  const title2 = item2.Title.toUpperCase();
-
-  if (mode === SortDir.ASC) {
-    if (title1 < title2) {
-      return -1;
-    }
-    if (title1 > title2) {
-      return 1;
-    }
-    return 0;
-  } else {
-    // descending order
-    if (title1 > title2) {
-      return -1;
-    }
-    if (title1 < title2) {
-      return 1;
-    }
-    return 0;
-  }
-}

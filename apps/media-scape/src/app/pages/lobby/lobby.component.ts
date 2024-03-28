@@ -8,6 +8,7 @@ import {
   MatSidenavContent,
 } from '@angular/material/sidenav';
 import { MatToolbar } from '@angular/material/toolbar';
+import { MediaLayoutComponent } from '../../media/media-layout/media-layout.component';
 
 @Component({
   selector: 'ms-lobby-page',
@@ -21,6 +22,7 @@ import { MatToolbar } from '@angular/material/toolbar';
     MatListItem,
     MatSidenavContent,
     MatSidenavContainer,
+    MediaLayoutComponent
   ],
   templateUrl: './lobby.component.html',
   styleUrl: './lobby.component.scss',

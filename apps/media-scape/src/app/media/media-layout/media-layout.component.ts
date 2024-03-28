@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  inject,
+} from '@angular/core';
 import { MediaService } from '../media.service';
 
 @Component({
@@ -9,10 +14,10 @@ import { MediaService } from '../media.service';
   styleUrl: './media-layout.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MediaLayoutComponent {
+export class MediaLayoutComponent implements OnInit {
   #mediaService = inject(MediaService);
 
-  constructor() {
-    this.#mediaService.loadMedia().subscribe((value) => console.log(value));
+  ngOnInit(): void {
+    this.#mediaService.loadMedia();
   }
 }

@@ -8,7 +8,7 @@ export class MediaService {
   constructor(private http: HttpClient) { }
   
   public loadMedia() {
-    const url = 'assets/data.json'
+    const url = 'assets/dat.json'
     return this.http.get(url);
   }
 }

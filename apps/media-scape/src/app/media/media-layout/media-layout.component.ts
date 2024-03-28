@@ -4,7 +4,7 @@ import {
   OnInit,
   inject,
 } from '@angular/core';
-import { MediaService } from '../media.service';
+import { AppStore } from '../../store/store';
 
 @Component({
   selector: 'ms-media-layout',
@@ -15,9 +15,9 @@ import { MediaService } from '../media.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MediaLayoutComponent implements OnInit {
-  #mediaService = inject(MediaService);
+  #store = inject(AppStore);
 
   ngOnInit(): void {
-    this.#mediaService.loadMedia();
+    this.#store.loadMedia();
   }
 }

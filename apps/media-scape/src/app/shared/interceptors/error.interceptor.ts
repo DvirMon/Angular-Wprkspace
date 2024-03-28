@@ -11,8 +11,6 @@ export const errorInterceptor: HttpInterceptorFn = (req, handle) => {
     catchError((err: HttpErrorResponse) => {
       const message = req.context.get(ERROR_MESSAGE_CONTEXT);
 
-      console.log(err.status);
-
       if (err.status === 404) {
         router.navigateByUrl('error');
       }

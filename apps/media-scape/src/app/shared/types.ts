@@ -16,3 +16,8 @@ export enum MediaType {
   SERIES = 'series',
   GAME = 'game',
 }
+
+export enum SortDir {
+  ASC = 'asc',
+  DESC = 'desc',
+}

@@ -41,7 +41,7 @@ export function withMedia() {
       ),
     })),
     withComputed((store) => ({
-      menuMap: computed(() => getTypeCounts(store.entities())),
+      menuItems: computed(() => getTypeCounts(store.entities())),
     }))
   );
 }
@@ -55,7 +55,7 @@ function getTypeCounts(entities: Result[]) {
   }, {} as Record<string, number>);
 
   return Object.keys(typeCounts).map((type) => ({
-    label: type,
+    type,
     amount: typeCounts[type],
   }));
 }

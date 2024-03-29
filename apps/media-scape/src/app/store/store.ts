@@ -1,14 +1,10 @@
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import { computed } from '@angular/core';
-import {
-  signalStore,
-  withComputed
-} from '@ngrx/signals';
+import { signalStore, withComputed } from '@ngrx/signals';
 import { MediaType } from '../shared/types';
 import { isTitleOrDate, isTypeEqual, withFilter } from './with-filter.feature';
 import { withMedia } from './with-media.feature';
 import { compareTitle, withSort } from './with-sort.feature';
-
 
 export const AppStore = signalStore(
   { providedIn: 'root' },

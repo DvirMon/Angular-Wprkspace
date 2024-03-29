@@ -7,6 +7,7 @@ import {
 import { MatListItem, MatNavList } from '@angular/material/list';
 import { AppStore } from '../../store/store';
 import { TitleCasePipe } from '@angular/common';
+import { MediaType } from '../../shared/types';
 
 @Component({
   selector: 'ms-media-menu',
@@ -19,9 +20,14 @@ import { TitleCasePipe } from '@angular/common';
 export class MediaMenuComponent {
   #store = inject(AppStore);
 
-  menuItems: Signal<{ label: string; amount: number }[]>;
+  menuItems: Signal<{ type: string; amount: number }[]>;
+
 
   constructor() {
-    this.menuItems = this.#store.menuMap;
+    this.menuItems = this.#store.menuItems;
+  }
+
+  onItemClick(value : string) {
+    this.#store.updateType(value as MediaType)
   }
 }

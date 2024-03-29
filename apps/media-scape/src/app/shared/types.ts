@@ -12,6 +12,7 @@ export interface Result {
 }
 
 export enum MediaType {
+  ALL = '',
   MOVIE = 'movie',
   SERIES = 'series',
   GAME = 'game',

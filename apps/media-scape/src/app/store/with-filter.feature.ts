@@ -6,12 +6,25 @@ import {
 } from '@ngrx/signals';
 import { MediaType, Result } from '../shared/types';
 
+interface FilterState {
+  searchTerm: string;
+  type: MediaType;
+}
+
+const initialState: FilterState = { searchTerm: '', type: MediaType.ALL };
+
 export function withFilter() {
   return signalStoreFeature(
-    withState({ searchTerm: '' }),
+    withState(initialState),
     withMethods((store) => ({
       updateSearchTerm(value: string) {
         patchState(store, { searchTerm: value });
+      },
+      updateType(value: MediaType) {
+        patchState(store, { type: value });
+      },
+      clearFilters() {
+        patchState(store, initialState);
       },
     }))
   );

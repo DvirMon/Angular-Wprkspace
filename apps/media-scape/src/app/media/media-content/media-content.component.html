@@ -1,3 +1,10 @@
+@if(hasFilterType()) {
+<pre>
+    {{ results() | json }}
+</pre>
+} @else {
 <pre>
     {{ media() | json }}
-</pre>
+    </pre
+>
+}

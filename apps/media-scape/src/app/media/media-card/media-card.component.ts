@@ -1,12 +1,19 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgOptimizedImage } from '@angular/common';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatCard, MatCardImage } from '@angular/material/card';
+import { Result } from '../../shared/types';
 
 @Component({
   selector: 'ms-media-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [NgOptimizedImage, ReactiveFormsModule, MatCard, MatCardImage],
   templateUrl: './media-card.component.html',
   styleUrl: './media-card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MediaCardComponent {}
+export class MediaCardComponent {
+
+  media = input.required<Result>()
+
+}

@@ -5,6 +5,7 @@ import { MatButton } from '@angular/material/button';
 import { MatToolbar } from '@angular/material/toolbar';
 import { SearchInputComponent } from '@dom';
 import { AppStore } from '../../store/store';
+import { MediaType } from '../../shared/types';
 
 @Component({
   selector: 'ms-media-header',
@@ -17,18 +18,24 @@ import { AppStore } from '../../store/store';
 export class MediaHeaderComponent {
   #store = inject(AppStore);
 
-  searchControl = new FormControl<string>('', { nonNullable: true });
+  searchControl: FormControl<string>;
+
+  constructor() {
+    this.searchControl = new FormControl<string>('', { nonNullable: true });
+  }
 
   onTermChanged(value: string): void {
     this.#store.updateSearchTerm(value);
   }
-
+  
   onClear(): void {
     this.searchControl.reset();
+    this.#store.clearFilters();
   }
 
   onRefresh(): void {
     this.#store.loadMedia();
+    this.onClear();
   }
 
   onSort(): void {

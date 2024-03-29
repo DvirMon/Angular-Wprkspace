@@ -1,13 +1,15 @@
+import { JsonPipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
   OnInit,
   Signal,
+  computed,
   inject,
 } from '@angular/core';
-import { AppStore } from '../../store/store';
 import { Result } from '../../shared/types';
-import { JsonPipe } from '@angular/common';
+import { AppStore } from '../../store/store';
+import { isTypeEqual } from '../../store/with-filter.feature';
 
 @Component({
   selector: 'ms-media-content',
@@ -20,16 +22,19 @@ import { JsonPipe } from '@angular/common';
 export class MediaContentComponent implements OnInit {
   #store = inject(AppStore);
 
+  hasFilterType: Signal<boolean>;
   media: Signal<Result[]>;
-  movies: Signal<Result[]>;
-  series: Signal<Result[]>;
-  games: Signal<Result[]>;
+  results: Signal<Result[]>;
 
   constructor() {
+    
+    this.hasFilterType = computed(() => !!this.#store.type());
+    
     this.media = this.#store.media;
-    this.movies = this.#store.movies;
-    this.series = this.#store.series;
-    this.games = this.#store.games;
+
+    this.results = computed(() =>
+      this.#store.media().filter(isTypeEqual(this.#store.type()))
+    );
   }
 
   ngOnInit(): void {

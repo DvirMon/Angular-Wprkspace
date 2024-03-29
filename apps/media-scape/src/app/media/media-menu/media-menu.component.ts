@@ -1,12 +1,27 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Signal,
+  inject,
+} from '@angular/core';
 import { MatListItem, MatNavList } from '@angular/material/list';
+import { AppStore } from '../../store/store';
+import { TitleCasePipe } from '@angular/common';
 
 @Component({
   selector: 'ms-media-menu',
   standalone: true,
-  imports: [MatNavList, MatListItem],
+  imports: [TitleCasePipe, MatNavList, MatListItem],
   templateUrl: './media-menu.component.html',
   styleUrl: './media-menu.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MediaMenuComponent {}
+export class MediaMenuComponent {
+  #store = inject(AppStore);
+
+  menuItems: Signal<{ label: string; amount: number }[]>;
+
+  constructor() {
+    this.menuItems = this.#store.menuMap;
+  }
+}

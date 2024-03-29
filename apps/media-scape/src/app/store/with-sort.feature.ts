@@ -1,4 +1,9 @@
-import { patchState, signalStoreFeature, withMethods, withState } from '@ngrx/signals';
+import {
+  patchState,
+  signalStoreFeature,
+  withMethods,
+  withState,
+} from '@ngrx/signals';
 import { Result, SortDir } from '../shared/types';
 
 export function withSort() {

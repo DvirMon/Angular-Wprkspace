@@ -10,11 +10,11 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import {
   MatCard,
   MatCardContent,
-  MatCardImage,
-  MatCardModule,
+  MatCardImage
 } from '@angular/material/card';
-import { MediaResult } from '../../shared/types';
 import { FormInputComponent } from '@dom';
+import { MediaResult } from '../../shared/types';
+import { FormatDatePipe } from '../../shared/pipes/formatDate.pipe';
 
 @Component({
   selector: 'ms-media-card',
@@ -27,6 +27,7 @@ import { FormInputComponent } from '@dom';
     MatCardImage,
     MatCardContent,
     FormInputComponent,
+    FormatDatePipe
   ],
   templateUrl: './media-card.component.html',
   styleUrl: './media-card.component.scss',

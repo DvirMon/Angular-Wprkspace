@@ -25,6 +25,6 @@
       <dom-form-input [control]="control" key="title"></dom-form-input>
       }
     </section>
-    <section>{{ media().Year }}</section>
+    <section>{{ media().Year | formatDate : 'YYYY' }}</section>
   </mat-card-content>
 </mat-card>

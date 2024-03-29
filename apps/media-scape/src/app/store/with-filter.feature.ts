@@ -4,7 +4,7 @@ import {
   withMethods,
   withState,
 } from '@ngrx/signals';
-import { MediaType, Result } from '../shared/types';
+import { MediaType, MediaResult } from '../shared/types';
 
 interface FilterState {
   searchTerm: string;
@@ -30,22 +30,22 @@ export function withFilter() {
   );
 }
 
-export function isTitleOrDate(value: string): (item: Result) => boolean {
-  return function (item: Result): boolean {
+export function isTitleOrDate(value: string): (item: MediaResult) => boolean {
+  return function (item: MediaResult): boolean {
     return isTitleInclude(item, value) || isYearInclude(item, value);
   };
 }
 
-function isTitleInclude(item: Result, value: string): boolean {
+function isTitleInclude(item: MediaResult, value: string): boolean {
   return item.Title.toLowerCase().includes(value.toLowerCase());
 }
 
-function isYearInclude(item: Result, value: string): boolean {
+function isYearInclude(item: MediaResult, value: string): boolean {
   return item.Year.substring(0, 4).includes(value);
 }
 
 export function isTypeEqual(value: MediaType) {
-  return function (item: Result): boolean {
+  return function (item: MediaResult): boolean {
     return item.Type === value;
   };
 }

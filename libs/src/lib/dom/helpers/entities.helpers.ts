@@ -17,12 +17,12 @@ export interface Entity {
 
 export type EntityMap = Record<EntityId, Entity>;
 
-export interface EntityResult<Entity> {
+export interface EntityMediaResult<Entity> {
   content: Entity[];
 }
 
 export type Loader<T, Entity, MethodName extends string> = {
-  [K in MethodName]: (args: T) => Observable<EntityResult<Entity>>;
+  [K in MethodName]: (args: T) => Observable<EntityMediaResult<Entity>>;
 };
 
 export type LoaderService<T> = ProviderToken<T>;
@@ -38,7 +38,7 @@ export function handleLoadEntitiesSuccess<Entity extends { id: EntityId }>(
   state: unknown,
   collection: string
 ) {
-  return (res: EntityResult<Entity>) => {
+  return (res: EntityMediaResult<Entity>) => {
     const key: string = getKey(collection);
     const localState = state as Record<string, Signal<Array<Entity>>>;
     const hasEntities = localState[key]()?.length > 0;
@@ -58,7 +58,7 @@ export function handleLoadEntitiesSuccess<Entity extends { id: EntityId }>(
 export function createLoader<T>(
   Loader: LoadService<Loader<T, Entity, string>>,
   methodName: string
-): (...args: T[]) => Observable<EntityResult<Entity>> {
+): (...args: T[]) => Observable<EntityMediaResult<Entity>> {
   return runInInjectionContext(inject(Injector), () => {
     const loader = inject(Loader);
     return (query: T) => loader[methodName](query);
@@ -66,7 +66,7 @@ export function createLoader<T>(
 }
 
 export function loadEntities<T>(
-  loader: (query: T) => Observable<EntityResult<Entity>>,
+  loader: (query: T) => Observable<EntityMediaResult<Entity>>,
   state: StateSignal<object>,
   collection = 'entities'
 ) {
@@ -87,7 +87,7 @@ export function loadEntities<T>(
 export function createSliceLoader<T>(
   Loader: LoadService<Loader<T, Entity, string>>,
   methodName: string
-): (args: T) => Observable<EntityResult<Entity>> {
+): (args: T) => Observable<EntityMediaResult<Entity>> {
   return runInInjectionContext(inject(Injector), () => {
     const loader = inject(Loader);
     return (query: T) => loader[methodName](query);
@@ -95,9 +95,9 @@ export function createSliceLoader<T>(
 }
 
 export function loadSlice<T>(
-  loader: (query: T) => Observable<EntityResult<Entity>>,
+  loader: (query: T) => Observable<EntityMediaResult<Entity>>,
   state: StateSignal<object>,
-  slice: string,
+  slice: string
 ) {
   return rxMethod<T>(
     pipe(

@@ -50,13 +50,13 @@ export interface DailyForecast {
   Link: string;
 }
 
-export interface FutureWeatherResult {
+export interface FutureWeatherMediaResult {
   Headline: Headline;
   DailyForecasts: DailyForecast[];
 }
 
 export interface FutureWeather {
-  id : number
+  id: number;
   Headline: Headline;
   DailyForecasts: DailyForecast[];
 }

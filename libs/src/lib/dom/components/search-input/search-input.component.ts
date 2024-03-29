@@ -13,8 +13,8 @@ import { MatInputModule } from '@angular/material/input';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { Subject, debounceTime, distinctUntilChanged, pipe, tap } from 'rxjs';
 
-export interface SearchResultsData {
-  totalResults: number;
+export interface SearchMediaResultsData {
+  totalMediaResults: number;
 }
 
 @Component({
@@ -33,7 +33,7 @@ export interface SearchResultsData {
 export class SearchInputComponent {
   label = input<string>();
   initialValue = input<string>();
-  searchResultsData = input<SearchResultsData>();
+  searchMediaResultsData = input<SearchMediaResultsData>();
   control = input.required<FormControl<string>>();
 
   #valueChanged: Subject<string> = new Subject();

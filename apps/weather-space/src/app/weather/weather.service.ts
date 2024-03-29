@@ -2,21 +2,21 @@ import { Injectable } from '@angular/core';
 
 import {
   AutocompleteOption,
-  AutocompleteResult,
-} from './models/autocomplete-result';
+  AutocompleteMediaResult,
+} from './models/autocomplete-MediaResult';
 
 import { map, Observable } from 'rxjs';
 import {
   CurrentWeather,
-  CurrentWeatherResult,
-} from './models/current-weather-result';
+  CurrentWeatherMediaResult,
+} from './models/current-weather-MediaResult';
 import {
   FutureWeather,
   FutureWeatherArgs,
-  FutureWeatherResult,
-} from './models/future-weather-result';
+  FutureWeatherMediaResult,
+} from './models/future-weather-MediaResult';
 import { WeatherHttpService } from './weather-http.service';
-import { EntityResult } from '@dom';
+import { EntityMediaResult } from '@dom';
 
 @Injectable({
   providedIn: 'root',
@@ -26,15 +26,15 @@ export class WeatherService {
 
   public loadOptions(
     query: string
-  ): Observable<EntityResult<AutocompleteOption>> {
+  ): Observable<EntityMediaResult<AutocompleteOption>> {
     return this.weatherHttp.loadOptions(query).pipe(
-      map((results) => this._mapToAutocompleteResults(results)),
+      map((MediaResults) => this._mapToAutocompleteMediaResults(MediaResults)),
       map((options) => ({ content: options }))
     );
   }
 
-  private _mapToAutocompleteResults(
-    input: AutocompleteResult[]
+  private _mapToAutocompleteMediaResults(
+    input: AutocompleteMediaResult[]
   ): AutocompleteOption[] {
     return input.map((item) => ({
       id: Number(item.Key),
@@ -49,9 +49,9 @@ export class WeatherService {
 
   public loadCurrentWeather(
     locationKey: number
-  ): Observable<EntityResult<CurrentWeather>> {
+  ): Observable<EntityMediaResult<CurrentWeather>> {
     return this.weatherHttp.loadCurrentWeather(locationKey).pipe(
-      map((data: CurrentWeatherResult[]) => {
+      map((data: CurrentWeatherMediaResult[]) => {
         return { id: locationKey, ...data[0] } as CurrentWeather;
       }),
       map((res) => ({ content: [res] }))
@@ -60,10 +60,10 @@ export class WeatherService {
 
   public loadFutureWeather(
     args: FutureWeatherArgs
-  ): Observable<EntityResult<FutureWeather>> {
+  ): Observable<EntityMediaResult<FutureWeather>> {
     const { id, metric } = args;
     return this.weatherHttp.loadFutureWeather(id, metric).pipe(
-      map((data: FutureWeatherResult) => {
+      map((data: FutureWeatherMediaResult) => {
         return { id, ...data } as FutureWeather;
       }),
       map((res) => ({ content: [res] }))

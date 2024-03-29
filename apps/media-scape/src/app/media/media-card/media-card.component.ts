@@ -2,7 +2,7 @@ import { NgOptimizedImage } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCard, MatCardImage } from '@angular/material/card';
-import { Result } from '../../shared/types';
+import { MediaResult } from '../../shared/types';
 
 @Component({
   selector: 'ms-media-card',
@@ -13,7 +13,5 @@ import { Result } from '../../shared/types';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MediaCardComponent {
-
-  media = input.required<Result>()
-
+  media = input.required<MediaResult>();
 }

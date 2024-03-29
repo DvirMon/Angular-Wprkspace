@@ -11,26 +11,26 @@ import { addEntities, withEntities } from '@ngrx/signals/entities';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { EMPTY, pipe, switchMap } from 'rxjs';
 import { MediaService } from '../media';
-import { Result } from '../shared/types';
+import { MediaResult } from '../shared/types';
 
 export function withMedia() {
   return signalStoreFeature(
-    withState({ totalResults: 0 }),
-    withEntities<Result>(),
+    withState({ totalMediaResults: 0 }),
+    withEntities<MediaResult>(),
     withMethods((store, service = inject(MediaService)) => ({
       loadMedia: rxMethod<void>(
         pipe(
           switchMap(() =>
             service.loadMedia().pipe(
               tapResponse({
-                next: (results) => {
+                next: (MediaResults) => {
                   patchState(store, {
-                    totalResults: Number(results.totalResults),
+                    totalMediaResults: Number(MediaResults.totalMediaResults),
                   });
 
                   patchState(
                     store,
-                    addEntities(results.results, { idKey: 'imdbID' })
+                    addEntities(MediaResults.MediaResults, { idKey: 'imdbID' })
                   );
                 },
                 error: () => EMPTY,
@@ -46,8 +46,7 @@ export function withMedia() {
   );
 }
 
-function getTypeCounts(entities: Result[]) {
-  
+function getTypeCounts(entities: MediaResult[]) {
   const typeCounts = entities.reduce((acc, item) => {
     const key = item.Type;
     acc[key] = (acc[key] || 0) + 1;

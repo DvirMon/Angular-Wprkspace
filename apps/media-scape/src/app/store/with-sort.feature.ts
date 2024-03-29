@@ -4,7 +4,7 @@ import {
   withMethods,
   withState,
 } from '@ngrx/signals';
-import { Result, SortDir } from '../shared/types';
+import { MediaResult, SortDir } from '../shared/types';
 
 export function withSort() {
   return signalStoreFeature(
@@ -19,8 +19,8 @@ export function withSort() {
 }
 
 export function compareTitle(
-  item1: Result,
-  item2: Result,
+  item1: MediaResult,
+  item2: MediaResult,
   mode: SortDir = SortDir.ASC
 ): number {
   const title1 = item1.Title.toUpperCase();

@@ -9,7 +9,7 @@ import {
 } from '@ngrx/signals';
 import { addEntity, removeEntity } from '@ngrx/signals/entities';
 import { FavoriteEntity } from '../weather/weather-favorite-card/favorite-card.component';
-import { AutocompleteOption } from '../weather/models/autocomplete-result';
+import { AutocompleteOption } from '../weather/models/autocomplete-MediaResult';
 import { WeatherService } from '../weather/weather.service';
 import { updateIsMetric } from './updaters';
 import { withCurrentWeather } from './with-current.feature';

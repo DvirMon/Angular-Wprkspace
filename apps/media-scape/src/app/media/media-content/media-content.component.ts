@@ -7,7 +7,7 @@ import {
   computed,
   inject,
 } from '@angular/core';
-import { Result } from '../../shared/types';
+import { MediaResult } from '../../shared/types';
 import { AppStore } from '../../store/store';
 import { isTypeEqual } from '../../store/with-filter.feature';
 
@@ -23,13 +23,12 @@ export class MediaContentComponent implements OnInit {
   #store = inject(AppStore);
 
   hasFilterType: Signal<boolean>;
-  media: Signal<Result[]>;
-  results: Signal<Result[]>;
+  media: Signal<MediaResult[]>;
+  results: Signal<MediaResult[]>;
 
   constructor() {
-    
     this.hasFilterType = computed(() => !!this.#store.type());
-    
+
     this.media = this.#store.media;
 
     this.results = computed(() =>

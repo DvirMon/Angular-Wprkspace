@@ -6,9 +6,8 @@ import { Item, Root } from './books';
 @Injectable({
   providedIn: 'root',
 })
-  
 export class BooksHttpService {
-  private readonly MAX_RESULTS: number = 12;
+  private readonly MAX_MediaResultS: number = 12;
 
   constructor(private http: HttpClient) {}
 
@@ -16,10 +15,10 @@ export class BooksHttpService {
     const baseQuery = `q=intitle:${encodeURIComponent(query)}`;
     const projection = `projection=lite`;
     // const languageRestrict = 'langRestrict=en';
-    const maxResults = `maxResults=${this.MAX_RESULTS}`;
+    const maxMediaResults = `maxMediaResults=${this.MAX_MediaResultS}`;
     // const apiKey = `key=${this.BOOKS_API_KEY}`;
 
-    return `?${baseQuery}&${projection}&${maxResults}`;
+    return `?${baseQuery}&${projection}&${maxMediaResults}`;
   }
 
   // Fetch data from Google Books API

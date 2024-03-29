@@ -6,7 +6,7 @@ import {
 } from '@ngrx/signals';
 import { addEntities, withEntities } from '@ngrx/signals/entities';
 import { lastValueFrom } from 'rxjs';
-import { AutocompleteOption } from '../weather/models/autocomplete-result';
+import { AutocompleteOption } from '../weather/models/autocomplete-MediaResult';
 import {
   Entity,
   Loader,

@@ -7,7 +7,7 @@ import {
   loadEntities,
 } from '@dom';
 import { withEntities } from '@ngrx/signals/entities';
-import { CurrentWeather } from '../weather/models/current-weather-result';
+import { CurrentWeather } from '../weather/models/current-weather-MediaResult';
 
 type WeatherLoader = Loader<number, Entity, 'loadCurrentWeather'>;
 

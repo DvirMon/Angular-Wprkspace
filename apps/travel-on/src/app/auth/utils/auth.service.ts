@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ConfirmationResult, UserCredential } from '@angular/fire/auth';
+import { ConfirmationMediaResult, UserCredential } from '@angular/fire/auth';
 import {
   CollectionReference,
   Firestore,
@@ -139,7 +139,7 @@ export class AuthService {
   }
 
   // Sign in with phone number and recaptcha verification.
-  public signInWithPhone$(phone: string): Observable<ConfirmationResult> {
+  public signInWithPhone$(phone: string): Observable<ConfirmationMediaResult> {
     return this.fireAuthService.signInWithPhone$(phone);
   }
 

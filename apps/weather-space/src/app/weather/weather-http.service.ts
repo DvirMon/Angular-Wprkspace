@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { AutocompleteResult } from './models/autocomplete-result';
+import { AutocompleteMediaResult } from './models/autocomplete-MediaResult';
 
 import { EntityId } from '@ngrx/signals/entities';
 import { distinctUntilChanged, map, Observable, of, switchMap } from 'rxjs';
@@ -9,13 +9,13 @@ import { environment } from '../../environments/environment';
 
 import { ServerService } from '../shared/services/server.service';
 import {
-  CURRENT_WEATHER_RESULT,
-  FUTURE_WEATHER_RESULT,
-  LOCATIONS_AUTOCOMPLETE_RESULT,
+  CURRENT_WEATHER_MediaResult,
+  FUTURE_WEATHER_MediaResult,
+  LOCATIONS_AUTOCOMPLETE_MediaResult,
 } from '../shared/mock/data';
-import { CurrentWeatherResult } from './models/current-weather-result';
-import { FutureWeatherResult } from './models/future-weather-result';
-import { GeolocationWeatherResult } from './models/geolocation-weather-result';
+import { CurrentWeatherMediaResult } from './models/current-weather-MediaResult';
+import { FutureWeatherMediaResult } from './models/future-weather-MediaResult';
+import { GeolocationWeatherMediaResult } from './models/geolocation-weather-MediaResult';
 
 @Injectable({
   providedIn: 'root',
@@ -25,32 +25,32 @@ export class WeatherHttpService {
 
   constructor(private serverService: ServerService, private http: HttpClient) {}
 
-  public getOptions(query: string): Observable<AutocompleteResult[]> {
+  public getOptions(query: string): Observable<AutocompleteMediaResult[]> {
     const params = new HttpParams()
       .set('apikey', environment.accuWeatherAPIKey)
       .set('q', query);
-    return this.http.get<AutocompleteResult[]>(
+    return this.http.get<AutocompleteMediaResult[]>(
       this._baseUrl + 'locations/v1/cities/autocomplete',
       { params }
     );
   }
 
-  public loadOptions(query: string): Observable<AutocompleteResult[]> {
+  public loadOptions(query: string): Observable<AutocompleteMediaResult[]> {
     const isServer = this.serverService.getServer();
 
     return isServer()
       ? this.getOptions(query)
-      : of(LOCATIONS_AUTOCOMPLETE_RESULT);
+      : of(LOCATIONS_AUTOCOMPLETE_MediaResult);
   }
 
   public getCurrentWeather(
     locationKey: EntityId
-  ): Observable<CurrentWeatherResult[]> {
+  ): Observable<CurrentWeatherMediaResult[]> {
     const params = new HttpParams().set(
       'apikey',
       environment.accuWeatherAPIKey
     );
-    return this.http.get<CurrentWeatherResult[]>(
+    return this.http.get<CurrentWeatherMediaResult[]>(
       this._baseUrl + 'currentconditions/v1/' + locationKey,
       { params }
     );
@@ -58,22 +58,22 @@ export class WeatherHttpService {
 
   public loadCurrentWeather(
     locationKey: number
-  ): Observable<CurrentWeatherResult[]> {
+  ): Observable<CurrentWeatherMediaResult[]> {
     const isServer = this.serverService.getServer();
 
     return isServer()
       ? this.getCurrentWeather(locationKey)
-      : of(CURRENT_WEATHER_RESULT);
+      : of(CURRENT_WEATHER_MediaResult);
   }
 
   public getFutureWeather(
     locationKey: EntityId,
     metric: boolean
-  ): Observable<FutureWeatherResult> {
+  ): Observable<FutureWeatherMediaResult> {
     const params = new HttpParams()
       .set('apikey', environment.accuWeatherAPIKey)
       .append('metric', metric);
-    return this.http.get<FutureWeatherResult>(
+    return this.http.get<FutureWeatherMediaResult>(
       this._baseUrl + 'forecasts/v1/daily/5day/' + locationKey,
       { params }
     );
@@ -82,12 +82,12 @@ export class WeatherHttpService {
   public loadFutureWeather(
     locationKey: EntityId,
     metric: boolean
-  ): Observable<FutureWeatherResult> {
+  ): Observable<FutureWeatherMediaResult> {
     const isServer = this.serverService.getServer();
 
     return isServer()
       ? this.getFutureWeather(locationKey, metric)
-      : of(FUTURE_WEATHER_RESULT);
+      : of(FUTURE_WEATHER_MediaResult);
   }
 
   private _getGeolocation(): Observable<GeolocationPosition> {
@@ -120,8 +120,8 @@ export class WeatherHttpService {
           .set('apikey', environment.accuWeatherAPIKey)
           .append('q', query);
         return this.http
-          .get<GeolocationWeatherResult>(url, { params })
-          .pipe(map((res: GeolocationWeatherResult) => res.LocalizedName));
+          .get<GeolocationWeatherMediaResult>(url, { params })
+          .pipe(map((res: GeolocationWeatherMediaResult) => res.LocalizedName));
       })
     );
   }

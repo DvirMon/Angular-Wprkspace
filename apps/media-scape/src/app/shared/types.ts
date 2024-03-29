@@ -1,9 +1,9 @@
 export interface Root {
-  results: Result[];
-  totalResults: string;
+  MediaResults: MediaResult[];
+  totalMediaResults: string;
 }
 
-export interface Result {
+export interface MediaResult {
   Title: string;
   Year: string;
   imdbID: string;

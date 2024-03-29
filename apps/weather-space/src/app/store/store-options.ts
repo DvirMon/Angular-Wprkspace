@@ -1,6 +1,6 @@
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import { signalStore } from '@ngrx/signals';
-import { AutocompleteOption } from '../weather/models/autocomplete-result';
+import { AutocompleteOption } from '../weather/models/autocomplete-MediaResult';
 
 export const OptionsStore = signalStore(
   { providedIn: 'root' },

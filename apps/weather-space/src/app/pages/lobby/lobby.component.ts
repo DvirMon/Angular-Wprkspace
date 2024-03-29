@@ -27,14 +27,14 @@ import { FavoriteEntity } from '../../weather/weather-favorite-card/favorite-car
 import {
   FavoriteChangeEvent,
   UnitChangeEvent,
-  WeatherResultComponent,
-} from '../../weather/weather-result-card/weather-result.component';
-import { AutocompleteOption } from '../../weather/models/autocomplete-result';
-import { CurrentWeather } from '../../weather/models/current-weather-result';
+  WeatherMediaResultComponent,
+} from '../../weather/weather-MediaResult-card/weather-MediaResult.component';
+import { AutocompleteOption } from '../../weather/models/autocomplete-MediaResult';
+import { CurrentWeather } from '../../weather/models/current-weather-MediaResult';
 import {
   FutureWeather,
   FutureWeatherArgs,
-} from '../../weather/models/future-weather-result';
+} from '../../weather/models/future-weather-MediaResult';
 import { HighLightPipe } from '../../shared/pipes/high-light.pipe';
 import { PluckPipe } from '../../shared/pipes/pluck.pipe';
 import { Store } from '../../store/store';
@@ -60,7 +60,7 @@ import { WeatherStore } from '../../store/store-weather';
     MatAutocompleteTrigger,
     MatAutocomplete,
     HighLightPipe,
-    WeatherResultComponent,
+    WeatherMediaResultComponent,
     AutocompleteComponent,
     OptionContentDirective,
   ],

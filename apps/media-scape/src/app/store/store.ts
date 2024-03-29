@@ -1,67 +1,21 @@
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
-import { computed, inject } from '@angular/core';
-import { tapResponse } from '@ngrx/operators';
+import { computed } from '@angular/core';
 import {
-  patchState,
   signalStore,
-  withComputed,
-  withMethods,
-  withState,
+  withComputed
 } from '@ngrx/signals';
-import { addEntities, withEntities } from '@ngrx/signals/entities';
-import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { EMPTY, pipe, switchMap } from 'rxjs';
-import { MediaService } from '../media/media.service';
-import { MediaType, Result, SortDir } from '../shared/types';
-import { isTypeEqual, compareTitle, isTitleOrDate } from './helper';
+import { MediaType } from '../shared/types';
+import { isTitleOrDate, isTypeEqual, withFilter } from './with-filter.feature';
+import { withMedia } from './with-media.feature';
+import { compareTitle, withSort } from './with-sort.feature';
 
-interface State {
-  totalResults: number;
-  sortDir: SortDir;
-  searchTerm: string;
-}
-
-const initialState: State = {
-  totalResults: 0,
-  sortDir: SortDir.ASC,
-  searchTerm: '',
-};
 
 export const AppStore = signalStore(
   { providedIn: 'root' },
   withDevtools('store'),
-  withState<State>(initialState),
-  withEntities<Result>(),
-  withMethods((store, service = inject(MediaService)) => ({
-    loadMedia: rxMethod<void>(
-      pipe(
-        switchMap(() =>
-          service.loadMedia().pipe(
-            tapResponse({
-              next: (results) => {
-                patchState(store, {
-                  totalResults: Number(results.totalResults),
-                });
-
-                patchState(
-                  store,
-                  addEntities(results.results, { idKey: 'imdbID' })
-                );
-              },
-              error: () => EMPTY,
-            })
-          )
-        )
-      )
-    ),
-    updateSort() {
-      const sortDir = store.sortDir() ^ SortDir.ASC ^ SortDir.DESC;
-      patchState(store, { sortDir });
-    },
-    updateSearchTerm(value: string) {
-      patchState(store, { searchTerm: value });
-    },
-  })),
+  withMedia(),
+  withFilter(),
+  withSort(),
   withComputed((store) => ({
     media: computed(() =>
       store

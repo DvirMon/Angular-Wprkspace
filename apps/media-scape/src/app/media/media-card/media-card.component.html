@@ -22,7 +22,12 @@
 
       <span> {{ media().Title }} </span>
       } @else {
-      <dom-form-input [control]="control" key="title"></dom-form-input>
+      <dom-form-input
+        (click)="$event.stopPropagation()"
+        (blurChanged)="onInputBlur($event)"
+        [control]="control"
+        key="title"
+      ></dom-form-input>
       }
     </section>
     <section>{{ media().Year | formatDate : 'YYYY' }}</section>

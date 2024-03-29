@@ -17,11 +17,9 @@
     {{ item.type | titlecase | pluralize : item.count }}
   </header>
 
-  <article class="media-card-wraaper w-3/4">
-    <section>
-      @for (item of item.data; track item.imdbID) {
-      <ms-media-card [media]="item"> </ms-media-card>
-      }
-    </section>
+  <article class="media-card-wraaper flex flex-col gap-4 w-3/4">
+    @for (item of item.data; track item.imdbID) {
+    <ms-media-card [media]="item"> </ms-media-card>
+    }
   </article>
 </ng-template>

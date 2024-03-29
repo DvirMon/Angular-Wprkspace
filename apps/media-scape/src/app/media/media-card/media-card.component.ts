@@ -7,11 +7,7 @@ import {
   signal,
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import {
-  MatCard,
-  MatCardContent,
-  MatCardImage
-} from '@angular/material/card';
+import { MatCard, MatCardContent, MatCardImage } from '@angular/material/card';
 import { FormInputComponent } from '@dom';
 import { MediaResult } from '../../shared/types';
 import { FormatDatePipe } from '../../shared/pipes/formatDate.pipe';
@@ -27,7 +23,7 @@ import { FormatDatePipe } from '../../shared/pipes/formatDate.pipe';
     MatCardImage,
     MatCardContent,
     FormInputComponent,
-    FormatDatePipe
+    FormatDatePipe,
   ],
   templateUrl: './media-card.component.html',
   styleUrl: './media-card.component.scss',
@@ -50,6 +46,10 @@ export class MediaCardComponent implements OnInit {
   }
 
   onTitleClick() {
+    this.isEditable.update((value) => !value);
+  }
+
+  onInputBlur(event : any) {
     this.isEditable.update((value) => !value);
   }
 }

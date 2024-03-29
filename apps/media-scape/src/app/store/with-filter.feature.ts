@@ -44,7 +44,7 @@ function isYearInclude(item: MediaResult, value: string): boolean {
   return item.Year.substring(0, 4).includes(value);
 }
 
-export function isTypeEqual(value: MediaType) {
+export function isTypeEqual(value: MediaType){
   return function (item: MediaResult): boolean {
     return item.Type === value;
   };

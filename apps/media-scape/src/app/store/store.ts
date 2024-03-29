@@ -3,7 +3,7 @@ import { computed } from '@angular/core';
 import { signalStore, withComputed } from '@ngrx/signals';
 import { MediaType } from '../shared/types';
 import { isTitleOrDate, isTypeEqual, withFilter } from './with-filter.feature';
-import { withMedia } from './with-media.feature';
+import { getMedia, getTypeCounts, withMedia } from './with-media.feature';
 import { compareTitle, withSort } from './with-sort.feature';
 
 export const AppStore = signalStore(
@@ -18,6 +18,13 @@ export const AppStore = signalStore(
         .entities()
         .filter(isTitleOrDate(store.searchTerm()))
         .sort((a, b) => compareTitle(a, b, store.sortDir()))
+    ),
+    mediaMap: computed(() =>
+      store
+        .entities()
+        .filter(isTitleOrDate(store.searchTerm()))
+        .sort((a, b) => compareTitle(a, b, store.sortDir()))
+        .reduce(getMedia, [])
     ),
     movies: computed(() =>
       store

@@ -1,4 +1,4 @@
-import { JsonPipe } from '@angular/common';
+import { JsonPipe, NgTemplateOutlet, TitleCasePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -7,15 +7,21 @@ import {
   computed,
   inject,
 } from '@angular/core';
-import { MediaResult } from '../../shared/types';
+import { MediaItem, MediaType } from '../../shared/types';
 import { AppStore } from '../../store/store';
-import { isTypeEqual } from '../../store/with-filter.feature';
 import { MediaCardComponent } from '../media-card/media-card.component';
+import { PluralizePipe } from '../../shared/pipes/pluralize.pipe copy';
 
 @Component({
   selector: 'ms-media-content',
   standalone: true,
-  imports: [JsonPipe, MediaCardComponent],
+  imports: [
+    NgTemplateOutlet,
+    JsonPipe,
+    TitleCasePipe,
+    PluralizePipe,
+    MediaCardComponent,
+  ],
   templateUrl: './media-content.component.html',
   styleUrl: './media-content.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -23,22 +29,25 @@ import { MediaCardComponent } from '../media-card/media-card.component';
 export class MediaContentComponent implements OnInit {
   #store = inject(AppStore);
 
+  media: Signal<MediaItem[]>;
+  mediaItem: Signal<MediaItem>;
+  mediaType: Signal<MediaType>;
   hasFilterType: Signal<boolean>;
-  media: Signal<MediaResult[]>;
-  results: Signal<MediaResult[]>;
 
   constructor() {
-    this.hasFilterType = computed(() => !!this.#store.type());
+    this.media = this.#store.mediaMap;
 
-    this.media = this.#store.media;
+    this.mediaType = this.#store.type;
 
-    this.results = computed(() =>
-      this.#store.media().filter(isTypeEqual(this.#store.type()))
+    this.hasFilterType = computed(() => !!this.mediaType());
+
+    this.mediaItem = computed(
+      () =>
+        this.media().find((item) => item.type === this.mediaType()) as MediaItem
     );
   }
 
   ngOnInit(): void {
     this.#store.loadMedia();
   }
-
 }

@@ -11,7 +11,7 @@ import { addEntities, withEntities } from '@ngrx/signals/entities';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { EMPTY, pipe, switchMap } from 'rxjs';
 import { MediaService } from '../media';
-import { MediaResult } from '../shared/types';
+import { MediaItem, MediaResult } from '../shared/types';
 
 export function withMedia() {
   return signalStoreFeature(
@@ -41,20 +41,36 @@ export function withMedia() {
       ),
     })),
     withComputed((store) => ({
-      menuItems: computed(() => getTypeCounts(store.entities())),
+      menuItems: computed(() => store.entities().reduce(getTypeCounts, [])),
     }))
   );
 }
 
-function getTypeCounts(entities: MediaResult[]) {
-  const typeCounts = entities.reduce((acc, item) => {
-    const key = item.Type;
-    acc[key] = (acc[key] || 0) + 1;
-    return acc;
-  }, {} as Record<string, number>);
+export function getTypeCounts(
+  acc: { type: string; count: number }[],
+  item: MediaResult
+): { type: string; count: number }[] {
+  const existingIndex = acc.findIndex((element) => element.type === item.Type);
 
-  return Object.keys(typeCounts).map((type) => ({
-    type,
-    amount: typeCounts[type],
-  }));
+  if (existingIndex !== -1) {
+    ++acc[existingIndex].count;
+  } else {
+    acc.push({ type: item.Type, count: 1 });
+  }
+
+  return acc;
+}
+
+
+export function getMedia(acc: MediaItem[], item: MediaResult): MediaItem[] {
+  const existingIndex = acc.findIndex((element) => element.type === item.Type);
+
+  if (existingIndex !== -1) {
+    ++acc[existingIndex].count;
+    acc[existingIndex].data.push(item);
+  } else {
+    acc.push({ type: item.Type, count: 1, data: [item] });
+  }
+
+  return acc;
 }

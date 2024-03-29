@@ -22,3 +22,9 @@ export enum SortDir {
   ASC = 0,
   DESC = 1,
 }
+
+export interface MediaItem {
+  data: MediaResult[];
+  type: string;
+  count: number;
+}

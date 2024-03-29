@@ -1,14 +1,27 @@
 <main class="flex flex-col justify-center items-center gap-4">
-  @if(hasFilterType()) { @for (item of results(); track item.imdbID) {
+  @if(!hasFilterType()) { @for (item of media(); track item.type) {
 
-  <section class="media-card-wraaper">
-    <ms-media-card [media]="item"> </ms-media-card>
-  </section>
+  <ng-container
+    *ngTemplateOutlet="mediaSection; context: { $implicit: item }"
+  ></ng-container>
 
-  } } @else { @for (item of media(); track item.imdbID) {
-
-  <section class="media-card-wraaper w-3/4">
-    <ms-media-card [media]="item"> </ms-media-card>
-  </section>
-  } }
+  } } @else {
+  <ng-container
+    *ngTemplateOutlet="mediaSection; context: { $implicit: mediaItem() }"
+  ></ng-container>
+  }
 </main>
+
+<ng-template #mediaSection let-item>
+  <header class="w-3/4 text-4xl">
+    {{ item.type | titlecase | pluralize : item.count }}
+  </header>
+
+  <article class="media-card-wraaper w-3/4">
+    <section>
+      @for (item of item.data; track item.imdbID) {
+      <ms-media-card [media]="item"> </ms-media-card>
+      }
+    </section>
+  </article>
+</ng-template>

@@ -19,7 +19,8 @@
 
   <article class="media-card-wraaper flex flex-col gap-4 w-3/4">
     @for (item of item.data; track item.imdbID) {
-    <ms-media-card [media]="item"> </ms-media-card>
+    <ms-media-card [media]="item" (valueChanged)="onValueChanged($event)">
+    </ms-media-card>
     }
   </article>
 </ng-template>

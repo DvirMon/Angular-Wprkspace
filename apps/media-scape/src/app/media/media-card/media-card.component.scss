@@ -13,8 +13,12 @@
   //   margin: 16px;
   // }
 
-  >.mat-mdc-card-content {
+  > .mat-mdc-card-content {
     display: flex;
-    flex-grow: .5;
+    flex-grow: 0.5;
+
+    mat-form-field {
+      width: 100%;
+    }
   }
 }

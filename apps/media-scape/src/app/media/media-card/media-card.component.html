@@ -6,7 +6,7 @@
     height="1"
     [ngSrc]="media().Poster"
     [alt]="media().Poster"
-    (error)="onError($event)"
+    (error)="onError()"
     priority
   />
   } @else {
@@ -22,12 +22,20 @@
 
       <span> {{ media().Title }} </span>
       } @else {
-      <dom-form-input
-        (click)="$event.stopPropagation()"
-        (blurChanged)="onInputBlur($event)"
-        [control]="control"
-        key="title"
-      ></dom-form-input>
+
+      <mat-form-field class="full-width">
+        <input
+          #input
+          matInput
+          autocomplete="off"
+          type="text"
+          name="title"
+          [formControl]="control"
+          (blur)="onInputBlur()"
+          (click)="$event.stopPropagation()"
+        />
+      </mat-form-field>
+
       }
     </section>
     <section>{{ media().Year | formatDate : 'YYYY' }}</section>

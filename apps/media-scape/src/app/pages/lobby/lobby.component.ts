@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { MatListItem, MatNavList } from '@angular/material/list';
 import {
   MatSidenav,
   MatSidenavContainer,

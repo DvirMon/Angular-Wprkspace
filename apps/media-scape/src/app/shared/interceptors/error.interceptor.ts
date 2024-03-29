@@ -1,7 +1,6 @@
 import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { EMPTY, catchError, throwError } from 'rxjs';
-import { ERROR_MESSAGE_CONTEXT } from './error-message.context';
 
 import { Router } from '@angular/router';
 export const errorInterceptor: HttpInterceptorFn = (req, handle) => {
@@ -9,7 +8,6 @@ export const errorInterceptor: HttpInterceptorFn = (req, handle) => {
 
   return handle(req).pipe(
     catchError((err: HttpErrorResponse) => {
-      const message = req.context.get(ERROR_MESSAGE_CONTEXT);
 
       if (err.status === 404) {
         router.navigateByUrl('error');

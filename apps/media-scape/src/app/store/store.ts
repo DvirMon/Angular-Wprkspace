@@ -3,7 +3,7 @@ import { computed } from '@angular/core';
 import { signalStore, withComputed } from '@ngrx/signals';
 import { MediaType } from '../shared/types';
 import { isTitleOrDate, isTypeEqual, withFilter } from './with-filter.feature';
-import { getMedia, getTypeCounts, withMedia } from './with-media.feature';
+import { getMedia, withMedia } from './with-media.feature';
 import { compareTitle, withSort } from './with-sort.feature';
 
 export const AppStore = signalStore(

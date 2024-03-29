@@ -5,7 +5,6 @@ import { MatButton } from '@angular/material/button';
 import { MatToolbar } from '@angular/material/toolbar';
 import { SearchInputComponent } from '@dom';
 import { AppStore } from '../../store/store';
-import { MediaType } from '../../shared/types';
 
 @Component({
   selector: 'ms-media-header',

@@ -7,7 +7,7 @@ import {
   withMethods,
   withState,
 } from '@ngrx/signals';
-import { addEntities, withEntities } from '@ngrx/signals/entities';
+import { setEntities, setEntity, withEntities } from '@ngrx/signals/entities';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { EMPTY, pipe, switchMap } from 'rxjs';
 import { MediaService } from '../media';
@@ -30,9 +30,22 @@ export function withMedia() {
 
                   patchState(
                     store,
-                    addEntities(results.results, { idKey: 'imdbID' })
+                    setEntities(results.results, { idKey: 'imdbID' })
                   );
                 },
+                error: () => EMPTY,
+              })
+            )
+          )
+        )
+      ),
+      updateMedia: rxMethod<MediaResult>(
+        pipe(
+          switchMap((item: MediaResult) =>
+            service.updateMedia(item).pipe(
+              tapResponse({
+                next: (item) =>
+                  patchState(store, setEntity(item, { idKey: 'imdbID' })),
                 error: () => EMPTY,
               })
             )
@@ -60,7 +73,6 @@ export function getTypeCounts(
 
   return acc;
 }
-
 
 export function getMedia(acc: MediaItem[], item: MediaResult): MediaItem[] {
   const existingIndex = acc.findIndex((element) => element.type === item.Type);

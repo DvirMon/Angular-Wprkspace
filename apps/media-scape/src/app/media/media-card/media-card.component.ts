@@ -1,24 +1,41 @@
-import { NgOptimizedImage, NgStyle } from '@angular/common';
+import { NgOptimizedImage } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  EventEmitter,
   OnInit,
+  Output,
+  effect,
   input,
   signal,
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatCard, MatCardContent, MatCardImage } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { FormInputComponent } from '@dom';
-import { MediaResult } from '../../shared/types';
+import { rxMethod } from '@ngrx/signals/rxjs-interop';
+import {
+  Observable,
+  Subject,
+  distinctUntilChanged,
+  filter,
+  map,
+  pipe,
+  switchMap,
+  tap,
+} from 'rxjs';
 import { FormatDatePipe } from '../../shared/pipes/formatDate.pipe';
+import { MediaResult } from '../../shared/types';
 
 @Component({
   selector: 'ms-media-card',
   standalone: true,
   imports: [
-    NgStyle,
     NgOptimizedImage,
     ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
     MatCard,
     MatCardImage,
     MatCardContent,
@@ -35,13 +52,29 @@ export class MediaCardComponent implements OnInit {
   showImg = signal(true);
   isEditable = signal(true);
 
-  control!: FormControl<string>;
+  control = new FormControl('', { nonNullable: true });
+  blurChanged = new Subject<void>();
 
-  ngOnInit() {
-    this.control = new FormControl(this.media().Title, { nonNullable: true });
+  @Output() valueChanged = new EventEmitter<MediaResult>();
+
+  private _handleValueChanged = rxMethod<string>(
+    pipe(
+      map((value: string) => ({ ...this.media(), Title: value })),
+      tap((value) => this.valueChanged.emit(value))
+    )
+  );
+
+  constructor() {
+    effect(() => {
+      this.control.setValue(this.media().Title);
+    });
   }
 
-  onError(event: ErrorEvent) {
+  ngOnInit() {
+    this._handleValueChanged(this._setSource$());
+  }
+
+  onError() {
     this.showImg.update((value) => !value);
   }
 
@@ -49,7 +82,20 @@ export class MediaCardComponent implements OnInit {
     this.isEditable.update((value) => !value);
   }
 
-  onInputBlur(event : any) {
+  onInputBlur() {
     this.isEditable.update((value) => !value);
+    this.blurChanged.next();
+  }
+
+  private _setSource$(): Observable<string> {
+    return this.control.valueChanges.pipe(
+      switchMap((value: string) =>
+        this.blurChanged.asObservable().pipe(
+          map(() => value.trim()),
+          distinctUntilChanged(),
+          filter((value) => value != this.media().Title.trim())
+        )
+      )
+    );
   }
 }

@@ -7,7 +7,7 @@ import {
   computed,
   inject,
 } from '@angular/core';
-import { MediaItem, MediaType } from '../../shared/types';
+import { MediaItem, MediaResult, MediaType } from '../../shared/types';
 import { AppStore } from '../../store/store';
 import { MediaCardComponent } from '../media-card/media-card.component';
 import { PluralizePipe } from '../../shared/pipes/pluralize.pipe copy';
@@ -49,5 +49,9 @@ export class MediaContentComponent implements OnInit {
 
   ngOnInit(): void {
     this.#store.loadMedia();
+  }
+
+  onValueChanged(event: MediaResult) {
+    this.#store.updateMedia(event);
   }
 }

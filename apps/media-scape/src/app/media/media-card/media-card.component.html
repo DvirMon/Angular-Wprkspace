@@ -1,6 +1,7 @@
 <mat-card class="ms-media-card">
   @if (showImg()) {
   <img
+    (click)="onImageClick()"
     mat-card-image
     width="1"
     height="1"
@@ -11,7 +12,11 @@
   />
   } @else {
 
-  <div mat-card-image class="flex items-center justify-center bg-gray-200">
+  <div
+    mat-card-image
+    class="flex items-center justify-center bg-gray-200"
+    (click)="onImageClick()"
+  >
     <span>Image not found</span>
   </div>
   }

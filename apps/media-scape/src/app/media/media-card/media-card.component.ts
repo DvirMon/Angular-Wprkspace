@@ -3,10 +3,13 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
+  Injector,
   OnInit,
   Output,
   effect,
+  inject,
   input,
+  runInInjectionContext,
   signal,
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -27,6 +30,7 @@ import {
 } from 'rxjs';
 import { FormatDatePipe } from '../../shared/pipes/formatDate.pipe';
 import { MediaResult } from '../../shared/types';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ms-media-card',
@@ -47,6 +51,8 @@ import { MediaResult } from '../../shared/types';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MediaCardComponent implements OnInit {
+  injector = inject(Injector);
+
   media = input.required<MediaResult>();
 
   showImg = signal(true);
@@ -85,6 +91,12 @@ export class MediaCardComponent implements OnInit {
   onInputBlur() {
     this.isEditable.update((value) => !value);
     this.blurChanged.next();
+  }
+
+  onImageClick() {
+    runInInjectionContext(this.injector, () =>
+      inject(Router).navigateByUrl(`item/${this.media().imdbID}`)
+    );
   }
 
   private _setSource$(): Observable<string> {

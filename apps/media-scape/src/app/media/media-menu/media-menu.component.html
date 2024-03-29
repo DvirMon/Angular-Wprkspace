@@ -1,7 +1,7 @@
 <mat-nav-list>
   @for (item of menuItems(); track $index) {
 
-  <a class="text-xl ml-4" mat-list-item (click)="onItemClick(item.type)"
+  <a class="text-xl pl-8" mat-list-item (click)="onItemClick(item.type)"
     >{{ item.type | titlecase | pluralize : item.count }} ({{ item.count }})</a
   >
   }

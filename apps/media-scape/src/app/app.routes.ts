@@ -10,10 +10,10 @@ export const appRoutes: Route[] = [
     title: 'The Media Scape',
   },
   {
-    path: 'media/:id',
+    path: 'item/:id',
     loadComponent: () =>
-      import('./pages/media/media-page.component').then(
-        (m) => m.MediaPageComponent
+      import('./pages/item/item-page.component').then(
+        (m) => m.ItemPageComponent
       ),
   },
   {

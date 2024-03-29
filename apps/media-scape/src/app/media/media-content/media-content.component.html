@@ -14,7 +14,7 @@
 
 <ng-template #mediaSection let-item>
   <header class="w-3/4 text-4xl">
-    {{ item.type | titlecase | pluralize : item.count }}
+    {{ item.type | titlecase | pluralize : item.count }} ({{ item.count }})
   </header>
 
   <article class="media-card-wraaper flex flex-col gap-4 w-3/4">

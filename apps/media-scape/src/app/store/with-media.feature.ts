@@ -15,7 +15,7 @@ import { MediaResult } from '../shared/types';
 
 export function withMedia() {
   return signalStoreFeature(
-    withState({ totalMediaResults: 0 }),
+    withState({ totalResults: 0 }),
     withEntities<MediaResult>(),
     withMethods((store, service = inject(MediaService)) => ({
       loadMedia: rxMethod<void>(
@@ -23,14 +23,14 @@ export function withMedia() {
           switchMap(() =>
             service.loadMedia().pipe(
               tapResponse({
-                next: (MediaResults) => {
+                next: (results) => {
                   patchState(store, {
-                    totalMediaResults: Number(MediaResults.totalMediaResults),
+                    totalResults: Number(results.totalResults),
                   });
 
                   patchState(
                     store,
-                    addEntities(MediaResults.MediaResults, { idKey: 'imdbID' })
+                    addEntities(results.results, { idKey: 'imdbID' })
                   );
                 },
                 error: () => EMPTY,

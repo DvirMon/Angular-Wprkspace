@@ -1,6 +1,6 @@
 export interface Root {
-  MediaResults: MediaResult[];
-  totalMediaResults: string;
+  results: MediaResult[];
+  totalResults: string;
 }
 
 export interface MediaResult {

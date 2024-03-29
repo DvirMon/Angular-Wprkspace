@@ -10,11 +10,12 @@ import {
 import { MediaResult } from '../../shared/types';
 import { AppStore } from '../../store/store';
 import { isTypeEqual } from '../../store/with-filter.feature';
+import { MediaCardComponent } from '../media-card/media-card.component';
 
 @Component({
   selector: 'ms-media-content',
   standalone: true,
-  imports: [JsonPipe],
+  imports: [JsonPipe, MediaCardComponent],
   templateUrl: './media-content.component.html',
   styleUrl: './media-content.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -39,4 +40,5 @@ export class MediaContentComponent implements OnInit {
   ngOnInit(): void {
     this.#store.loadMedia();
   }
+
 }

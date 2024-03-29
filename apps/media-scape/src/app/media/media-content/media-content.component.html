@@ -1,10 +1,14 @@
-@if(hasFilterType()) {
-<pre>
-    {{ results() | json }}
-</pre>
-} @else {
-<pre>
-    {{ media() | json }}
-    </pre
->
-}
+<main class="flex flex-col justify-center items-center gap-4">
+  @if(hasFilterType()) { @for (item of results(); track item.imdbID) {
+
+  <section class="media-card-wraaper">
+    <ms-media-card [media]="item"> </ms-media-card>
+  </section>
+
+  } } @else { @for (item of media(); track item.imdbID) {
+
+  <section class="media-card-wraaper w-3/4">
+    <ms-media-card [media]="item"> </ms-media-card>
+  </section>
+  } }
+</main>

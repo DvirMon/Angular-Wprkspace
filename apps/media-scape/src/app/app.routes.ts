@@ -10,7 +10,7 @@ export const appRoutes: Route[] = [
     title: 'The Media Scape',
   },
   {
-    path: 'item/:id',
+    path: 'item/:imdbID',
     loadComponent: () =>
       import('./pages/item/item-page.component').then(
         (m) => m.ItemPageComponent

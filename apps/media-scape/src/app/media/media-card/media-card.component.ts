@@ -80,10 +80,6 @@ export class MediaCardComponent implements OnInit {
     this._handleValueChanged(this._setSource$());
   }
 
-  onError() {
-    this.showImg.update((value) => !value);
-  }
-
   onTitleClick() {
     this.isEditable.update((value) => !value);
   }
@@ -91,6 +87,10 @@ export class MediaCardComponent implements OnInit {
   onInputBlur() {
     this.isEditable.update((value) => !value);
     this.blurChanged.next();
+  }
+
+  onError() {
+    this.showImg.update((value) => !value);
   }
 
   onImageClick() {

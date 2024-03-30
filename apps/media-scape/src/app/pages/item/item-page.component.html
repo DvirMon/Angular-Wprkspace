@@ -1,1 +1,18 @@
-<p>media-page works!</p>
+@if (showImg()) {
+<img
+  mat-card-image
+  width="1"
+  height="1"
+  [ngSrc]="media().Poster"
+  [alt]="media().Poster"
+  (error)="onError()"
+  priority
+/>
+} @else {
+
+<div mat-card-image class="flex items-center justify-center bg-gray-200">
+  <span>Image not found</span>
+</div>
+}
+
+<pre>{{ media() | json }}</pre>

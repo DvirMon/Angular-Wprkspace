@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { LayoutComponent } from './layout/layout.component';
+import { AppStore } from './store/store';
 
 @Component({
   standalone: true,
@@ -9,6 +10,10 @@ import { LayoutComponent } from './layout/layout.component';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent {
-  title = 'media-scape';
+export class AppComponent implements OnInit {
+  #store = inject(AppStore);
+
+  ngOnInit(): void {
+    this.#store.loadMedia();
+  }
 }

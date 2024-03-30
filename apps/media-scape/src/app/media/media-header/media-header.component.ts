@@ -33,8 +33,8 @@ export class MediaHeaderComponent {
   }
 
   onRefresh(): void {
-    this.#store.loadMedia();
     this.onClear();
+    this.#store.refreshMedia();
   }
 
   onSort(): void {

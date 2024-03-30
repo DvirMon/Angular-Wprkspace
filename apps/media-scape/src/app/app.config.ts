@@ -1,5 +1,5 @@
 import { ApplicationConfig, ErrorHandler } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { appRoutes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -8,9 +8,8 @@ import { ErrorsService } from './shared/error.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(appRoutes),
+    provideRouter(appRoutes, withComponentInputBinding()),
     provideHttpClient(withInterceptors([errorInterceptor])),
-    provideAnimationsAsync(),
     provideAnimationsAsync(),
     {
       provide: ErrorHandler,

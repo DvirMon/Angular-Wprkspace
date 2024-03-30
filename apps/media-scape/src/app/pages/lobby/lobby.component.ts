@@ -4,21 +4,22 @@ import {
   MatSidenavContainer,
   MatSidenavContent,
 } from '@angular/material/sidenav';
-import { MediaContentComponent } from '../../media';
-import { MediaHeaderComponent } from '../../media/media-header/media-header.component';
-import { MediaMenuComponent } from '../../media/media-menu/media-menu.component';
+import {
+  MediaContentComponent,
+  MediaHeaderComponent,
+  MediaMenuComponent,
+} from '../../media';
 
 @Component({
   selector: 'ms-lobby-page',
   standalone: true,
   imports: [
     MatSidenav,
-
     MatSidenavContent,
     MatSidenavContainer,
     MediaContentComponent,
     MediaHeaderComponent,
-    MediaMenuComponent
+    MediaMenuComponent,
   ],
   templateUrl: './lobby.component.html',
   styleUrl: './lobby.component.scss',

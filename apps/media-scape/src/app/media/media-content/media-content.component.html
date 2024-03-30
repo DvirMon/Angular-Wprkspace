@@ -1,4 +1,4 @@
-<main class="flex flex-col justify-center items-center gap-4">
+<main class="flex flex-col justify-center items-center gap-8">
   @if(!hasFilterType()) { @for (item of media(); track item.type) {
 
   <ng-container
@@ -13,14 +13,20 @@
 </main>
 
 <ng-template #mediaSection let-item>
-  <header class="w-3/4 text-4xl">
-    {{ item.type | titlecase | pluralize : item.count }} ({{ item.count }})
-  </header>
+  <div class="media-container">
+    <header class="text-4xl">
+      {{ item.type | titlecase | pluralize : item.count }} ({{ item.count }})
+    </header>
 
-  <article class="media-card-wraaper flex flex-col gap-4 w-3/4">
-    @for (item of item.data; track item.imdbID) {
-    <ms-media-card [media]="item" (valueChanged)="onValueChanged($event)">
-    </ms-media-card>
-    }
-  </article>
+    <article
+      [ngClass]="{ 'list-content': isList(), 'grid-content': !isList() }"
+    >
+      @for (item of item.data; track item.imdbID) {
+      <section class="grid-item">
+        <ms-media-card [media]="item" (valueChanged)="onValueChanged($event)">
+        </ms-media-card>
+      </section>
+      }
+    </article>
+  </div>
 </ng-template>

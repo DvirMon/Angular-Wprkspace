@@ -1,12 +1,16 @@
-<mat-nav-list>
+<div class="h-14"></div>
+<mat-nav-list class="flex-col gap-4">
   @for (item of menuItems(); track $index) {
 
-  <a class="text-xl pl-8" mat-list-item (click)="onItemClick(item.type)"
+  <a class="text-xl" mat-list-item (click)="onItemClick(item.type)"
     >{{ item.type | titlecase | pluralize : item.count }} ({{ item.count }})</a
   >
   }
 </mat-nav-list>
-<mat-button-toggle-group name="fontStyle" aria-label="Font Style">
-  <mat-button-toggle value="bold">Bold</mat-button-toggle>
-  <mat-button-toggle value="underline">Underline</mat-button-toggle>
-</mat-button-toggle-group>
+
+<section class="layout-button-toggle-wrapper">
+  <mat-button-toggle-group value="list" (change)="onCheckedChanged()">
+    <mat-button-toggle value="list">List</mat-button-toggle>
+    <mat-button-toggle value="grid">Grid</mat-button-toggle>
+  </mat-button-toggle-group>
+</section>

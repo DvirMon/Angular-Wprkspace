@@ -4,10 +4,13 @@ import { Injectable, signal } from '@angular/core';
   providedIn: 'root',
 })
 export class MediaLayoutService {
-
   private _isList = signal(true);
 
+  getIsList() {
+    return this._isList;
+  }
+
   toggleLayout() {
-    this._isList.update((value) => !value)
+    this._isList.update((value) => !value);
   }
 }

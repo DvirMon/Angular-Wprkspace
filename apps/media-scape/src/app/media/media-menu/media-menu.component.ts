@@ -2,14 +2,21 @@ import { TitleCasePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  Injector,
   Signal,
   inject,
+  runInInjectionContext,
 } from '@angular/core';
-import { MatButtonToggle, MatButtonToggleGroup } from '@angular/material/button-toggle';
+import {
+  MatButtonToggle,
+  MatButtonToggleChange,
+  MatButtonToggleGroup,
+} from '@angular/material/button-toggle';
 import { MatListItem, MatNavList } from '@angular/material/list';
 import { PluralizePipe } from '../../shared/pipes/pluralize.pipe copy';
 import { MediaType } from '../../shared/types';
 import { AppStore } from '../../store/store';
+import { MediaLayoutService } from '../layout.service';
 
 @Component({
   selector: 'ms-media-menu',
@@ -27,6 +34,7 @@ import { AppStore } from '../../store/store';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MediaMenuComponent {
+  #injector = inject(Injector);
   #store = inject(AppStore);
 
   menuItems: Signal<{ type: string; count: number }[]>;
@@ -37,5 +45,11 @@ export class MediaMenuComponent {
 
   onItemClick(value: string) {
     this.#store.updateType(value as MediaType);
+  }
+
+  onCheckedChanged() {
+    runInInjectionContext(this.#injector, () =>
+      inject(MediaLayoutService).toggleLayout()
+    );
   }
 }

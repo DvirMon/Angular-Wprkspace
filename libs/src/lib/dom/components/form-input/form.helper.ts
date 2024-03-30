@@ -65,13 +65,16 @@ export function handleServerErrorEffect(
 }
 
 export function createValueChangesEmitter(
-  // valueChanged: (value: string) => void
+  valueChanged: (value: string) => void
 ) {
   return rxMethod<string>(
     pipe(
       debounceTime(300),
       distinctUntilChanged(),
-      // tap((value) => valueChanged(value))
+      tap((value) => valueChanged(value))
     )
   );
+}
+export function createDebouncedDistinctValueEmitter() {
+  return rxMethod<string>(pipe(debounceTime(300), distinctUntilChanged()));
 }

@@ -2,4 +2,8 @@ mat-toolbar {
   height: 80px;
   position: sticky;
   top: 0;
+
+  mat-form-field {
+    width: 100%;
+  }
 }

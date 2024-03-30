@@ -6,7 +6,7 @@ import { MediaResult, Root } from '../shared/types';
 @Injectable({
   providedIn: 'root',
 })
-export class MediaService {
+export class MediaHttpService {
   constructor(private http: HttpClient) {}
 
   public loadMedia(): Observable<Root> {

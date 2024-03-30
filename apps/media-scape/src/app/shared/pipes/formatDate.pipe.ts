@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
   standalone: true,
 })
 export class FormatDatePipe implements PipeTransform {
-  transform(value: string, format = 'yyyy-MM-dd'): string | null {
+  transform(value: string | undefined | null, format = 'yyyy-MM-dd'): string | undefined | null {
     // Ensure that the input value is valid
     if (!value || value.trim().length !== 8 || isNaN(Number(value))) {
       return value; // Return the input value unchanged if it's not in the expected format

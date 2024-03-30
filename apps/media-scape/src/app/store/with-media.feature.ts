@@ -17,7 +17,7 @@ import {
 } from '@ngrx/signals/entities';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { EMPTY, filter, pipe, switchMap, tap } from 'rxjs';
-import { MediaService } from '../media';
+import { MediaHttpService } from '../media';
 import { MediaItem, MediaResult, Root } from '../shared/types';
 import { withLoaded } from './with-loaded.feature';
 
@@ -33,7 +33,7 @@ export function withMedia() {
     withState({ totalResults: 0 }),
     withLoaded(),
     withEntities<MediaResult>(),
-    withMethods((store, service = inject(MediaService)) => ({
+    withMethods((store, service = inject(MediaHttpService)) => ({
       loadMedia: rxMethod<void>(
         pipe(
           filter(() => !store.isLoaded()),

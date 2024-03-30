@@ -2,16 +2,15 @@ import { CommonModule } from '@angular/common';
 import {
   Component,
   EventEmitter,
-  OnInit,
   Output,
   effect,
-  input,
+  input
 } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { Subject, debounceTime, distinctUntilChanged, pipe, tap } from 'rxjs';
+import { debounceTime, distinctUntilChanged, pipe, tap } from 'rxjs';
 
 export interface SearchMediaResultsData {
   totalMediaResults: number;
@@ -30,21 +29,21 @@ export interface SearchMediaResultsData {
   templateUrl: './search-input.component.html',
   styleUrls: ['./search-input.component.scss'],
 })
-export class SearchInputComponent {
+export class SearchInputComponent  {
+
+  control = input.required<FormControl<string>>();
+  
   label = input<string>();
   initialValue = input<string>();
-  searchMediaResultsData = input<SearchMediaResultsData>();
-  control = input.required<FormControl<string>>();
 
-  #valueChanged: Subject<string> = new Subject();
 
-  @Output() termChanged = new EventEmitter<string>();
+  @Output() valueChanged = new EventEmitter<string>();
 
-  private onTermChanged = rxMethod<string>(
+  private onValueChanges = rxMethod<string>(
     pipe(
       debounceTime(300),
       distinctUntilChanged(),
-      tap((value) => this.termChanged.emit(value))
+      tap((value) => this.valueChanged.emit(value))
     )
   );
 
@@ -52,14 +51,14 @@ export class SearchInputComponent {
     effect(
       () => {
         if (this.control()) {
-          this.onTermChanged(this.#valueChanged.asObservable());
+          this.onValueChanges(this.control().valueChanges);
         }
       },
       { allowSignalWrites: true }
     );
   }
 
-  onInputChanged() {
-    this.#valueChanged.next(this.control().value as string);
-  }
+
+
+
 }

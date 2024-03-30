@@ -1,4 +1,4 @@
-import { NgClass, NgTemplateOutlet, TitleCasePipe } from '@angular/common';
+import { JsonPipe, NgClass, NgTemplateOutlet, TitleCasePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -17,6 +17,7 @@ import { MediaCardComponent } from '../media-card/media-card.component';
   selector: 'ms-media-content',
   standalone: true,
   imports: [
+    JsonPipe,
     NgClass,
     NgTemplateOutlet,
     TitleCasePipe,
@@ -38,7 +39,7 @@ export class MediaContentComponent implements OnInit {
   isList: Signal<boolean>;
 
   constructor() {
-    this.media = this.#store.mediaMap;
+    this.media = this.#store.media;
 
     this.mediaType = this.#store.type;
 
@@ -46,10 +47,12 @@ export class MediaContentComponent implements OnInit {
 
     this.mediaItem = computed(
       () =>
-        this.media().find((item) => item.type === this.mediaType()) as MediaItem
+        this.#store
+          .media()
+          .find((item) => item.type === this.mediaType()) as MediaItem
     );
 
-    this.isList = this.#layoutService.getIsList()
+    this.isList = this.#layoutService.getIsList();
   }
 
   ngOnInit(): void {

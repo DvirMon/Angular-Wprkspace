@@ -6,6 +6,14 @@ import {
   signal,
 } from '@angular/core';
 import { FormGroup, ValidationErrors } from '@angular/forms';
+import { rxMethod } from '@ngrx/signals/rxjs-interop';
+import {
+  pipe,
+  debounceTime,
+  distinctUntilChanged,
+  tap,
+  Observable,
+} from 'rxjs';
 
 export interface FormServerError {
   control: string;
@@ -53,5 +61,17 @@ export function handleServerErrorEffect(
       }
     },
     { allowSignalWrites: true, injector }
+  );
+}
+
+export function createValueChangesEmitter(
+  // valueChanged: (value: string) => void
+) {
+  return rxMethod<string>(
+    pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      // tap((value) => valueChanged(value))
+    )
   );
 }

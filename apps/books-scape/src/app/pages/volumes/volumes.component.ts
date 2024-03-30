@@ -18,8 +18,7 @@ import { FormControl } from '@angular/forms';
 export class VolumesPageComponent {
   #store = inject(AppStore);
 
-  searchControl = new FormControl<string>('', { nonNullable: true });
-
+  searchControl = new FormControl<string>('angular', { nonNullable: true });
 
   public readonly books: Signal<Book[]>;
   public readonly initialValue: Signal<string>;
@@ -29,7 +28,7 @@ export class VolumesPageComponent {
     this.initialValue = this.#store.searchTerm;
   }
 
-  onTermChanged(value: string): void {
+  onValueChanged(value: string): void {
     patchState(this.#store, { searchTerm: value });
   }
 

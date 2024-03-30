@@ -1,8 +1,8 @@
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import { computed } from '@angular/core';
 import { signalStore, withComputed } from '@ngrx/signals';
-import { MediaType } from '../shared/types';
-import { isTitleOrDate, isTypeEqual, withFilter } from './with-filter.feature';
+import { MediaItem } from '../shared/types';
+import { isTitleOrDate, withFilter } from './with-filter.feature';
 import { getMedia, withMedia } from './with-media.feature';
 import { compareTitle, withSort } from './with-sort.feature';
 
@@ -13,39 +13,23 @@ export const AppStore = signalStore(
   withFilter(),
   withSort(),
   withComputed((store) => ({
-    media: computed(() =>
-      store
-        .entities()
-        .filter(isTitleOrDate(store.searchTerm()))
-        .sort((a, b) => compareTitle(a, b, store.sortDir()))
-    ),
-    mediaMap: computed(() =>
+    mediaV1: computed(() =>
       store
         .entities()
         .filter(isTitleOrDate(store.searchTerm()))
         .sort((a, b) => compareTitle(a, b, store.sortDir()))
         .reduce(getMedia, [])
     ),
-    movies: computed(() =>
+    media: computed(() =>
       store
         .entities()
-        .filter(isTypeEqual(MediaType.MOVIE))
-        .filter(isTitleOrDate(store.searchTerm()))
-        .sort((a, b) => compareTitle(a, b, store.sortDir()))
-    ),
-    series: computed(() =>
-      store
-        .entities()
-        .filter(isTypeEqual(MediaType.SERIES))
-        .filter(isTitleOrDate(store.searchTerm()))
-        .sort(compareTitle)
-    ),
-    games: computed(() =>
-      store
-        .entities()
-        .filter(isTypeEqual(MediaType.GAME))
-        .filter(isTitleOrDate(store.searchTerm()))
-        .sort(compareTitle)
+        .reduce(getMedia, [])
+        .map((item: MediaItem) => ({
+          ...item,
+          data: item.data
+            .filter(isTitleOrDate(store.searchTerm()))
+            .sort((a, b) => compareTitle(a, b, store.sortDir())),
+        }))
     ),
   }))
 );

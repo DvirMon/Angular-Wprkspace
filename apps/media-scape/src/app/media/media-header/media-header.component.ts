@@ -23,7 +23,7 @@ export class MediaHeaderComponent {
     this.searchControl = new FormControl<string>('', { nonNullable: true });
   }
 
-  onTermChanged(value: string): void {
+  onValueChanged(value: string): void {
     this.#store.updateSearchTerm(value);
   }
   

@@ -1,4 +1,4 @@
-<main class="flex flex-col justify-center items-center gap-8">
+<main class="flex flex-col items-center gap-8">
   @if(!hasFilterType()) { @for (item of media(); track item.type) {
 
   <ng-container
@@ -9,13 +9,16 @@
   <ng-container
     *ngTemplateOutlet="mediaSection; context: { $implicit: mediaItem() }"
   ></ng-container>
+
   }
 </main>
 
 <ng-template #mediaSection let-item>
   <div class="media-container">
     <header class="text-4xl">
-      {{ item.type | titlecase | pluralize : item.count }} ({{ item.count }})
+      {{ item.type | titlecase | pluralize : item.count }} ({{
+        item.data.length
+      }})
     </header>
 
     <article

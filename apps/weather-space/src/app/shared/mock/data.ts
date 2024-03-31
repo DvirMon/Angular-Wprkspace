@@ -1,9 +1,9 @@
 import { EntityMap } from '@ngrx/signals/entities';
-import { AutocompleteMediaResult } from '../../weather/models/autocomplete-MediaResult';
-import { CurrentWeatherMediaResult } from '../../weather/models/current-weather-MediaResult';
-import { FutureWeatherMediaResult } from '../../weather/models/future-weather-MediaResult';
-import { GeolocationWeatherMediaResult } from '../../weather/models/geolocation-weather-MediaResult';
 import { FavoriteEntity } from '../../weather/weather-favorite-card/favorite-card.component';
+import { AutocompleteMediaResult } from '../../weather/models/autocomplete-result';
+import { CurrentWeatherMediaResult } from '../../weather/models/current-weather-result';
+import { FutureWeatherMediaResult } from '../../weather/models/future-weather-result';
+import { GeolocationWeatherMediaResult } from '../../weather/models/geolocation-weather-result';
 
 export const LOCATIONS_AUTOCOMPLETE_MediaResult: AutocompleteMediaResult[] = [
   {

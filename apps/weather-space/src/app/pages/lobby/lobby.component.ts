@@ -23,24 +23,21 @@ import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { OptionContentDirective } from '@dom';
 import { AutocompleteComponent } from '@dom/components';
+import { HighLightPipe } from '../../shared/pipes/high-light.pipe';
+import { PluckPipe } from '../../shared/pipes/pluck.pipe';
+import { Store } from '../../store/store';
+import { AutocompleteOption } from '../../weather/models/autocomplete-result';
+import { CurrentWeather } from '../../weather/models/current-weather-result';
+import {
+  FutureWeather,
+  FutureWeatherArgs,
+} from '../../weather/models/future-weather-result';
 import { FavoriteEntity } from '../../weather/weather-favorite-card/favorite-card.component';
 import {
   FavoriteChangeEvent,
   UnitChangeEvent,
   WeatherMediaResultComponent,
-} from '../../weather/weather-MediaResult-card/weather-MediaResult.component';
-import { AutocompleteOption } from '../../weather/models/autocomplete-MediaResult';
-import { CurrentWeather } from '../../weather/models/current-weather-MediaResult';
-import {
-  FutureWeather,
-  FutureWeatherArgs,
-} from '../../weather/models/future-weather-MediaResult';
-import { HighLightPipe } from '../../shared/pipes/high-light.pipe';
-import { PluckPipe } from '../../shared/pipes/pluck.pipe';
-import { Store } from '../../store/store';
-import { FavoriteStore } from '../../store/store-favorites';
-import { OptionsStore } from '../../store/store-options';
-import { WeatherStore } from '../../store/store-weather';
+} from '../../weather/weather-result-card/weather-result.component';
 
 @Component({
   selector: 'weather-space-lobby',
@@ -69,9 +66,6 @@ export class LobbyPageComponent implements OnInit {
   #nfb = inject(NonNullableFormBuilder);
 
   #store = inject(Store);
-  #optionsStore = inject(OptionsStore);
-  #weatherStore = inject(WeatherStore);
-  #favoriteStore = inject(FavoriteStore);
 
   options: Signal<AutocompleteOption[]>;
   filtered: Signal<AutocompleteOption[]>;

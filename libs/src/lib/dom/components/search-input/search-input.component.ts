@@ -3,8 +3,6 @@ import { Component, EventEmitter, Output, effect, input } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { debounceTime, distinctUntilChanged, pipe, tap } from 'rxjs';
 import { createValueChangesEmitter } from '../form-input';
 
 export interface SearchMediaResultsData {

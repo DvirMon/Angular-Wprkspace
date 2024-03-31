@@ -1,10 +1,9 @@
 import { ComponentType } from '@angular/cdk/portal';
-import { Inject, Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   MatDialog,
-  MAT_DIALOG_DEFAULT_OPTIONS,
   MatDialogConfig,
-  MatDialogRef,
+  MatDialogRef
 } from '@angular/material/dialog';
 
 @Injectable({

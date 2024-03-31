@@ -1,22 +1,20 @@
 import { Injectable } from '@angular/core';
-
+import { EntityMediaResult } from '@dom';
+import { Observable, map } from 'rxjs';
 import {
-  AutocompleteOption,
   AutocompleteMediaResult,
-} from './models/autocomplete-MediaResult';
-
-import { map, Observable } from 'rxjs';
+  AutocompleteOption,
+} from './models/autocomplete-result';
 import {
   CurrentWeather,
   CurrentWeatherMediaResult,
-} from './models/current-weather-MediaResult';
+} from './models/current-weather-result';
 import {
   FutureWeather,
   FutureWeatherArgs,
   FutureWeatherMediaResult,
-} from './models/future-weather-MediaResult';
+} from './models/future-weather-result';
 import { WeatherHttpService } from './weather-http.service';
-import { EntityMediaResult } from '@dom';
 
 @Injectable({
   providedIn: 'root',

@@ -9,13 +9,13 @@ import {
 } from '@ngrx/signals';
 import { addEntity, removeEntity } from '@ngrx/signals/entities';
 import { FavoriteEntity } from '../weather/weather-favorite-card/favorite-card.component';
-import { AutocompleteOption } from '../weather/models/autocomplete-MediaResult';
 import { WeatherService } from '../weather/weather.service';
 import { updateIsMetric } from './updaters';
 import { withCurrentWeather } from './with-current.feature';
 import { withFavorites } from './with-favorites.feature';
 import { withFutureWeather } from './with-future.feature';
 import { withOptions } from './with-options.feature';
+import { AutocompleteOption } from '../weather/models/autocomplete-result';
 
 export interface State {
   isMetric: boolean;

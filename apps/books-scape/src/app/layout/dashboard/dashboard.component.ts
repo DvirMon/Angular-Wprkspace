@@ -1,4 +1,3 @@
-import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, Signal, inject, input } from '@angular/core';
 
 import { MatBadgeModule } from '@angular/material/badge';

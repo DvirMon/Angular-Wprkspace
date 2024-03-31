@@ -14,12 +14,13 @@ import {
   MatCardTitle,
 } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { AutocompleteOption } from '../models/autocomplete-MediaResult';
-import { CurrentWeather } from '../models/current-weather-MediaResult';
-import { FutureWeather } from '../models/future-weather-MediaResult';
+
 import { DailyTemperaturePipe } from '../../shared/pipes/daily-temperature.pipe';
 import { TemperaturePipe } from '../../shared/pipes/temperature.pipe';
 import { IsUnitPipe } from '../../shared/pipes/unit-temperature.pipe';
+import { AutocompleteOption } from '../models/autocomplete-result';
+import { CurrentWeather } from '../models/current-weather-result';
+import { FutureWeather } from '../models/future-weather-result';
 
 export interface FavoriteChangeEvent
   extends AutocompleteOption,
@@ -32,9 +33,9 @@ export interface UnitChangeEvent {
 }
 
 @Component({
-  selector: 'weather-space-MediaResult-card',
-  templateUrl: './weather-MediaResult.component.html',
-  styleUrls: ['./weather-MediaResult.component.scss'],
+  selector: 'weather-space-result-card',
+  templateUrl: './weather-result.component.html',
+  styleUrls: ['./weather-result.component.scss'],
   standalone: true,
   imports: [
     NgIf,

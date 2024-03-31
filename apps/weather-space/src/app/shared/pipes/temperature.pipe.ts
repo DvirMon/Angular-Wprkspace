@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Temperature } from '../../weather/models/current-weather-MediaResult';
+import { Temperature } from '../../weather/models/current-weather-result';
 
 @Pipe({
   name: 'temperature',

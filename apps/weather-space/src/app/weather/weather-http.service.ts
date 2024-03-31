@@ -1,7 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { AutocompleteMediaResult } from './models/autocomplete-MediaResult';
 
 import { EntityId } from '@ngrx/signals/entities';
 import { distinctUntilChanged, map, Observable, of, switchMap } from 'rxjs';
@@ -13,9 +12,10 @@ import {
   FUTURE_WEATHER_MediaResult,
   LOCATIONS_AUTOCOMPLETE_MediaResult,
 } from '../shared/mock/data';
-import { CurrentWeatherMediaResult } from './models/current-weather-MediaResult';
-import { FutureWeatherMediaResult } from './models/future-weather-MediaResult';
-import { GeolocationWeatherMediaResult } from './models/geolocation-weather-MediaResult';
+import { CurrentWeatherMediaResult } from './models/current-weather-result';
+import { FutureWeatherMediaResult } from './models/future-weather-result';
+import { GeolocationWeatherMediaResult } from './models/geolocation-weather-result';
+import { AutocompleteMediaResult } from './models/autocomplete-result';
 
 @Injectable({
   providedIn: 'root',

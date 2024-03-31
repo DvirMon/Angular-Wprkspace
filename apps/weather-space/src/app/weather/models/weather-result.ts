@@ -1,5 +1,5 @@
-import { Temperature } from './current-weather-MediaResult';
-import { DailyTemperature } from './future-weather-MediaResult';
+import { Temperature } from "./current-weather-result";
+import { DailyTemperature } from "./future-weather-result";
 
 export type WeatherForecast = {
   date: Date;

@@ -8,9 +8,9 @@ import {
   MatCardSubtitle,
   MatCardTitle,
 } from '@angular/material/card';
-import { Temperature } from '../models/current-weather-MediaResult';
 import { TemperaturePipe } from '../../shared/pipes/temperature.pipe';
 import { IsUnitPipe } from '../../shared/pipes/unit-temperature.pipe';
+import { Temperature } from '../models/current-weather-result';
 
 export interface FavoriteEntity {
   id: number;

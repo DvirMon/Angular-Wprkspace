@@ -1,6 +1,4 @@
-export { SearchInputComponent } from './search-input/search-input.component';
-export { AutocompleteComponent } from './autocomplete/autocomplete.component';
-export * from './form-input/index';
+export * from './form/index';
 
 export { CardButtonComponent } from './card-button/card-button.component';
 export { DividerHeaderComponent } from './divider-header/divider-header.component';

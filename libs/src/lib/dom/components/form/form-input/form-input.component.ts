@@ -22,7 +22,7 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Observable, map, startWith } from 'rxjs';
-import { errorMessageMap } from './form.helper';
+import { errorMessageMap } from '../form.helper';
 
 @Component({
   selector: 'dom-form-input',

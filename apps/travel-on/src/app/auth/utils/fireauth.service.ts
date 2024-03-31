@@ -2,7 +2,7 @@ import { Injectable, Injector, inject } from '@angular/core';
 import {
   ActionCodeSettings,
   Auth,
-  ConfirmationMediaResult,
+  ConfirmationResult,
   GoogleAuthProvider,
   RecaptchaVerifier,
   UserCredential,
@@ -40,7 +40,7 @@ export class FireAuthService {
   }
 
   // Sign in with phone number and recaptcha verification.
-  public signInWithPhone$(phone: string): Observable<ConfirmationMediaResult> {
+  public signInWithPhone$(phone: string): Observable<ConfirmationResult> {
     return from(
       signInWithPhoneNumber(
         this.auth,

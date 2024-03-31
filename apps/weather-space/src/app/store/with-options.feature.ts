@@ -6,7 +6,6 @@ import {
 } from '@ngrx/signals';
 import { addEntities, withEntities } from '@ngrx/signals/entities';
 import { lastValueFrom } from 'rxjs';
-import { AutocompleteOption } from '../weather/models/autocomplete-result';
 import {
   Entity,
   Loader,
@@ -14,6 +13,7 @@ import {
   createLoader,
   loadEntities,
 } from '@dom';
+import { AutocompleteOption } from '../weather/models/autocomplete-result';
 
 type OptionLoader = Loader<string, Entity, 'loadOptions'>;
 

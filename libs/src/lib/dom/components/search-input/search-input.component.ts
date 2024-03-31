@@ -1,13 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output, input } from '@angular/core';
+import { Component, EventEmitter, Output, effect, input } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { debounceTime, distinctUntilChanged, pipe, tap } from 'rxjs';
+import { createValueChangesEmitter } from '../form-input';
 
-export interface SearchResultsData {
-  totalResults: number;
+export interface SearchMediaResultsData {
+  totalMediaResults: number;
 }
 
 @Component({
@@ -23,33 +22,26 @@ export interface SearchResultsData {
   templateUrl: './search-input.component.html',
   styleUrls: ['./search-input.component.scss'],
 })
-export class SearchInputComponent implements OnInit {
+export class SearchInputComponent {
+  control = input.required<FormControl<string>>();
+
+  label = input<string>();
   initialValue = input<string>();
-  searchResultsData = input<SearchResultsData>();
 
-  searchControl: FormControl<string> = new FormControl();
+  @Output() valueChanged = new EventEmitter<string>();
 
-  @Output() termChanged = new EventEmitter<string>();
-
-  private onTermChanged = rxMethod<string>(
-    pipe(
-      debounceTime(300),
-      distinctUntilChanged(),
-      tap((value) => this.termChanged.emit(value))
-    )
+  private handleValueChanges = createValueChangesEmitter((value) =>
+    this.valueChanged.emit(value)
   );
 
   constructor() {
-    this.onTermChanged(this.searchControl.valueChanges);
-  }
-
-  ngOnInit(): void {
-    // Set initial value if provided
-
-    const value: string | undefined = this.initialValue();
-
-    if (value != undefined) {
-      this.searchControl.setValue(value);
-    }
+    effect(
+      () => {
+        if (this.control()) {
+          this.handleValueChanges(this.control().valueChanges);
+        }
+      },
+      { allowSignalWrites: true }
+    );
   }
 }

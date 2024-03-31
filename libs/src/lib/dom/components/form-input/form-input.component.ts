@@ -1,29 +1,31 @@
-import { CommonModule } from "@angular/common";
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  EventEmitter,
   Injector,
   OnInit,
+  Output,
   Signal,
   computed,
   inject,
   input,
   runInInjectionContext,
-} from "@angular/core";
-import { toSignal } from "@angular/core/rxjs-interop";
+} from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import {
   AbstractControl,
   FormControl,
   ReactiveFormsModule,
   ValidationErrors,
-} from "@angular/forms";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatInputModule } from "@angular/material/input";
-import { Observable, map, startWith } from "rxjs";
-import { errorMessageMap } from "./form.helper";
+} from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { Observable, map, startWith } from 'rxjs';
+import { errorMessageMap } from './form.helper';
 
 @Component({
-  selector: "dom-form-input",
+  selector: 'dom-form-input',
   standalone: true,
   imports: [
     CommonModule,
@@ -31,8 +33,8 @@ import { errorMessageMap } from "./form.helper";
     MatFormFieldModule,
     MatInputModule,
   ],
-  templateUrl: "./form-input.component.html",
-  styleUrls: ["./form-input.component.scss"],
+  templateUrl: './form-input.component.html',
+  styleUrls: ['./form-input.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormInputComponent implements OnInit {
@@ -48,6 +50,8 @@ export class FormInputComponent implements OnInit {
   formControl!: Signal<FormControl>;
   errorMessage!: Signal<string | undefined>;
   hasError!: Signal<boolean>;
+
+  @Output() blurChanged = new EventEmitter<FormControl>();
 
   ngOnInit(): void {
     this.formControl = computed(() => this.control() as FormControl);
@@ -107,6 +111,10 @@ export class FormInputComponent implements OnInit {
       }
     }
 
-    return "";
+    return '';
+  }
+
+  onBlur() {
+    this.blurChanged.emit(this.formControl());
   }
 }

@@ -1,8 +1,6 @@
 import { FormServerError } from "@dom/components";
 import { AuthEvent, User } from "../utils/auth.model";
 
-export const authFeatureKey = "auth";
-
 export interface AuthState {
   user: User;
   isLoaded: boolean;

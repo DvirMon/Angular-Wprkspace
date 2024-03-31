@@ -1,8 +1,8 @@
-<mat-form-field>
-  <input matInput type="text" [formControl]="searchControl" />
-  <!-- @if (searchResultsData()!.totalResults !== 0) {
-    <span matSuffix
-      >{{ searchResultsData()!.totalResults }} results
-    </span>
-  } -->
+<mat-form-field class="dom-search-input">
+  <label for="">{{ label() }}</label>
+  <input
+    matInput
+    type="text"
+    [formControl]="control()"
+  />
 </mat-form-field>

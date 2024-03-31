@@ -8,7 +8,7 @@ export interface AdministrativeArea {
   LocalizedName: string;
 }
 
-export interface AutocompleteResult {
+export interface AutocompleteMediaResult {
   Version: number;
   Key: string;
   Type: string;

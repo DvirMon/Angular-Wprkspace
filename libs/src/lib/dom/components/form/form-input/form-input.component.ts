@@ -21,7 +21,7 @@ import {
 } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { createErrorMessageEmitter, handleError, withError } from '../helper';
+import { FormErrorService } from '../form-error.service';
 
 @Component({
   selector: 'dom-form-input',
@@ -37,7 +37,8 @@ import { createErrorMessageEmitter, handleError, withError } from '../helper';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormInputComponent implements OnInit {
-  #injector: Injector = inject(Injector);
+
+  #formError = inject(FormErrorService);
 
   control = input.required<AbstractControl<unknown, unknown> | null>();
   key = input.required<string>();
@@ -55,13 +56,12 @@ export class FormInputComponent implements OnInit {
   ngOnInit(): void {
     this.formControl = computed(() => this.control() as FormControl);
 
-    const errorEmitter = createErrorMessageEmitter(
-      this.#injector,
+    const errorEmitter = this.#formError.createErrorMessageEmitter(
       this.errorsMap(),
       (value) => this.message.set(value)
     );
 
-    handleError(this.formControl(), errorEmitter);
+    this.#formError.handleError(this.formControl(), errorEmitter);
   }
 
   onBlur() {

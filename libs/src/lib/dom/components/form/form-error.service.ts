@@ -1,15 +1,48 @@
-import { Injectable, Injector, runInInjectionContext } from '@angular/core';
+import {
+  Injectable,
+  Injector,
+  Signal,
+  effect,
+  runInInjectionContext,
+} from '@angular/core';
 import { Observable, pipe } from 'rxjs';
-import { FormControl, ValidationErrors } from '@angular/forms';
+import { FormControl, FormGroup, ValidationErrors } from '@angular/forms';
 import { map, tap, startWith } from 'rxjs/operators';
 import { errorMessageMap } from './constants';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
+import { FormServerError } from './types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FormErrorService {
   constructor(private injector: Injector) {}
+
+  handleServerErrorEffect(
+    serverError: Signal<FormServerError | undefined>,
+    form: FormGroup
+  ): void {
+    effect(
+      () => {
+        const error = serverError();
+
+        if (error) {
+          this.setFormError(form, error);
+        }
+      },
+      { allowSignalWrites: true, injector: this.injector }
+    );
+  }
+
+  private setFormError(group: FormGroup, error: FormServerError): void {
+    if (group !== null && error !== null) {
+      const control = group.get(error.control as string);
+
+      if (control != null) {
+        control.setErrors({ serverError: error.message });
+      }
+    }
+  }
 
   createErrorMessageEmitter(
     messages: ValidationErrors | undefined,

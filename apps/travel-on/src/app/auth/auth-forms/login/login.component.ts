@@ -15,7 +15,7 @@ import {
   NonNullableFormBuilder,
   ReactiveFormsModule,
   ValidationErrors,
-  Validators
+  Validators,
 } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatCard, MatCardContent, MatCardHeader } from '@angular/material/card';
@@ -33,6 +33,7 @@ import {
 } from '@dom/components';
 import { EmailAndPasswordSignIn, SignInEvent, SignInMethod } from '../../utils';
 import { DEFAULT_EMAIL } from '../../utils/constants';
+import { FormErrorService } from 'libs/src/lib/dom/components/form/form-error.service';
 
 interface LoginForm {
   email: FormControl<string>;
@@ -63,6 +64,8 @@ interface LoginForm {
 export class LoginFormComponent {
   #injector = inject(Injector);
 
+  #formError = inject(FormErrorService);
+
   public readonly loginFormGroup: FormGroup<LoginForm>;
 
   public readonly serverError = input<FormServerError>();
@@ -89,8 +92,7 @@ export class LoginFormComponent {
 
     this.formKeys = getFormKeys(this.loginFormGroup);
 
-    handleServerErrorEffect(
-      this.#injector,
+    this.#formError.handleServerErrorEffect(
       this.serverError,
       this.loginFormGroup
     );
@@ -104,8 +106,6 @@ export class LoginFormComponent {
       )
     );
   }
-
-
 
   private buildLoginForm(): FormGroup<LoginForm> {
     return inject(NonNullableFormBuilder).group({
@@ -154,5 +154,4 @@ export class LoginFormComponent {
       data,
     } as SignInEvent;
   }
-
 }

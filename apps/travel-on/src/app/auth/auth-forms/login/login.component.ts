@@ -10,22 +10,19 @@ import {
   input,
 } from '@angular/core';
 import {
-  AbstractControl,
   FormControl,
   FormGroup,
-  FormsModule,
   NonNullableFormBuilder,
   ReactiveFormsModule,
   ValidationErrors,
-  Validators,
+  Validators
 } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
+import { MatButton } from '@angular/material/button';
+import { MatCard, MatCardContent, MatCardHeader } from '@angular/material/card';
+import { MatFormField } from '@angular/material/form-field';
+import { MatIcon, MatIconRegistry } from '@angular/material/icon';
+import { MatInput } from '@angular/material/input';
 import { DomSanitizer } from '@angular/platform-browser';
-import { RouterModule } from '@angular/router';
 
 import {
   DividerHeaderComponent,
@@ -46,15 +43,15 @@ interface LoginForm {
   selector: 'to-login-form',
   standalone: true,
   imports: [
-    RouterModule,
-    FormsModule,
     ReactiveFormsModule,
     NgOptimizedImage,
-    MatFormFieldModule,
-    MatInputModule,
-    MatCardModule,
-    MatButtonModule,
-    MatIconModule,
+    MatCard,
+    MatCardHeader,
+    MatCardContent,
+    MatFormField,
+    MatInput,
+    MatButton,
+    MatIcon,
     TitleCasePipe,
     DividerHeaderComponent,
     FormInputComponent,
@@ -158,17 +155,4 @@ export class LoginFormComponent {
     } as SignInEvent;
   }
 
-  //   private _handleServerError(
-  //     group: FormGroup,
-  //     server: AuthServerError | null
-  //   ): void {
-  //     if (group !== null && server !== null) {
-  //       const control = group.get(server.control as string);
-
-  //       if (control != null) {
-  //         control.setErrors({ serverError: server.message });
-  //       }
-  //     }
-  //   }
-  // }
 }

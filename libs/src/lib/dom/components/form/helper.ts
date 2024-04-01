@@ -3,16 +3,37 @@ import {
   Signal,
   WritableSignal,
   effect,
+  runInInjectionContext,
   signal,
 } from '@angular/core';
 import { FormControl, FormGroup, ValidationErrors } from '@angular/forms';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { debounceTime, distinctUntilChanged, pipe, tap } from 'rxjs';
+import {
+  Observable,
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  pipe,
+  startWith,
+  tap,
+} from 'rxjs';
 import { FormServerError } from './types';
 import { errorMessageMap } from './constants';
 
 export function getFormKeys(obj: FormGroup): WritableSignal<string[]> {
   return signal(Object.keys(obj.controls));
+}
+
+export function createValueChangesEmitter(
+  valueChanged: (value: string) => void
+) {
+  return rxMethod<string>(
+    pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      tap((value) => valueChanged(value))
+    )
+  );
 }
 
 function setFormError(group: FormGroup, error: FormServerError): void {
@@ -61,25 +82,10 @@ export function handleServerErrorEffect(
   );
 }
 
-export function createValueChangesEmitter(
-  valueChanged: (value: string) => void
-) {
-  return rxMethod<string>(
-    pipe(
-      debounceTime(300),
-      distinctUntilChanged(),
-      tap((value) => valueChanged(value))
-    )
-  );
-}
-
 export function getInputErrorMessage(
-  control: FormControl,
-  messages: ValidationErrors
+  errors: ValidationErrors,
+  messages: ValidationErrors | undefined
 ): string {
-  
-  const errors = { ...control.errors };
-
   if (errors) {
     const errorKeys: string[] = Object.keys(errors);
 
@@ -90,11 +96,42 @@ export function getInputErrorMessage(
     };
 
     for (const error of errorKeys) {
-      if (control.hasError(error)) {
-        return errorMap[error];
-      }
+      return errorMap[error];
     }
   }
 
   return '';
+}
+
+export function createErrorMessageEmitter(
+  injector: Injector,
+  messages: ValidationErrors | undefined,
+  updater: (value: string) => void
+): (source$: Observable<ValidationErrors | null>) => void {
+  return runInInjectionContext(injector, () => {
+    return rxMethod<ValidationErrors>(
+      pipe(
+        map((errors: ValidationErrors) =>
+          getInputErrorMessage(errors, messages)
+        ),
+        tap((value: string) => updater(value))
+      )
+    );
+  });
+}
+
+export function handleError(
+  control: FormControl,
+  emitter: (source$: Observable<ValidationErrors | null>) => void
+) {
+  const source$ = control.statusChanges.pipe(
+    startWith(control.status),
+    map(() => control.errors)
+  );
+
+  emitter(source$);
+}
+
+export function withError() {
+  return { handleError, createErrorMessageEmitter };
 }

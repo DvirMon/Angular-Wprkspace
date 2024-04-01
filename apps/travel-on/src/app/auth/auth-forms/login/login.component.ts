@@ -23,17 +23,15 @@ import { MatFormField } from '@angular/material/form-field';
 import { MatIcon, MatIconRegistry } from '@angular/material/icon';
 import { MatInput } from '@angular/material/input';
 import { DomSanitizer } from '@angular/platform-browser';
-
 import {
   DividerHeaderComponent,
+  FormErrorService,
   FormInputComponent,
   FormServerError,
   getFormKeys,
-  handleServerErrorEffect,
-} from '@dom/components';
+} from '@dom';
 import { EmailAndPasswordSignIn, SignInEvent, SignInMethod } from '../../utils';
 import { DEFAULT_EMAIL } from '../../utils/constants';
-import { FormErrorService } from 'libs/src/lib/dom/components/form/form-error.service';
 
 interface LoginForm {
   email: FormControl<string>;
@@ -62,7 +60,6 @@ interface LoginForm {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginFormComponent {
-  #injector = inject(Injector);
 
   #formError = inject(FormErrorService);
 

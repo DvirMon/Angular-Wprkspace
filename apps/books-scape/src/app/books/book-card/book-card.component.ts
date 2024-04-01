@@ -1,9 +1,7 @@
 import { NgIf, NgOptimizedImage } from '@angular/common';
 import { Component, EventEmitter, Output, input, signal } from '@angular/core';
 import {
-  MatButton,
-  MatIconButton,
-  MatMiniFabButton,
+  MatIconButton
 } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
@@ -17,8 +15,6 @@ import { Book } from '../books';
     NgIf,
     NgOptimizedImage,
     MatCardModule,
-    MatButton,
-    MatMiniFabButton,
     MatIconButton,
     MatIcon,
     TruncatePipe,

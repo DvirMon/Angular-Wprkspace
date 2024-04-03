@@ -20,6 +20,7 @@ import {
 import { Places } from '../../places/places.model';
 import { SignalStore } from '../../store/store';
 import { PlacesHeaderComponent } from '../../places/places-header/places-header.component';
+import { PlacesPageService } from './places.service';
 
 @Component({
   selector: 'to-places',
@@ -38,15 +39,18 @@ import { PlacesHeaderComponent } from '../../places/places-header/places-header.
 export class PlacesComponent implements OnInit {
   #injector = inject(Injector);
   #store = inject(SignalStore);
+  #layout = inject(PlacesPageService);
 
   userId = input.required<string>();
 
   public readonly places: Signal<Places[]>;
   public readonly selection: Signal<Record<string, boolean>>;
+  public readonly isGrid: Signal<boolean>;
 
   constructor() {
     this.places = this.#store.places;
     this.selection = this.#store.favoriteMap;
+    this.isGrid = this.#layout.getIsGrid();
   }
 
   ngOnInit(): void {
@@ -61,5 +65,4 @@ export class PlacesComponent implements OnInit {
   onLogout(): void {
     runInInjectionContext(this.#injector, () => inject(AuthStore).logout());
   }
-
 }

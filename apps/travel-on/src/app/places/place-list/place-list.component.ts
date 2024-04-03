@@ -33,26 +33,7 @@ export class PlacesListComponent {
 
     this._emitChangeEvent({ placeId: place().id, selected } as PlaceSelection);
   }
-
-  // private _updateStoreSelection(
-  //   selection: Record<string, boolean>,
-  //   selected: boolean,
-  //   places: Places
-  // ): Record<string, boolean> {
-  //   let newSelection = { ...selection }; // Create a copy of the original selection
-
-  //   if (selected) {
-  //     newSelection = {
-  //       ...selection,
-  //       [places.id]: selected,
-  //     };
-  //   } else {
-  //     delete newSelection[places.id];
-  //   }
-
-  //   return newSelection;
-  // }
-
+  
   _emitChangeEvent(currentSelection: PlaceSelection) {
     const event = { source: this, currentSelection } as SelectionListChange;
     this.selectionChanged.emit(event);

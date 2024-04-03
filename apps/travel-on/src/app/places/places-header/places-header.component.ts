@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
   MatButtonToggle,
   MatButtonToggleGroup,
 } from '@angular/material/button-toggle';
 import { MatIcon } from '@angular/material/icon';
 import { MatToolbar } from '@angular/material/toolbar';
+import { PlacesPageService } from '../../pages/places/places.service';
 
 @Component({
   selector: 'to-places-header',
@@ -15,5 +16,9 @@ import { MatToolbar } from '@angular/material/toolbar';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlacesHeaderComponent {
-  onCheckedChanged() {}
+  #layout = inject(PlacesPageService);
+
+  onCheckedChanged() {
+    this.#layout.toggleLayout();
+  }
 }

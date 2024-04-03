@@ -11,11 +11,13 @@
   </header>
   <div class="places-list-container">
     <main class="content w-10/12">
+      @if (isGrid()) {
       <to-places-list
         [places]="places()"
         [selection]="selection()"
         (selectionChanged)="onSelectionChanged($event)"
       ></to-places-list>
+      }
     </main>
   </div>
 </div>

@@ -7,24 +7,19 @@ import {
 } from '@angular/core';
 
 import { JsonPipe } from '@angular/common';
+import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SearchInputComponent } from '@dom/components';
 import { patchState } from '@ngrx/signals';
 import { BookCardComponent } from '../../books/book-card/book-card.component';
 import { Book } from '../../books/books';
-import { DashboardComponent } from '../../layout/dashboard/dashboard.component';
-import { FormControl } from '@angular/forms';
+import { LayoutComponent } from '../../layout/layout.component';
 import { AppStore } from '../../store/store';
 
 @Component({
   selector: 'books-scape-volume-page',
   standalone: true,
-  imports: [
-    JsonPipe,
-    DashboardComponent,
-    BookCardComponent,
-    SearchInputComponent,
-  ],
+  imports: [JsonPipe, LayoutComponent, BookCardComponent, SearchInputComponent],
   templateUrl: './volumes.component.html',
   styleUrls: ['./volumes.component.scss'],
 })

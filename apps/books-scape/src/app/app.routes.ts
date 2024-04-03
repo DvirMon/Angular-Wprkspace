@@ -28,6 +28,14 @@ export const appRoutes: Routes = [
     resolve: { info: infoResolver },
   },
   {
+    path: 'filters',
+    loadComponent: () =>
+      import('./pages/filters/filters.component').then(
+        (m) => m.FiltersPageComponent
+      ),
+    title: 'The Boos Scape',
+  },
+  {
     path: '**',
     loadComponent: () =>
       import('./pages/pnf/pnf.component').then((m) => m.PnfComponent),

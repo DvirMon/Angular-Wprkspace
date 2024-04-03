@@ -13,12 +13,12 @@ import { MatToolbar } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 
 import { NgIf, TitleCasePipe, UpperCasePipe } from '@angular/common';
-import { AppStore } from '../../store/store';
+import { AppStore } from '../store/store';
 
 @Component({
-  selector: 'books-scape-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss'],
+  selector: 'books-scape-layout',
+  templateUrl: './layout.component.html',
+  styleUrls: ['./layout.component.scss'],
   standalone: true,
   imports: [
     NgIf,
@@ -37,7 +37,7 @@ import { AppStore } from '../../store/store';
     MatBadgeModule,
   ],
 })
-export class DashboardComponent {
+export class LayoutComponent {
   #store = inject(AppStore);
 
   showNavigation = input<boolean>(false);

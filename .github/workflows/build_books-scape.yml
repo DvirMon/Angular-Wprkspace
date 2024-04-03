@@ -6,7 +6,6 @@ on:
       - main
     paths:
       - apps/books-scape
-  pull_request:
   workflow_dispatch:
 
 permissions:

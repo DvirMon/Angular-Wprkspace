@@ -1,9 +1,6 @@
 import { signalStoreFeature, type, withMethods } from '@ngrx/signals';
 import { withEntities } from '@ngrx/signals/entities';
-import {
-  FutureWeather,
-  FutureWeatherArgs,
-} from '../weather/models/future-weather-result';
+
 import {
   Entity,
   Loader,
@@ -11,6 +8,10 @@ import {
   createLoader,
   loadEntities,
 } from '@dom';
+import {
+  FutureWeatherArgs,
+  FutureWeather,
+} from '../weather/models/future-weather-result';
 
 type FutureWeatherLoader = Loader<
   FutureWeatherArgs,

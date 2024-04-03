@@ -1,0 +1,31 @@
+.mat-mdc-card.ms-media-card {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+
+  > div.no-img {
+    height: 180px;
+    width: 130px;
+    padding: 8px;
+
+    .mat-mdc-card-image {
+      height: 100%;
+      width: 100%;
+      cursor: pointer;
+    }
+    
+    section {
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  > .mat-mdc-card-content {
+    display: flex;
+    // flex-grow: 0.5;
+
+    mat-form-field {
+      width: 100%;
+    }
+  }
+}

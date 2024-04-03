@@ -14,12 +14,13 @@ import {
   MatCardTitle,
 } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { AutocompleteOption } from '../models/autocomplete-result';
-import { CurrentWeather } from '../models/current-weather-result';
-import { FutureWeather } from '../models/future-weather-result';
+
 import { DailyTemperaturePipe } from '../../shared/pipes/daily-temperature.pipe';
 import { TemperaturePipe } from '../../shared/pipes/temperature.pipe';
 import { IsUnitPipe } from '../../shared/pipes/unit-temperature.pipe';
+import { AutocompleteOption } from '../models/autocomplete-result';
+import { CurrentWeather } from '../models/current-weather-result';
+import { FutureWeather } from '../models/future-weather-result';
 
 export interface FavoriteChangeEvent
   extends AutocompleteOption,
@@ -55,7 +56,7 @@ export interface UnitChangeEvent {
     DailyTemperaturePipe,
   ],
 })
-export class WeatherResultComponent {
+export class WeatherMediaResultComponent {
   optionSelected = input.required<AutocompleteOption>();
   currentWeather = input.required<CurrentWeather>();
   futureWeather = input.required<FutureWeather>();

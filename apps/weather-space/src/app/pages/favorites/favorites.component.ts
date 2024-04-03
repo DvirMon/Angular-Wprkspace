@@ -1,4 +1,4 @@
-import { Component, Signal, inject, signal } from '@angular/core';
+import { Component, Signal, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { KeyValuePipe, NgFor } from '@angular/common';
@@ -9,7 +9,6 @@ import {
   FavoriteEntity,
   FavoriteEntityComponent,
 } from '../../weather/weather-favorite-card/favorite-card.component';
-import { FAVORITES } from '../../shared/mock/data';
 
 @Component({
   selector: 'weather-space-favorites',

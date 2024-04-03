@@ -1,0 +1,17 @@
+span {
+  height: 80px;
+}
+
+.mat-mdc-nav-list {
+  display: flex;
+  padding: 0px;
+}
+
+::ng-deep .layout-button-toggle-wrapper {
+  margin-top: 16px;
+  padding-left: 16px;
+
+  mat-pseudo-checkbox {
+    display: none !important;
+  }
+}

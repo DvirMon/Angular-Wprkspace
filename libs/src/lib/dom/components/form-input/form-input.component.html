@@ -3,10 +3,11 @@
   <input
     #input
     matInput
+    autocomplete="off"
     [type]="type() || 'text'"
     [formControl]="formControl()"
-    autocomplete="off"
     [name]="key()"
+    (blur)="onBlur()"
   />
 
   @if (hint()) {

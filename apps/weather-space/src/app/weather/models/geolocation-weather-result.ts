@@ -1,4 +1,3 @@
-
 export interface Region {
   ID: string;
   LocalizedName: string;
@@ -52,7 +51,7 @@ export interface GeoPosition {
   Elevation: Elevation;
 }
 
-export interface GeolocationWeatherResult {
+export interface GeolocationWeatherMediaResult {
   Version: number;
   Key: string;
   Type: string;

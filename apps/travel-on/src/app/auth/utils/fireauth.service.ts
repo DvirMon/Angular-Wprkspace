@@ -1,4 +1,4 @@
-import { Injectable, Injector, inject } from "@angular/core";
+import { Injectable, Injector, inject } from '@angular/core';
 import {
   ActionCodeSettings,
   Auth,
@@ -15,9 +15,9 @@ import {
   signInWithEmailLink,
   signInWithPhoneNumber,
   signInWithPopup,
-} from "@angular/fire/auth";
-import { Observable, from, map, of } from "rxjs";
-import { generateVerificationLink } from "./auth.helpers";
+} from '@angular/fire/auth';
+import { Observable, from, map, of } from 'rxjs';
+import { generateVerificationLink } from './auth.helpers';
 
 export interface FirebaseError {
   code: string;
@@ -26,7 +26,7 @@ export interface FirebaseError {
   message: string;
 }
 
-@Injectable({ providedIn: "root" })
+@Injectable({ providedIn: 'root' })
 export class FireAuthService {
   private readonly injector = inject(Injector);
   private readonly auth = inject(Auth);
@@ -45,7 +45,7 @@ export class FireAuthService {
       signInWithPhoneNumber(
         this.auth,
         phone,
-        new RecaptchaVerifier(this.auth, "recaptcha", { size: "invisible" })
+        new RecaptchaVerifier(this.auth, 'recaptcha', { size: 'invisible' })
       )
     );
   }

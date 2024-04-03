@@ -13,6 +13,7 @@ import { patchState } from '@ngrx/signals';
 import { BookCardComponent } from '../../books/book-card/book-card.component';
 import { Book } from '../../books/books';
 import { DashboardComponent } from '../../layout/dashboard/dashboard.component';
+import { FormControl } from '@angular/forms';
 import { AppStore } from '../../store/store';
 
 @Component({
@@ -31,6 +32,8 @@ export class VolumesPageComponent {
   #store = inject(AppStore);
   #injector = inject(Injector);
 
+  searchControl = new FormControl<string>('angular', { nonNullable: true });
+
   public readonly books: Signal<Book[]>;
   public readonly initialValue: Signal<string>;
 
@@ -39,7 +42,7 @@ export class VolumesPageComponent {
     this.initialValue = this.#store.searchTerm;
   }
 
-  onTermChanged(value: string): void {
+  onValueChanged(value: string): void {
     patchState(this.#store, { searchTerm: value });
   }
 

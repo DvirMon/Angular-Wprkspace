@@ -1,11 +1,11 @@
 import { EntityMap } from '@ngrx/signals/entities';
-import { AutocompleteResult } from '../../weather/models/autocomplete-result';
-import { CurrentWeatherResult } from '../../weather/models/current-weather-result';
-import { FutureWeatherResult } from '../../weather/models/future-weather-result';
-import { GeolocationWeatherResult } from '../../weather/models/geolocation-weather-result';
 import { FavoriteEntity } from '../../weather/weather-favorite-card/favorite-card.component';
+import { AutocompleteMediaResult } from '../../weather/models/autocomplete-result';
+import { CurrentWeatherMediaResult } from '../../weather/models/current-weather-result';
+import { FutureWeatherMediaResult } from '../../weather/models/future-weather-result';
+import { GeolocationWeatherMediaResult } from '../../weather/models/geolocation-weather-result';
 
-export const LOCATIONS_AUTOCOMPLETE_RESULT: AutocompleteResult[] = [
+export const LOCATIONS_AUTOCOMPLETE_MediaResult: AutocompleteMediaResult[] = [
   {
     Version: 1,
     Key: '226396',
@@ -188,7 +188,7 @@ export const LOCATIONS_AUTOCOMPLETE_RESULT: AutocompleteResult[] = [
   },
 ];
 
-export const CURRENT_WEATHER_RESULT: CurrentWeatherResult[] = [
+export const CURRENT_WEATHER_MediaResult: CurrentWeatherMediaResult[] = [
   {
     LocalObservationDateTime: new Date('2022-07-28T15:28:00+03:00'),
     EpochTime: 1659011280,
@@ -215,7 +215,7 @@ export const CURRENT_WEATHER_RESULT: CurrentWeatherResult[] = [
   },
 ];
 
-export const FUTURE_WEATHER_RESULT: FutureWeatherResult = {
+export const FUTURE_WEATHER_MediaResult: FutureWeatherMediaResult = {
   Headline: {
     EffectiveDate: new Date('2022-07-28T14:00:00+03:00'),
     EffectiveEpochDate: 1659006000,
@@ -382,7 +382,7 @@ export const FUTURE_WEATHER_RESULT: FutureWeatherResult = {
   ],
 };
 
-export const GEOLOCATION_DATA: GeolocationWeatherResult = {
+export const GEOLOCATION_DATA: GeolocationWeatherMediaResult = {
   Version: 1,
   Key: '212575',
   Type: 'City',
@@ -412,8 +412,8 @@ export const GEOLOCATION_DATA: GeolocationWeatherResult = {
   },
 };
 
-export const FAVORITES :EntityMap<FavoriteEntity>= {
-  212575 : {
+export const FAVORITES: EntityMap<FavoriteEntity> = {
+  212575: {
     id: 212575,
     WeatherText: 'Partly cloudy',
     LocalizedName: 'San Francisco',
@@ -430,7 +430,7 @@ export const FAVORITES :EntityMap<FavoriteEntity>= {
       },
     },
   },
-  226396 : {
+  226396: {
     id: 226396,
     WeatherText: 'Partly cloudy',
     LocalizedName: 'San Francisco',
@@ -447,7 +447,7 @@ export const FAVORITES :EntityMap<FavoriteEntity>= {
       },
     },
   },
-  106770 : {
+  106770: {
     id: 106770,
     WeatherText: 'Partly cloudy',
     LocalizedName: 'San Francisco',
@@ -464,7 +464,7 @@ export const FAVORITES :EntityMap<FavoriteEntity>= {
       },
     },
   },
-  106775 : {
+  106775: {
     id: 106775,
     WeatherText: 'Partly cloudy',
     LocalizedName: 'San Francisco',
@@ -481,7 +481,7 @@ export const FAVORITES :EntityMap<FavoriteEntity>= {
       },
     },
   },
-  213575 : {
+  213575: {
     id: 232575,
     WeatherText: 'Partly cloudy',
     LocalizedName: 'San Francisco',

@@ -57,10 +57,6 @@ export function loadUserById(
       switchMap((userId) =>
         service.loadUserById$(userId).pipe(
           handleLoadUser(store, event)
-          // tapResponse({
-          //   next: (user: User) => console.log(user),
-          //   error: (err: FirebaseError) => console.log(err),
-          // })
         )
       )
     )

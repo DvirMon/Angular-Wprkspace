@@ -1,0 +1,45 @@
+<mat-card class="ms-media-card">
+  <div class="no-img">
+    @if (showImg()) {
+    <img
+      (click)="onImageClick()"
+      mat-card-image
+      width="1"
+      height="1"
+      [ngSrc]="media().Poster"
+      [alt]="media().Poster"
+      (error)="onError()"
+      priority
+    />
+    } @else {
+    <section class="flex items-center justify-center bg-gray-200">
+      <span class="text-center">Image not found</span>
+    </section>
+    }
+  </div>
+
+  <mat-card-content class="text-xl flex flex-col justify-center gap-3">
+    <section class="cursor-pointer" (click)="onTitleClick()">
+      @if(isEditable()) {
+
+      <span> {{ media().Title }} </span>
+      } @else {
+
+      <mat-form-field class="full-width">
+        <input
+          #input
+          matInput
+          autocomplete="off"
+          type="text"
+          name="title"
+          [formControl]="control"
+          (blur)="onInputBlur()"
+          (click)="$event.stopPropagation()"
+        />
+      </mat-form-field>
+
+      }
+    </section>
+    <section>{{ media().Year | formatDate : 'YYYY' }}</section>
+  </mat-card-content>
+</mat-card>

@@ -15,7 +15,7 @@ export interface Temperature {
   Imperial: Imperial;
 }
 
-export interface CurrentWeatherResult {
+export interface CurrentWeatherMediaResult {
   LocalObservationDateTime: Date;
   EpochTime: number;
   WeatherText: string;
@@ -28,6 +28,6 @@ export interface CurrentWeatherResult {
   Link: string;
 }
 
-export interface CurrentWeather extends CurrentWeatherResult {
+export interface CurrentWeather extends CurrentWeatherMediaResult {
   id: number;
 }

@@ -1,0 +1,24 @@
+main {
+  overflow: hidden;
+  min-height: calc(100vh - 144px) 
+}
+
+div.media-container {
+  @apply w-11/12 flex flex-col gap-4;
+}
+
+article {
+  display: flex;
+
+  &.list-content {
+    @apply flex-col gap-4;
+  }
+
+  &.grid-content {
+    @apply flex-row flex-wrap gap-4;
+
+    .grid-item {
+      width: 400px;
+    }
+  }
+}

@@ -6,7 +6,7 @@ import {
   getDocs,
   query,
 } from '@angular/fire/firestore';
-import { EntityResult } from '@dom';
+import { EntityMediaResult } from '@dom';
 import { Observable, from, map } from 'rxjs';
 import { Places } from './places.model';
 
@@ -24,7 +24,7 @@ export class PlacesService {
     ) as CollectionReference<Places>;
   }
 
-  loadPlaces(): Observable<EntityResult<Places>> {
+  loadPlaces(): Observable<EntityMediaResult<Places>> {
     const queryRef = query(this.vacationsRef);
     return from(getDocs(queryRef)).pipe(
       map((querySnapshot) =>
@@ -32,8 +32,8 @@ export class PlacesService {
           return { ...doc.data(), id: doc.id } as Places;
         })
       ),
-      map((result) => {
-        return { content: result };
+      map((MediaResult) => {
+        return { content: MediaResult };
       })
     );
   }

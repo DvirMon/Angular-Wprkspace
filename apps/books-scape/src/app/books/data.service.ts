@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
+import { EntityResult } from '@dom';
 import { Observable, map } from 'rxjs';
 import { Book, Item, VolumeInfo } from './books';
 import { VolumesHttpService } from './http.service';
-import { EntityResult } from '@dom';
-import { Entity } from '@angular-architects/ngrx-toolkit';
 import { Info } from './info.t';
 
 @Injectable({

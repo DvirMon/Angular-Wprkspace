@@ -10,14 +10,6 @@
   <mat-sidenav-content>
     <mat-toolbar color="primary">
       <div class="toolbar-content">
-        <!-- <button
-          type="button"
-          aria-label="Toggle sidenav"
-          mat-icon-button
-          (click)="drawer.toggle()"
-        >
-          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-        </button> -->
         <span class="brand">{{ title | titlecase }}</span>
         @if(showShopping()){
         <button class="shopping" mat-button [routerLink]="'/'">
@@ -32,6 +24,7 @@
       <div class="toolbar-content">
         <mat-nav-list>
           <span mat-list-item routerLink="/">Home</span>
+          <span mat-list-item routerLink="/filters">Filters</span>
         </mat-nav-list>
         <button class="bookshelf-btn" routerLink="bookshelf" mat-icon-button>
           <mat-icon fontIcon="shelves"></mat-icon>

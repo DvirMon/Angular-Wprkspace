@@ -8,7 +8,7 @@ import {
   input,
   runInInjectionContext,
 } from '@angular/core';
-import { MatToolbar } from '@angular/material/toolbar';
+import { MatButton } from '@angular/material/button';
 import { ParallaxDirective } from '@dom';
 import { FloatingButtonComponent } from '@dom/components';
 import { AuthStore } from '../../auth/store/store';
@@ -19,12 +19,13 @@ import {
 } from '../../places/place-list/place-list.component';
 import { Places } from '../../places/places.model';
 import { SignalStore } from '../../store/store';
+import { PlacesHeaderComponent } from '../../places/places-header/places-header.component';
 
 @Component({
   selector: 'to-places',
   standalone: true,
   imports: [
-    MatToolbar,
+    PlacesHeaderComponent,
     PlacesListComponent,
     PlacesCardComponent,
     FloatingButtonComponent,
@@ -60,4 +61,5 @@ export class PlacesComponent implements OnInit {
   onLogout(): void {
     runInInjectionContext(this.#injector, () => inject(AuthStore).logout());
   }
+
 }

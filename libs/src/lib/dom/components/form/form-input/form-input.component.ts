@@ -3,7 +3,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
-  Injector,
   OnInit,
   Output,
   Signal,
@@ -11,7 +10,7 @@ import {
   computed,
   inject,
   input,
-  signal,
+  signal
 } from '@angular/core';
 import {
   AbstractControl,
@@ -45,7 +44,7 @@ export class FormInputComponent implements OnInit {
   type = input<string>();
   label = input<string>();
   hint = input<string>();
-  errorsMap = input<ValidationErrors>();
+  messagesMap = input<ValidationErrors>();
 
   formControl!: Signal<FormControl<unknown>>;
 
@@ -57,7 +56,7 @@ export class FormInputComponent implements OnInit {
     this.formControl = computed(() => this.control() as FormControl);
 
     const errorEmitter = this.#formError.createErrorMessageEmitter(
-      this.errorsMap(),
+      this.messagesMap(),
       (value) => this.message.set(value)
     );
 

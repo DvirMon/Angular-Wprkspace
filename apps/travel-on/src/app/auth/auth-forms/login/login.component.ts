@@ -1,13 +1,13 @@
-import { NgOptimizedImage, TitleCasePipe } from '@angular/common';
+import { JsonPipe, NgOptimizedImage, TitleCasePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
-  Injector,
   Output,
   WritableSignal,
   inject,
   input,
+  signal,
 } from '@angular/core';
 import {
   FormControl,
@@ -19,7 +19,12 @@ import {
 } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatCard, MatCardContent, MatCardHeader } from '@angular/material/card';
-import { MatFormField } from '@angular/material/form-field';
+import {
+  MatError,
+  MatFormField,
+  MatHint,
+  MatLabel,
+} from '@angular/material/form-field';
 import { MatIcon, MatIconRegistry } from '@angular/material/icon';
 import { MatInput } from '@angular/material/input';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -32,6 +37,7 @@ import {
 } from '@dom';
 import { EmailAndPasswordSignIn, SignInEvent, SignInMethod } from '../../utils';
 import { DEFAULT_EMAIL } from '../../utils/constants';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 interface LoginForm {
   email: FormControl<string>;
@@ -42,12 +48,17 @@ interface LoginForm {
   selector: 'to-login-form',
   standalone: true,
   imports: [
+    JsonPipe,
     ReactiveFormsModule,
     NgOptimizedImage,
+    MatSlideToggleModule,
     MatCard,
     MatCardHeader,
     MatCardContent,
     MatFormField,
+    MatLabel,
+    MatError,
+    MatHint,
     MatInput,
     MatButton,
     MatIcon,
@@ -60,7 +71,6 @@ interface LoginForm {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginFormComponent {
-
   #formError = inject(FormErrorService);
 
   public readonly loginFormGroup: FormGroup<LoginForm>;
@@ -76,6 +86,8 @@ export class LoginFormComponent {
 
   public readonly formKeys: WritableSignal<string[]>;
 
+  public message = signal('');
+
   @Output() login: EventEmitter<SignInEvent> = new EventEmitter();
   @Output() google: EventEmitter<SignInEvent> = new EventEmitter();
   @Output() otp: EventEmitter<SignInEvent> = new EventEmitter();
@@ -86,6 +98,8 @@ export class LoginFormComponent {
     this._setGoogleIcon();
 
     this.loginFormGroup = this.buildLoginForm();
+
+    this.#formError.handleErrorMap(this.loginFormGroup, this.errorsMap);
 
     this.formKeys = getFormKeys(this.loginFormGroup);
 

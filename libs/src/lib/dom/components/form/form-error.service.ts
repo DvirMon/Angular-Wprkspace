@@ -2,8 +2,10 @@ import {
   Injectable,
   Injector,
   Signal,
+  WritableSignal,
   effect,
   runInInjectionContext,
+  signal,
 } from '@angular/core';
 import { Observable, pipe } from 'rxjs';
 import { FormControl, FormGroup, ValidationErrors } from '@angular/forms';
@@ -17,6 +19,8 @@ import { FormServerError } from './types';
 })
 export class FormErrorService {
   constructor(private injector: Injector) {}
+
+  errors: WritableSignal<ValidationErrors> = signal({});
 
   handleServerErrorEffect(
     serverError: Signal<FormServerError | undefined>,
@@ -91,5 +95,24 @@ export class FormErrorService {
     }
 
     return '';
+  }
+
+  handleErrorMap(group: FormGroup, messages: ValidationErrors) {
+    group.statusChanges
+      .pipe(
+        startWith(group.status),
+        map(() => {
+          const formKeys = Object.keys(group.controls);
+          for (const key of formKeys) {
+            const controlErrors = group.controls[key].errors;
+
+            this.errors.update((value) => ({
+              ...value,
+              [key]: { ...controlErrors, },
+            }));
+          }
+        })
+      )
+      .subscribe((val) => console.log(this.errors()));
   }
 }

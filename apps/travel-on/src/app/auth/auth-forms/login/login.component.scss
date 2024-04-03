@@ -1,7 +1,6 @@
-@use "variables" as main;
+@use 'variables' as main;
 
 .mat-mdc-card.login-form {
-
   mat-card-header {
     @include main.flexLayout(column, center, none);
 
@@ -41,4 +40,8 @@
       }
     }
   }
+}
+
+::ng-deep button.mat-mdc-button {
+  color: black;
 }

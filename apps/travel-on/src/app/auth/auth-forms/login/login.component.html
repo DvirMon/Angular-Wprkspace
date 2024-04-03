@@ -22,13 +22,14 @@
         [control]="loginFormGroup.get(key)"
         [key]="key"
         [label]="key | titlecase"
-        [errorsMap]="errorsMap[key]"
+        [messagesMap]="errorsMap[key]"
       >
       </dom-form-input>
+
       }
       <button
         class="login-btn"
-        mat-raised-button
+        mat-flat-button
         type="submit"
         color="primary"
         [disabled]="!loginFormGroup.valid"

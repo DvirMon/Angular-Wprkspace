@@ -12,9 +12,4 @@ export type Loader<T, Entity, MethodName extends string> = {
   [K in MethodName]: (args: T) => Observable<Entity[]>;
 };
 
-
-export interface EntityLoader<T, Entity> {
-  [key: string]: (args: T) => Observable<Entity[]>;
-}
-
-export type LoaderService<EntityLoader> = ProviderToken<EntityLoader>;
+export type LoaderService<Loader> = ProviderToken<Loader>;

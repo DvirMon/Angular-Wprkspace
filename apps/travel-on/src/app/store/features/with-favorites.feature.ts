@@ -3,8 +3,8 @@ import {
   Entity,
   Loader,
   LoaderService,
-  createSliceLoader,
-  loadSlice,
+  createLoader,
+  loadSlice
 } from '@dom';
 import {
   patchState,
@@ -25,7 +25,7 @@ export function withFavorites(Loader: LoaderService<FavoritesLoader>) {
   return signalStoreFeature(
     withState<{ favorite: Favorite[] }>({ favorite: [] }),
     withMethods((store) => {
-      const loader = createSliceLoader(Loader, 'loadFavorites');
+      const loader = createLoader(Loader, 'loadFavorites');
       return {
         loadFavorites: loadSlice(loader, store, SLICE),
       };

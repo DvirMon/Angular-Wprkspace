@@ -2,7 +2,7 @@ import {
   Entity,
   Loader,
   LoaderService,
-  createSliceLoader,
+  createLoader,
   loadSlice,
 } from '@dom';
 import { signalStoreFeature, withMethods, withState } from '@ngrx/signals';
@@ -22,7 +22,7 @@ export function withPlaces(Loader: LoaderService<PlacesLoader>) {
   return signalStoreFeature(
     withState(initialState),
     withMethods((store) => {
-      const loader = createSliceLoader(Loader, 'loadPlaces');
+      const loader = createLoader(Loader, 'loadPlaces');
       return {
         loadPlaces: loadSlice<void>(loader, store, SLICE),
       };

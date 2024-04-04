@@ -58,16 +58,6 @@ export function loadEntities<T>(
   );
 }
 
-export function createSliceLoader<T>(
-  Loader: LoaderService<Loader<T, Entity, string>>,
-  methodName: string
-): (args: T) => Observable<Entity[]> {
-  return runInInjectionContext(inject(Injector), () => {
-    const loader = inject(Loader);
-    return (query: T) => loader[methodName](query);
-  });
-}
-
 export function loadSlice<T>(
   loader: (query: T) => Observable<Entity[]>,
   state: StateSignal<object>,

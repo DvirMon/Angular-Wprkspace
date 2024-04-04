@@ -17,15 +17,13 @@ export interface Entity {
 
 export type EntityMap = Record<EntityId, Entity>;
 
-export interface EntityResult<Entity> {
-  content: Entity[];
-}
-
 export type Loader<T, Entity, MethodName extends string> = {
-  [K in MethodName]: (args: T) => Observable<EntityResult<Entity>>;
+  [K in MethodName]: (args: T) => Observable<Entity[]>;
 };
 
-export type LoaderService<Loader> = ProviderToken<Loader>;
+export type LoaderService<T> = ProviderToken<T>;
+
+export type LoadService<Loader> = ProviderToken<Loader>;
 
 function getKey(collection: string): string {
   return collection == 'entities' ? collection : collection + 'Entities';
@@ -36,27 +34,24 @@ export function handleLoadEntitiesSuccess<Entity extends { id: EntityId }>(
   state: unknown,
   collection: string
 ) {
-  return (res: EntityResult<Entity>) => {
+  return (res: Entity[]) => {
     const key: string = getKey(collection);
     const localState = state as Record<string, Signal<Array<Entity>>>;
     const hasEntities = localState[key]()?.length > 0;
     const update = hasEntities ? setAllEntities : addEntities;
 
     if (key === 'entities') {
-      patchState(state as StateSignal<object>, update(res.content));
+      patchState(state as StateSignal<object>, update(res));
     } else {
-      patchState(
-        state as StateSignal<object>,
-        update(res.content, { collection })
-      );
+      patchState(state as StateSignal<object>, update(res, { collection }));
     }
   };
 }
 
 export function createLoader<T>(
-  Loader: LoaderService<Loader<T, Entity, string>>,
+  Loader: LoadService<Loader<T, Entity, string>>,
   methodName: string
-): (...args: T[]) => Observable<EntityResult<Entity>> {
+): (...args: T[]) => Observable<Entity[]> {
   return runInInjectionContext(inject(Injector), () => {
     const loader = inject(Loader);
     return (query: T) => loader[methodName](query);
@@ -64,7 +59,7 @@ export function createLoader<T>(
 }
 
 export function loadEntities<T>(
-  loader: (query: T) => Observable<EntityResult<Entity>>,
+  loader: (query: T) => Observable<Entity[]>,
   state: StateSignal<object>,
   collection = 'entities'
 ) {
@@ -83,9 +78,9 @@ export function loadEntities<T>(
 }
 
 export function createSliceLoader<T>(
-  Loader: LoaderService<Loader<T, Entity, string>>,
+  Loader: LoadService<Loader<T, Entity, string>>,
   methodName: string
-): (args: T) => Observable<EntityResult<Entity>> {
+): (args: T) => Observable<Entity[]> {
   return runInInjectionContext(inject(Injector), () => {
     const loader = inject(Loader);
     return (query: T) => loader[methodName](query);
@@ -93,7 +88,7 @@ export function createSliceLoader<T>(
 }
 
 export function loadSlice<T>(
-  loader: (query: T) => Observable<EntityResult<Entity>>,
+  loader: (query: T) => Observable<Entity[]>,
   state: StateSignal<object>,
   slice: string
 ) {
@@ -102,7 +97,7 @@ export function loadSlice<T>(
       switchMap((query) =>
         loader(query).pipe(
           tapResponse({
-            next: (res) => patchState(state, { [slice]: res.content }),
+            next: (res) => patchState(state, { [slice]: res }),
             error: () => EMPTY,
           })
         )

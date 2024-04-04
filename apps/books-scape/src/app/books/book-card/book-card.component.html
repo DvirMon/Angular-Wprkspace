@@ -30,7 +30,7 @@
         </p>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-icon-button>
+        <button mat-icon-button (click)="onInfo(book())">
           <mat-icon fontIcon="info"></mat-icon>
         </button>
         <button (click)="onAddToShelf(book())" mat-icon-button>

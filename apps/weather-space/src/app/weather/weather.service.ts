@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { EntityMediaResult } from '@dom';
+import { EntityResult } from '@dom';
 import { Observable, map } from 'rxjs';
 import {
   AutocompleteMediaResult,
@@ -24,7 +24,7 @@ export class WeatherService {
 
   public loadOptions(
     query: string
-  ): Observable<EntityMediaResult<AutocompleteOption>> {
+  ): Observable<EntityResult<AutocompleteOption>> {
     return this.weatherHttp.loadOptions(query).pipe(
       map((MediaResults) => this._mapToAutocompleteMediaResults(MediaResults)),
       map((options) => ({ content: options }))
@@ -47,7 +47,7 @@ export class WeatherService {
 
   public loadCurrentWeather(
     locationKey: number
-  ): Observable<EntityMediaResult<CurrentWeather>> {
+  ): Observable<EntityResult<CurrentWeather>> {
     return this.weatherHttp.loadCurrentWeather(locationKey).pipe(
       map((data: CurrentWeatherMediaResult[]) => {
         return { id: locationKey, ...data[0] } as CurrentWeather;
@@ -58,7 +58,7 @@ export class WeatherService {
 
   public loadFutureWeather(
     args: FutureWeatherArgs
-  ): Observable<EntityMediaResult<FutureWeather>> {
+  ): Observable<EntityResult<FutureWeather>> {
     const { id, metric } = args;
     return this.weatherHttp.loadFutureWeather(id, metric).pipe(
       map((data: FutureWeatherMediaResult) => {

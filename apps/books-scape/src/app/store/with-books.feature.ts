@@ -7,20 +7,24 @@ import {
   LoaderService,
   createLoader,
   loadEntities,
+  loadSlice,
 } from '@dom';
 import { Book } from '../books/books';
 
-const COLLECTION = 'books';
+const COLLECTION = 'volumes';
+const SLICE = 'volInfo';
 
-type BooksLoader = Loader<string, Entity, 'loadBooks'>;
+type BooksLoader = Loader<string, Entity, 'loadVolumes'>;
 
 export function withBooks(Loader: LoaderService<BooksLoader>) {
   return signalStoreFeature(
     withEntities({ entity: type<Book>(), collection: COLLECTION }),
     withMethods((state) => {
-      const loader = createLoader(Loader, 'loadBooks');
+      const volumeLoader = createLoader(Loader, 'loadVolumes');
+      const volumeInfoLoader = createLoader(Loader, 'loadVolumeInfo');
       return {
-        loadBooks: loadEntities(loader, state, COLLECTION),
+        loadVolumes: loadEntities(volumeLoader, state, COLLECTION),
+        loadVolumeInfo: loadSlice(volumeInfoLoader, state, SLICE),
       };
     })
   );

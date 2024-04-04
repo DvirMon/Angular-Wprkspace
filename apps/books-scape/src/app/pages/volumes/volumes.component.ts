@@ -1,22 +1,31 @@
-import { Component, Signal, inject } from '@angular/core';
+import {
+  Component,
+  Injector,
+  Signal,
+  inject,
+  runInInjectionContext,
+} from '@angular/core';
 
+import { JsonPipe } from '@angular/common';
+import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
+import { SearchInputComponent } from '@dom/components';
 import { patchState } from '@ngrx/signals';
 import { BookCardComponent } from '../../books/book-card/book-card.component';
 import { Book } from '../../books/books';
+import { LayoutComponent } from '../../layout/layout.component';
 import { AppStore } from '../../store/store';
-import { SearchInputComponent } from '@dom/components';
-import { DashboardComponent } from '../../layout/dashboard/dashboard.component';
-import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'books-scape-volume-page',
   standalone: true,
-  imports: [DashboardComponent, BookCardComponent, SearchInputComponent],
+  imports: [JsonPipe, LayoutComponent, BookCardComponent, SearchInputComponent],
   templateUrl: './volumes.component.html',
   styleUrls: ['./volumes.component.scss'],
 })
 export class VolumesPageComponent {
   #store = inject(AppStore);
+  #injector = inject(Injector);
 
   searchControl = new FormControl<string>('angular', { nonNullable: true });
 
@@ -24,7 +33,7 @@ export class VolumesPageComponent {
   public readonly initialValue: Signal<string>;
 
   constructor() {
-    this.books = this.#store.booksEntities;
+    this.books = this.#store.volumesEntities;
     this.initialValue = this.#store.searchTerm;
   }
 
@@ -33,6 +42,12 @@ export class VolumesPageComponent {
   }
 
   onAddToShelf(newBook: Book): void {
-    this.#store.AddToShelf(newBook);
+    this.#store.addToShelf(newBook);
+  }
+
+  onInfo(volId: string): void {
+    runInInjectionContext(this.#injector, () =>
+      inject(Router).navigateByUrl(`info/${volId}`)
+    );
   }
 }

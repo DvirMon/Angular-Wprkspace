@@ -14,24 +14,18 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatListOption, MatSelectionList } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
-import { AutocompleteComponent, LoaderService, getFormKeys } from '@dom';
+import { AutocompleteComponent, getFormKeys } from '@dom';
 import { StateSignal, patchState, signalState } from '@ngrx/signals';
-import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import {
-  debounceTime,
-  distinctUntilChanged,
-  map,
-  merge,
-  pipe,
-  switchMap,
-  tap,
-} from 'rxjs';
 import { Book } from '../../books/books';
 import { LayoutComponent } from '../../layout/layout.component';
-import { Loader, createLoader } from '../../shared/data.helpers';
+import {
+  Loader,
+  LoaderService,
+  createOptionsLoader,
+  handleGroupOptions,
+  registerGroupOptions,
+} from '../../shared/options.helper';
 import { FiltersDataService } from './data.service';
-
-type OptionLoader = Loader<string, Book, 'loadOptions'>;
 
 @Component({
   selector: 'books-scape-filters',
@@ -67,17 +61,9 @@ export class FiltersPageComponent {
     { value: 'tacos-2', viewValue: 'Tacos' },
   ];
 
-  #handleOptionsChanged = rxMethod(
-    pipe(
-      switchMap(({ key, value }: Record<string, string>) =>
-        this.#filterService
-          .loadOptions(value)
-          .pipe(map((data) => ({ [key]: data })))
-      ),
-      tap((value) =>
-        patchState(this.optionsMap, { ...this.optionsMap(), ...value })
-      )
-    )
+  #handleOptionsChanged = this.handleOptions(
+    FiltersDataService,
+    this.optionsMap
   );
 
   constructor() {
@@ -90,9 +76,7 @@ export class FiltersPageComponent {
 
     this.booKeys = getFormKeys(this.booksAutocomplete);
 
-    this.#handleOptionsChanged(
-      this.registerGroupOptions(this.booksAutocomplete)
-    );
+    this.#handleOptionsChanged(registerGroupOptions(this.booksAutocomplete));
 
     const results = toSignal(this.#filterService.loadFilterOptions());
 
@@ -106,31 +90,12 @@ export class FiltersPageComponent {
     );
   }
 
-  registerGroupOptions(group: FormGroup) {
-    const observables$ = Object.keys(group.controls).map((key: string) =>
-      group.controls[key].valueChanges.pipe(
-        debounceTime(300),
-        distinctUntilChanged(),
-        map((value) => ({ key: key, value }))
-      )
-    );
-
-    return merge(...observables$);
-  }
-
   handleOptions(
-    Loader: LoaderService<OptionLoader>,
+    Loader: LoaderService<Loader<Book, 'loadOptions'>>,
     state: StateSignal<object>
   ) {
-    const loader = createLoader(Loader, 'loadOptions');
+    const loader = createOptionsLoader(Loader, 'loadOptions');
 
-    return rxMethod(
-      pipe(
-        switchMap(({ key, value }: Record<string, string>) =>
-          loader(value).pipe(map((data) => ({ [key]: data })))
-        ),
-        tap((value) => patchState(state, { ...state, ...value }))
-      )
-    );
+    return handleGroupOptions(loader, state);
   }
 }

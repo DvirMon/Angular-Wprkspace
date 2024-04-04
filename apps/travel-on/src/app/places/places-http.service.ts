@@ -13,7 +13,7 @@ import { Places } from './places.model';
 @Injectable({
   providedIn: 'root',
 })
-export class PlacesService {
+export class PlacesHttpService {
   private readonly vacationsRef: CollectionReference<Places>;
   private readonly VACATIONS_COLLECTION = 'vacations';
 

@@ -12,9 +12,8 @@
 
   @if (hint()) {
 
-  <!-- <mat-hint> {{ "Please enter your " + hint() }}</mat-hint> -->
-  <mat-hint> {{ formControl().errors }}</mat-hint>
-  } @if (hasError()) {
-  <mat-error>{{ errorMessage() }}</mat-error>
+  <mat-hint> {{ 'Please enter your ' + hint() }}</mat-hint>
+  } @if (!!message()) {
+  <mat-error>{{ message() }}</mat-error>
   }
 </mat-form-field>

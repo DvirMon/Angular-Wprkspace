@@ -1,15 +1,14 @@
-@use "variables" as main;
-
+@use 'variables' as main;
 
 div.places-list-wrapper {
   width: 100%;
   overflow-wrap: hidden;
 
-  padding: main.spacing(2);
+  // padding: main.spacing(2);
   display: flex;
   flex-wrap: wrap;
-  gap: main.spacing(3);
-
+  gap: 24px 5%;
+  // justify-content: space-between;
   section.places-card-wrapper {
     width: 30%;
   }

@@ -1,40 +1,43 @@
-import { NgOptimizedImage, TitleCasePipe } from '@angular/common';
+import { JsonPipe, NgOptimizedImage, TitleCasePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
-  Injector,
   Output,
   WritableSignal,
   inject,
   input,
+  signal,
 } from '@angular/core';
 import {
   FormControl,
   FormGroup,
-  FormsModule,
   NonNullableFormBuilder,
   ReactiveFormsModule,
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
+import { MatButton } from '@angular/material/button';
+import { MatCard, MatCardContent, MatCardHeader } from '@angular/material/card';
+import {
+  MatError,
+  MatFormField,
+  MatHint,
+  MatLabel,
+} from '@angular/material/form-field';
+import { MatIcon, MatIconRegistry } from '@angular/material/icon';
+import { MatInput } from '@angular/material/input';
 import { DomSanitizer } from '@angular/platform-browser';
-import { RouterModule } from '@angular/router';
-
 import {
   DividerHeaderComponent,
+  FormErrorService,
   FormInputComponent,
   FormServerError,
   getFormKeys,
-  handleServerErrorEffect,
-} from '@dom/components';
+} from '@dom';
 import { EmailAndPasswordSignIn, SignInEvent, SignInMethod } from '../../utils';
 import { DEFAULT_EMAIL } from '../../utils/constants';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 interface LoginForm {
   email: FormControl<string>;
@@ -45,15 +48,20 @@ interface LoginForm {
   selector: 'to-login-form',
   standalone: true,
   imports: [
-    RouterModule,
-    FormsModule,
+    JsonPipe,
     ReactiveFormsModule,
     NgOptimizedImage,
-    MatFormFieldModule,
-    MatInputModule,
-    MatCardModule,
-    MatButtonModule,
-    MatIconModule,
+    MatSlideToggleModule,
+    MatCard,
+    MatCardHeader,
+    MatCardContent,
+    MatFormField,
+    MatLabel,
+    MatError,
+    MatHint,
+    MatInput,
+    MatButton,
+    MatIcon,
     TitleCasePipe,
     DividerHeaderComponent,
     FormInputComponent,
@@ -63,7 +71,7 @@ interface LoginForm {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginFormComponent {
-  #injector = inject(Injector);
+  #formError = inject(FormErrorService);
 
   public readonly loginFormGroup: FormGroup<LoginForm>;
 
@@ -78,6 +86,8 @@ export class LoginFormComponent {
 
   public readonly formKeys: WritableSignal<string[]>;
 
+  public message = signal('');
+
   @Output() login: EventEmitter<SignInEvent> = new EventEmitter();
   @Output() google: EventEmitter<SignInEvent> = new EventEmitter();
   @Output() otp: EventEmitter<SignInEvent> = new EventEmitter();
@@ -89,10 +99,11 @@ export class LoginFormComponent {
 
     this.loginFormGroup = this.buildLoginForm();
 
+    this.#formError.handleErrorMap(this.loginFormGroup, this.errorsMap);
+
     this.formKeys = getFormKeys(this.loginFormGroup);
 
-    handleServerErrorEffect(
-      this.#injector,
+    this.#formError.handleServerErrorEffect(
       this.serverError,
       this.loginFormGroup
     );
@@ -154,18 +165,4 @@ export class LoginFormComponent {
       data,
     } as SignInEvent;
   }
-
-  //   private _handleServerError(
-  //     group: FormGroup,
-  //     server: AuthServerError | null
-  //   ): void {
-  //     if (group !== null && server !== null) {
-  //       const control = group.get(server.control as string);
-
-  //       if (control != null) {
-  //         control.setErrors({ serverError: server.message });
-  //       }
-  //     }
-  //   }
-  // }
 }

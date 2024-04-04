@@ -1,0 +1,33 @@
+@use '@angular/material' as mat;
+
+@use '@angular/material-experimental' as matx;
+
+@use 'color-palettes' as palettes;
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+
+$travel-on-primary: mat.define-palette(palettes.primary-palette());
+$travel-on-accent: mat.define-palette(palettes.accent-palette());
+
+// The warn palette is optional (defaults to red).
+$travel-on-warn: mat.define-palette(mat.$red-palette);
+
+$theme: matx.define-theme(
+  (
+    color: (
+      theme-type: light,
+      primary: matx.$m3-orange-palette,
+      tertiary: matx.$m3-red-palette,
+    ),
+    typography: (
+      brand-family: 'Comic Sans',
+      bold-weight: 900,
+    ),
+  )
+);
+
+html, body, to-root {
+  @include mat.all-component-themes($theme);
+}

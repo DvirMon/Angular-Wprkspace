@@ -1,6 +1,6 @@
 import {
   Entity,
-  Loader,
+  EntityLoader,
   LoaderService,
   createLoader,
   loadSlice,
@@ -16,7 +16,7 @@ const initialState: PlacesState = { places: [] };
 
 const SLICE = 'places';
 
-type PlacesLoader = Loader<void, Entity, 'loadPlaces'>;
+type PlacesLoader = EntityLoader<void, Entity, 'loadPlaces'>;
 
 export function withPlaces(Loader: LoaderService<PlacesLoader>) {
   return signalStoreFeature(

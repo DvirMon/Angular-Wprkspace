@@ -1,7 +1,7 @@
 import { computed, inject } from '@angular/core';
 import {
   Entity,
-  Loader,
+  EntityLoader,
   LoaderService,
   createLoader,
   loadSlice
@@ -17,7 +17,7 @@ import { Favorite, FavoriteHttpService } from '../../favorites';
 
 const SLICE = 'favorite';
 
-type FavoritesLoader = Loader<string, Entity, 'loadFavorites'>;
+type FavoritesLoader = EntityLoader<string, Entity, 'loadFavorites'>;
 
 type FavoriteSelection = { placeId: string; selected: boolean };
 

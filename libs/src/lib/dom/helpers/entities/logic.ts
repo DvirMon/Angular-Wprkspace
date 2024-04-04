@@ -4,7 +4,7 @@ import { StateSignal, patchState } from '@ngrx/signals';
 import { EntityId, addEntities, setAllEntities } from '@ngrx/signals/entities';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { EMPTY, Observable, pipe, switchMap } from 'rxjs';
-import { Entity, EntityLoader, Loader, LoaderService } from './types';
+import { Entity, EntityLoader, LoaderService } from './types';
 
 function getKey(collection: string): string {
   return collection == 'entities' ? collection : collection + 'Entities';
@@ -30,7 +30,7 @@ export function handleLoadEntitiesSuccess<Entity extends { id: EntityId }>(
 }
 
 export function createLoader<T>(
-  Loader: LoaderService<EntityLoader<T, Entity>>,
+  Loader: LoaderService<EntityLoader<T, Entity, string>>,
   methodName: string
 ): (...args: T[]) => Observable<Entity[]> {
   return runInInjectionContext(inject(Injector), () => {

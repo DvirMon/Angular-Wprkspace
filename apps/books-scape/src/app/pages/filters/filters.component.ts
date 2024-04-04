@@ -47,32 +47,21 @@ import { FiltersDataService } from './data.service';
   styleUrls: ['./filters.component.scss'],
 })
 export class FiltersPageComponent {
-  public readonly optionsMap = signalState<Record<string, Book[]>>({});
-
   #filterService = inject(FiltersDataService);
+
+  public readonly optionsMap = signalState<Record<string, Book[]>>({});
 
   public readonly booksAutocomplete: FormGroup;
 
   public readonly booKeys: Signal<string[]>;
 
-  foods = [
-    { value: 'steak-0', viewValue: 'Steak' },
-    { value: 'pizza-1', viewValue: 'Pizza' },
-    { value: 'tacos-2', viewValue: 'Tacos' },
-  ];
-
-  #handleOptionsChanged = this.handleOptions(
+  #handleOptionsChanged = this._handleOptions(
     FiltersDataService,
     this.optionsMap
   );
 
   constructor() {
-    this.booksAutocomplete = inject(NonNullableFormBuilder).group({
-      book1: ['Angular'],
-      book2: ['Angular'],
-      book3: ['Foundation'],
-      book4: ['The Hobbit'],
-    });
+    this.booksAutocomplete = this._buildGroup();
 
     this.booKeys = getFormKeys(this.booksAutocomplete);
 
@@ -90,8 +79,17 @@ export class FiltersPageComponent {
     );
   }
 
-  handleOptions(
-    Loader: LoaderService<Loader<Book, 'loadOptions'>>,
+  private _buildGroup() {
+    return inject(NonNullableFormBuilder).group({
+      book1: ['Angular'],
+      book2: ['Angular'],
+      book3: ['Foundation'],
+      book4: ['The Hobbit'],
+    });
+  }
+
+  private _handleOptions(
+    Loader: LoaderService<Loader<string, Book, 'loadOptions'>>,
     state: StateSignal<object>
   ) {
     const loader = createOptionsLoader(Loader, 'loadOptions');

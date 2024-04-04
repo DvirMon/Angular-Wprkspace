@@ -25,19 +25,19 @@ export interface OptionChanged {
   query: string;
 }
 
-export type Loader<Entity, MethodName extends string> = {
-  [K in MethodName]: (args: string) => Observable<Entity[]>;
+export type Loader<T, Entity, MethodName extends string> = {
+  [K in MethodName]: (args: T) => Observable<Entity[]>;
 };
 
 export type LoaderService<Loader> = ProviderToken<Loader>;
 
-export function createOptionsLoader(
-  Loader: LoaderService<Loader<Entity, string>>,
+export function createOptionsLoader<T>(
+  Loader: LoaderService<Loader<T, Entity, string>>,
   methodName: string
-): (args: string) => Observable<Entity[]> {
+): (args: T) => Observable<Entity[]> {
   return runInInjectionContext(inject(Injector), () => {
     const loader = inject(Loader);
-    return (query: string) => loader[methodName](query);
+    return (query: T) => loader[methodName](query);
   });
 }
 
@@ -55,14 +55,14 @@ export function registerGroupOptions(
   return merge(...observables$);
 }
 
-export function handleGroupOptions(
-  loader: (args: string) => Observable<Entity[]>,
+export function handleGroupOptions<T>(
+  loader: (args: T) => Observable<Entity[]>,
   state: StateSignal<object>
 ) {
   return rxMethod<OptionChanged>(
     pipe(
       switchMap(({ query, key }) =>
-        loader(query).pipe(
+        loader(query as T).pipe(
           tapResponse({
             next: (data) => patchState(state, { [key]: data }),
             error: () => EMPTY,

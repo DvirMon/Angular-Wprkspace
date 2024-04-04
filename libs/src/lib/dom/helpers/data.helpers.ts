@@ -21,9 +21,7 @@ export type Loader<T, Entity, MethodName extends string> = {
   [K in MethodName]: (args: T) => Observable<Entity[]>;
 };
 
-export type LoaderService<T> = ProviderToken<T>;
-
-export type LoadService<Loader> = ProviderToken<Loader>;
+export type LoaderService<Loader> = ProviderToken<Loader>;
 
 function getKey(collection: string): string {
   return collection == 'entities' ? collection : collection + 'Entities';
@@ -49,7 +47,7 @@ export function handleLoadEntitiesSuccess<Entity extends { id: EntityId }>(
 }
 
 export function createLoader<T>(
-  Loader: LoadService<Loader<T, Entity, string>>,
+  Loader: LoaderService<Loader<T, Entity, string>>,
   methodName: string
 ): (...args: T[]) => Observable<Entity[]> {
   return runInInjectionContext(inject(Injector), () => {
@@ -78,7 +76,7 @@ export function loadEntities<T>(
 }
 
 export function createSliceLoader<T>(
-  Loader: LoadService<Loader<T, Entity, string>>,
+  Loader: LoaderService<Loader<T, Entity, string>>,
   methodName: string
 ): (args: T) => Observable<Entity[]> {
   return runInInjectionContext(inject(Injector), () => {

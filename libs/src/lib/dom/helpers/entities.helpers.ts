@@ -9,7 +9,7 @@ import { tapResponse } from '@ngrx/operators';
 import { StateSignal, patchState } from '@ngrx/signals';
 import { EntityId, addEntities, setAllEntities } from '@ngrx/signals/entities';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { EMPTY, Observable, pipe, switchMap, tap } from 'rxjs';
+import { EMPTY, Observable, pipe, switchMap } from 'rxjs';
 
 export interface Entity {
   id: EntityId;
@@ -25,9 +25,7 @@ export type Loader<T, Entity, MethodName extends string> = {
   [K in MethodName]: (args: T) => Observable<EntityResult<Entity>>;
 };
 
-export type LoaderService<T> = ProviderToken<T>;
-
-export type LoadService<Loader> = ProviderToken<Loader>;
+export type LoaderService<Loader> = ProviderToken<Loader>;
 
 function getKey(collection: string): string {
   return collection == 'entities' ? collection : collection + 'Entities';
@@ -56,7 +54,7 @@ export function handleLoadEntitiesSuccess<Entity extends { id: EntityId }>(
 }
 
 export function createLoader<T>(
-  Loader: LoadService<Loader<T, Entity, string>>,
+  Loader: LoaderService<Loader<T, Entity, string>>,
   methodName: string
 ): (...args: T[]) => Observable<EntityResult<Entity>> {
   return runInInjectionContext(inject(Injector), () => {
@@ -85,7 +83,7 @@ export function loadEntities<T>(
 }
 
 export function createSliceLoader<T>(
-  Loader: LoadService<Loader<T, Entity, string>>,
+  Loader: LoaderService<Loader<T, Entity, string>>,
   methodName: string
 ): (args: T) => Observable<EntityResult<Entity>> {
   return runInInjectionContext(inject(Injector), () => {

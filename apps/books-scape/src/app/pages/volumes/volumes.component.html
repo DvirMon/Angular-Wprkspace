@@ -1,4 +1,4 @@
-<books-scape-dashboard [showNavigation]="true" [showShopping]="false">
+<books-scape-layout [showNavigation]="true" [showShopping]="false">
   <div class="books-page">
     <header>
       <div class="search-wrapper">
@@ -11,15 +11,17 @@
     </header>
 
     <main class="books-wrapper">
+
       @for (book of books(); track book.id) {
       <div class="book-card-wrapper">
         <books-scape-book-card
           [book]="book"
-          (addToShelf)="onAddToShelf($event)"
+          (addSelected)="onAddToShelf($event)"
+          (infoSelected)="onInfo($event)"
         ></books-scape-book-card>
       </div>
 
       }
     </main>
   </div>
-</books-scape-dashboard>
+</books-scape-layout>

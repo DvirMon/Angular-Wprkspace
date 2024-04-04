@@ -16,10 +16,10 @@ export function withBookshelf() {
   return signalStoreFeature(
     withEntities({ entity: type<Book>(), collection: COLLECTION }),
     withMethods((store) => ({
-      AddToShelf(newBook: Book) {
+      addToShelf(newBook: Book) {
         patchState(store, addEntity(newBook, { collection: COLLECTION }));
       },
-      RemoveFromShelf(id: string) {
+      removeFromShelf(id: string) {
         patchState(store, removeEntity(id, { collection: COLLECTION }));
       },
     })),

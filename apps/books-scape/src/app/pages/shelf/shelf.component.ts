@@ -8,13 +8,13 @@ import {
 } from '@angular/core';
 import { Book } from '../../books/books';
 import { BookshelfCardComponent } from '../../bookshelf/bookshelf-card/bookshelf-card.component';
-import { DashboardComponent } from '../../layout/dashboard/dashboard.component';
 import { AppStore } from '../../store/store';
+import { LayoutComponent } from '../../layout/layout.component';
 
 @Component({
   selector: 'books-scape-shelf-page',
   standalone: true,
-  imports: [TitleCasePipe, DashboardComponent, BookshelfCardComponent],
+  imports: [TitleCasePipe, LayoutComponent, BookshelfCardComponent],
   templateUrl: './shelf.component.html',
   styleUrls: ['./shelf.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -34,6 +34,6 @@ export class BookshelfPageComponent {
   }
 
   onRemoveFromShelf(event: Book) {
-    this.#store.RemoveFromShelf(event.id);
+    this.#store.removeFromShelf(event.id);
   }
 }

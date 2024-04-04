@@ -13,7 +13,6 @@ import {
   setDoc,
   where,
 } from '@angular/fire/firestore';
-import { EntityResult } from '@dom';
 import { Observable, from, iif, map, of, switchMap } from 'rxjs';
 import { mapQuerySnapshotDoc } from '../shared/helpers';
 import { createFavorite } from './helpers';
@@ -45,9 +44,7 @@ export class FavoriteHttpService {
       })
     );
   }
-  public loadFavorites(
-    userId: string
-  ): Observable<EntityResult<Favorite>> {
+  public loadFavorites(userId: string): Observable<Favorite[]> {
     const querySnapshot$ = from(
       getDocs(query(this.favoritesRef, where('userId', '==', userId)))
     );
@@ -64,9 +61,7 @@ export class FavoriteHttpService {
       switchMap((querySnapshot: QuerySnapshot<Favorite>) =>
         iif(() => querySnapshot.empty, trueMediaResult$, falseMediaResult$)
       ),
-      map((res) => {
-        return { content: [res] };
-      })
+      map((res) => [res])
     );
   }
 

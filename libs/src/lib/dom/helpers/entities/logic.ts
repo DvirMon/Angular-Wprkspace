@@ -1,27 +1,10 @@
-import {
-  Injector,
-  ProviderToken,
-  Signal,
-  inject,
-  runInInjectionContext,
-} from '@angular/core';
+import { Injector, Signal, inject, runInInjectionContext } from '@angular/core';
 import { tapResponse } from '@ngrx/operators';
 import { StateSignal, patchState } from '@ngrx/signals';
 import { EntityId, addEntities, setAllEntities } from '@ngrx/signals/entities';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { EMPTY, Observable, pipe, switchMap } from 'rxjs';
-
-export interface Entity {
-  id: EntityId;
-}
-
-export type EntityMap = Record<EntityId, Entity>;
-
-export type Loader<T, Entity, MethodName extends string> = {
-  [K in MethodName]: (args: T) => Observable<Entity[]>;
-};
-
-export type LoaderService<Loader> = ProviderToken<Loader>;
+import { Entity, Loader, LoaderService } from './types';
 
 function getKey(collection: string): string {
   return collection == 'entities' ? collection : collection + 'Entities';
@@ -92,10 +75,10 @@ export function loadSlice<T>(
 ) {
   return rxMethod<T>(
     pipe(
-      switchMap((query) =>
+      switchMap((query: T) =>
         loader(query).pipe(
           tapResponse({
-            next: (res) => patchState(state, { [slice]: res }),
+            next: (res: Entity[]) => patchState(state, { [slice]: res }),
             error: () => EMPTY,
           })
         )

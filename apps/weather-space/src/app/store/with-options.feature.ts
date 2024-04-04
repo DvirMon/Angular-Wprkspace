@@ -32,7 +32,7 @@ export function withOptions(Loader: LoaderService<OptionLoader>) {
 
         async loadOptionAsync(query: string) {
           const res = await lastValueFrom(loader(query));
-          const options = res.content as AutocompleteOption[];
+          const options = res as AutocompleteOption[];
           patchState(store, addEntities(options, { collection: COLLECTION }));
         },
       };

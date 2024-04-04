@@ -14,8 +14,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatListOption, MatSelectionList } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
-import { AutocompleteComponent, getFormKeys } from '@dom';
-import { patchState, signalState } from '@ngrx/signals';
+import { AutocompleteComponent, LoaderService, getFormKeys } from '@dom';
+import { StateSignal, patchState, signalState } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import {
   debounceTime,
@@ -28,7 +28,10 @@ import {
 } from 'rxjs';
 import { Book } from '../../books/books';
 import { LayoutComponent } from '../../layout/layout.component';
+import { Loader, createLoader } from '../../shared/data.helpers';
 import { FiltersDataService } from './data.service';
+
+type OptionLoader = Loader<string, Book, 'loadOptions'>;
 
 @Component({
   selector: 'books-scape-filters',
@@ -64,7 +67,18 @@ export class FiltersPageComponent {
     { value: 'tacos-2', viewValue: 'Tacos' },
   ];
 
-  #handleOptionsChanged = this.handleOptions();
+  #handleOptionsChanged = rxMethod(
+    pipe(
+      switchMap(({ key, value }: Record<string, string>) =>
+        this.#filterService
+          .loadOptions(value)
+          .pipe(map((data) => ({ [key]: data })))
+      ),
+      tap((value) =>
+        patchState(this.optionsMap, { ...this.optionsMap(), ...value })
+      )
+    )
+  );
 
   constructor() {
     this.booksAutocomplete = inject(NonNullableFormBuilder).group({
@@ -104,17 +118,18 @@ export class FiltersPageComponent {
     return merge(...observables$);
   }
 
-  handleOptions() {
+  handleOptions(
+    Loader: LoaderService<OptionLoader>,
+    state: StateSignal<object>
+  ) {
+    const loader = createLoader(Loader, 'loadOptions');
+
     return rxMethod(
       pipe(
         switchMap(({ key, value }: Record<string, string>) =>
-          this.#filterService
-            .loadOptions(value)
-            .pipe(map((data) => ({ [key]: data })))
+          loader(value).pipe(map((data) => ({ [key]: data })))
         ),
-        tap((value) =>
-          patchState(this.optionsMap, { ...this.optionsMap(), ...value })
-        )
+        tap((value) => patchState(state, { ...state, ...value }))
       )
     );
   }

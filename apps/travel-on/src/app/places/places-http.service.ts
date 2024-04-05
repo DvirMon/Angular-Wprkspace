@@ -12,8 +12,7 @@ import { Places } from './places.model';
 @Injectable({
   providedIn: 'root',
 })
-export class PlacesHttpService
-{
+export class PlacesHttpService {
   private readonly vacationsRef: CollectionReference<Places>;
   private readonly VACATIONS_COLLECTION = 'vacations';
 
@@ -24,7 +23,8 @@ export class PlacesHttpService
     ) as CollectionReference<Places>;
   }
 
-  loadPlaces(): Observable<Places[]> {
+  public loadPlaces(): Observable<Places[]> {
+    
     const queryRef = query(this.vacationsRef);
     return from(getDocs(queryRef)).pipe(
       map((querySnapshot) =>

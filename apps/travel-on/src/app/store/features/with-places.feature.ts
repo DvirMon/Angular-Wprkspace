@@ -3,7 +3,7 @@ import {
   EntityLoader,
   LoaderService,
   createLoader,
-  loadSlice,
+  loadSlice
 } from '@dom';
 import { signalStoreFeature, withMethods, withState } from '@ngrx/signals';
 import { Places } from '../../places/places.model';

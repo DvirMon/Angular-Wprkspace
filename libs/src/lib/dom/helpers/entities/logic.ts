@@ -1,4 +1,4 @@
-import { Injector, Signal, inject, runInInjectionContext } from '@angular/core';
+import { Injector, inject, runInInjectionContext } from '@angular/core';
 import { tapResponse } from '@ngrx/operators';
 import { StateSignal, patchState } from '@ngrx/signals';
 import { EntityId, addEntities, setAllEntities } from '@ngrx/signals/entities';
@@ -6,50 +6,89 @@ import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { EMPTY, Observable, pipe, switchMap } from 'rxjs';
 import { Entity, EntityLoader, LoaderService } from './types';
 
-function getKey(collection: string): string {
-  return collection == 'entities' ? collection : collection + 'Entities';
+export function onLoadSlice<Entity extends { id: EntityId }>(
+  state: StateSignal<object>,
+  slice: keyof StateSignal<object>
+) {
+  return (res: Entity[] | Entity) => patchState(state, { [slice]: res });
+}
+
+export function onLoadEntities<Entity extends { id: EntityId }>(
+  state: StateSignal<object>
+) {
+  return (res: Entity[]) => patchState(state, addEntities(res));
+}
+
+
+// Function to handle the success response of loading entities
+export function onLoadCollection<Entity extends { id: EntityId }>(
+  state: StateSignal<object>,
+  collection: string
+) {
+  return (res: Entity[] | Entity) =>
+    patchState(state, addEntities(res as Entity[], { collection }));
 }
 
 // Function to handle the success response of loading entities
-export function handleLoadEntitiesSuccess<Entity extends { id: EntityId }>(
-  state: unknown,
+export function onUpdateCollection<Entity extends { id: EntityId }>(
+  state: StateSignal<object>,
   collection: string
 ) {
-  return (res: Entity[]) => {
-    const key: string = getKey(collection);
-    const localState = state as Record<string, Signal<Array<Entity>>>;
-    const hasEntities = localState[key]()?.length > 0;
-    const update = hasEntities ? setAllEntities : addEntities;
-
-    if (key === 'entities') {
-      patchState(state as StateSignal<object>, update(res));
-    } else {
-      patchState(state as StateSignal<object>, update(res, { collection }));
-    }
+  return (res: Entity[] | Entity) => {
+    patchState(
+      state as StateSignal<object>,
+      setAllEntities(res as Entity[], { collection })
+    );
   };
 }
 
 export function createLoader<T>(
   Loader: LoaderService<EntityLoader<T, Entity, string>>,
   methodName: string
-): (...args: T[]) => Observable<Entity[]> {
+): (...args: T[]) => Observable<Entity[] | Entity> {
   return runInInjectionContext(inject(Injector), () => {
     const loader = inject(Loader);
     return (query: T) => loader[methodName](query);
   });
 }
 
-export function loadEntities<T>(
+// export function createSliceLoader<T>(
+//   Loader: LoaderService<EntityLoader<T, Entity, string>>,
+//   methodName: string
+// ): (...args: T[]) => Observable<Entity> {
+//   return runInInjectionContext(inject(Injector), () => {
+//     const loader = inject(Loader);
+//     return (query: T) => loader[methodName](query);
+//   });
+// }
+
+export function loadCollection<T>(
   loader: (query: T) => Observable<Entity[]>,
-  state: StateSignal<object>,
-  collection = 'entities'
+  next: (value: Entity[]) => void
 ) {
   return rxMethod<T>(
     pipe(
       switchMap((query) =>
         loader(query).pipe(
           tapResponse({
-            next: handleLoadEntitiesSuccess(state, collection),
+            next: next,
+            error: () => EMPTY,
+          })
+        )
+      )
+    )
+  );
+}
+export function loadEntities<T>(
+  loader: (query: T) => Observable<Entity[] | Entity>,
+  next: (value: Entity[] | Entity) => void
+) {
+  return rxMethod<T>(
+    pipe(
+      switchMap((query) =>
+        loader(query).pipe(
+          tapResponse({
+            next: next,
             error: () => EMPTY,
           })
         )
@@ -59,7 +98,7 @@ export function loadEntities<T>(
 }
 
 export function loadSlice<T>(
-  loader: (query: T) => Observable<Entity[]>,
+  loader: (query: T) => Observable<Entity[] | Entity>,
   state: StateSignal<object>,
   slice: string
 ) {
@@ -68,7 +107,8 @@ export function loadSlice<T>(
       switchMap((query: T) =>
         loader(query).pipe(
           tapResponse({
-            next: (res: Entity[]) => patchState(state, { [slice]: res }),
+            next: (res: Entity[] | Entity) =>
+              patchState(state, { [slice]: res }),
             error: () => EMPTY,
           })
         )

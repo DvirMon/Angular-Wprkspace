@@ -14,7 +14,7 @@ export type Loader<T, Entity, MethodName extends string> = {
 };
 export type LoaderService<T> = ProviderToken<T>;
 export type LoadService<Loader> = ProviderToken<Loader>;
-export declare function handleLoadEntitiesSuccess<
+export declare function onLoadSuccess<
   Entity extends {
     id: EntityId;
   }

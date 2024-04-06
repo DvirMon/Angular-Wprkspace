@@ -11,7 +11,7 @@ export class VolumesDataService {
   constructor(private bookHttp: VolumesHttpService) {}
 
   // function to fetch books from Google Books API}
-  public loadVolumes(query?: string): Observable<Book[]> {
+  public loadVolumes(query: string): Observable<Book[] | Book> {
     return this.bookHttp.fetchVolumes(query as string).pipe(
       map((items) => this.mapItemsToBooks(items)),
       map((books) => this.filterBooksWithImages(books))
@@ -41,9 +41,7 @@ export class VolumesDataService {
     };
   }
 
-  public loadVolumeInfo(volId: string): Observable<Info[]> {
-    return this.bookHttp
-      .fetchVolumeInfo(volId)
-      .pipe(map((info: Info) => [info]));
+  public loadVolumeInfo(volId: string): Observable<Info> {
+    return this.bookHttp.fetchVolumeInfo(volId);
   }
 }

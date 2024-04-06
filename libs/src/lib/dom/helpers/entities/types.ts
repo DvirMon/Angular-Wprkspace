@@ -9,10 +9,7 @@ export interface Entity {
 export type EntityMap = Record<EntityId, Entity>;
 
 export type EntityLoader<T, Entity, MethodName extends string> = {
-  [K in MethodName]: (args: T) => Observable<Entity[]>;
+  [K in MethodName]: (args: T) => Observable<Entity[] | Entity>;
 };
 
-
 export type LoaderService<EntityLoader> = ProviderToken<EntityLoader>;
-
-

@@ -38,7 +38,7 @@ export class VolumesPageComponent {
   }
 
   onValueChanged(value: string): void {
-    patchState(this.#store, { searchTerm: value });
+    this.#store.updateVolumes(value);
   }
 
   onAddToShelf(newBook: Book): void {

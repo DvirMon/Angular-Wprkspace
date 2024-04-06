@@ -1,6 +1,14 @@
+::ng-deep section.select-options-wrapper {
+  mat-option {
+    flex-direction: row-reverse;
+    // justify-content: space-between;
 
-@import '@angular/cdk/overlay-prebuilt.css';
+    mat-pseudo-checkbox {
+      margin-right: 0px !important;
+    }
+  }
+}
 
-mat-option {
+::ng-deep .mat-mdc-select-arrow-wrapper {
   display: none !important;
 }

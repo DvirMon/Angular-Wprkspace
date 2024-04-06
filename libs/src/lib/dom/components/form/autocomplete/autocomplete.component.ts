@@ -10,14 +10,10 @@ import {
   effect,
   input,
 } from '@angular/core';
-import {
-  FormControl,
-  FormsModule,
-  ReactiveFormsModule
-} from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   MatAutocompleteModule,
-  MatAutocompleteSelectedEvent
+  MatAutocompleteSelectedEvent,
 } from '@angular/material/autocomplete';
 import { MatOption } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -31,7 +27,7 @@ import {
   pipe,
   tap,
 } from 'rxjs';
-import { OptionContentDirective } from './optionContent.directive';
+import { OptionContentDirective } from '../../../directives';
 
 @Component({
   selector: 'dom-autocomplete',

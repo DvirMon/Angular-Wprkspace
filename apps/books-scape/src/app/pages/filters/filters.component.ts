@@ -1,5 +1,19 @@
-import { JsonPipe, NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
-import { Component, Signal, WritableSignal, computed, effect, inject } from '@angular/core';
+import {
+  JsonPipe,
+  NgFor,
+  NgIf,
+  NgTemplateOutlet,
+  TitleCasePipe,
+} from '@angular/common';
+import {
+  Component,
+  Inject,
+  Signal,
+  WritableSignal,
+  computed,
+  effect,
+  inject,
+} from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import {
   FormControl,
@@ -7,12 +21,25 @@ import {
   NonNullableFormBuilder,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { MatAutocomplete, MatAutocompleteModule, MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import {
+  MatAutocomplete,
+  MatAutocompleteModule,
+  MatAutocompleteTrigger,
+} from '@angular/material/autocomplete';
 import { MatOption, MatOptionModule } from '@angular/material/core';
-import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
+import {
+  MatFormField,
+  MatFormFieldModule,
+  MatLabel,
+  MatSuffix,
+} from '@angular/material/form-field';
 import { MatInput, MatInputModule } from '@angular/material/input';
 import { MatListOption, MatSelectionList } from '@angular/material/list';
-import { MatSelectModule } from '@angular/material/select';
+import {
+  MAT_SELECT_CONFIG,
+  MatSelect,
+  MatSelectModule,
+} from '@angular/material/select';
 import { AutocompleteComponent, getFormKeys } from '@dom';
 import { StateSignal, patchState, signalState } from '@ngrx/signals';
 import { Book } from '../../books/books';
@@ -26,6 +53,7 @@ import {
 } from '../../shared/options.helper';
 import { AppStore } from '../../store/store';
 import { FiltersDataService } from './data.service';
+import { MatIcon } from '@angular/material/icon';
 
 interface Filters {
   book1: FormControl<string>;
@@ -38,19 +66,19 @@ interface Filters {
   selector: 'books-scape-filters',
   standalone: true,
   imports: [
-    JsonPipe,
-    NgFor,
     NgIf,
-    NgTemplateOutlet,
-    ReactiveFormsModule,
-
+    JsonPipe,
+    TitleCasePipe,
     ReactiveFormsModule,
     MatFormField,
+    MatSuffix,
     MatLabel,
     MatInput,
     MatAutocompleteTrigger,
     MatAutocomplete,
     MatOption,
+    MatSelect,
+    MatIcon,
     LayoutComponent,
     AutocompleteComponent,
   ],

@@ -1,2 +1,2 @@
-export { OptionContentDirective } from '../components/form/autocomplete/optionContent.directive';
+export { OptionContentDirective } from './optionContent.directive';
 export { ParallaxDirective } from './parallax.directive';

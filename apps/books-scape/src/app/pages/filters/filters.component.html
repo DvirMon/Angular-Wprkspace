@@ -1,23 +1,52 @@
-<!-- <books-scape-layout>
+<books-scape-layout>
+  <header class="p-4">
+    <form class="flex flex-row gap-4" [formGroup]="booksAutocomplete">
+      @for (key of booKeys(); track $index) {
 
-</books-scape-layout> -->
-<header class="p-4">
-  <form class="flex flex-row gap-4" [formGroup]="booksAutocomplete">
-    @for (key of booKeys(); track $index) {
-    <!-- <dom-autocomplete
-      [control]="booksAutocomplete.controls[key]"
-      [options]="optionsMap()[key]"
-    ></dom-autocomplete> -->
+      <section class="w-80">
+        <mat-form-field class="w-full" appearance="outline">
+          <input
+            type="text"
+            matInput
+            [formControlName]="key"
+            [matAutocomplete]="auto"
+          />
+          <mat-autocomplete #auto="matAutocomplete">
+            @for (option of optionsMap()[key]; track $index) {
 
-    }
-  </form>
+            <mat-option>{{ option.title | titlecase }}</mat-option>
+            }
+          </mat-autocomplete>
+        </mat-form-field>
+      </section>
 
-  <mat-form-field appearance="outline">
-    <input type="text" matInput autocomplete="off" [matAutocomplete]="auto" />
-    <mat-autocomplete #auto="matAutocomplete">
-      @for (option of books(); track option.id) {
-      <mat-option [value]="option">{{ option.title }}</mat-option>
       }
-    </mat-autocomplete>
-  </mat-form-field>
-</header>
+    </form>
+  </header>
+
+  <header class="p-4">
+    <form class="flex flex-row gap-4" [formGroup]="booksAutocomplete">
+      @for (key of booKeys(); track $index) {
+      <section class="w-80">
+        <mat-form-field class="w-full" appearance="outline">
+          <mat-select multiple>
+            <section class="flex justify-center">
+              <mat-form-field class="w-11/12" appearance="outline">
+                <input type="text" [formControlName]="key" matInput />
+              </mat-form-field>
+            </section>
+            <section class="select-options-wrapper">
+              @for (option of optionsMap()[key]; track $index) {
+              <mat-option >{{
+                option.title | titlecase
+              }}</mat-option>
+              }
+            </section>
+          </mat-select>
+          <mat-icon matSuffix fontIcon="expand_more"></mat-icon>
+        </mat-form-field>
+      </section>
+      }
+    </form>
+  </header>
+</books-scape-layout>

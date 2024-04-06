@@ -8,6 +8,12 @@ export interface Entity {
 
 export type EntityMap = Record<EntityId, Entity>;
 
+/**
+ * Represents a generic type defining methods for loading entities.
+ * @template T The type of the method parameter.
+ * @template Entity The type of the entities being loaded.
+ * @template MethodName The name of the methods defined in the loader.
+ */
 export type EntityLoader<T, Entity, MethodName extends string> = {
   [K in MethodName]: (args: T) => Observable<Entity[] | Entity>;
 };

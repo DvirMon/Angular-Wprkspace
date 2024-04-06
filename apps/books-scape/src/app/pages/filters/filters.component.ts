@@ -1,5 +1,5 @@
 import { JsonPipe } from '@angular/common';
-import { Component, Signal, effect, inject } from '@angular/core';
+import { Component, Signal, computed, effect, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import {
   FormGroup,
@@ -7,11 +7,12 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import {
-  MatAutocompleteModule,
+  MatAutocomplete,
+  MatAutocompleteTrigger,
   MatOption,
 } from '@angular/material/autocomplete';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
 import { MatListOption, MatSelectionList } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { AutocompleteComponent, getFormKeys } from '@dom';
@@ -26,6 +27,7 @@ import {
   registerGroupOptions,
 } from '../../shared/options.helper';
 import { FiltersDataService } from './data.service';
+import { AppStore } from '../../store/store';
 
 @Component({
   selector: 'books-scape-filters',
@@ -33,12 +35,17 @@ import { FiltersDataService } from './data.service';
   imports: [
     JsonPipe,
     ReactiveFormsModule,
-    MatAutocompleteModule,
-    MatFormFieldModule,
-    MatInputModule,
+
+    MatFormField,
+    MatLabel,
+    MatInput,
+    MatAutocompleteTrigger,
+    MatAutocomplete,
+    MatOption,
+    MatFormField,
+
     MatSelectModule,
     MatSelectionList,
-    MatOption,
     MatListOption,
     LayoutComponent,
     AutocompleteComponent,
@@ -47,13 +54,20 @@ import { FiltersDataService } from './data.service';
   styleUrls: ['./filters.component.scss'],
 })
 export class FiltersPageComponent {
+  #store = inject(AppStore);
   #filterService = inject(FiltersDataService);
 
   public readonly optionsMap = signalState<Record<string, Book[]>>({});
 
+  public readonly showForm = computed(
+    () => !!Object.keys(this.optionsMap()).length
+  );
+
   public readonly booksAutocomplete: FormGroup;
 
   public readonly booKeys: Signal<string[]>;
+
+  books: Signal<Book[]>;
 
   #handleOptionsChanged = this._handleOptions(
     FiltersDataService,
@@ -64,6 +78,8 @@ export class FiltersPageComponent {
     this.booksAutocomplete = this._buildGroup();
 
     this.booKeys = getFormKeys(this.booksAutocomplete);
+
+    this.books = this.#store.volumesEntities;
 
     this.#handleOptionsChanged(registerGroupOptions(this.booksAutocomplete));
 

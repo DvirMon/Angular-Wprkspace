@@ -30,7 +30,7 @@ export class FiltersDataService {
     );
   }
 
-  loadOptions(query: string): Observable<Book[]> {
+  public loadOptions(query: string): Observable<Book[]> {
     return this.bookHttp.fetchVolumes(query).pipe(
       map((items) => this.mapItemsToBooks(items)),
       map((books) => this.filterBooksWithImages(books))
@@ -44,11 +44,6 @@ export class FiltersDataService {
     );
   }
 
-  // Filter books with images
-  private filterBooksWithImages(books: Book[]): Book[] {
-    return books.filter((book) => book.imageLinks != null);
-  }
-
   // RxJS operator function to transform book data
   private mapVolumeToBook(id: string, volumeInfo: VolumeInfo): Book {
     return {
@@ -58,5 +53,10 @@ export class FiltersDataService {
       description: volumeInfo.description,
       imageLinks: volumeInfo.imageLinks,
     };
+  }
+
+  // Filter books with images
+  private filterBooksWithImages(books: Book[]): Book[] {
+    return books.filter((book) => book.imageLinks != null);
   }
 }

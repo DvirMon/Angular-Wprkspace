@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PnfComponent } from './pnf.component';
+import { FiltersPageComponent } from './filters.component';
 
-describe('PnfComponent', () => {
-  let component: PnfComponent;
-  let fixture: ComponentFixture<PnfComponent>;
+describe('FiltersPageComponent', () => {
+  let component: FiltersPageComponent;
+  let fixture: ComponentFixture<FiltersPageComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [PnfComponent]
+      imports: [FiltersPageComponent]
     });
-    fixture = TestBed.createComponent(PnfComponent);
+    fixture = TestBed.createComponent(FiltersPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

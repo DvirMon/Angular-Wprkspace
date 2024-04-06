@@ -1,9 +1,8 @@
 <books-scape-layout>
-
+  @if(showForm()) {
   <header class="p-4">
     <form class="flex flex-row gap-4" [formGroup]="booksAutocomplete">
       @for (key of booKeys(); track $index) {
-
       <mat-form-field class="w-80" appearance="outline">
         <input
           type="text"
@@ -12,13 +11,9 @@
           [matAutocomplete]="auto"
         />
         <mat-autocomplete #auto="matAutocomplete">
-          <mat-option class="hidden"></mat-option>
-
-          <mat-selection-list>
-            @for (option of optionsMap()[key]; track option.id) {
-            <mat-list-option>{{ option.title }}</mat-list-option>
-            }
-          </mat-selection-list>
+          @for (option of books(); track option) {
+            <mat-option [value]="option">{{option}}</mat-option>
+          }
         </mat-autocomplete>
       </mat-form-field>
 
@@ -36,4 +31,5 @@
       </mat-select>
     </mat-form-field>
   </header>
+  }
 </books-scape-layout>

@@ -3,17 +3,18 @@ import { withEntities } from '@ngrx/signals/entities';
 
 import {
   Entity,
-  Loader,
+  EntityLoader,
   LoaderService,
   createLoader,
   loadEntities,
+  onLoadCollection,
 } from '@dom';
 import {
-  FutureWeatherArgs,
   FutureWeather,
+  FutureWeatherArgs,
 } from '../weather/models/future-weather-result';
 
-type FutureWeatherLoader = Loader<
+type FutureWeatherLoader = EntityLoader<
   FutureWeatherArgs,
   Entity,
   'loadFutureWeather'
@@ -24,10 +25,13 @@ const COLLECTION = 'future';
 export function withFutureWeather(Loader: LoaderService<FutureWeatherLoader>) {
   return signalStoreFeature(
     withEntities({ entity: type<FutureWeather>(), collection: COLLECTION }),
-    withMethods((state) => {
+    withMethods((store) => {
       const loader = createLoader(Loader, 'loadFutureWeather');
       return {
-        loadFutureWeather: loadEntities(loader, state, COLLECTION),
+        loadFutureWeather: loadEntities(
+          loader,
+          onLoadCollection(store, COLLECTION)
+        ),
       };
     })
   );

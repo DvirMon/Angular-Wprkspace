@@ -1,18 +1,16 @@
-import { JsonPipe } from '@angular/common';
-import { Component, Signal, computed, effect, inject } from '@angular/core';
+import { JsonPipe, NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
+import { Component, Signal, WritableSignal, computed, effect, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import {
+  FormControl,
   FormGroup,
   NonNullableFormBuilder,
   ReactiveFormsModule,
 } from '@angular/forms';
-import {
-  MatAutocomplete,
-  MatAutocompleteTrigger,
-  MatOption,
-} from '@angular/material/autocomplete';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
+import { MatAutocomplete, MatAutocompleteModule, MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { MatOption, MatOptionModule } from '@angular/material/core';
+import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
+import { MatInput, MatInputModule } from '@angular/material/input';
 import { MatListOption, MatSelectionList } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { AutocompleteComponent, getFormKeys } from '@dom';
@@ -26,27 +24,33 @@ import {
   handleGroupOptions,
   registerGroupOptions,
 } from '../../shared/options.helper';
-import { FiltersDataService } from './data.service';
 import { AppStore } from '../../store/store';
+import { FiltersDataService } from './data.service';
+
+interface Filters {
+  book1: FormControl<string>;
+  book2: FormControl<string>;
+  book3: FormControl<string>;
+  book4: FormControl<string>;
+}
 
 @Component({
   selector: 'books-scape-filters',
   standalone: true,
   imports: [
     JsonPipe,
+    NgFor,
+    NgIf,
+    NgTemplateOutlet,
     ReactiveFormsModule,
 
+    ReactiveFormsModule,
     MatFormField,
     MatLabel,
     MatInput,
     MatAutocompleteTrigger,
     MatAutocomplete,
     MatOption,
-    MatFormField,
-
-    MatSelectModule,
-    MatSelectionList,
-    MatListOption,
     LayoutComponent,
     AutocompleteComponent,
   ],
@@ -63,9 +67,9 @@ export class FiltersPageComponent {
     () => !!Object.keys(this.optionsMap()).length
   );
 
-  public readonly booksAutocomplete: FormGroup;
+  public readonly booksAutocomplete: FormGroup<Filters>;
 
-  public readonly booKeys: Signal<string[]>;
+  public readonly booKeys: WritableSignal<(keyof Filters)[]>;
 
   books: Signal<Book[]>;
 
@@ -77,7 +81,7 @@ export class FiltersPageComponent {
   constructor() {
     this.booksAutocomplete = this._buildGroup();
 
-    this.booKeys = getFormKeys(this.booksAutocomplete);
+    this.booKeys = getFormKeys<Filters>(this.booksAutocomplete);
 
     this.books = this.#store.volumesEntities;
 
@@ -95,7 +99,7 @@ export class FiltersPageComponent {
     );
   }
 
-  private _buildGroup() {
+  private _buildGroup(): FormGroup<Filters> {
     return inject(NonNullableFormBuilder).group({
       book1: ['Angular'],
       book2: ['Angular'],

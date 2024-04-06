@@ -10,15 +10,18 @@ import {
   effect,
   input,
 } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import {
-  MatAutocomplete,
-  MatAutocompleteSelectedEvent,
-  MatAutocompleteTrigger,
+  FormControl,
+  FormsModule,
+  ReactiveFormsModule
+} from '@angular/forms';
+import {
+  MatAutocompleteModule,
+  MatAutocompleteSelectedEvent
 } from '@angular/material/autocomplete';
 import { MatOption } from '@angular/material/core';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import {
   Subject,
@@ -28,8 +31,7 @@ import {
   pipe,
   tap,
 } from 'rxjs';
-// eslint-disable-next-line @nx/enforce-module-boundaries
-import { OptionContentDirective } from '../../../directives';
+import { OptionContentDirective } from './optionContent.directive';
 
 @Component({
   selector: 'dom-autocomplete',
@@ -37,13 +39,12 @@ import { OptionContentDirective } from '../../../directives';
   imports: [
     NgFor,
     NgIf,
-    ReactiveFormsModule,
     NgTemplateOutlet,
-    MatFormField,
-    MatLabel,
-    MatInput,
-    MatAutocompleteTrigger,
-    MatAutocomplete,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatAutocompleteModule,
     MatOption,
     OptionContentDirective,
   ],
@@ -52,10 +53,10 @@ import { OptionContentDirective } from '../../../directives';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AutocompleteComponent<T> {
-  label = input<string>('Search...');
+  label = input<string>('');
   defaultValue = input<string>();
   options = input.required<T[]>();
-  control = input.required<FormControl<T>>();
+  control = input.required<FormControl<unknown>>();
 
   optionTemplate = input<TemplateRef<unknown>>();
 

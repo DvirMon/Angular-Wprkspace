@@ -11,10 +11,18 @@
             [formControlName]="key"
             [matAutocomplete]="auto"
           />
-          <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption>
+          <mat-autocomplete
+            #auto="matAutocomplete"
+            autoActiveFirstOption
+            [displayWith]="displayWith"
+          >
             @for (option of optionsMap()[key]; track $index) {
 
-            <mat-option>{{ option.title | titlecase }}</mat-option>
+            <mat-option
+              [value]="option"
+              (onSelectionChange)="onSelectionChange($event)"
+              >{{ option.title | titlecase }}</mat-option
+            >
             }
           </mat-autocomplete>
         </mat-form-field>

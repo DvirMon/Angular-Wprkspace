@@ -1,15 +1,6 @@
-import {
-  JsonPipe,
-  NgClass,
-  NgFor,
-  NgIf,
-  NgTemplateOutlet,
-  TitleCasePipe,
-} from '@angular/common';
+import { JsonPipe, NgClass, NgIf, TitleCasePipe } from '@angular/common';
 import {
   Component,
-  Inject,
-  Signal,
   WritableSignal,
   computed,
   effect,
@@ -24,23 +15,17 @@ import {
 } from '@angular/forms';
 import {
   MatAutocomplete,
-  MatAutocompleteModule,
   MatAutocompleteTrigger,
 } from '@angular/material/autocomplete';
-import { MatOption, MatOptionModule } from '@angular/material/core';
+import { MatOption, MatOptionSelectionChange } from '@angular/material/core';
 import {
   MatFormField,
-  MatFormFieldModule,
   MatLabel,
   MatSuffix,
 } from '@angular/material/form-field';
-import { MatInput, MatInputModule } from '@angular/material/input';
-import { MatListOption, MatSelectionList } from '@angular/material/list';
-import {
-  MAT_SELECT_CONFIG,
-  MatSelect,
-  MatSelectModule,
-} from '@angular/material/select';
+import { MatIcon } from '@angular/material/icon';
+import { MatInput } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
 import { AutocompleteComponent, getFormKeys } from '@dom';
 import { StateSignal, patchState, signalState } from '@ngrx/signals';
 import { Book } from '../../books/books';
@@ -52,15 +37,13 @@ import {
   handleGroupOptions,
   registerGroupOptions,
 } from '../../shared/options.helper';
-import { AppStore } from '../../store/store';
 import { FiltersDataService } from './data.service';
-import { MatIcon } from '@angular/material/icon';
 
 interface Filters {
-  book1: FormControl<string>;
-  book2: FormControl<string>;
-  book3: FormControl<string>;
-  book4: FormControl<string>;
+  book1: FormControl<Partial<Book>>;
+  book2: FormControl<Partial<Book>>;
+  book3: FormControl<Partial<Book>>;
+  book4: FormControl<Partial<Book>>;
 }
 
 @Component({
@@ -126,11 +109,11 @@ export class FiltersPageComponent {
 
   private _buildGroup(): FormGroup<Filters> {
     return inject(NonNullableFormBuilder).group({
-      book1: ['Angular'],
-      book2: ['Angular'],
-      book3: ['Foundation'],
-      book4: ['The Hobbit'],
-    });
+      book1: [{ title: 'Angular' }],
+      book2: [{ title: 'Angular' }],
+      book3: [{ title: 'Foundation' }],
+      book4: [{ title: 'The Hobbit' }],
+    }) as FormGroup<Filters>;
   }
 
   private _handleOptions(
@@ -140,5 +123,13 @@ export class FiltersPageComponent {
     const loader = createOptionsLoader(Loader, 'loadOptions');
 
     return handleGroupOptions(loader, state);
+  }
+
+  onSelectionChange(event: MatOptionSelectionChange<Book>) {
+    console.log(event);
+  }
+
+  displayWith(value: Book) {
+    return value.title;
   }
 }

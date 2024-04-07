@@ -1,3 +1,9 @@
+
+// add active style when type a word
+mat-option.active {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
 ::ng-deep section.select-options-wrapper {
   mat-option {
     flex-direction: row-reverse;

@@ -1,5 +1,6 @@
 import {
   JsonPipe,
+  NgClass,
   NgFor,
   NgIf,
   NgTemplateOutlet,
@@ -67,6 +68,7 @@ interface Filters {
   standalone: true,
   imports: [
     NgIf,
+    NgClass,
     JsonPipe,
     TitleCasePipe,
     ReactiveFormsModule,
@@ -86,7 +88,6 @@ interface Filters {
   styleUrls: ['./filters.component.scss'],
 })
 export class FiltersPageComponent {
-  #store = inject(AppStore);
   #filterService = inject(FiltersDataService);
 
   public readonly optionsMap = signalState<Record<string, Book[]>>({});
@@ -99,8 +100,6 @@ export class FiltersPageComponent {
 
   public readonly booKeys: WritableSignal<(keyof Filters)[]>;
 
-  books: Signal<Book[]>;
-
   #handleOptionsChanged = this._handleOptions(
     FiltersDataService,
     this.optionsMap
@@ -110,8 +109,6 @@ export class FiltersPageComponent {
     this.booksAutocomplete = this._buildGroup();
 
     this.booKeys = getFormKeys<Filters>(this.booksAutocomplete);
-
-    this.books = this.#store.volumesEntities;
 
     this.#handleOptionsChanged(registerGroupOptions(this.booksAutocomplete));
 

@@ -2,8 +2,7 @@ import { NgIf } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  effect,
-  inject,
+  inject
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatButton } from '@angular/material/button';

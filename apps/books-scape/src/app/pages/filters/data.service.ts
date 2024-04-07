@@ -11,10 +11,10 @@ export class FiltersDataService {
   constructor(private bookHttp: VolumesHttpService) {}
 
   public loadFilterOptions(): Observable<Record<string, Book[]>> {
-    const book1$ = this._loadOptions();
-    const book2$ = this._loadOptions();
-    const book3$ = this._loadOptions();
-    const book4$ = this._loadOptions();
+    const book1$ = this._loadOptions('Angular');
+    const book2$ = this._loadOptions('Angular');
+    const book3$ = this._loadOptions('Foundation');
+    const book4$ = this._loadOptions('The Hobbit');
 
     return combineLatest([book1$, book2$, book3$, book4$]).pipe(
       map(([book1, book2, book3, book4]) => ({ book1, book2, book3, book4 })),

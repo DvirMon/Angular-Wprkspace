@@ -38,8 +38,8 @@ export const appRoutes: Routes = [
   {
     path: 'table',
     loadComponent: () =>
-      import('./pages/table/table.component').then(
-        (m) => m.TableComponent
+      import('./pages/table/table-page.component').then(
+        (m) => m.TablePageComponent
       ),
     title: 'The Boos Scape',
   },

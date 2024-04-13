@@ -1,0 +1,11 @@
+<books-scape-layout [showNavigation]="true">
+  <div class="table-wrapper w-full">
+    <article class="w-full h-3/4 flex justify-center items-center">
+      <books-scape-table
+        class="w-1/2"
+        [dataSource]="dataSource"
+        [columnsDefs]="displayedColumns"
+      ></books-scape-table>
+    </article>
+  </div>
+</books-scape-layout>

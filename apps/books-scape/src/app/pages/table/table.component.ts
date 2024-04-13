@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { LayoutComponent } from '../../layout/layout.component';
 
 @Component({
   selector: 'books-scape-table',
   standalone: true,
-  imports: [CommonModule],
+  imports: [LayoutComponent],
   templateUrl: './table.component.html',
   styleUrl: './table.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

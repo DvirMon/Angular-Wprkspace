@@ -23,11 +23,15 @@
           }}</span>
           }
         </mat-nav-list>
+
+        @if(showBookshelf()) {
+
         <button class="bookshelf-btn" routerLink="bookshelf" mat-icon-button>
           <mat-icon fontIcon="shelves"></mat-icon>
           <span class="badge" [matBadge]="shelfSize()" matBadgeOverlap="false">
           </span>
         </button>
+        }
       </div>
     </mat-toolbar>
     }

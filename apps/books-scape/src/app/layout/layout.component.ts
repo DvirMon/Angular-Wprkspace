@@ -40,8 +40,9 @@ import { AppStore } from '../store/store';
 export class LayoutComponent {
   #store = inject(AppStore);
 
-  showNavigation = input<boolean>(false);
+  showNavigation = input<boolean>(true);
   showShopping = input<boolean>(true);
+  showBookshelf = input<boolean>(false);
 
   public readonly routes: string[] = ['filters', 'table'];
 

@@ -1,4 +1,4 @@
-<books-scape-layout>
+<books-scape-layout [showNavigation]="true">
   <header class="p-4 flex justify-center">
     <form class="flex flex-row gap-4" [formGroup]="booksAutocomplete">
       @for (key of booKeys(); track $index) {

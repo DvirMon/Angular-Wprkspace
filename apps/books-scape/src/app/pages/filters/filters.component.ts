@@ -38,6 +38,7 @@ import {
   registerGroupOptions,
 } from '../../shared/options.helper';
 import { FiltersDataService } from './data.service';
+import { DropdownModule } from 'primeng/dropdown';
 
 interface Filters {
   book1: FormControl<Partial<Book>>;
@@ -55,6 +56,7 @@ interface Filters {
     JsonPipe,
     TitleCasePipe,
     ReactiveFormsModule,
+    DropdownModule,
     MatFormField,
     MatSuffix,
     MatLabel,

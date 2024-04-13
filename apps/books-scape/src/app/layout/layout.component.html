@@ -1,4 +1,4 @@
-<mat-sidenav-container class="sidenav-container">
+<mat-sidenav-container class="sidenav-container h-full">
   <mat-sidenav #drawer class="sidenav" fixedInViewport> </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">
@@ -16,7 +16,12 @@
     <mat-toolbar color="primary">
       <div class="toolbar-content">
         <mat-nav-list>
-          <span mat-list-item routerLink="/filters">Filters</span>
+          @for (route of routes; track $index) {
+
+          <span mat-list-item [routerLink]="'/' + route">{{
+            route | titlecase
+          }}</span>
+          }
         </mat-nav-list>
         <button class="bookshelf-btn" routerLink="bookshelf" mat-icon-button>
           <mat-icon fontIcon="shelves"></mat-icon>

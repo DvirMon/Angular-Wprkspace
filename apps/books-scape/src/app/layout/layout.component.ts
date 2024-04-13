@@ -43,7 +43,9 @@ export class LayoutComponent {
   showNavigation = input<boolean>(false);
   showShopping = input<boolean>(true);
 
-  protected readonly title: string = 'the books scape';
+  public readonly routes: string[] = ['filters', 'table'];
+
+  public readonly title: string = 'the books scape';
 
   public readonly shelfSize: Signal<string> = this.#store.shelfSize;
 }

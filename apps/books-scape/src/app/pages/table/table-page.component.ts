@@ -1,6 +1,10 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
 import { LayoutComponent } from '../../layout/layout.component';
 import { TableComponent } from './table.component';
+import { GridBaseColDef } from './types/column';
+import { Observable, of } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { JsonPipe } from '@angular/common';
 
 export interface PeriodicElement {
   name: string;
@@ -22,21 +26,35 @@ const ELEMENT_DATA: PeriodicElement[] = [
   { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
 ];
 
+const HEADERS: { [key: string]: string } = { position: 'No.' };
+
 @Component({
   selector: 'books-scape-page-table',
   standalone: true,
-  imports: [LayoutComponent, TableComponent],
+  imports: [JsonPipe, LayoutComponent, TableComponent],
   templateUrl: './table-page.component.html',
   styleUrl: './table.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TablePageComponent {
-  dataSource = ELEMENT_DATA;
+  public readonly data = toSignal(this.getData(), { initialValue: [] });
 
-  displayedColumns: (keyof PeriodicElement)[] = [
+  public readonly displayedColumns: string[] = [
     'position',
     'name',
     'weight',
     'symbol',
   ];
+
+  public readonly columns: GridBaseColDef[] = this.displayedColumns.map(
+    (field) => ({
+      field,
+      headerName: HEADERS[field],
+      editable: true,
+    })
+  );
+
+  getData(): Observable<PeriodicElement[]> {
+    return of(ELEMENT_DATA);
+  }
 }

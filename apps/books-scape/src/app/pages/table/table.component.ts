@@ -1,34 +1,55 @@
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  WritableSignal,
   computed,
-  input
+  input,
+  signal,
 } from '@angular/core';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
-import { LayoutComponent } from '../../layout/layout.component';
+import { GridBaseColDef } from './types/column';
+import { MatIcon } from '@angular/material/icon';
+import { MatIconButton } from '@angular/material/button';
 
 @Component({
   selector: 'books-scape-table',
   standalone: true,
-  imports: [LayoutComponent, MatTableModule, MatPaginatorModule],
+  imports: [CommonModule, MatTableModule, MatPaginatorModule,MatIcon,  MatIconButton],
   templateUrl: './table.component.html',
   styleUrl: './table.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableComponent<T> {
-  dataSource = input<T[]>([]);
+  dataSource = input.required<T[]>();
 
-  columnsDefs = input<(keyof T)[]>([]);
+  columns = input.required<GridBaseColDef[]>();
 
-  // displayedColumns: Signal<string[]>;
-  displayedColumns = this.computeDisplayColumns();
+  editRow = input<boolean>(false);
+
+  public readonly tableColumns = this.computeTableColumns();
+  public readonly displayedColumns = this.computeDisplayColumns();
+
+  public readonly showEdit : WritableSignal<boolean> = signal(false);
+
+  computeTableColumns() {
+    return computed(() => {
+      const columns = this.columns();
+
+      const withEditColumn = this.editRow()
+        ? [...columns, { field: 'editable', type: 'actions' } as GridBaseColDef]
+        : columns;
+
+      return withEditColumn;
+    });
+  }
 
   computeDisplayColumns() {
-    return computed(() =>
-      this.dataSource().length > 0
-        ? Object.keys(this.dataSource()[0] as object)
-        : [...this.columnsDefs()]
-    );
+    return computed(() => this.tableColumns().map((column) => column.field));
+  }
+
+  onEdit() {
+    this.showEdit.update((value) => !value);
   }
 }

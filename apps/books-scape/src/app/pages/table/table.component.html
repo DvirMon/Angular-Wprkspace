@@ -2,12 +2,34 @@
   <!--- Note that these columns can be defined in any order.
               The actual rendered columns are set as a property on the row definition" -->
 
-  <!-- Position Column -->
-  <ng-container matColumnDef="position">
-    <th mat-header-cell *matHeaderCellDef>No.</th>
-    <td mat-cell *matCellDef="let element">{{ element.position }}</td>
+  @for (column of tableColumns(); track $index) {
+
+  <ng-container [matColumnDef]="column.field">
+    <th mat-header-cell *matHeaderCellDef>
+      @if (column.type !== 'actions') {
+      {{ column.headerName || column.field | titlecase }}
+      }
+    </th>
+
+    @if(column.type !== 'actions') {
+
+    <td mat-cell *matCellDef="let element">
+      @if( column.editable && showEdit()) { edit state } @else {
+      {{ element[column.field] }}}
+    </td>
+
+    } @else if (column.field === 'editable') {
+    <td mat-cell *matCellDef="let element">
+      <button mat-icon-button (click)="onEdit()">
+        <mat-icon fontIcon="edit"></mat-icon>
+      </button>
+    </td>
+
+    }
   </ng-container>
 
+  }
+  <!--   
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef>Name</th>
     <td mat-cell *matCellDef="let element">{{ element.name }}</td>
@@ -21,7 +43,7 @@
   <ng-container matColumnDef="symbol">
     <th mat-header-cell *matHeaderCellDef>Symbol</th>
     <td mat-cell *matCellDef="let element">{{ element.symbol }}</td>
-  </ng-container>
+  </ng-container> -->
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns()"></tr>

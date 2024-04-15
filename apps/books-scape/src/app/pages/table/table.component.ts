@@ -16,12 +16,20 @@ import { MatIconButton } from '@angular/material/button';
 @Component({
   selector: 'books-scape-table',
   standalone: true,
-  imports: [CommonModule, MatTableModule, MatPaginatorModule,MatIcon,  MatIconButton],
+  imports: [
+    CommonModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatIcon,
+    MatIconButton,
+  ],
   templateUrl: './table.component.html',
   styleUrl: './table.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableComponent<T> {
+  idKey = input<string>('id');
+
   dataSource = input.required<T[]>();
 
   columns = input.required<GridBaseColDef[]>();
@@ -31,7 +39,9 @@ export class TableComponent<T> {
   public readonly tableColumns = this.computeTableColumns();
   public readonly displayedColumns = this.computeDisplayColumns();
 
-  public readonly showEdit : WritableSignal<boolean> = signal(false);
+  public readonly showEdit: WritableSignal<{ [key: string]: boolean }> = signal(
+    {}
+  );
 
   computeTableColumns() {
     return computed(() => {
@@ -49,7 +59,7 @@ export class TableComponent<T> {
     return computed(() => this.tableColumns().map((column) => column.field));
   }
 
-  onEdit() {
-    this.showEdit.update((value) => !value);
+  onEdit(key: string) {
+    this.showEdit.update((value) => ({ ...value, [key]: !value[key] }));
   }
 }

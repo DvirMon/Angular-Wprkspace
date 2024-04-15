@@ -51,6 +51,7 @@ export class TablePageComponent {
       field,
       headerName: HEADERS[field],
       editable: true,
+      type: 'number',
     })
   );
 

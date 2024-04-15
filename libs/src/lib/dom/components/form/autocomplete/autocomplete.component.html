@@ -1,6 +1,8 @@
 <mat-form-field appearance="outline">
   @if(!!label()) {
-  <mat-label>{{ label() }}</mat-label>
+  <ng-container>
+    <mat-label>{{ label() }}</mat-label>
+  </ng-container>
   }
   <input
     #input

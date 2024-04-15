@@ -22,7 +22,8 @@
       "@dom/directives": ["libs/src.lib/dom/directives/index.ts"],
       "@dom/helpers": ["libs/src.lib/dom/helpers/index.ts"],
       "@dom/services": ["libs/src.lib/dom/services/index.ts"]
-    }
+    },
+ 
   },
   "exclude": ["node_modules", "tmp"]
 }

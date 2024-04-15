@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { RouterOutlet } from "@angular/router";
-import { LayoutComponent } from "./components/layout/layout.component";
+import { LayoutComponent } from "./ui/layout/layout.component";
 
 @Component({
   selector: "weather-space-root",

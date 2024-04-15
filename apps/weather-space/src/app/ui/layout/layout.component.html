@@ -7,8 +7,10 @@
           <mat-slide-toggle
             [checked]="isServer()"
             (change)="onValueChanged($event)"
-            >{{ toggleLabel() | titlecase }}</mat-slide-toggle
-          >
+          ></mat-slide-toggle>
+          <span>
+            {{ toggleLabel() | titlecase }}
+          </span>
         </section>
         <section class="navigation">
           <button mat-button [routerLink]="'/'">Home</button>

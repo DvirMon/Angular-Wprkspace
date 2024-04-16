@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  Input,
+  TemplateRef,
   WritableSignal,
   computed,
   input,
@@ -24,10 +26,10 @@ import { MatIconButton } from '@angular/material/button';
     MatIconButton,
   ],
   templateUrl: './table.component.html',
-  styleUrl: './table.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableComponent<T> {
+
   idKey = input<string>('id');
 
   dataSource = input.required<T[]>();
@@ -35,6 +37,10 @@ export class TableComponent<T> {
   columns = input.required<GridBaseColDef[]>();
 
   editRow = input<boolean>(false);
+
+
+  @Input() actionTemplate! : TemplateRef<unknown>
+
 
   public readonly tableColumns = this.computeTableColumns();
   public readonly displayedColumns = this.computeDisplayColumns();

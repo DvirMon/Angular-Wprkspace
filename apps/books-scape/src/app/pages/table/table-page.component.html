@@ -7,7 +7,15 @@
         [dataSource]="data()"
         [columns]="columns"
         [editRow]="true"
+        [actionTemplate]="actionTemplate"
       ></books-scape-table>
     </article>
   </div>
 </books-scape-layout>
+
+<ng-template #actionTemplate>
+  <div class="flex gap-4 justify-center items-center">
+    <table-actions-cell icon="edit"></table-actions-cell>
+    <table-actions-cell text="save"></table-actions-cell>
+  </div>
+</ng-template>

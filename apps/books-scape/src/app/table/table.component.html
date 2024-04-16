@@ -14,16 +14,20 @@
     @if(column.type !== 'actions') {
 
     <td mat-cell *matCellDef="let element">
-      @if( column.editable && showEdit()[element[idKey()]]) { edit state
-      } @else {
+      @if( column.editable && showEdit()[element[idKey()]]) { edit state } @else
+      {
       {{ element[column.field] }}}
     </td>
 
-    } @else if (column.field === 'editable') {
+    } @else {
     <td mat-cell *matCellDef="let element">
-      <button mat-icon-button (click)="onEdit(element[idKey()])">
+      <ng-container
+        *ngTemplateOutlet="actionTemplate; context: { $implicit: element }"
+      ></ng-container>
+
+      <!-- <button mat-icon-button (click)="onEdit(element[idKey()])">
         <mat-icon fontIcon="edit"></mat-icon>
-      </button>
+      </button> -->
     </td>
 
     }

@@ -8,7 +8,6 @@ export interface Entity {
 
 export type EntityMap = Record<EntityId, Entity>;
 
-<<<<<<< HEAD
 /**
  * Represents a generic type defining methods for loading entities.
  * @template T The type of the method parameter.
@@ -20,10 +19,3 @@ export type EntityLoader<T, Entity, MethodName extends string> = {
 };
 
 export type LoaderService<EntityLoader> = ProviderToken<EntityLoader>;
-=======
-export type Loader<T, Entity, MethodName extends string> = {
-  [K in MethodName]: (args: T) => Observable<Entity[]>;
-};
-
-export type LoaderService<Loader> = ProviderToken<Loader>;
->>>>>>> b65f585 (remove  EntityResult)

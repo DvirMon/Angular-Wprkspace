@@ -7,11 +7,11 @@ import {
   runInInjectionContext,
   signal,
 } from '@angular/core';
-import { Observable, pipe } from 'rxjs';
 import { FormControl, FormGroup, ValidationErrors } from '@angular/forms';
-import { map, tap, startWith } from 'rxjs/operators';
-import { errorMessageMap } from './constants';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
+import { Observable, pipe } from 'rxjs';
+import { map, startWith, tap } from 'rxjs/operators';
+import { errorMessageMap } from './constants';
 import { FormServerError } from './types';
 
 @Injectable({
@@ -108,7 +108,7 @@ export class FormErrorService {
 
             this.errors.update((value) => ({
               ...value,
-              [key]: { ...controlErrors, },
+              [key]: { ...controlErrors },
             }));
           }
         })

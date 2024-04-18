@@ -5,6 +5,6 @@
     "types": []
   },
   "files": ["src/main.ts"],
-  "include": ["src/**/*.d.ts", "src/app/table/types/row..dts"],
+  "include": ["src/**/*.d.ts", "src/app/table/types/row..dts", "src/app/table/types/row.ts"],
   "exclude": ["jest.config.ts", "src/**/*.test.ts", "src/**/*.spec.ts"]
 }

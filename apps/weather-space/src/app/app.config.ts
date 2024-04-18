@@ -6,9 +6,13 @@ import {
 
 import {
   provideHttpClient,
-  withInterceptors
+  withFetch,
+  withInterceptors,
 } from '@angular/common/http';
-import { BrowserModule } from '@angular/platform-browser';
+import {
+  BrowserModule,
+  provideClientHydration,
+} from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
@@ -21,11 +25,12 @@ import { errorInterceptor } from './shared/interceptors/error.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideClientHydration(),
     importProvidersFrom(BrowserModule),
     provideRouter(appRoutes),
     provideAnimations(),
     provideAnimationsAsync(),
-    provideHttpClient(withInterceptors([errorInterceptor])),
+    provideHttpClient(withInterceptors([errorInterceptor]), withFetch()),
     provideToastr(),
     {
       provide: ErrorHandler,

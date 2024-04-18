@@ -9,8 +9,7 @@ import {
 } from '@angular/core';
 import {
   MatButtonToggle,
-  MatButtonToggleChange,
-  MatButtonToggleGroup,
+  MatButtonToggleGroup
 } from '@angular/material/button-toggle';
 import { MatListItem, MatNavList } from '@angular/material/list';
 import { PluralizePipe } from '../../shared/pipes/pluralize.pipe copy';

@@ -1,6 +1,20 @@
 
-@import '@angular/cdk/overlay-prebuilt.css';
+// add active style when type a word
+mat-option.active {
+  background-color: rgba(0, 0, 0, 0.04);
+}
 
-mat-option {
+::ng-deep section.select-options-wrapper {
+  mat-option {
+    flex-direction: row-reverse;
+    // justify-content: space-between;
+
+    mat-pseudo-checkbox {
+      margin-right: 0px !important;
+    }
+  }
+}
+
+::ng-deep .mat-mdc-select-arrow-wrapper {
   display: none !important;
 }

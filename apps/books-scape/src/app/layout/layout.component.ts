@@ -40,10 +40,13 @@ import { AppStore } from '../store/store';
 export class LayoutComponent {
   #store = inject(AppStore);
 
-  showNavigation = input<boolean>(false);
+  showNavigation = input<boolean>(true);
   showShopping = input<boolean>(true);
+  showBookshelf = input<boolean>(false);
 
-  protected readonly title: string = 'the books scape';
+  public readonly routes: string[] = ['filters', 'table'];
+
+  public readonly title: string = 'the books scape';
 
   public readonly shelfSize: Signal<string> = this.#store.shelfSize;
 }

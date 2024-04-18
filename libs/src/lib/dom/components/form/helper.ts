@@ -20,8 +20,8 @@ import {
 import { FormServerError } from './types';
 import { errorMessageMap } from './constants';
 
-export function getFormKeys(obj: FormGroup): WritableSignal<string[]> {
-  return signal(Object.keys(obj.controls));
+export function getFormKeys<T>(obj: FormGroup): WritableSignal<(keyof T)[]> {
+  return signal(Object.keys(obj.controls) as (keyof T)[]);
 }
 
 export function createValueChangesEmitter(

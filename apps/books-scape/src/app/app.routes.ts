@@ -36,6 +36,14 @@ export const appRoutes: Routes = [
     title: 'The Boos Scape',
   },
   {
+    path: 'table',
+    loadComponent: () =>
+      import('./pages/table/table-page.component').then(
+        (m) => m.TablePageComponent
+      ),
+    title: 'The Boos Scape',
+  },
+  {
     path: '**',
     loadComponent: () =>
       import('./pages/pnf/pnf.component').then((m) => m.PnfComponent),

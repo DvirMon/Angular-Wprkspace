@@ -1,10 +1,10 @@
 import { computed, inject } from '@angular/core';
 import {
   Entity,
-  Loader,
+  EntityLoader,
   LoaderService,
-  createSliceLoader,
-  loadSlice,
+  createLoader,
+  loadSlice
 } from '@dom';
 import {
   patchState,
@@ -17,7 +17,7 @@ import { Favorite, FavoriteHttpService } from '../../favorites';
 
 const SLICE = 'favorite';
 
-type FavoritesLoader = Loader<string, Entity, 'loadFavorites'>;
+type FavoritesLoader = EntityLoader<string, Entity, 'loadFavorites'>;
 
 type FavoriteSelection = { placeId: string; selected: boolean };
 
@@ -25,7 +25,7 @@ export function withFavorites(Loader: LoaderService<FavoritesLoader>) {
   return signalStoreFeature(
     withState<{ favorite: Favorite[] }>({ favorite: [] }),
     withMethods((store) => {
-      const loader = createSliceLoader(Loader, 'loadFavorites');
+      const loader = createLoader(Loader, 'loadFavorites');
       return {
         loadFavorites: loadSlice(loader, store, SLICE),
       };

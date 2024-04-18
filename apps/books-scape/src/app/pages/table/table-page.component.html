@@ -1,0 +1,35 @@
+<books-scape-layout [showNavigation]="true">
+  <div class="table-wrapper w-full">
+    <article class="w-full h-3/4 flex justify-center items-center">
+      <books-scape-table
+        class="w-1/2"
+        [idKey]="'position'"
+        [dataSource]="data()"
+        [columns]="columns"
+        [editRow]="true"
+        [rowModesModel]="rowModesModel()"
+        [actionTemplate]="actionTemplate"
+      ></books-scape-table>
+    </article>
+  </div>
+</books-scape-layout>
+
+<ng-template #actionTemplate let-element>
+  <div class="flex gap-4 justify-center items-center">
+    @if(rowModesModel()[element.position] === 'edit') {
+    <table-actions-cell
+      text="save"
+      (actionClicked)="onSave(element)"
+    ></table-actions-cell>
+    } @else {
+    <table-actions-cell
+      icon="edit"
+      (actionClicked)="onEdit(element)"
+    ></table-actions-cell>
+    }
+  </div>
+</ng-template>
+
+<ng-template #formTemplate let-element>
+  <!-- write input per field -->
+</ng-template>

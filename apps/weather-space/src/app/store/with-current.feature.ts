@@ -1,25 +1,29 @@
 import { signalStoreFeature, type, withMethods } from '@ngrx/signals';
 import {
   Entity,
-  Loader,
+  EntityLoader,
   LoaderService,
   createLoader,
   loadEntities,
+  onLoadCollection,
 } from '@dom';
 import { withEntities } from '@ngrx/signals/entities';
 import { CurrentWeather } from '../weather/models/current-weather-result';
 
-type WeatherLoader = Loader<number, Entity, 'loadCurrentWeather'>;
+type WeatherLoader = EntityLoader<number, Entity, 'loadCurrentWeather'>;
 
 const COLLECTION = 'current';
 
 export function withCurrentWeather(Loader: LoaderService<WeatherLoader>) {
   return signalStoreFeature(
     withEntities({ entity: type<CurrentWeather>(), collection: COLLECTION }),
-    withMethods((state) => {
+    withMethods((store) => {
       const loader = createLoader(Loader, 'loadCurrentWeather');
       return {
-        loadCurrentWeather: loadEntities(loader, state, COLLECTION),
+        loadCurrentWeather: loadEntities(
+          loader,
+          onLoadCollection(store, COLLECTION)
+        ),
       };
     })
   );

@@ -11,10 +11,10 @@ export class FiltersDataService {
   constructor(private bookHttp: VolumesHttpService) {}
 
   public loadFilterOptions(): Observable<Record<string, Book[]>> {
-    const book1$ = this._loadOptions();
-    const book2$ = this._loadOptions();
-    const book3$ = this._loadOptions();
-    const book4$ = this._loadOptions();
+    const book1$ = this._loadOptions('Angular');
+    const book2$ = this._loadOptions('Angular');
+    const book3$ = this._loadOptions('Foundation');
+    const book4$ = this._loadOptions('The Hobbit');
 
     return combineLatest([book1$, book2$, book3$, book4$]).pipe(
       map(([book1, book2, book3, book4]) => ({ book1, book2, book3, book4 })),
@@ -30,7 +30,7 @@ export class FiltersDataService {
     );
   }
 
-  loadOptions(query: string): Observable<Book[]> {
+  public loadOptions(query: string): Observable<Book[]> {
     return this.bookHttp.fetchVolumes(query).pipe(
       map((items) => this.mapItemsToBooks(items)),
       map((books) => this.filterBooksWithImages(books))
@@ -44,11 +44,6 @@ export class FiltersDataService {
     );
   }
 
-  // Filter books with images
-  private filterBooksWithImages(books: Book[]): Book[] {
-    return books.filter((book) => book.imageLinks != null);
-  }
-
   // RxJS operator function to transform book data
   private mapVolumeToBook(id: string, volumeInfo: VolumeInfo): Book {
     return {
@@ -58,5 +53,10 @@ export class FiltersDataService {
       description: volumeInfo.description,
       imageLinks: volumeInfo.imageLinks,
     };
+  }
+
+  // Filter books with images
+  private filterBooksWithImages(books: Book[]): Book[] {
+    return books.filter((book) => book.imageLinks != null);
   }
 }

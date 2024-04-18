@@ -1,19 +1,31 @@
-import { JsonPipe } from '@angular/common';
-import { Component, Signal, effect, inject } from '@angular/core';
+import { JsonPipe, NgClass, NgIf, TitleCasePipe } from '@angular/common';
+import {
+  Component,
+  WritableSignal,
+  computed,
+  effect,
+  inject,
+} from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import {
+  FormControl,
   FormGroup,
   NonNullableFormBuilder,
   ReactiveFormsModule,
 } from '@angular/forms';
 import {
-  MatAutocompleteModule,
-  MatOption,
+  MatAutocomplete,
+  MatAutocompleteTrigger,
 } from '@angular/material/autocomplete';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatListOption, MatSelectionList } from '@angular/material/list';
-import { MatSelectModule } from '@angular/material/select';
+import { MatOption, MatOptionSelectionChange } from '@angular/material/core';
+import {
+  MatFormField,
+  MatLabel,
+  MatSuffix,
+} from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { MatInput } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
 import { AutocompleteComponent, getFormKeys } from '@dom';
 import { StateSignal, patchState, signalState } from '@ngrx/signals';
 import { Book } from '../../books/books';
@@ -26,20 +38,34 @@ import {
   registerGroupOptions,
 } from '../../shared/options.helper';
 import { FiltersDataService } from './data.service';
+import { DropdownModule } from 'primeng/dropdown';
+
+interface Filters {
+  book1: FormControl<Partial<Book>>;
+  book2: FormControl<Partial<Book>>;
+  book3: FormControl<Partial<Book>>;
+  book4: FormControl<Partial<Book>>;
+}
 
 @Component({
   selector: 'books-scape-filters',
   standalone: true,
   imports: [
+    NgIf,
+    NgClass,
     JsonPipe,
+    TitleCasePipe,
     ReactiveFormsModule,
-    MatAutocompleteModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatSelectionList,
+    DropdownModule,
+    MatFormField,
+    MatSuffix,
+    MatLabel,
+    MatInput,
+    MatAutocompleteTrigger,
+    MatAutocomplete,
     MatOption,
-    MatListOption,
+    MatSelect,
+    MatIcon,
     LayoutComponent,
     AutocompleteComponent,
   ],
@@ -51,9 +77,13 @@ export class FiltersPageComponent {
 
   public readonly optionsMap = signalState<Record<string, Book[]>>({});
 
-  public readonly booksAutocomplete: FormGroup;
+  public readonly showForm = computed(
+    () => !!Object.keys(this.optionsMap()).length
+  );
 
-  public readonly booKeys: Signal<string[]>;
+  public readonly booksAutocomplete: FormGroup<Filters>;
+
+  public readonly booKeys: WritableSignal<(keyof Filters)[]>;
 
   #handleOptionsChanged = this._handleOptions(
     FiltersDataService,
@@ -63,7 +93,7 @@ export class FiltersPageComponent {
   constructor() {
     this.booksAutocomplete = this._buildGroup();
 
-    this.booKeys = getFormKeys(this.booksAutocomplete);
+    this.booKeys = getFormKeys<Filters>(this.booksAutocomplete);
 
     this.#handleOptionsChanged(registerGroupOptions(this.booksAutocomplete));
 
@@ -79,13 +109,13 @@ export class FiltersPageComponent {
     );
   }
 
-  private _buildGroup() {
+  private _buildGroup(): FormGroup<Filters> {
     return inject(NonNullableFormBuilder).group({
-      book1: ['Angular'],
-      book2: ['Angular'],
-      book3: ['Foundation'],
-      book4: ['The Hobbit'],
-    });
+      book1: [{ title: 'Angular' }],
+      book2: [{ title: 'Angular' }],
+      book3: [{ title: 'Foundation' }],
+      book4: [{ title: 'The Hobbit' }],
+    }) as FormGroup<Filters>;
   }
 
   private _handleOptions(
@@ -95,5 +125,13 @@ export class FiltersPageComponent {
     const loader = createOptionsLoader(Loader, 'loadOptions');
 
     return handleGroupOptions(loader, state);
+  }
+
+  onSelectionChange(event: MatOptionSelectionChange<Book>) {
+    console.log(event);
+  }
+
+  displayWith(value: Book) {
+    return value.title;
   }
 }

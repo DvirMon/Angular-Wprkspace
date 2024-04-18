@@ -1,0 +1,33 @@
+@if (isIconButton()) {
+
+<button
+  mat-icon-button
+  type="button"
+  (click)="onActionButtonClick()"
+  [disabled]="isDisabled()"
+  [matTooltip]="tooltip()"
+>
+  <mat-icon [fontIcon]="icon()"></mat-icon>
+</button>
+} @else {
+<button
+  mat-flat-button
+  type="button"
+  (click)="onActionButtonClick()"
+  [disabled]="isDisabled()"
+  [matTooltip]="tooltip()"
+>
+  {{ text() }}
+</button>
+}
+<!-- slots buttons -->
+<!-- <ng-container>
+    <ng-template
+      *ngTemplateOutlet="
+        endSlot;
+        context: {
+          $implicit: rowState
+        }
+      "
+    ></ng-template>
+  </ng-container> -->

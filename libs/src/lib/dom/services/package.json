@@ -6,9 +6,13 @@
     "@angular/core": "^17.2.0"
   },
   "dependencies": {
+<<<<<<< HEAD
     "tslib": "^2.3.0",
     "@ngrx/operators": "^17.1.1",
     "@ngrx/signals": "^17.1.1"
+=======
+    "tslib": "^2.3.0"
+>>>>>>> b65f585 (remove  EntityResult)
   },
   "sideEffects": false
 }

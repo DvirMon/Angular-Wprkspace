@@ -11,12 +11,9 @@
   />
 
   @if (hint()) {
-  <ng-container>
-    <mat-hint> {{ 'Please enter your ' + hint() }}</mat-hint>
-  </ng-container>
+  <mat-hint> {{ 'Please enter your ' + hint() }}</mat-hint>
+
   } @if (!!message()) {
-  <ng-container>
-    <mat-error>{{ message() }}</mat-error>
-  </ng-container>
+  <mat-error>{{ message() }}</mat-error>
   }
 </mat-form-field>

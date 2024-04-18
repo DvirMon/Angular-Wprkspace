@@ -1,4 +1,13 @@
-import { Component, OnInit, Signal, computed, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  Signal,
+  computed,
+  input,
+} from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 import { MatButtonModule, MatIconButton } from '@angular/material/button';
@@ -16,6 +25,7 @@ import { MatTooltip } from '@angular/material/tooltip';
   imports: [CommonModule, MatButtonModule, MatIconButton, MatTooltip, MatIcon],
   templateUrl: './table-action-cell.component.html',
   styleUrls: ['./table-action-cell.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableActionCellComponent implements OnInit {
   icon = input<string>('');
@@ -26,9 +36,13 @@ export class TableActionCellComponent implements OnInit {
 
   isIconButton!: Signal<boolean>;
 
+  @Output() actionClicked = new EventEmitter<void>();
+
   ngOnInit(): void {
     this.isIconButton = computed(() => !!this.icon());
   }
 
-  onActionButtonClick() {}
+  onActionButtonClick(): void {
+    this.actionClicked.emit();
+  }
 }

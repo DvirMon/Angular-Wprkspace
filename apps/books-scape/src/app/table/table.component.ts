@@ -3,17 +3,20 @@ import {
   ChangeDetectionStrategy,
   Component,
   Input,
+  Signal,
   TemplateRef,
   WritableSignal,
   computed,
   input,
   signal,
 } from '@angular/core';
+import { MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { GridBaseColDef } from './types/column';
-import { MatIcon } from '@angular/material/icon';
-import { MatIconButton } from '@angular/material/button';
+import { GridRowModes } from './types/row';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'books-scape-table',
@@ -29,7 +32,6 @@ import { MatIconButton } from '@angular/material/button';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableComponent<T> {
-
   idKey = input<string>('id');
 
   dataSource = input.required<T[]>();
@@ -38,9 +40,18 @@ export class TableComponent<T> {
 
   editRow = input<boolean>(false);
 
+  rowModesModel = input<{ [key: string]: GridRowModes }>({});
 
-  @Input() actionTemplate! : TemplateRef<unknown>
+  rowFormGroupModel: Signal<{ [key: string]: FormGroup }> = computed(() => {
+    return Object.keys(this.rowModesModel()).reduce((acc, key) => {
+      if (this.rowModesModel()[key] === GridRowModes.Edit) {
+        acc[key] = new FormGroup({});
+      }
+      return acc;
+    }, {} as { [key: string]: FormGroup });
+  });
 
+  @Input() actionTemplate!: TemplateRef<unknown>;
 
   public readonly tableColumns = this.computeTableColumns();
   public readonly displayedColumns = this.computeDisplayColumns();
@@ -54,7 +65,13 @@ export class TableComponent<T> {
       const columns = this.columns();
 
       const withEditColumn = this.editRow()
-        ? [...columns, { field: 'editable', type: 'actions' } as GridBaseColDef]
+        ? [
+            ...columns,
+            {
+              field: 'editable',
+              type: 'actions',
+            } as GridBaseColDef,
+          ]
         : columns;
 
       return withEditColumn;

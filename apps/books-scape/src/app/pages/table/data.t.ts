@@ -23,7 +23,7 @@ export const ELEMENT_DATA: PeriodicElement[] = [
 export const HEADERS: { [key: string]: string } = { position: 'No.' };
 
 export const COLUMNS: GridBaseColDef<PeriodicElement>[] = [
-  { field: 'position', editable: true, type: 'number' },
+  { field: 'position', type: 'number' },
   { field: 'name', editable: true, type: 'number' },
   { field: 'weight', editable: true, type: 'number' },
   { field: 'symbol', editable: true, type: 'number' },

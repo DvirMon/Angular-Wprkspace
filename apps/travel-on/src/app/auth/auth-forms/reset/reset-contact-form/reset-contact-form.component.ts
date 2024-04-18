@@ -54,7 +54,7 @@ export class ResetContactFormComponent {
   serverError = input<FormServerError>();
 
   public readonly resetFormGroup: FormGroup<ResetContactForm>;
-  public readonly formKeys: WritableSignal<string[]>;
+  public readonly formKeys: WritableSignal<(keyof ResetContactForm)[]>;
 
   @Output() resetEmail: EventEmitter<string> = new EventEmitter();
 

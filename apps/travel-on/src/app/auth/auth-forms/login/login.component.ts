@@ -84,7 +84,7 @@ export class LoginFormComponent {
     },
   };
 
-  public readonly formKeys: WritableSignal<string[]>;
+  public readonly formKeys: WritableSignal<(keyof LoginForm)[]>;
 
   public message = signal('');
 

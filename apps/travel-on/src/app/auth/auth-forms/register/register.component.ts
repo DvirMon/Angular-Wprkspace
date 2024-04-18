@@ -56,7 +56,7 @@ export class RegisterFormComponent {
   serverError = input<FormServerError>();
 
   public readonly registerFormGroup: FormGroup<RegisterForm>;
-  public readonly formKeys: WritableSignal<string[]>;
+  public readonly formKeys: WritableSignal<(keyof RegisterForm)[]>;
 
   public readonly errorsMap: { [key: string]: ValidationErrors } = {
     password: {

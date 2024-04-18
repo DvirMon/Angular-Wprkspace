@@ -8,7 +8,6 @@ import {
   input,
   runInInjectionContext,
 } from '@angular/core';
-import { MatButton } from '@angular/material/button';
 import { ParallaxDirective } from '@dom';
 import { FloatingButtonComponent } from '@dom/components';
 import { AuthStore } from '../../auth/store/store';
@@ -17,9 +16,9 @@ import {
   PlacesListComponent,
   SelectionListChange,
 } from '../../places/place-list/place-list.component';
+import { PlacesHeaderComponent } from '../../places/places-header/places-header.component';
 import { Places } from '../../places/places.model';
 import { SignalStore } from '../../store/store';
-import { PlacesHeaderComponent } from '../../places/places-header/places-header.component';
 import { PlacesPageService } from './places.service';
 
 @Component({

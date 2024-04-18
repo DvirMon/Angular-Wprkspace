@@ -42,7 +42,7 @@ interface ResetPasswordForm {
 })
 export class ResetPasswordFormComponent {
   public readonly resetPasswordFormGroup: FormGroup<ResetPasswordForm>;
-  public readonly formKeys: WritableSignal<string[]>;
+  public readonly formKeys: WritableSignal<(keyof ResetPasswordForm)[]>;
 
   @Output() resetPassword: EventEmitter<string> = new EventEmitter();
 

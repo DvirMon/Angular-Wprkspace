@@ -23,12 +23,8 @@ export class PlacesHttpService {
     ) as CollectionReference<Places>;
   }
 
-<<<<<<< HEAD
   public loadPlaces(): Observable<Places[]> {
     
-=======
-  loadPlaces(): Observable<Places[]> {
->>>>>>> b65f585 (remove  EntityResult)
     const queryRef = query(this.vacationsRef);
     return from(getDocs(queryRef)).pipe(
       map((querySnapshot) =>

@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { placesGuard } from './pages/places/places.guard';
 
 export const appRoutes: Routes = [
   {

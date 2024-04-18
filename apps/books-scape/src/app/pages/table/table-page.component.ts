@@ -6,13 +6,13 @@ import { LayoutComponent } from '../../layout/layout.component';
 import { TableActionCellComponent } from '../../table/table-action-cell/table-action-cell.component';
 import { TableComponent } from '../../table/table.component';
 import { GridBaseColDef } from '../../table/types/column';
-// import { GridRowModes } from '../../table/types/row';
+import { GridRowModes } from '../../table/types/row';
 import { COLUMNS, ELEMENT_DATA, PeriodicElement } from './data.t';
 
-enum GridRowModes {
-  Edit = 'edit',
-  View = 'view',
-}
+// enum GridRowModes {
+//   Edit = 'edit',
+//   View = 'view',
+// }
 @Component({
   selector: 'books-scape-page-table',
   standalone: true,

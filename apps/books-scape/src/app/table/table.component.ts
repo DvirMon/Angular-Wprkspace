@@ -19,7 +19,7 @@ import { GridRowModes } from './models/gridRows';
 import { FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'books-scape-table',
+  selector: 'dom-table',
   standalone: true,
   imports: [
     CommonModule,

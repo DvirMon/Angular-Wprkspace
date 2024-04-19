@@ -14,8 +14,8 @@ import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
-import { GridBaseColDef } from './types/gridColDef';
-import { GridRowModes } from './types/gridRows';
+import { GridBaseColDef } from './models/gridColDef';
+import { GridRowModes } from './models/gridRows';
 import { FormGroup } from '@angular/forms';
 
 @Component({

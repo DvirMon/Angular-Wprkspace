@@ -4,7 +4,7 @@ export { ActionCellDirective } from './table-action-cell/cell-action.directive';
 export { FormCellComponent } from './table-form-cell/table-cell-form.component';
 export { TableComponent } from './table.component';
 
-export * from './types/gridColDef';
-export * from './types/gridColType';
-export * from './types/gridRows';
-export * from './types/gridSortModel';
+export * from './models/gridColDef';
+export * from './models/gridColType';
+export * from './models/gridRows';
+export * from './models/gridSortModel';

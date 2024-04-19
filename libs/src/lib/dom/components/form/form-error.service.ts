@@ -98,21 +98,20 @@ export class FormErrorService {
   }
 
   handleErrorMap(group: FormGroup, messages: ValidationErrors) {
-    group.statusChanges
-      .pipe(
-        startWith(group.status),
-        map(() => {
-          const formKeys = Object.keys(group.controls);
-          for (const key of formKeys) {
-            const controlErrors = group.controls[key].errors;
+    group.statusChanges.pipe(
+      startWith(group.status),
+      map(() => {
+        const formKeys = Object.keys(group.controls);
+        for (const key of formKeys) {
+          const controlErrors = group.controls[key].errors;
 
-            this.errors.update((value) => ({
-              ...value,
-              [key]: { ...controlErrors },
-            }));
-          }
-        })
-      )
-      .subscribe((val) => console.log(this.errors()));
+          this.errors.update((value) => ({
+            ...value,
+            ...messages,
+            [key]: { ...controlErrors },
+          }));
+        }
+      })
+    );
   }
 }

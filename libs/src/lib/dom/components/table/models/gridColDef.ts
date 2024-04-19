@@ -1,6 +1,6 @@
 import { GridColType } from './gridColType';
 import { GridRowId, GridValidRowModel } from './gridRows';
-import { GridSortDirection, GridComparatorFn } from './gridSortModel';
+import { GridComparatorFn, GridSortDirection } from './gridSortModel';
 /**
  * Alignment used in position elements in Cells.
  */
@@ -15,7 +15,6 @@ export type ValueOptions =
     }
   | Record<string, unknown>;
 
-  
 export type GridKeyValue = string | number | boolean;
 
 export type GridValueGetter<
@@ -254,7 +253,7 @@ export interface GridSingleSelectColDef<
    */
   type: 'singleSelect';
   /**
-   * To be used in combination with `type: 'singleSelect'`. This is an array 
+   * To be used in combination with `type: 'singleSelect'`. This is an array
    * (or a function returning an array) of the possible cell values and labels.
    */
   valueOptions?:
@@ -291,7 +290,9 @@ export type GridColTypeDef<V = unknown, F = V> = Omit<
   'field'
 >;
 
-export interface GridValueOptionsParams<R extends GridValidRowModel = any> {
+export interface GridValueOptionsParams<
+  R extends GridValidRowModel = { [key: string]: unknown }
+> {
   /**
    * The field of the column to which options will be provided
    */

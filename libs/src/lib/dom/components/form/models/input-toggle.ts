@@ -1,6 +1,5 @@
-import { Input } from '@angular/core';
 import { FormControl, ValidationErrors } from '@angular/forms';
-import { BaseInput, Appearance, InputType } from './input.model';
+import { Appearance, BaseInput, InputType } from './input.model';
 
 abstract class InputBooleanMode implements BaseInput<boolean> {
   public key: string;

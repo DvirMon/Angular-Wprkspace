@@ -27,6 +27,7 @@ import {
   pipe,
   tap,
 } from 'rxjs';
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import { OptionContentDirective } from '../../../directives';
 
 @Component({

@@ -1,9 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  TemplateRef,
-  input
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 // import { QuestionGroupModel } from '../../../../form/models/question-group.model';
 // import { QuestionBase } from '../../../../form/models/question.model';
 import { CommonModule } from '@angular/common';
@@ -27,21 +22,7 @@ import { MatSelectModule } from '@angular/material/select';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormCellComponent {
-  
   public readonly group = input.required<FormGroup>();
   public readonly columnDef = input.required<string>();
   public readonly type = input.required<string>();
-
-  // public question: QuestionBase;
-
-  // public questionTemplate: { [key: string]: TemplateRef<any> };
-
-  private setQuestionTemplate(template: TemplateRef<any>) {
-    // return this.group.questions.reduce((acc, question) => {
-    //   return {
-    //     ...acc,
-    //     [question.key]: question.controlType,
-    //   };
-    // }, {});
-  }
 }

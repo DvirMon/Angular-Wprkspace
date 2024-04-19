@@ -11,6 +11,10 @@
     "jest.config.ts",
     "src/**/*.test.ts",
     "src/**/*.spec.ts",
-    "src/**/*.d.ts"
+    "src/**/*.d.ts",
+    "src/app/table/types/gridRows.ts",
+    "src/app/table/types/gridSortModel.ts",
+    "src/app/table/types/gridColType.ts",
+    "src/app/table/types/gridColDef.ts"
   ]
 }

@@ -8,4 +8,5 @@ export interface GridColumnTypes {
   actions: 'actions';
   custom: 'custom';
 }
+
 export type GridColType = GridColumnTypes[keyof GridColumnTypes];

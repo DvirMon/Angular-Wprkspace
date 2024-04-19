@@ -1,4 +1,4 @@
-import { GridBaseColDef } from '../../table/types/column';
+import { GridBaseColDef } from '../../table/types/gridColDef';
 
 export interface PeriodicElement {
   name: string;

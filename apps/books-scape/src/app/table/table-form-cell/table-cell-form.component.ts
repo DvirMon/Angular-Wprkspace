@@ -14,7 +14,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 
 @Component({
-  selector: 'table-form-cell',
+  selector: 'dom-form-cell',
   standalone: true,
   imports: [
     CommonModule,

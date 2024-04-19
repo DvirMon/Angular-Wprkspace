@@ -20,7 +20,7 @@ import { MatTooltip } from '@angular/material/tooltip';
 // }
 
 @Component({
-  selector: 'dom-actions-cell',
+  selector: 'dom-table-actions-cell',
   standalone: true,
   imports: [CommonModule, MatButtonModule, MatIconButton, MatTooltip, MatIcon],
   templateUrl: './table-action-cell.component.html',

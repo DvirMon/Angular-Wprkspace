@@ -3,12 +3,13 @@ import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Observable, of } from 'rxjs';
 import { LayoutComponent } from '../../layout/layout.component';
+
 import {
   GridBaseColDef,
   GridRowModes,
   TableActionCellComponent,
   TableComponent,
-} from '../../table';
+} from '@dom';
 import { COLUMNS, ELEMENT_DATA, PeriodicElement } from './data.t';
 
 // enum GridRowModes {

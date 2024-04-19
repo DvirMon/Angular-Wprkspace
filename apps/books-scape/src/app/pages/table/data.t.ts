@@ -1,4 +1,4 @@
-import { GridBaseColDef } from '../../table/models/gridColDef';
+import { GridBaseColDef } from "@dom";
 
 export interface PeriodicElement {
   name: string;
@@ -22,7 +22,7 @@ export const ELEMENT_DATA: PeriodicElement[] = [
 
 export const HEADERS: { [key: string]: string } = { position: 'No.' };
 
-export const COLUMNS: GridBaseColDef<PeriodicElement>[] = [
+export const COLUMNS: GridBaseColDef[] = [
   { field: 'position', type: 'number' },
   { field: 'name', editable: true, type: 'number' },
   { field: 'weight', editable: true, type: 'number' },

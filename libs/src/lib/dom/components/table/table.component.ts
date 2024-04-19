@@ -14,12 +14,12 @@ import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
-import { GridBaseColDef } from './types/column';
-import { GridRowModes } from './types/row';
+import { GridBaseColDef } from './models/gridColDef';
+import { GridRowModes } from './models/gridRows';
 import { FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'books-scape-table',
+  selector: 'dom-table',
   standalone: true,
   imports: [
     CommonModule,

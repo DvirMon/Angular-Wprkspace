@@ -1,9 +1,9 @@
 import { Directive, TemplateRef } from '@angular/core';
 
 @Directive({
-  selector: '[tableActionCell]',
+  selector: '[domActionCell]',
   standalone: true,
 })
-export class KKLActionCellDirective {
+export class ActionCellDirective {
   constructor(public template: TemplateRef<unknown>) {}
 }

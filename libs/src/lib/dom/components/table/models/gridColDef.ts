@@ -1,26 +1,11 @@
-import * as React from 'react';
-
-import { GridCellClassNamePropType } from '../gridCellClass';
-import { GridColumnHeaderClassNamePropType } from '../gridColumnHeaderClass';
-import type { GridFilterOperator } from '../gridFilterOperator';
-import {
-  GridRenderCellParams,
-  GridRenderEditCellParams,
-  GridPreProcessEditCellProps,
-} from '../params/gridCellParams';
-import { GridColumnHeaderParams } from '../params/gridColumnHeaderParams';
-import { GridComparatorFn, GridSortDirection } from '../gridSortModel';
 import { GridColType } from './gridColType';
-import { GridRowParams } from '../params/gridRowParams';
-import { GridValueOptionsParams } from '../params/gridValueOptionsParams';
-import { GridActionsCellItemProps } from '../../components/cell/GridActionsCellItem';
-import { GridEditCellProps } from '../gridEditRowModel';
-import type { GridValidRowModel } from '../gridRows';
-import { GridApiCommunity } from '../api/gridApiCommunity';
+import { GridRowId, GridValidRowModel } from './gridRows';
+import { GridSortDirection, GridComparatorFn } from './gridSortModel';
 /**
  * Alignment used in position elements in Cells.
  */
 export type GridAlignment = 'left' | 'right' | 'center';
+
 export type ValueOptions =
   | string
   | number
@@ -29,64 +14,29 @@ export type ValueOptions =
       label: string;
     }
   | Record<string, unknown>;
-/**
- * Value that can be used as a key for grouping rows
- */
+
+  
 export type GridKeyValue = string | number | boolean;
-
-export type GridApplyQuickFilter<
-  R extends GridValidRowModel = GridValidRowModel,
-  V = unknown
-> = (
-  value: V,
-  row: R,
-  column: GridColDef,
-  apiRef: React.MutableRefObject<GridApiCommunity>
-  ) => boolean;
-
-export type GetApplyQuickFilterFn<
-  R extends GridValidRowModel = GridValidRowModel,
-  V = unknown
-> = (
-  value: unknown,
-  colDef: GridStateColDef<R, V>,
-  apiRef: React.MutableRefObject<GridApiCommunity>
-) => null | GridApplyQuickFilter<R, V>;
 
 export type GridValueGetter<
   R extends GridValidRowModel = GridValidRowModel,
   V = unknown,
   F = V,
   TValue = never
-> = (
-  value: TValue,
-  row: R,
-  column: GridColDef<R, V, F>,
-  apiRef: React.MutableRefObject<GridApiCommunity>
-  ) => V;
+> = (value: TValue, row: R, column: GridColDef<R, V, F>) => V;
 
 export type GridValueFormatter<
   R extends GridValidRowModel = GridValidRowModel,
   V = unknown,
   F = V,
   TValue = never
-> = (
-  value: TValue,
-  row: R,
-  column: GridColDef<R, V, F>,
-  apiRef: React.MutableRefObject<GridApiCommunity>
-  ) => F;
+> = (value: TValue, row: R, column: GridColDef<R, V, F>) => F;
 
 export type GridValueSetter<
   R extends GridValidRowModel = GridValidRowModel,
   V = unknown,
   F = V
-> = (
-  value: V,
-  row: R,
-  column: GridColDef<R, V, F>,
-  apiRef: React.MutableRefObject<GridApiCommunity>
-  ) => R;
+> = (value: V, row: R, column: GridColDef<R, V, F>) => R;
 
 export type GridValueParser<
   R extends GridValidRowModel = GridValidRowModel,
@@ -95,20 +45,14 @@ export type GridValueParser<
 > = (
   value: F | undefined,
   row: R | undefined,
-  column: GridColDef<R, V, F>,
-  apiRef: React.MutableRefObject<GridApiCommunity>
-  ) => V;
+  column: GridColDef<R, V, F>
+) => V;
 
 export type GridColSpanFn<
   R extends GridValidRowModel = GridValidRowModel,
   V = unknown,
   F = V
-> = (
-  value: V,
-  row: R,
-  column: GridColDef<R, V, F>,
-  apiRef: React.MutableRefObject<GridApiCommunity>
-) => number | undefined;
+> = (value: V, row: R, column: GridColDef<R, V, F>) => number | undefined;
 /**
  * Column Definition base interface.
  */
@@ -231,48 +175,18 @@ export interface GridBaseColDef<
   /**
    * Class name that will be added in cells for that column.
    */
-  cellClassName?: GridCellClassNamePropType<R, V>;
+  cellClassName?: string;
   /**
    * Display mode for the cell:
    *  - 'text': For text-based cells (default)
    *  - 'flex': For cells with HTMLElement children
    */
   display?: 'text' | 'flex';
-  /**
-   * Allows to override the component rendered as cell for this column.
-   * @template R, V, F
-   * @param {GridRenderCellParams<R, V, F>} params Object containing parameters for the renderer.
-   * @returns {React.ReactNode} The element to be rendered.
-   */
-  renderCell?: (params: GridRenderCellParams<R, V, F>) => React.ReactNode;
-  /**
-   * Allows to override the component rendered in edit cell mode for this column.
-   * @param {GridRenderEditCellParams} params Object containing parameters for the renderer.
-   * @returns {React.ReactNode} The element to be rendered.
-   */
-  renderEditCell?: (
-    params: GridRenderEditCellParams<R, V, F>
-  ) => React.ReactNode;
-  /**
-   * Callback fired when the edit props of the cell changes.
-   * It allows to process the props that saved into the state.
-   * @param {GridPreProcessEditCellProps} params Object containing parameters of the cell being edited.
-   * @returns {GridEditCellProps | Promise<GridEditCellProps>} The new edit cell props.
-   */
-  preProcessEditCellProps?: (
-    params: GridPreProcessEditCellProps
-  ) => GridEditCellProps | Promise<GridEditCellProps>;
+
   /**
    * Class name that will be added in the column header cell.
    */
-  headerClassName?: GridColumnHeaderClassNamePropType;
-  /**
-   * Allows to render a component in the column header cell.
-   * @template R, V, F
-   * @param {GridColumnHeaderParams<R, V, F>} params Object containing parameters for the renderer.
-   * @returns {React.ReactNode} The element to be rendered.
-   */
-  renderHeader?: (params: GridColumnHeaderParams<R, V, F>) => React.ReactNode;
+  headerClassName?: string;
   /**
    * Header cell element alignment.
    */
@@ -292,24 +206,7 @@ export interface GridBaseColDef<
    * @default true
    */
   filterable?: boolean;
-  /**
-   * Allows setting the filter operators for this column.
-   */
-  filterOperators?: GridFilterOperator<R, V, F>[];
-  /**
-   * The callback that generates a filtering function for a given quick filter value.
-   * This function can return `null` to skip filtering for this value and column.
-   * @param {unknown} value The value with which we want to filter the column.
-   * @param {GridStateColDef} colDef The column from which we want to filter the rows.
-   * @param {React.MutableRefObject<GridApiCommunity>} apiRef Deprecated: The API of the grid.
-   * @returns {null | GridApplyQuickFilter} The function to call to check if a row pass this filter value or not.
-   */
-  getApplyQuickFilterFn?: GetApplyQuickFilterFn<R, V>;
-  /**
-   * If `true`, this column cannot be reordered.
-   * @default false
-   */
-  disableReorder?: boolean;
+
   /**
    * If `true`, this column will not be included in exports.
    * @default false
@@ -327,7 +224,7 @@ export interface GridBaseColDef<
  *   - [Special column properties](/x/react-data-grid/column-definition/#special-properties)
  */
 export interface GridActionsColDef<
-  R extends GridValidRowModel = unknown,
+  R extends GridValidRowModel = { [key: string]: unknown },
   V = unknown,
   F = V
 > extends GridBaseColDef<R, V, F> {
@@ -336,14 +233,10 @@ export interface GridActionsColDef<
    * @default 'actions'
    */
   type: 'actions';
-  /**
-   * Function that returns the actions to be shown.
-   * @param {GridRowParams} params The params for each row.
-   * @returns {React.ReactElement<GridActionsCellItemProps>[]} An array of [[GridActionsCell]] elements.
-   */
-  getActions: (
-    params: GridRowParams<R>
-  ) => React.ReactElement<GridActionsCellItemProps>[];
+
+  // getActions: (
+  //   params: GridRowParams<R>
+  // ) => React.ReactElement<GridActionsCellItemProps>[];
 }
 /**
  * Column Definition interface used for columns with the `singleSelect` type.
@@ -351,7 +244,7 @@ export interface GridActionsColDef<
  *   - [Special column properties](/x/react-data-grid/column-definition/#special-properties)
  */
 export interface GridSingleSelectColDef<
-  R extends GridValidRowModel = unknown,
+  R extends GridValidRowModel = { [key: string]: unknown },
   V = unknown,
   F = V
 > extends GridBaseColDef<R, V, F> {
@@ -361,7 +254,8 @@ export interface GridSingleSelectColDef<
    */
   type: 'singleSelect';
   /**
-   * To be used in combination with `type: 'singleSelect'`. This is an array (or a function returning an array) of the possible cell values and labels.
+   * To be used in combination with `type: 'singleSelect'`. This is an array 
+   * (or a function returning an array) of the possible cell values and labels.
    */
   valueOptions?:
     | Array<ValueOptions>
@@ -385,7 +279,7 @@ export interface GridSingleSelectColDef<
  *   - [Column definition](/x/react-data-grid/column-definition/)
  */
 export type GridColDef<
-  R extends GridValidRowModel = unknown,
+  R extends GridValidRowModel = { [key: string]: unknown },
   V = unknown,
   F = V
 > =
@@ -393,6 +287,21 @@ export type GridColDef<
   | GridActionsColDef<R, V, F>
   | GridSingleSelectColDef<R, V, F>;
 export type GridColTypeDef<V = unknown, F = V> = Omit<
-  GridBaseColDef<unknown, V, F>,
+  GridBaseColDef<{ [key: string]: unknown }, V, F>,
   'field'
 >;
+
+export interface GridValueOptionsParams<R extends GridValidRowModel = any> {
+  /**
+   * The field of the column to which options will be provided
+   */
+  field: string;
+  /**
+   * The grid row id.
+   */
+  id?: GridRowId;
+  /**
+   * The row model of the row that the current cell belongs to.
+   */
+  row?: R;
+}

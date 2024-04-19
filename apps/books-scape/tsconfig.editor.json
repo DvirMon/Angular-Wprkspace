@@ -1,6 +1,6 @@
 {
   "extends": "./tsconfig.json",
-  "include": ["src/**/*.ts", "src/app/table/types/row..dts"],
+  "include": ["src/**/*.ts", "src/app/table/models/row..dts"],
   "compilerOptions": {
     "types": ["jest", "node"]
   }

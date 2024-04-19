@@ -5,6 +5,13 @@
     "types": []
   },
   "files": ["src/main.ts"],
-  "include": ["src/**/*.d.ts", "src/app/table/types/row..dts", "src/app/table/types/row.ts"],
+  "include": [
+    "src/**/*.d.ts",
+    "src/app/table/models/row..dts",
+    "src/app/table/models/gridRows.ts",
+    "src/app/table/models/gridSortModel.ts",
+    "src/app/table/models/gridColType.ts",
+    "src/app/table/models/gridColDef.ts"
+  ],
   "exclude": ["jest.config.ts", "src/**/*.test.ts", "src/**/*.spec.ts"]
 }

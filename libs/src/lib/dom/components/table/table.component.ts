@@ -7,6 +7,7 @@ import {
   TemplateRef,
   WritableSignal,
   computed,
+  contentChild,
   input,
   signal,
 } from '@angular/core';
@@ -17,6 +18,7 @@ import { MatTableModule } from '@angular/material/table';
 import { GridBaseColDef } from './models/gridColDef';
 import { GridRowModes } from './models/gridRows';
 import { FormGroup } from '@angular/forms';
+import { ActionCellDirective } from './table-action-cell/cell-action.directive';
 
 @Component({
   selector: 'dom-table',
@@ -32,6 +34,9 @@ import { FormGroup } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableComponent<T> {
+
+  private actionColumn = contentChild(ActionCellDirective);
+
   idKey = input<string>('id');
 
   dataSource = input.required<T[]>();

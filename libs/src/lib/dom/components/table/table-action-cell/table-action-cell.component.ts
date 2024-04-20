@@ -6,7 +6,7 @@ import {
   Output,
   Signal,
   computed,
-  input,
+  input
 } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
@@ -28,6 +28,7 @@ import { MatTooltip } from '@angular/material/tooltip';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableActionCellComponent implements OnInit {
+
   icon = input<string>('');
   tooltip = input<string>('');
   text = input<string>('');

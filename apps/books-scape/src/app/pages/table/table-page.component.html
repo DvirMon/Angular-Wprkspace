@@ -10,25 +10,17 @@
         [rowModesModel]="rowModesModel()"
       >
         <ng-template domActionCell let-element>
-          <div class="flex gap-4 justify-center items-center">
-            @if(rowModesModel()[element.position] === 'edit') {
-            <dom-table-actions-cell
-              text="save"
-              (actionClicked)="onSave(element)"
-            ></dom-table-actions-cell>
-            } @else {
-            <dom-table-actions-cell
-              icon="edit"
-              (actionClicked)="onEdit(element)"
-            ></dom-table-actions-cell>
-            }
-          </div>
+
+          <books-scape-table-actions
+            [rowModesModel]="rowModesModel"
+            [element]="element"
+          ></books-scape-table-actions>
+        </ng-template>
+
+        <ng-template domFormCell let-element>
+          <!-- write input per field -->
         </ng-template>
       </dom-table>
     </article>
   </div>
 </books-scape-layout>
-
-<ng-template #formTemplate let-element>
-  <!-- write input per field -->
-</ng-template>

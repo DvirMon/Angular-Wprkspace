@@ -1,0 +1,13 @@
+<div class="flex gap-4 justify-center items-center">
+    @if(rowModesModel()[element().position] === 'edit') {
+    <dom-table-actions-cell
+      text="save"
+      (actionClicked)="onSave(element())"
+    ></dom-table-actions-cell>
+    } @else {
+    <dom-table-actions-cell
+      icon="edit"
+      (actionClicked)="onEdit(element())"
+    ></dom-table-actions-cell>
+    }
+  </div>

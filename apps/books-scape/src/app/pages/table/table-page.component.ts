@@ -5,6 +5,7 @@ import { Observable, of } from 'rxjs';
 import { LayoutComponent } from '../../layout/layout.component';
 
 import {
+  ActionCellDirective,
   GridBaseColDef,
   GridRowModes,
   TableActionCellComponent,
@@ -24,6 +25,7 @@ import { COLUMNS, ELEMENT_DATA, PeriodicElement } from './data.t';
     LayoutComponent,
     TableComponent,
     TableActionCellComponent,
+    ActionCellDirective
   ],
   templateUrl: './table-page.component.html',
   styleUrl: './table-page.component.css',

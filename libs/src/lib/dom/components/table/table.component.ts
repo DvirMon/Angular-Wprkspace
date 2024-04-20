@@ -9,15 +9,15 @@ import {
   computed,
   contentChild,
   input,
-  signal,
+  signal
 } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { GridBaseColDef } from './models/gridColDef';
 import { GridRowModes } from './models/gridRows';
-import { FormGroup } from '@angular/forms';
 import { ActionCellDirective } from './table-action-cell/cell-action.directive';
 
 @Component({
@@ -35,7 +35,7 @@ import { ActionCellDirective } from './table-action-cell/cell-action.directive';
 })
 export class TableComponent<T> {
 
-  private actionColumn = contentChild(ActionCellDirective);
+  public actionColumn = contentChild(ActionCellDirective);
 
   idKey = input<string>('id');
 

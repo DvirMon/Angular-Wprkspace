@@ -5,6 +5,7 @@ import {
   Input,
   WritableSignal,
   input,
+  model,
 } from '@angular/core';
 import {
   ActionCellDirective,
@@ -23,10 +24,7 @@ import { PeriodicElement } from '../../pages/table/data.t';
 })
 export class TableActionsComponent {
   element = input.required<PeriodicElement>();
-
-  // @Input() rowModesModel = input.required<{ [key: string]: GridRowModes }>({});
-
-  @Input() rowModesModel!: WritableSignal<{ [key: string]: GridRowModes }>;
+  rowModesModel = model.required<{ [key: string]: GridRowModes }>()
 
   onEdit(element: PeriodicElement) {
     this.rowModesModel.update((value) => ({

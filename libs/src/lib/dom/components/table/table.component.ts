@@ -1,17 +1,14 @@
 import { CommonModule } from '@angular/common';
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
-  ComponentFactoryResolver,
-  ElementRef,
-  Input,
   Signal,
-  TemplateRef,
-  ViewChild,
+  Type,
+  ViewContainerRef,
   WritableSignal,
   computed,
   contentChild,
+  effect,
   input,
   signal,
   viewChild,
@@ -25,6 +22,7 @@ import { GridBaseColDef } from './models/gridColDef';
 import { GridRowModes } from './models/gridRows';
 import { ActionCellDirective } from './table-action-cell/cell-action.directive';
 import { TableFormCellComponent } from './table-form-cell/table-cell-form.component';
+import { FormCellDirective } from './table-form-cell/table-cell-form.directive';
 
 @Component({
   selector: 'dom-table',
@@ -35,17 +33,23 @@ import { TableFormCellComponent } from './table-form-cell/table-cell-form.compon
     MatPaginatorModule,
     MatIcon,
     MatIconButton,
+    FormCellDirective,
   ],
   templateUrl: './table.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TableComponent<T>  {
+export class TableComponent<T> {
   public actionColumn = contentChild(ActionCellDirective);
 
-  public formCell = viewChild(TableFormCellComponent);
+  public formCell = contentChild(TableFormCellComponent);
 
-  @ViewChild('dom-table-form-cell', { static: true, read: ElementRef })
-  childContainer!: ElementRef;
+  public formContainer = viewChild('formContainer', { read: ViewContainerRef });
+
+  formComponent = signal<Type<TableFormCellComponent>>(
+    {} as Type<TableFormCellComponent>
+  );
+
+  hasFormComponent = false;
 
   idKey = input<string>('id');
 
@@ -66,8 +70,6 @@ export class TableComponent<T>  {
     }, {} as { [key: string]: FormGroup });
   });
 
-  @Input() actionTemplate!: TemplateRef<unknown>;
-
   public readonly tableColumns = this.computeTableColumns();
   public readonly displayedColumns = this.computeDisplayColumns();
 
@@ -75,6 +77,32 @@ export class TableComponent<T>  {
     {}
   );
 
+  constructor() {
+    effect(
+      () => {
+        if (this.formContainer()) {
+          this.formContainer()?.createComponent<TableFormCellComponent>(
+            TableFormCellComponent
+          );
+        }
+      },
+      { allowSignalWrites: true }
+    );
+  }
+
+  loadComponent() {
+    if (this.formContainer()) {
+      console.log('this.formContainer()');
+
+      this.formContainer()?.createComponent<TableFormCellComponent>(
+        TableFormCellComponent
+      );
+    }
+    // if (this.formCell() && this.formContainer()) {
+
+    //   this.formComponent =
+    //     componentRef?.instance as Type<TableFormCellComponent>;
+  }
 
   computeTableColumns() {
     return computed(() => {

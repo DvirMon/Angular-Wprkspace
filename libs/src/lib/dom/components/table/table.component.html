@@ -14,9 +14,17 @@
     @if(column.type !== 'actions') {
 
     <td mat-cell *matCellDef="let element">
+
+      <ng-container #formContainer></ng-container>
+
+      <!-- @if (hasFormComponent) {
+      <ng-container *ngComponentOutlet="formComponent()"></ng-container>
+      } -->
+
+      <!--       
       @if( column.editable && rowModesModel()![element[idKey()]] === 'edit') {
       edit state } @else {
-      {{ element[column.field] }}}
+      {{ element[column.field] }}} -->
     </td>
 
     } @else {
@@ -24,19 +32,15 @@
       @if(actionColumn()){
 
       <ng-container
-        *ngTemplateOutlet="actionColumn()!.template;
+        *ngTemplateOutlet="
+          actionColumn()!.template;
           context: { $implicit: element }
         "
       ></ng-container>
       }
-
-      <!-- <button mat-icon-button (click)="onEdit(element[idKey()])">
-        <mat-icon fontIcon="edit"></mat-icon>
-      </button> -->
     </td>
 
     }
-
   </ng-container>
 
   }

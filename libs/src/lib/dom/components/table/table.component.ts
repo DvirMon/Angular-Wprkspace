@@ -1,15 +1,20 @@
 import { CommonModule } from '@angular/common';
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
+  ComponentFactoryResolver,
+  ElementRef,
   Input,
   Signal,
   TemplateRef,
+  ViewChild,
   WritableSignal,
   computed,
   contentChild,
   input,
-  signal
+  signal,
+  viewChild,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatIconButton } from '@angular/material/button';
@@ -19,6 +24,7 @@ import { MatTableModule } from '@angular/material/table';
 import { GridBaseColDef } from './models/gridColDef';
 import { GridRowModes } from './models/gridRows';
 import { ActionCellDirective } from './table-action-cell/cell-action.directive';
+import { TableFormCellComponent } from './table-form-cell/table-cell-form.component';
 
 @Component({
   selector: 'dom-table',
@@ -33,9 +39,13 @@ import { ActionCellDirective } from './table-action-cell/cell-action.directive';
   templateUrl: './table.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TableComponent<T> {
-
+export class TableComponent<T>  {
   public actionColumn = contentChild(ActionCellDirective);
+
+  public formCell = viewChild(TableFormCellComponent);
+
+  @ViewChild('dom-table-form-cell', { static: true, read: ElementRef })
+  childContainer!: ElementRef;
 
   idKey = input<string>('id');
 
@@ -65,6 +75,7 @@ export class TableComponent<T> {
     {}
   );
 
+
   computeTableColumns() {
     return computed(() => {
       const columns = this.columns();
@@ -85,9 +96,5 @@ export class TableComponent<T> {
 
   computeDisplayColumns() {
     return computed(() => this.tableColumns().map((column) => column.field));
-  }
-
-  onEdit(key: string) {
-    this.showEdit.update((value) => ({ ...value, [key]: !value[key] }));
   }
 }

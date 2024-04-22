@@ -6,6 +6,7 @@ import { LayoutComponent } from '../../layout/layout.component';
 
 import {
   ActionCellDirective,
+  TableFormCellComponent,
   GridBaseColDef,
   GridRowModes,
   TableActionCellComponent,
@@ -27,7 +28,8 @@ import { COLUMNS, ELEMENT_DATA, PeriodicElement } from './data.t';
     TableComponent,
     TableActionCellComponent,
     ActionCellDirective,
-    TableActionsComponent
+    TableFormCellComponent,
+    TableActionsComponent,
   ],
   templateUrl: './table-page.component.html',
   styleUrl: './table-page.component.css',
@@ -38,11 +40,8 @@ export class TablePageComponent {
 
   public readonly columns: GridBaseColDef[] = COLUMNS;
 
-  
   getData(): Observable<PeriodicElement[]> {
     return of(ELEMENT_DATA);
   }
   public readonly rowModesModel = signal<{ [key: string]: GridRowModes }>({});
-
-
 }

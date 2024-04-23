@@ -9,18 +9,15 @@
         [editRow]="true"
         [rowModesModel]="rowModesModel()"
       >
-        <ng-template domActionCell let-element>
-
+        <ng-template domTableActionCell let-element>
           <books-scape-table-actions
             [(rowModesModel)]="rowModesModel"
             [element]="element"
           ></books-scape-table-actions>
         </ng-template>
 
-        <dom-table-form-cell></dom-table-form-cell>
-
-        <ng-template domFormCell let-element>
-          <!-- write input per field -->
+        <ng-template domTableFormCell let-element>
+          <dom-table-form-cell></dom-table-form-cell>
         </ng-template>
       </dom-table>
     </article>

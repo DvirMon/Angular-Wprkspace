@@ -6,19 +6,17 @@ import { LayoutComponent } from '../../layout/layout.component';
 
 import {
   ActionCellDirective,
-  TableFormCellComponent,
+  FormCellDirective,
   GridBaseColDef,
   GridRowModes,
   TableActionCellComponent,
   TableComponent,
+  TableFormCellComponent,
 } from '@dom';
 import { TableActionsComponent } from '../../table/actions/table-actions.component';
 import { COLUMNS, ELEMENT_DATA, PeriodicElement } from './data.t';
 
-// enum GridRowModes {
-//   Edit = 'edit',
-//   View = 'view',
-// }
+
 @Component({
   selector: 'books-scape-page-table',
   standalone: true,
@@ -28,6 +26,7 @@ import { COLUMNS, ELEMENT_DATA, PeriodicElement } from './data.t';
     TableComponent,
     TableActionCellComponent,
     ActionCellDirective,
+    FormCellDirective,
     TableFormCellComponent,
     TableActionsComponent,
   ],

@@ -3,15 +3,11 @@ import {
   ChangeDetectionStrategy,
   Component,
   Signal,
-  Type,
-  ViewContainerRef,
   WritableSignal,
   computed,
   contentChild,
-  effect,
   input,
   signal,
-  viewChild,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatIconButton } from '@angular/material/button';
@@ -20,8 +16,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { GridBaseColDef } from './models/gridColDef';
 import { GridRowModes } from './models/gridRows';
-import { ActionCellDirective } from './table-action-cell/cell-action.directive';
-import { TableFormCellComponent } from './table-form-cell/table-cell-form.component';
+import { ActionCellDirective } from './table-action-cell/table-cell-action.directive';
 import { FormCellDirective } from './table-form-cell/table-cell-form.directive';
 
 @Component({
@@ -33,7 +28,6 @@ import { FormCellDirective } from './table-form-cell/table-cell-form.directive';
     MatPaginatorModule,
     MatIcon,
     MatIconButton,
-    FormCellDirective,
   ],
   templateUrl: './table.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -41,15 +35,7 @@ import { FormCellDirective } from './table-form-cell/table-cell-form.directive';
 export class TableComponent<T> {
   public actionColumn = contentChild(ActionCellDirective);
 
-  public formCell = contentChild(TableFormCellComponent);
-
-  public formContainer = viewChild('formContainer', { read: ViewContainerRef });
-
-  formComponent = signal<Type<TableFormCellComponent>>(
-    {} as Type<TableFormCellComponent>
-  );
-
-  hasFormComponent = false;
+  public formColumn = contentChild(FormCellDirective);
 
   idKey = input<string>('id');
 
@@ -77,33 +63,6 @@ export class TableComponent<T> {
     {}
   );
 
-  constructor() {
-    effect(
-      () => {
-        if (this.formContainer()) {
-          this.formContainer()?.createComponent<TableFormCellComponent>(
-            TableFormCellComponent
-          );
-        }
-      },
-      { allowSignalWrites: true }
-    );
-  }
-
-  loadComponent() {
-    if (this.formContainer()) {
-      console.log('this.formContainer()');
-
-      this.formContainer()?.createComponent<TableFormCellComponent>(
-        TableFormCellComponent
-      );
-    }
-    // if (this.formCell() && this.formContainer()) {
-
-    //   this.formComponent =
-    //     componentRef?.instance as Type<TableFormCellComponent>;
-  }
-
   computeTableColumns() {
     return computed(() => {
       const columns = this.columns();
@@ -112,7 +71,7 @@ export class TableComponent<T> {
         ? [
             ...columns,
             {
-              field: 'editable',
+              field: 'actions',
               type: 'actions',
             } as GridBaseColDef,
           ]

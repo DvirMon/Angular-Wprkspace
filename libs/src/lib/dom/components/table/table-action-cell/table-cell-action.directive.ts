@@ -1,7 +1,7 @@
 import { Directive, TemplateRef } from '@angular/core';
 
 @Directive({
-  selector: '[domActionCell]',
+  selector: '[domTableActionCell]',
   standalone: true,
 })
 export class ActionCellDirective {

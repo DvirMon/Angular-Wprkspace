@@ -1,0 +1,8 @@
+export var FormErrorType;
+(function (FormErrorType) {
+    FormErrorType["Required"] = "required";
+    FormErrorType["Pattern"] = "pattern";
+    FormErrorType["EmailPattern"] = "email";
+    FormErrorType["Server"] = "serverError";
+})(FormErrorType || (FormErrorType = {}));
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidHlwZXMuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi8uLi8uLi8uLi9saWJzL3NyYy9saWIvZG9tL2NvbXBvbmVudHMvZm9ybS90eXBlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFNRSxNQUFNLENBQU4sSUFBWSxhQUtYO0FBTEQsV0FBWSxhQUFhO0lBQ3ZCLHNDQUFxQixDQUFBO0lBQ3JCLG9DQUFtQixDQUFBO0lBQ25CLHVDQUFzQixDQUFBO0lBQ3RCLHVDQUFzQixDQUFBO0FBQ3hCLENBQUMsRUFMVyxhQUFhLEtBQWIsYUFBYSxRQUt4QiIsInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCBpbnRlcmZhY2UgRm9ybVNlcnZlckVycm9yIHtcbiAgICBjb250cm9sOiBzdHJpbmc7XG4gICAgbWVzc2FnZTogc3RyaW5nO1xuICB9XG4gIFxuICBcbiAgZXhwb3J0IGVudW0gRm9ybUVycm9yVHlwZSB7XG4gICAgUmVxdWlyZWQgPSAncmVxdWlyZWQnLFxuICAgIFBhdHRlcm4gPSAncGF0dGVybicsXG4gICAgRW1haWxQYXR0ZXJuID0gJ2VtYWlsJyxcbiAgICBTZXJ2ZXIgPSAnc2VydmVyRXJyb3InLFxuICB9XG4gICJdfQ==

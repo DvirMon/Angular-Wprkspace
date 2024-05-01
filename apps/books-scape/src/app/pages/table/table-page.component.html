@@ -1,7 +1,8 @@
 <books-scape-layout [showNavigation]="true">
-  <div class="table-wrapper w-full">
-    <article class="w-full h-3/4 flex justify-center items-center">
+  <div class="table-wrapper h-full w-full">
+    <article class="w-full h-full flex justify-center items-center">
       <dom-table
+        #table
         class="w-1/2"
         [idKey]="'position'"
         [dataSource]="data()"
@@ -21,5 +22,6 @@
         </ng-template>
       </dom-table>
     </article>
+    
   </div>
 </books-scape-layout>

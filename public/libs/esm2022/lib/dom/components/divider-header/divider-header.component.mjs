@@ -7,8 +7,8 @@ export class DividerHeaderComponent {
     constructor() {
         this.label = "Hallow";
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "17.2.2", ngImport: i0, type: DividerHeaderComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "17.2.2", type: DividerHeaderComponent, isStandalone: true, selector: "dom-divider-header", inputs: { label: "label" }, ngImport: i0, template: `
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "17.3.2", ngImport: i0, type: DividerHeaderComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "17.3.2", type: DividerHeaderComponent, isStandalone: true, selector: "dom-divider-header", inputs: { label: "label" }, ngImport: i0, template: `
     <section class="divider">
     <mat-divider></mat-divider>
     <span> {{ label }} </span>
@@ -16,7 +16,7 @@ export class DividerHeaderComponent {
   </section>
   `, isInline: true, styles: ["section.divider{display:flex;justify-content:center;align-items:center}section.divider mat-divider{width:100%}section.divider span{margin:8px;flex-shrink:0;text-align:center}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "ngmodule", type: MatDividerModule }, { kind: "component", type: i1.MatDivider, selector: "mat-divider", inputs: ["vertical", "inset"] }], changeDetection: i0.ChangeDetectionStrategy.OnPush }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "17.2.2", ngImport: i0, type: DividerHeaderComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "17.3.2", ngImport: i0, type: DividerHeaderComponent, decorators: [{
             type: Component,
             args: [{ selector: 'dom-divider-header', standalone: true, imports: [CommonModule, MatDividerModule], template: `
     <section class="divider">

@@ -1,0 +1,24 @@
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+// import { QuestionGroupModel } from '../../../../form/models/question-group.model';
+// import { QuestionBase } from '../../../../form/models/question.model';
+import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import * as i0 from "@angular/core";
+export class TableFormCellComponent {
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "17.3.2", ngImport: i0, type: TableFormCellComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "17.3.2", type: TableFormCellComponent, isStandalone: true, selector: "dom-table-form-cell", ngImport: i0, template: "<div>form cell</div>\r\n", dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "ngmodule", type: MatSelectModule }, { kind: "ngmodule", type: MatFormFieldModule }, { kind: "ngmodule", type: MatIconModule }, { kind: "ngmodule", type: MatInputModule }], changeDetection: i0.ChangeDetectionStrategy.OnPush }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "17.3.2", ngImport: i0, type: TableFormCellComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'dom-table-form-cell', standalone: true, imports: [
+                        CommonModule,
+                        MatSelectModule,
+                        MatFormFieldModule,
+                        MatIconModule,
+                        MatInputModule,
+                    ], changeDetection: ChangeDetectionStrategy.OnPush, template: "<div>form cell</div>\r\n" }]
+        }] });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidGFibGUtY2VsbC1mb3JtLmNvbXBvbmVudC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uLy4uLy4uLy4uL2xpYnMvc3JjL2xpYi9kb20vY29tcG9uZW50cy90YWJsZS90YWJsZS1mb3JtLWNlbGwvdGFibGUtY2VsbC1mb3JtLmNvbXBvbmVudC50cyIsIi4uLy4uLy4uLy4uLy4uLy4uLy4uLy4uL2xpYnMvc3JjL2xpYi9kb20vY29tcG9uZW50cy90YWJsZS90YWJsZS1mb3JtLWNlbGwvdGFibGUtY2VsbC1mb3JtLmNvbXBvbmVudC5odG1sIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLE9BQU8sRUFBRSx1QkFBdUIsRUFBRSxTQUFTLEVBQVMsTUFBTSxlQUFlLENBQUM7QUFDMUUscUZBQXFGO0FBQ3JGLHlFQUF5RTtBQUN6RSxPQUFPLEVBQUUsWUFBWSxFQUFFLE1BQU0saUJBQWlCLENBQUM7QUFFL0MsT0FBTyxFQUFFLGtCQUFrQixFQUFFLE1BQU0sOEJBQThCLENBQUM7QUFDbEUsT0FBTyxFQUFFLGFBQWEsRUFBRSxNQUFNLHdCQUF3QixDQUFDO0FBQ3ZELE9BQU8sRUFBRSxjQUFjLEVBQUUsTUFBTSx5QkFBeUIsQ0FBQztBQUN6RCxPQUFPLEVBQUUsZUFBZSxFQUFFLE1BQU0sMEJBQTBCLENBQUM7O0FBZTNELE1BQU0sT0FBTyxzQkFBc0I7OEdBQXRCLHNCQUFzQjtrR0FBdEIsc0JBQXNCLCtFQ3ZCbkMsMEJBQ0EsMkNEYUksWUFBWSw4QkFDWixlQUFlLDhCQUNmLGtCQUFrQiw4QkFDbEIsYUFBYSw4QkFDYixjQUFjOzsyRkFLTCxzQkFBc0I7a0JBYmxDLFNBQVM7K0JBQ0UscUJBQXFCLGNBQ25CLElBQUksV0FDUDt3QkFDUCxZQUFZO3dCQUNaLGVBQWU7d0JBQ2Ysa0JBQWtCO3dCQUNsQixhQUFhO3dCQUNiLGNBQWM7cUJBQ2YsbUJBRWdCLHVCQUF1QixDQUFDLE1BQU0iLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBDaGFuZ2VEZXRlY3Rpb25TdHJhdGVneSwgQ29tcG9uZW50LCBpbnB1dCB9IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xyXG4vLyBpbXBvcnQgeyBRdWVzdGlvbkdyb3VwTW9kZWwgfSBmcm9tICcuLi8uLi8uLi8uLi9mb3JtL21vZGVscy9xdWVzdGlvbi1ncm91cC5tb2RlbCc7XHJcbi8vIGltcG9ydCB7IFF1ZXN0aW9uQmFzZSB9IGZyb20gJy4uLy4uLy4uLy4uL2Zvcm0vbW9kZWxzL3F1ZXN0aW9uLm1vZGVsJztcclxuaW1wb3J0IHsgQ29tbW9uTW9kdWxlIH0gZnJvbSAnQGFuZ3VsYXIvY29tbW9uJztcclxuaW1wb3J0IHsgRm9ybUdyb3VwIH0gZnJvbSAnQGFuZ3VsYXIvZm9ybXMnO1xyXG5pbXBvcnQgeyBNYXRGb3JtRmllbGRNb2R1bGUgfSBmcm9tICdAYW5ndWxhci9tYXRlcmlhbC9mb3JtLWZpZWxkJztcclxuaW1wb3J0IHsgTWF0SWNvbk1vZHVsZSB9IGZyb20gJ0Bhbmd1bGFyL21hdGVyaWFsL2ljb24nO1xyXG5pbXBvcnQgeyBNYXRJbnB1dE1vZHVsZSB9IGZyb20gJ0Bhbmd1bGFyL21hdGVyaWFsL2lucHV0JztcclxuaW1wb3J0IHsgTWF0U2VsZWN0TW9kdWxlIH0gZnJvbSAnQGFuZ3VsYXIvbWF0ZXJpYWwvc2VsZWN0JztcclxuXHJcbkBDb21wb25lbnQoe1xyXG4gIHNlbGVjdG9yOiAnZG9tLXRhYmxlLWZvcm0tY2VsbCcsXHJcbiAgc3RhbmRhbG9uZTogdHJ1ZSxcclxuICBpbXBvcnRzOiBbXHJcbiAgICBDb21tb25Nb2R1bGUsXHJcbiAgICBNYXRTZWxlY3RNb2R1bGUsXHJcbiAgICBNYXRGb3JtRmllbGRNb2R1bGUsXHJcbiAgICBNYXRJY29uTW9kdWxlLFxyXG4gICAgTWF0SW5wdXRNb2R1bGUsXHJcbiAgXSxcclxuICB0ZW1wbGF0ZVVybDogJy4vdGFibGUtY2VsbC1mb3JtLmNvbXBvbmVudC5odG1sJyxcclxuICBjaGFuZ2VEZXRlY3Rpb246IENoYW5nZURldGVjdGlvblN0cmF0ZWd5Lk9uUHVzaCxcclxufSlcclxuZXhwb3J0IGNsYXNzIFRhYmxlRm9ybUNlbGxDb21wb25lbnQge1xyXG4gIC8vIHB1YmxpYyByZWFkb25seSBncm91cCA9IGlucHV0LnJlcXVpcmVkPEZvcm1Hcm91cD4oKTtcclxuICAvLyBwdWJsaWMgcmVhZG9ubHkgY29sdW1uRGVmID0gaW5wdXQucmVxdWlyZWQ8c3RyaW5nPigpO1xyXG4gIC8vIHB1YmxpYyByZWFkb25seSB0eXBlID0gaW5wdXQucmVxdWlyZWQ8c3RyaW5nPigpO1xyXG59XHJcbiIsIjxkaXY+Zm9ybSBjZWxsPC9kaXY+XHJcbiJdfQ==

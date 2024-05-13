@@ -120,7 +120,7 @@ export function createErrorMessageEmitter(
   });
 }
 
-export function handleError(
+export function handleErrorMessage(
   control: FormControl,
   emitter: (source$: Observable<ValidationErrors | null>) => void
 ) {
@@ -133,5 +133,5 @@ export function handleError(
 }
 
 export function withError() {
-  return { handleError, createErrorMessageEmitter };
+  return { handleErrorMessage, createErrorMessageEmitter };
 }

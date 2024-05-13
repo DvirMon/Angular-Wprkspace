@@ -99,9 +99,9 @@ export class LoginFormComponent {
 
     this.loginFormGroup = this.buildLoginForm();
 
-    this.#formError.handleErrorMap(this.loginFormGroup, this.errorsMap);
-
     this.formKeys = getFormKeys(this.loginFormGroup);
+
+    this.#formError.handleErrorMessageMap(this.loginFormGroup, this.errorsMap);
 
     this.#formError.handleServerErrorEffect(
       this.serverError,

@@ -1,8 +1,9 @@
 import { FormControl, ValidationErrors } from '@angular/forms';
-import { Appearance, BaseInput, InputType } from './input.model';
+import { Appearance, BaseInput } from './input.model';
+import { InputType } from './input.types';
 
 export class InputTextModel implements BaseInput<string> {
-  public key: string;
+  public name: string;
   public control: FormControl<string>;
   appearance?: Appearance | undefined;
   errors?: ValidationErrors | undefined;
@@ -12,7 +13,7 @@ export class InputTextModel implements BaseInput<string> {
   type: InputType;
 
   constructor({
-    key,
+    name,
     control,
     appearance,
     errors,
@@ -20,58 +21,30 @@ export class InputTextModel implements BaseInput<string> {
     icon,
     placeHolder,
   }: BaseInput<string>) {
-    this.key = key;
+    this.name = name;
     this.label = label;
     this.placeHolder = placeHolder;
     this.appearance = appearance;
     this.control = control;
-    this.type = InputType.TEXT;
     this.icon = icon;
     this.errors = errors;
+    this.type = InputType.TEXT;
   }
 }
 
 export class PasswordInputModel extends InputTextModel {
-  constructor({
-    key,
-    control,
-    appearance,
-    errors,
-    label,
-    icon,
-    placeHolder,
-  }: BaseInput<string>) {
+  constructor(fields: BaseInput<string>) {
     super({
-      key,
-      control,
-      appearance,
-      errors,
-      label,
-      icon,
-      placeHolder,
+      ...fields,
       type: InputType.PASSWORD,
     });
   }
 }
 
 export class EmailInputModel extends InputTextModel {
-  constructor({
-    key,
-    control,
-    appearance,
-    errors,
-    label,
-    icon,
-    placeHolder,
-  }: BaseInput<string>) {
+  constructor(fields: BaseInput<string>) {
     super({
-      key,
-      control,
-      appearance,
-      errors,
-      label,
-      icon,
-      placeHolder,
+      ...fields,
       type: InputType.EMAIL,
     });
   }

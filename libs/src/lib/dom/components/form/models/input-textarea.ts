@@ -1,25 +1,23 @@
 import { InputTextModel } from './input-text';
-import { BaseInput, InputType } from './input.model';
+import { BaseInput } from './input.model';
+import { InputType } from './input.types';
+
+interface TextareaFields extends BaseInput<string> {
+  rows: string | number;
+}
 
 export class InputTextareaModel extends InputTextModel {
-  constructor({
-    key,
-    control,
-    appearance,
-    errors,
-    label,
-    icon,
-    placeHolder,
-  }: BaseInput<string>) {
+  // /**
+  //  * Number of rows to display when multiline option is set to true.
+  //  */
+  public rows: string | number;
+
+  constructor(options: TextareaFields) {
     super({
-      key,
-      control,
-      appearance,
-      errors,
-      label,
-      icon,
-      placeHolder,
+      ...options,
       type: InputType.TEXTAREA,
     });
+
+    this.rows = options.rows;
   }
 }

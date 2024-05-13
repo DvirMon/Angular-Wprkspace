@@ -1,53 +1,43 @@
 import { FormControl, ValidationErrors } from '@angular/forms';
-import { Appearance, BaseInput, InputType } from './input.model';
+import { Appearance, BaseInput } from './input.model';
+import { InputType } from './input.types';
 
 abstract class InputBooleanMode implements BaseInput<boolean> {
-  public key: string;
+  public name: string;
   public control: FormControl<boolean>;
   appearance?: Appearance | undefined;
   errors?: ValidationErrors | undefined;
   icon?: string | undefined;
   label?: string | undefined;
   placeHolder?: string | undefined;
+  helperText?: string | undefined;
   type: InputType = InputType.CUSTOM;
 
   constructor({
-    key,
+    name,
     control,
     appearance,
     errors,
     label,
     icon,
     placeHolder,
+    helperText,
   }: BaseInput<boolean>) {
-    this.key = key;
+    this.name = name;
     this.label = label;
     this.placeHolder = placeHolder;
     this.appearance = appearance;
     this.control = control;
     this.icon = icon;
     this.errors = errors;
+    this.helperText = helperText;
   }
 }
 
 export class InputToggleModel extends InputBooleanMode {
-  constructor({
-    key,
-    control,
-    appearance,
-    errors,
-    label,
-    icon,
-    placeHolder,
-  }: BaseInput<boolean>) {
+  constructor(options: BaseInput<boolean>) {
     super({
-      key,
-      control,
-      appearance,
-      errors,
-      label,
-      icon,
-      placeHolder,
+      ...options,
       type: InputType.TOGGLE,
     });
   }
@@ -60,27 +50,12 @@ interface CheckboxInput extends BaseInput<boolean> {
 export class InputCheckboxModel extends InputBooleanMode {
   public multi: boolean;
 
-  constructor({
-    key,
-    control,
-    multi,
-    appearance,
-    errors,
-    label,
-    icon,
-    placeHolder,
-  }: CheckboxInput) {
+  constructor(fields: CheckboxInput) {
     super({
-      key,
-      control,
-      appearance,
-      errors,
-      label,
-      icon,
-      placeHolder,
-      type: multi ? InputType.CHECKBOXGROUP : InputType.CHECKBOX,
+      ...fields,
+      type: fields.multi ? InputType.CHECKBOXGROUP : InputType.CHECKBOX,
     });
 
-    this.multi = multi;
+    this.multi = fields.multi;
   }
 }

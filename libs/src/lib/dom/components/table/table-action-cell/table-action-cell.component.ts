@@ -6,13 +6,15 @@ import {
   Output,
   Signal,
   computed,
-  input
+  input,
 } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 import { MatButtonModule, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
+
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 // export interface ButtonActionState {
 //   editState?: ActionState;
@@ -22,13 +24,19 @@ import { MatTooltip } from '@angular/material/tooltip';
 @Component({
   selector: 'dom-table-actions-cell',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatIconButton, MatTooltip, MatIcon],
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconButton,
+    MatTooltip,
+    MatIcon,
+    MatSlideToggleModule,
+  ],
   templateUrl: './table-action-cell.component.html',
   styleUrls: ['./table-action-cell.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableActionCellComponent implements OnInit {
-
   icon = input<string>('');
   tooltip = input<string>('');
   text = input<string>('');

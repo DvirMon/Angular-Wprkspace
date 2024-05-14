@@ -3,14 +3,14 @@ import { Component, EventEmitter, Output, effect, input } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { createValueChangesEmitter } from '../helper';
+import { createValueChangesEmitter } from '../../helper';
 
 export interface SearchMediaResultsData {
   totalMediaResults: number;
 }
 
 @Component({
-  selector: 'dom-search-input',
+  selector: 'dom-form-search-input',
   standalone: true,
   imports: [
     CommonModule,

@@ -28,10 +28,11 @@ import {
   tap,
 } from 'rxjs';
 // eslint-disable-next-line @nx/enforce-module-boundaries
-import { OptionContentDirective } from '../../../directives';
+import { OptionContentDirective } from '../../../../directives';
+import { FormOption } from '../../models/input-options';
 
 @Component({
-  selector: 'dom-autocomplete',
+  selector: 'dom-form-autocomplete',
   standalone: true,
   imports: [
     NgFor,
@@ -49,21 +50,23 @@ import { OptionContentDirective } from '../../../directives';
   styleUrl: './autocomplete.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AutocompleteComponent<T> {
+export class FormAutocompleteComponent<TOption extends FormOption> {
+  
   label = input<string>('');
   defaultValue = input<string>();
-  options = input.required<T[]>();
-  control = input.required<FormControl<unknown>>();
+  options = input.required<TOption[]>();
+  control = input.required<FormControl<FormOption>>();
 
-  optionTemplate = input<TemplateRef<unknown>>();
+
+  optionTemplate = input<TemplateRef<FormOption>>();
 
   @ContentChild(OptionContentDirective)
   optionContentDirective!: OptionContentDirective;
 
-  @Input() displayFn: (option: T) => string = () => '';
+  @Input() displayFn: (option: TOption) => string = () => '';
 
   @Output() queryChanged = new EventEmitter<string>();
-  @Output() optionSelected = new EventEmitter<T>();
+  @Output() optionSelected = new EventEmitter<TOption>();
 
   #valueChanged: Subject<string> = new Subject();
 
@@ -88,7 +91,7 @@ export class AutocompleteComponent<T> {
   }
 
   onOptionSelected(event: MatAutocompleteSelectedEvent): void {
-    const option: T = event.option.value;
+    const option: TOption = event.option.value;
     this.optionSelected.emit(option);
   }
 

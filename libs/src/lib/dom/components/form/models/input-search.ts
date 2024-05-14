@@ -2,8 +2,8 @@ import { InputOptionsModel, OptionsInput } from './input-options';
 import { InputType } from './input.types';
 
 
-export class InputSearchModel<T> extends InputOptionsModel<T> {
-  constructor(options: OptionsInput<T>) {
+export class InputSearchModel extends InputOptionsModel {
+  constructor(options: OptionsInput) {
     super({
       ...options,
       icon: 'search',

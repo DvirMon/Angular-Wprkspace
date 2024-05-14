@@ -20,7 +20,7 @@
     #auto="matAutocomplete"
   >
     <ng-container *ngFor="let option of options()">
-      <mat-option [value]="option">
+      <mat-option [value]="option" [disabled]="option?.disabled">
         <ng-container *ngIf="optionContentDirective; else defaultTemplate">
           <ng-container
             *ngTemplateOutlet="

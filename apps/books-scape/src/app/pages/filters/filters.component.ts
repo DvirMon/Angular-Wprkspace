@@ -26,8 +26,9 @@ import {
 import { MatIcon } from '@angular/material/icon';
 import { MatInput } from '@angular/material/input';
 import { MatSelect } from '@angular/material/select';
-import { AutocompleteComponent, getFormKeys } from '@dom';
+import { FormAutocompleteComponent, getFormKeys } from '@dom';
 import { StateSignal, patchState, signalState } from '@ngrx/signals';
+import { DropdownModule } from 'primeng/dropdown';
 import { Book } from '../../books/books';
 import { LayoutComponent } from '../../layout/layout.component';
 import {
@@ -38,7 +39,6 @@ import {
   registerGroupOptions,
 } from '../../shared/options.helper';
 import { FiltersDataService } from './data.service';
-import { DropdownModule } from 'primeng/dropdown';
 
 interface Filters {
   book1: FormControl<Partial<Book>>;
@@ -67,7 +67,7 @@ interface Filters {
     MatSelect,
     MatIcon,
     LayoutComponent,
-    AutocompleteComponent,
+    FormAutocompleteComponent,
   ],
   templateUrl: './filters.component.html',
   styleUrls: ['./filters.component.scss'],

@@ -1,3 +1,4 @@
+import { FormControl } from "@angular/forms";
 
 export enum InputType {
   TEXT = 'text',
@@ -26,5 +27,13 @@ export enum InputType {
   AUTOCOMPLETE = 'autocomplete',
   TEXEDITOR = 'texteditor',
   CLEAVE = 'cleave',
+}
+
+export interface InputChangeEvent<T = unknown> {
+  key: string;
+  index?: number;
+  control?: FormControl;
+  value?: T;
+  query?: unknown;
 }
 

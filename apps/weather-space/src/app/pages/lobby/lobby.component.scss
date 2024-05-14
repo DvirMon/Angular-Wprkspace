@@ -1,36 +1,24 @@
 div.lobby-page-wrapper {
   height: calc(100% - 64px);
- 
+
   display: flex;
   flex-direction: column;
 }
 
-
-header {
+header,
+main {
+  width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
-
-  @media (min-width: 601px) {
-    flex: 0 0 10rem; // This sets the flex-basis to 10rem, not growing or shrinking
-  }
-  
-  dom-autocomplete {
-    width: 30%;
-
-    
-  }
 }
 
-main {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
+header {
+  height: 30%;
+}
 
-  section.weather-result-wrapper {
-    width: 50%;
-  }
+dom-form-autocomplete,
+section.weather-space-result-wrapper {
+  width: 50%;
 }

@@ -22,7 +22,7 @@ import { MatOption } from '@angular/material/core';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { OptionContentDirective } from '@dom';
-import { AutocompleteComponent } from '@dom/components';
+import { FormAutocompleteComponent } from '@dom/components';
 import { HighLightPipe } from '../../shared/pipes/high-light.pipe';
 import { PluckPipe } from '../../shared/pipes/pluck.pipe';
 import { Store } from '../../store/store';
@@ -58,7 +58,7 @@ import {
     MatAutocomplete,
     HighLightPipe,
     WeatherMediaResultComponent,
-    AutocompleteComponent,
+    FormAutocompleteComponent,
     OptionContentDirective,
   ],
 })
@@ -136,7 +136,9 @@ export class LobbyPageComponent implements OnInit {
       this.#store.setCurrentId('tel aviv');
     }
 
-    this.control = this.#nfb.control(this.optionSelected());
+    this.control = this.#nfb.control(
+      this.optionSelected()
+    ) as FormControl<AutocompleteOption>;
 
     this.#store.loadCurrentWeather(this.#store.selectedId);
     this.#store.loadFutureWeather(this.futureArgs);

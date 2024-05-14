@@ -1,7 +1,7 @@
 <div class="lobby-page-wrapper">
-  <header>
+  <header >
     @if(control) {
-    <dom-autocomplete
+    <dom-form-autocomplete
       [label]="'Enter City'"
       [defaultValue]="'tel aviv'"
       [options]="filtered()"
@@ -14,7 +14,7 @@
         {{ option | pluck : 'LocalizedName' }},
         {{ option | pluck : 'Country' | pluck : 'LocalizedName' }}
       </ng-template>
-    </dom-autocomplete>
+    </dom-form-autocomplete>
     }
   </header>
 

@@ -33,6 +33,7 @@ import {
   FormErrorService,
   FormInputComponent,
   FormServerError,
+  PasswordInputModel,
   getFormKeys,
 } from '@dom';
 import { EmailAndPasswordSignIn, SignInEvent, SignInMethod } from '../../utils';

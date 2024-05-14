@@ -21,6 +21,8 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormErrorService } from '../form-error.service';
+import { BaseInput } from '../models/input.model';
+import { InputType } from '../models/input.types';
 
 @Component({
   selector: 'dom-form-input',
@@ -37,11 +39,10 @@ import { FormErrorService } from '../form-error.service';
 })
 export class FormInputComponent implements OnInit {
   #formError = inject(FormErrorService);
-
   control = input.required<AbstractControl<unknown, unknown> | null>();
-  key = input.required<string>();
-  type = input<string>();
-  label = input<string>();
+  name = input.required<string>();
+  type = input<InputType>();
+  label = input<string | undefined>();
   hint = input<string>();
 
   messagesMap = input<ValidationErrors>();

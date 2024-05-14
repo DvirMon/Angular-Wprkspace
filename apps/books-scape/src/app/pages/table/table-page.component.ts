@@ -5,17 +5,18 @@ import { Observable, of } from 'rxjs';
 import { LayoutComponent } from '../../layout/layout.component';
 
 import {
+  ActionCellDirective,
+  FormCellDirective,
   GridBaseColDef,
   GridRowModes,
   TableActionCellComponent,
   TableComponent,
+  TableFormCellComponent,
 } from '@dom';
+import { TableActionsComponent } from '../../table/actions/table-actions.component';
 import { COLUMNS, ELEMENT_DATA, PeriodicElement } from './data.t';
 
-// enum GridRowModes {
-//   Edit = 'edit',
-//   View = 'view',
-// }
+
 @Component({
   selector: 'books-scape-page-table',
   standalone: true,
@@ -24,6 +25,10 @@ import { COLUMNS, ELEMENT_DATA, PeriodicElement } from './data.t';
     LayoutComponent,
     TableComponent,
     TableActionCellComponent,
+    ActionCellDirective,
+    FormCellDirective,
+    TableFormCellComponent,
+    TableActionsComponent,
   ],
   templateUrl: './table-page.component.html',
   styleUrl: './table-page.component.css',
@@ -34,23 +39,8 @@ export class TablePageComponent {
 
   public readonly columns: GridBaseColDef[] = COLUMNS;
 
-  public readonly rowModesModel = signal<{ [key: string]: GridRowModes }>({});
-
   getData(): Observable<PeriodicElement[]> {
     return of(ELEMENT_DATA);
   }
-
-  onEdit(element: PeriodicElement) {
-    this.rowModesModel.update((value) => ({
-      ...value,
-      [element.position]: GridRowModes.Edit,
-    }));
-  }
-
-  onSave(element: PeriodicElement) {
-    this.rowModesModel.update((value) => ({
-      ...value,
-      [element.position]: GridRowModes.View,
-    }));
-  }
+  public readonly rowModesModel = signal<{ [key: string]: GridRowModes }>({});
 }

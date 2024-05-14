@@ -6,30 +6,27 @@
 
   <ng-container [matColumnDef]="column.field">
     <th mat-header-cell *matHeaderCellDef>
-      @if (column.type !== 'actions') {
-      {{ column.headerName || column.field | titlecase }}
-      }
+      {{ column.headerName | titlecase }}
     </th>
 
     @if(column.type !== 'actions') {
 
     <td mat-cell *matCellDef="let element">
       @if( column.editable && rowModesModel()![element[idKey()]] === 'edit') {
-      edit state } @else {
-      {{ element[column.field] }}}
+
+      <ng-container
+        *ngTemplateOutlet="formCell; context: { $implicit: element }"
+      ></ng-container>
+
+      } @else { {{ element[column.field] }}}
     </td>
 
     } @else {
     <td mat-cell *matCellDef="let element">
       <ng-container
-        *ngTemplateOutlet="actionTemplate; context: { $implicit: element }"
+        *ngTemplateOutlet="actionCell; context: { $implicit: element }"
       ></ng-container>
-
-      <!-- <button mat-icon-button (click)="onEdit(element[idKey()])">
-        <mat-icon fontIcon="edit"></mat-icon>
-      </button> -->
     </td>
-
     }
   </ng-container>
 
@@ -39,3 +36,22 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumns()"></tr>
 </table>
 
+<ng-template #formCell let-element>
+  @if(formColumn()) {
+  <ng-container
+    *ngTemplateOutlet="formColumn()!.template; context: { $implicit: element }"
+  ></ng-container>
+  }
+</ng-template>
+
+<ng-template #actionCell let-element>
+  @if(actionColumn()){
+
+  <ng-container
+    *ngTemplateOutlet="
+      actionColumn()!.template;
+      context: { $implicit: element }
+    "
+  ></ng-container>
+  }
+</ng-template>

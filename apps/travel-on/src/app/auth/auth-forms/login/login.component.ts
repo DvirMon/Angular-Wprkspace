@@ -33,6 +33,7 @@ import {
   FormErrorService,
   FormInputComponent,
   FormServerError,
+  PasswordInputModel,
   getFormKeys,
 } from '@dom';
 import { EmailAndPasswordSignIn, SignInEvent, SignInMethod } from '../../utils';
@@ -99,9 +100,9 @@ export class LoginFormComponent {
 
     this.loginFormGroup = this.buildLoginForm();
 
-    this.#formError.handleErrorMap(this.loginFormGroup, this.errorsMap);
-
     this.formKeys = getFormKeys(this.loginFormGroup);
+
+    this.#formError.handleErrorMessageMap(this.loginFormGroup, this.errorsMap);
 
     this.#formError.handleServerErrorEffect(
       this.serverError,

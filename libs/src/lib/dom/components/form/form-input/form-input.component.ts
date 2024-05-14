@@ -10,7 +10,7 @@ import {
   computed,
   inject,
   input,
-  signal
+  signal,
 } from '@angular/core';
 import {
   AbstractControl,
@@ -21,6 +21,8 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormErrorService } from '../form-error.service';
+import { BaseInput } from '../models/input.model';
+import { InputType } from '../models/input.types';
 
 @Component({
   selector: 'dom-form-input',
@@ -36,14 +38,13 @@ import { FormErrorService } from '../form-error.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormInputComponent implements OnInit {
-
   #formError = inject(FormErrorService);
-
   control = input.required<AbstractControl<unknown, unknown> | null>();
-  key = input.required<string>();
-  type = input<string>();
-  label = input<string>();
+  name = input.required<string>();
+  type = input<InputType>();
+  label = input<string | undefined>();
   hint = input<string>();
+
   messagesMap = input<ValidationErrors>();
 
   formControl!: Signal<FormControl<unknown>>;
@@ -60,7 +61,7 @@ export class FormInputComponent implements OnInit {
       (value) => this.message.set(value)
     );
 
-    this.#formError.handleError(this.formControl(), errorEmitter);
+    this.#formError.handleErrorMessage(this.formControl(), errorEmitter);
   }
 
   onBlur() {

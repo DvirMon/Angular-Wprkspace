@@ -13,8 +13,8 @@ export class FlipCardComponent {
     handleKeyUp(event) {
         return event;
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "17.2.2", ngImport: i0, type: FlipCardComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "17.2.2", type: FlipCardComponent, isStandalone: true, selector: "dom-flip-container", outputs: { flip: "flip" }, ngImport: i0, template: `
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "17.3.2", ngImport: i0, type: FlipCardComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "17.3.2", type: FlipCardComponent, isStandalone: true, selector: "dom-flip-container", outputs: { flip: "flip" }, ngImport: i0, template: `
     <div
       [@flip]="isFlipped() ? 'back' : 'front'"
       (click)="onClick()"
@@ -41,7 +41,7 @@ export class FlipCardComponent {
             ]),
         ], changeDetection: i0.ChangeDetectionStrategy.OnPush }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "17.2.2", ngImport: i0, type: FlipCardComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "17.3.2", ngImport: i0, type: FlipCardComponent, decorators: [{
             type: Component,
             args: [{ selector: "dom-flip-container", standalone: true, template: `
     <div

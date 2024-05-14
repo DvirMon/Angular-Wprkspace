@@ -48,6 +48,15 @@ export class FormErrorService {
     }
   }
 
+  /**
+   * Creates an error message emitter function for a FormControl, allowing
+   * dynamic updating of error messages.
+   *
+   * @param {ValidationErrors | undefined} messages - Validation error messages or undefined.
+   * @param {(value: string) => void} errorMessageUpdater - Function to update error messages.
+   * @returns {(source$: Observable<ValidationErrors | null>) => void} A function that handles error messages based on observable input.
+   */
+
   createErrorMessageEmitter(
     messages: ValidationErrors | undefined,
     updater: (value: string) => void
@@ -64,7 +73,15 @@ export class FormErrorService {
     });
   }
 
-  handleError(
+  /**
+   * Handles error messages for a FormControl by emitting a messages to a designated
+   * handler function.
+   *
+   * @param {FormControl} control - The FormControl instance to monitor for errors.
+   * @param {(source$: Observable<ValidationErrors | null>) => void} errorMessageEmitter - The error message emitter function.
+   */
+
+  handleErrorMessage(
     control: FormControl,
     emitter: (source$: Observable<ValidationErrors | null>) => void
   ) {
@@ -97,7 +114,7 @@ export class FormErrorService {
     return '';
   }
 
-  handleErrorMap(group: FormGroup, messages: ValidationErrors) {
+  handleErrorMessageMap(group: FormGroup, messages: ValidationErrors) {
     group.statusChanges.pipe(
       startWith(group.status),
       map(() => {

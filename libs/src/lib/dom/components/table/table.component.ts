@@ -2,21 +2,22 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
   Signal,
-  TemplateRef,
   WritableSignal,
   computed,
+  contentChild,
   input,
   signal,
 } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { GridBaseColDef } from './models/gridColDef';
 import { GridRowModes } from './models/gridRows';
-import { FormGroup } from '@angular/forms';
+import { ActionCellDirective } from './table-action-cell/table-cell-action.directive';
+import { FormCellDirective } from './table-form-cell/table-cell-form.directive';
 
 @Component({
   selector: 'dom-table',
@@ -32,6 +33,10 @@ import { FormGroup } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableComponent<T> {
+  public actionColumn = contentChild(ActionCellDirective);
+
+  public formColumn = contentChild(FormCellDirective);
+
   idKey = input<string>('id');
 
   dataSource = input.required<T[]>();
@@ -51,8 +56,6 @@ export class TableComponent<T> {
     }, {} as { [key: string]: FormGroup });
   });
 
-  @Input() actionTemplate!: TemplateRef<unknown>;
-
   public readonly tableColumns = this.computeTableColumns();
   public readonly displayedColumns = this.computeDisplayColumns();
 
@@ -68,7 +71,7 @@ export class TableComponent<T> {
         ? [
             ...columns,
             {
-              field: 'editable',
+              field: 'actions',
               type: 'actions',
             } as GridBaseColDef,
           ]
@@ -80,9 +83,5 @@ export class TableComponent<T> {
 
   computeDisplayColumns() {
     return computed(() => this.tableColumns().map((column) => column.field));
-  }
-
-  onEdit(key: string) {
-    this.showEdit.update((value) => ({ ...value, [key]: !value[key] }));
   }
 }

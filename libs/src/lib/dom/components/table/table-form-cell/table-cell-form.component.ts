@@ -21,8 +21,8 @@ import { MatSelectModule } from '@angular/material/select';
   templateUrl: './table-cell-form.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FormCellComponent {
-  public readonly group = input.required<FormGroup>();
-  public readonly columnDef = input.required<string>();
-  public readonly type = input.required<string>();
+export class TableFormCellComponent {
+  // public readonly group = input.required<FormGroup>();
+  // public readonly columnDef = input.required<string>();
+  // public readonly type = input.required<string>();
 }

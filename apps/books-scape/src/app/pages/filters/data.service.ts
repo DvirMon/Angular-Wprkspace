@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, map, take } from 'rxjs';
+import { Observable, map, take, tap } from 'rxjs';
 import { combineLatest } from 'rxjs/internal/observable/combineLatest';
 import { Book, Item, VolumeInfo } from '../../books/books';
 import { VolumesHttpService } from '../../books/http.service';
@@ -18,6 +18,7 @@ export class FiltersDataService {
 
     return combineLatest([book1$, book2$, book3$, book4$]).pipe(
       map(([book1, book2, book3, book4]) => ({ book1, book2, book3, book4 })),
+      tap(() => console.log('called')),
       take(1)
     );
   }

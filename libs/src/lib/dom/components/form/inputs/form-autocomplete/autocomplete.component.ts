@@ -15,7 +15,12 @@ import {
   MatAutocompleteModule,
   MatAutocompleteSelectedEvent,
 } from '@angular/material/autocomplete';
-import { MatListModule, MatSelectionList } from '@angular/material/list';
+import {
+  MatListModule,
+  MatListOption,
+  MatSelectionList,
+  MatSelectionListChange,
+} from '@angular/material/list';
 import { MatOption } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -51,7 +56,7 @@ import { DisplayOptionLabelPipe } from '../../pipes/displayOption.pipe';
     MatSelectionList,
     OptionContentDirective,
     DisplayOptionLabelPipe,
-    DisplayOptionDisablePipe
+    DisplayOptionDisablePipe,
   ],
   templateUrl: './autocomplete.component.html',
   styleUrl: './autocomplete.component.scss',
@@ -61,10 +66,8 @@ export class FormAutocompleteComponent<TOption> {
   label = input<string>('');
   defaultValue = input<string>();
   options = input.required<TOption[]>();
-  control = input.required<FormControl<TOption>>();
+  control = input.required<FormControl<TOption | TOption[]>>();
   multi = input<boolean>(false);
-
-  optionTemplate = input<TemplateRef<TOption>>();
 
   @ContentChild(OptionContentDirective)
   optionContentDirective!: OptionContentDirective;
@@ -74,7 +77,7 @@ export class FormAutocompleteComponent<TOption> {
   @Input() displayOptionDisableWith: (option: TOption) => boolean = () => false;
 
   @Output() queryChanged = new EventEmitter<string>();
-  @Output() optionSelected = new EventEmitter<TOption>();
+  @Output() optionSelected = new EventEmitter<TOption | TOption[]>();
 
   #valueChanged: Subject<string> = new Subject();
 
@@ -105,5 +108,18 @@ export class FormAutocompleteComponent<TOption> {
 
   onInputChanged() {
     this.#valueChanged.next(this.control().value as string);
+  }
+
+  public onSelectionChange(event: MatSelectionListChange): void {
+    const selectedOptions: MatListOption[] =
+      event.source.selectedOptions.selected;
+    const options = selectedOptions.map(
+      ({ value }: MatListOption) =>
+        ({
+          ...value,
+        } as TOption)
+    );
+
+    this.control().setValue(options);
   }
 }

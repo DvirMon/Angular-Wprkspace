@@ -34,11 +34,14 @@ import { LayoutComponent } from '../../layout/layout.component';
 import {
   Loader,
   LoaderService,
+  OptionChanged,
   createOptionsLoader,
   handleGroupOptions,
   registerGroupOptions,
 } from '../../shared/options.helper';
 import { FiltersDataService } from './data.service';
+import { Observable, of } from 'rxjs';
+import { mapToString } from './helpers';
 
 interface Filters {
   book1: FormControl<Book>;
@@ -95,7 +98,7 @@ export class FiltersPageComponent {
 
     this.booKeys = getFormKeys<Filters>(this.booksAutocomplete);
 
-    this.#handleOptionsChanged(registerGroupOptions(this.booksAutocomplete));
+    // this.#handleOptionsChanged(registerGroupOptions(this.booksAutocomplete));
 
     const results = toSignal(this.#filterService.loadFilterOptions());
 
@@ -107,6 +110,10 @@ export class FiltersPageComponent {
       },
       { allowSignalWrites: true }
     );
+
+    effect(() => {
+      console.log(this.optionsMap());
+    });
   }
 
   private _buildGroup(): FormGroup<Filters> {
@@ -128,11 +135,20 @@ export class FiltersPageComponent {
   }
 
   onSelectionChange(event: MatOptionSelectionChange<Book>) {
-    console.log(event);
+    // console.log(event);
   }
 
-  displayWith(value: Book) {
-    return value.title;
+  onQueryChanged(query: string, key: string) {
+    const optionChanged: Observable<OptionChanged> = of({ query, key });
+    this.#handleOptionsChanged(optionChanged);
+  }
+
+  displayWith(value: Book | Book[]): string {
+    if (Array.isArray(value)) {
+      return mapToString(value, (v) => v.title, 35)
+    } else {
+      return (() => value.title)();
+    }
   }
 
   displayOptionDisableWith(value: Book): boolean {

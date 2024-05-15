@@ -16,7 +16,6 @@
 
   <mat-autocomplete
     (optionSelected)="onOptionSelected($event)"
-    autoActiveFirstOption
     [displayWith]="displayWith"
     #auto="matAutocomplete"
   >
@@ -36,20 +35,24 @@
       </mat-option>
     </ng-container>
     } @else {
-    <mat-selection-list [multiple]="true" #selectionList>
+    <mat-selection-list
+      [multiple]="true"
+      (selectionChange)="onSelectionChange($event)"
+    >
+      @for(option of options(); track option) {
+
       <mat-list-option
-        class="kkl-form-autocomplete-list-option"
         [disabled]="option | displayOptionDisable : displayOptionDisableWith"
-        *ngFor="let option of options()"
         [value]="option"
       >
         <ng-container
           *ngTemplateOutlet="
-            optionContentDirective.template || defaultTemplate;
+            optionContentDirective?.template || defaultTemplate;
             context: { $implicit: option }
           "
         ></ng-container>
       </mat-list-option>
+      }
     </mat-selection-list>
     <!-- empty mat-option for display mat-list -->
     <mat-option [style.display]="'none'"></mat-option>

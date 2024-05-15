@@ -41,10 +41,10 @@ import {
 import { FiltersDataService } from './data.service';
 
 interface Filters {
-  book1: FormControl<Partial<Book>>;
-  book2: FormControl<Partial<Book>>;
-  book3: FormControl<Partial<Book>>;
-  book4: FormControl<Partial<Book>>;
+  book1: FormControl<Book>;
+  book2: FormControl<Book>;
+  book3: FormControl<Book>;
+  book4: FormControl<Book>;
 }
 
 @Component({
@@ -111,10 +111,10 @@ export class FiltersPageComponent {
 
   private _buildGroup(): FormGroup<Filters> {
     return inject(NonNullableFormBuilder).group({
-      book1: [{ title: 'Angular' }],
-      book2: [{ title: 'Angular' }],
-      book3: [{ title: 'Foundation' }],
-      book4: [{ title: 'The Hobbit' }],
+      book1: [{ title: 'Angular' } as Book],
+      book2: [{ title: 'Angular' } as Book],
+      book3: [{ title: 'Foundation' } as Book],
+      book4: [{ title: 'The Hobbit' } as Book],
     }) as FormGroup<Filters>;
   }
 
@@ -133,5 +133,9 @@ export class FiltersPageComponent {
 
   displayWith(value: Book) {
     return value.title;
+  }
+
+  displayOptionDisableWith(value: Book): boolean {
+    return value.title.length > 30;
   }
 }

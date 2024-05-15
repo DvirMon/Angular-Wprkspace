@@ -31,9 +31,25 @@
       }
     </form>
 
-    <pre class="flex justify-center">
+    <!-- <pre class="flex justify-center">
       {{ booksAutocomplete.value | json }}
-    </pre>
+    </pre> -->
+  </header>
+
+  <header class="p-4">
+    <form class="flex flex-row gap-4" [formGroup]="booksAutocomplete">
+      @for (key of booKeys(); track $index) {
+      <section class="w-80">
+        <dom-form-autocomplete
+          [control]="booksAutocomplete.controls[key]"
+          [options]="optionsMap()[key]"
+          [displayWith]="displayWith"
+          [displayOptionLabelWith]="displayWith"
+          [displayOptionDisableWith]="displayOptionDisableWith"
+        ></dom-form-autocomplete>
+      </section>
+      }
+    </form>
   </header>
 
   <header class="p-4">

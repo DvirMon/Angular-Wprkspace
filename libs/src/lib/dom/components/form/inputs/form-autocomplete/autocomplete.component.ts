@@ -30,7 +30,8 @@ import {
 } from 'rxjs';
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { OptionContentDirective } from '../../../../directives';
-import { FormOption } from '../../models/input-options';
+import { DisplayOptionDisablePipe } from '../../pipes/displayDisable.pipe';
+import { DisplayOptionLabelPipe } from '../../pipes/displayOption.pipe';
 
 @Component({
   selector: 'dom-form-autocomplete',
@@ -49,24 +50,28 @@ import { FormOption } from '../../models/input-options';
     MatListModule,
     MatSelectionList,
     OptionContentDirective,
+    DisplayOptionLabelPipe,
+    DisplayOptionDisablePipe
   ],
   templateUrl: './autocomplete.component.html',
   styleUrl: './autocomplete.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FormAutocompleteComponent<TOption extends FormOption> {
+export class FormAutocompleteComponent<TOption> {
   label = input<string>('');
   defaultValue = input<string>();
   options = input.required<TOption[]>();
-  control = input.required<FormControl<FormOption>>();
+  control = input.required<FormControl<TOption>>();
   multi = input<boolean>(false);
 
-  optionTemplate = input<TemplateRef<FormOption>>();
+  optionTemplate = input<TemplateRef<TOption>>();
 
   @ContentChild(OptionContentDirective)
   optionContentDirective!: OptionContentDirective;
 
-  @Input() displayFn: (option: TOption) => string = () => '';
+  @Input() displayWith: (option: TOption) => string = () => '';
+  @Input() displayOptionLabelWith: (option: TOption) => string = () => '';
+  @Input() displayOptionDisableWith: (option: TOption) => boolean = () => false;
 
   @Output() queryChanged = new EventEmitter<string>();
   @Output() optionSelected = new EventEmitter<TOption>();

@@ -15,6 +15,7 @@ import {
   MatAutocompleteModule,
   MatAutocompleteSelectedEvent,
 } from '@angular/material/autocomplete';
+import { MatListModule, MatSelectionList } from '@angular/material/list';
 import { MatOption } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -38,12 +39,15 @@ import { FormOption } from '../../models/input-options';
     NgFor,
     NgIf,
     NgTemplateOutlet,
+    NgTemplateOutlet,
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatAutocompleteModule,
     MatOption,
+    MatListModule,
+    MatSelectionList,
     OptionContentDirective,
   ],
   templateUrl: './autocomplete.component.html',
@@ -51,12 +55,11 @@ import { FormOption } from '../../models/input-options';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormAutocompleteComponent<TOption extends FormOption> {
-  
   label = input<string>('');
   defaultValue = input<string>();
   options = input.required<TOption[]>();
   control = input.required<FormControl<FormOption>>();
-
+  multi = input<boolean>(false);
 
   optionTemplate = input<TemplateRef<FormOption>>();
 

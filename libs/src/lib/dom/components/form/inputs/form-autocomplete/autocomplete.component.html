@@ -13,15 +13,24 @@
     [matAutocomplete]="auto"
     (input)="onInputChanged()"
   />
+
   <mat-autocomplete
     (optionSelected)="onOptionSelected($event)"
     autoActiveFirstOption
     [displayWith]="displayFn"
     #auto="matAutocomplete"
   >
+    @if(!multi()) {
+
     <ng-container *ngFor="let option of options()">
       <mat-option [value]="option" [disabled]="option?.disabled">
-        <ng-container *ngIf="optionContentDirective; else defaultTemplate">
+        <ng-container
+          *ngTemplateOutlet="
+            optionContentDirective.template || defaultTemplate;
+            context: { $implicit: option }
+          "
+        ></ng-container>
+        <!-- <ng-container *ngIf="optionContentDirective; else defaultTemplate">
           <ng-container
             *ngTemplateOutlet="
               optionContentDirective.template;
@@ -32,8 +41,31 @@
 
         <ng-template #defaultTemplate>
           {{ option }}
-        </ng-template>
+        </ng-template> -->
       </mat-option>
     </ng-container>
+    } @else {
+    <mat-selection-list [multiple]="true" #selectionList>
+      <mat-list-option
+        class="kkl-form-autocomplete-list-option"
+        [disabled]="option.disabled"
+        *ngFor="let option of options()"
+        [value]="option"
+      >
+        <ng-container
+          *ngTemplateOutlet="
+            optionContentDirective.template || defaultTemplate;
+            context: { $implicit: option }
+          "
+        ></ng-container>
+      </mat-list-option>
+    </mat-selection-list>
+    <!-- empty mat-option for display mat-list -->
+    <mat-option [style.display]="'none'"></mat-option>
+    }
   </mat-autocomplete>
 </mat-form-field>
+
+<ng-template #defaultTemplate let-option>
+  <!-- {{ option | pluck : 'label' }} -->
+</ng-template>

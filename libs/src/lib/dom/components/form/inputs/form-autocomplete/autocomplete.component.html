@@ -42,8 +42,9 @@
       @for(option of options(); track option) {
 
       <mat-list-option
-        [disabled]="option | displayOptionDisable : displayOptionDisableWith"
         [value]="option"
+        [disabled]="option | displayOptionDisable : displayOptionDisableWith"
+        [selected]="!!selectedMap()[idKey()]"
       >
         <ng-container
           *ngTemplateOutlet="

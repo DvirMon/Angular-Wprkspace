@@ -18,7 +18,6 @@ export class FiltersDataService {
 
     return combineLatest([book1$, book2$, book3$, book4$]).pipe(
       map(([book1, book2, book3, book4]) => ({ book1, book2, book3, book4 })),
-      tap(() => console.log('called')),
       take(1)
     );
   }

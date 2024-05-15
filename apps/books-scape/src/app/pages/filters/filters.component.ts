@@ -111,9 +111,7 @@ export class FiltersPageComponent {
       { allowSignalWrites: true }
     );
 
-    effect(() => {
-      console.log(this.optionsMap());
-    });
+
   }
 
   private _buildGroup(): FormGroup<Filters> {
@@ -145,13 +143,17 @@ export class FiltersPageComponent {
 
   displayWith(value: Book | Book[]): string {
     if (Array.isArray(value)) {
-      return mapToString(value, (v) => v.title, 35)
+      return mapToString(value, (v) => v.title, 35);
     } else {
       return (() => value.title)();
     }
   }
 
   displayOptionDisableWith(value: Book): boolean {
-    return value.title.length > 30;
+    if (value) {
+      return value.title.length > 30;
+    }
+
+    return false;
   }
 }

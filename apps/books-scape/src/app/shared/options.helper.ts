@@ -1,3 +1,10 @@
+import { Entity } from '@angular-architects/ngrx-toolkit';
+import {
+  Injector,
+  ProviderToken,
+  inject,
+  runInInjectionContext,
+} from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { tapResponse } from '@ngrx/operators';
 import { StateSignal, patchState } from '@ngrx/signals';
@@ -10,16 +17,8 @@ import {
   map,
   merge,
   pipe,
-  switchMap,
-  tap,
+  switchMap
 } from 'rxjs';
-import {
-  runInInjectionContext,
-  inject,
-  Injector,
-  ProviderToken,
-} from '@angular/core';
-import { Entity } from '@angular-architects/ngrx-toolkit';
 
 export interface OptionChanged {
   key: string;

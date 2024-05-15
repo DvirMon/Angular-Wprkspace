@@ -9,6 +9,7 @@ import {
   TemplateRef,
   effect,
   input,
+  signal,
 } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
@@ -63,10 +64,14 @@ import { DisplayOptionLabelPipe } from '../../pipes/displayOption.pipe';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormAutocompleteComponent<TOption> {
-  label = input<string>('');
-  defaultValue = input<string>();
+  public readonly selectedMap = signal<Record<string, TOption>>({});
+
   options = input.required<TOption[]>();
   control = input.required<FormControl<TOption | TOption[]>>();
+
+  idKey = input<string>('id');
+  label = input<string>('');
+  defaultValue = input<string>();
   multi = input<boolean>(false);
 
   @ContentChild(OptionContentDirective)
@@ -75,6 +80,8 @@ export class FormAutocompleteComponent<TOption> {
   @Input() displayWith: (option: TOption) => string = () => '';
   @Input() displayOptionLabelWith: (option: TOption) => string = () => '';
   @Input() displayOptionDisableWith: (option: TOption) => boolean = () => false;
+  @Input() displayOptionSelectedWith: (option: TOption) => boolean = () =>
+    false;
 
   @Output() queryChanged = new EventEmitter<string>();
   @Output() optionSelected = new EventEmitter<TOption | TOption[]>();
@@ -104,6 +111,11 @@ export class FormAutocompleteComponent<TOption> {
   onOptionSelected(event: MatAutocompleteSelectedEvent): void {
     const option: TOption = event.option.value;
     this.optionSelected.emit(option);
+
+    this.selectedMap.update((obj) => ({
+      ...obj,
+      [this.idKey()]: option,
+    }));
   }
 
   onInputChanged() {

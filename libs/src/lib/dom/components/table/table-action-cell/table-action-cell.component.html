@@ -11,15 +11,16 @@
 </button>
 
 } @else {
-<button
-  mat-flat-button
-  type="button"
-  (click)="onActionButtonClick()"
-  [disabled]="isDisabled()"
-  [matTooltip]="tooltip()"
->
-  {{ text() }}
-</button>
+  <button
+    mat-flat-button
+    color=""
+    type="button"
+    (click)="onActionButtonClick()"
+    [disabled]="isDisabled()"
+    [matTooltip]="tooltip()"
+  >
+    {{ text() }}
+  </button>
 }
 <!-- slots buttons -->
 <!-- <ng-container>

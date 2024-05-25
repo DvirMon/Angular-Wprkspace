@@ -8,15 +8,15 @@
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 
-$travel-on-primary: mat.define-palette(palettes.primary-palette());
-$travel-on-accent: mat.define-palette(palettes.accent-palette());
+$travel-on-primary: mat.m2-define-palette(palettes.primary-palette());
+$travel-on-accent: mat.m2-define-palette(palettes.accent-palette());
 
 // The warn palette is optional (defaults to red).
-$travel-on-warn: mat.define-palette(mat.$red-palette);
+$travel-on-warn: mat.m2-define-palette(mat.$m2-red-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$travel-on-theme: mat.define-light-theme(
+$travel-on-theme: mat.m2-define-light-theme(
   (
     color: (
       primary: $travel-on-primary,

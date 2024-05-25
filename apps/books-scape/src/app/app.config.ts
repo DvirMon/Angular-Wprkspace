@@ -1,5 +1,5 @@
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { ApplicationConfig } from '@angular/core';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
@@ -12,9 +12,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(appRoutes),
     provideHttpClient(withInterceptors([baseUrlInterceptor, errorInterceptor])),
     provideAnimationsAsync(),
-    importProvidersFrom(
-      provideFirebaseApp(() => initializeApp(environment.firebaseConfig))
-    ),
-
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
   ],
 };

@@ -20,9 +20,8 @@ import {
 } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { FormErrorService } from '../form-error.service';
-import { BaseInput } from '../models/input.model';
-import { InputType } from '../models/input.types';
+import { FormErrorService } from '../../form-error.service';
+import { InputType } from '../../models/input.types';
 
 @Component({
   selector: 'dom-form-input',

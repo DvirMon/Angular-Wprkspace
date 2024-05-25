@@ -9,12 +9,19 @@ import {
   TemplateRef,
   effect,
   input,
+  signal,
 } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   MatAutocompleteModule,
   MatAutocompleteSelectedEvent,
 } from '@angular/material/autocomplete';
+import {
+  MatListModule,
+  MatListOption,
+  MatSelectionList,
+  MatSelectionListChange,
+} from '@angular/material/list';
 import { MatOption } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -28,14 +35,17 @@ import {
   tap,
 } from 'rxjs';
 // eslint-disable-next-line @nx/enforce-module-boundaries
-import { OptionContentDirective } from '../../../directives';
+import { OptionContentDirective } from '../../../../directives';
+import { DisplayOptionDisablePipe } from '../../pipes/displayDisable.pipe';
+import { DisplayOptionLabelPipe } from '../../pipes/displayOption.pipe';
 
 @Component({
-  selector: 'dom-autocomplete',
+  selector: 'dom-form-autocomplete',
   standalone: true,
   imports: [
     NgFor,
     NgIf,
+    NgTemplateOutlet,
     NgTemplateOutlet,
     FormsModule,
     ReactiveFormsModule,
@@ -43,27 +53,38 @@ import { OptionContentDirective } from '../../../directives';
     MatInputModule,
     MatAutocompleteModule,
     MatOption,
+    MatListModule,
+    MatSelectionList,
     OptionContentDirective,
+    DisplayOptionLabelPipe,
+    DisplayOptionDisablePipe,
   ],
   templateUrl: './autocomplete.component.html',
   styleUrl: './autocomplete.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AutocompleteComponent<T> {
+export class FormAutocompleteComponent<TOption> {
+  public readonly selectedMap = signal<Record<string, TOption>>({});
+
+  options = input.required<TOption[]>();
+  control = input.required<FormControl<TOption | TOption[]>>();
+
+  idKey = input<string>('id');
   label = input<string>('');
   defaultValue = input<string>();
-  options = input.required<T[]>();
-  control = input.required<FormControl<unknown>>();
-
-  optionTemplate = input<TemplateRef<unknown>>();
+  multi = input<boolean>(false);
 
   @ContentChild(OptionContentDirective)
   optionContentDirective!: OptionContentDirective;
 
-  @Input() displayFn: (option: T) => string = () => '';
+  @Input() displayWith: (option: TOption) => string = () => '';
+  @Input() displayOptionLabelWith: (option: TOption) => string = () => '';
+  @Input() displayOptionDisableWith: (option: TOption) => boolean = () => false;
+  @Input() displayOptionSelectedWith: (option: TOption) => boolean = () =>
+    false;
 
   @Output() queryChanged = new EventEmitter<string>();
-  @Output() optionSelected = new EventEmitter<T>();
+  @Output() optionSelected = new EventEmitter<TOption | TOption[]>();
 
   #valueChanged: Subject<string> = new Subject();
 
@@ -88,11 +109,29 @@ export class AutocompleteComponent<T> {
   }
 
   onOptionSelected(event: MatAutocompleteSelectedEvent): void {
-    const option: T = event.option.value;
+    const option: TOption = event.option.value;
     this.optionSelected.emit(option);
+
+    this.selectedMap.update((obj) => ({
+      ...obj,
+      [this.idKey()]: option,
+    }));
   }
 
   onInputChanged() {
     this.#valueChanged.next(this.control().value as string);
+  }
+
+  public onSelectionChange(event: MatSelectionListChange): void {
+    const selectedOptions: MatListOption[] =
+      event.source.selectedOptions.selected;
+    const options = selectedOptions.map(
+      ({ value }: MatListOption) =>
+        ({
+          ...value,
+        } as TOption)
+    );
+
+    this.control().setValue(options);
   }
 }

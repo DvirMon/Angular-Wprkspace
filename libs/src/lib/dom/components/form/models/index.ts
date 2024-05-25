@@ -1,5 +1,5 @@
 export * from './input-base.types'
-export * from './form.options'
+export * from './input-options'
 export * from './input-search'
 export * from './input-select'
 export * from './input-text'

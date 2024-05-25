@@ -16,7 +16,7 @@ export class ErrorsService implements ErrorHandler {
     return this.injector.get(ToastrService);
   }
 
-  handleErrorMessage(error: ErrorEvent | HttpErrorResponse) {
+  handleError(error: ErrorEvent | HttpErrorResponse) {
     if (error instanceof ErrorEvent) {
       this.handleClientError(error);
     }

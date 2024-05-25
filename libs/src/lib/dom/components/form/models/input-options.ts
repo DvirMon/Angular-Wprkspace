@@ -2,14 +2,24 @@ import { FormControl, ValidationErrors } from '@angular/forms';
 import { Appearance, BaseInput } from './input.model';
 import { InputType } from './input.types';
 
-export interface OptionsInput<T> extends BaseInput<T> {
-  options: T[];
+export interface FormOption {
+  // label: string;
+  // value: unknown;
+  selected?: boolean;
+  disabled?: boolean;
 }
 
-export abstract class InputOptionsModel<T> implements OptionsInput<T> {
+export interface OptionsInput<TOption = FormOption>
+  extends BaseInput<TOption> {
+  options: TOption[];
+}
+
+export abstract class InputOptionsModel<TOption = FormOption>
+  implements OptionsInput<TOption>
+{
   public name: string;
-  public control: FormControl<T>;
-  public options: T[];
+  public control: FormControl<TOption>;
+  public options: TOption[];
   appearance?: Appearance | undefined;
   errors?: ValidationErrors | undefined;
   icon?: string | undefined;
@@ -28,7 +38,7 @@ export abstract class InputOptionsModel<T> implements OptionsInput<T> {
     icon,
     placeHolder,
     helperText,
-  }: OptionsInput<T>) {
+  }: OptionsInput<TOption>) {
     this.name = name;
     this.control = control;
     this.options = options;

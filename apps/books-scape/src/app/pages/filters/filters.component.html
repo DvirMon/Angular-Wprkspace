@@ -18,11 +18,9 @@
           >
             @for (option of optionsMap()[key]; track $index) {
 
-            <mat-option
-              [value]="option"
-              (onSelectionChange)="onSelectionChange($event)"
-              >{{ option.title | titlecase }}</mat-option
-            >
+            <mat-option [value]="option">{{
+              option.title | titlecase
+            }}</mat-option>
             }
           </mat-autocomplete>
         </mat-form-field>
@@ -30,10 +28,23 @@
 
       }
     </form>
+  </header>
 
-    <pre class="flex justify-center">
-      {{ booksAutocomplete.value | json }}
-    </pre>
+  <header class="p-4">
+    <form class="flex flex-row gap-4" [formGroup]="booksAutocomplete">
+      @for (key of booKeys(); track $index) {
+      <section class="w-80">
+        <dom-form-autocomplete
+          [control]="booksAutocomplete.controls[key]"
+          [options]="optionsMap()[key]"
+          [displayWith]="displayWith"
+          [displayOptionLabelWith]="displayWith"
+          [displayOptionDisableWith]="displayOptionDisableWith"
+          (queryChanged)="onQueryChanged($event, key)"
+        ></dom-form-autocomplete>
+      </section>
+      }
+    </form>
   </header>
 
   <header class="p-4">
@@ -56,34 +67,6 @@
           <mat-icon matSuffix fontIcon="expand_more"></mat-icon>
         </mat-form-field>
       </section>
-      }
-    </form>
-  </header>
-
-  <header class="p-4">
-    <form class="flex flex-row gap-4" [formGroup]="booksAutocomplete">
-      @for (key of booKeys(); track $index) {
-      <p-dropdown
-        [options]="optionsMap()[key]"
-        [formControlName]="key"
-        optionLabel="title"
-        [filter]="true"
-        filterBy="title"
-        [showClear]="true"
-        placeholder="Select a Country"
-      >
-        <ng-template pTemplate="selectedItem" let-selectedOption>
-          <div class="flex align-items-center gap-2">
-            <div>{{ selectedOption.title }}</div>
-          </div>
-        </ng-template>
-        <ng-template let-country pTemplate="item">
-          <div class="flex align-items-center gap-2">
-            <div>{{ country.title }}</div>
-          </div>
-        </ng-template>
-      </p-dropdown>
-
       }
     </form>
   </header>

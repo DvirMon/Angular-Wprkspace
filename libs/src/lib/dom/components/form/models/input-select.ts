@@ -1,14 +1,14 @@
 import { InputOptionsModel, OptionsInput } from './input-options';
 import { InputType } from './input.types';
 
-export interface SelectionInput<T> extends OptionsInput<T> {
+export interface SelectionInput extends OptionsInput {
   multi: boolean;
 }
 
-export class InputSelectModel<T> extends InputOptionsModel<T> {
+export class InputSelectModel extends InputOptionsModel {
   multi: boolean;
 
-  constructor(options: SelectionInput<T>) {
+  constructor(options: SelectionInput) {
     super({
       ...options,
       icon: 'expand_more',

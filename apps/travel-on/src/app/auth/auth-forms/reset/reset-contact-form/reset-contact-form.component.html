@@ -7,13 +7,15 @@
 
     <form
       [formGroup]="resetFormGroup"
-      (ngSubmit)="onSubmit(resetFormGroup.value)">
-      @for (key of formKeys(); track key) {
+      (ngSubmit)="onSubmit(resetFormGroup.value)"
+    >
+      @for (name of formKeys(); track name) {
 
       <dom-form-input
-        [control]="resetFormGroup.get(key)"
-        [key]="key"
-        [label]="key | titlecase">
+        [control]="resetFormGroup.controls[name]"
+        [name]="name"
+        [label]="name | titlecase"
+      >
       </dom-form-input>
       }
 
@@ -22,7 +24,8 @@
         mat-raised-button
         type="submit"
         color="primary"
-        [disabled]="!resetFormGroup.valid">
+        [disabled]="!resetFormGroup.valid"
+      >
         Send Link
       </button>
     </form>

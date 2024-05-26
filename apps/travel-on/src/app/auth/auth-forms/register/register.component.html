@@ -4,13 +4,13 @@
     <form
       [formGroup]="registerFormGroup"
       (ngSubmit)="onSubmit(registerFormGroup.value)">
-      @for (key of formKeys(); track key) {
+      @for (name of formKeys(); track name) {
 
       <dom-form-input
-        [control]="registerFormGroup.get(key)"
-        [key]="key"
-        [label]="key | titlecase"
-        [messagesMap]="errorsMap[key]">
+        [control]="registerFormGroup.controls[name]"
+        [name]="name"
+        [label]="name | titlecase"
+        [messagesMap]="errorsMap[name]">
       </dom-form-input>
       }
 

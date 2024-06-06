@@ -9,7 +9,7 @@ import {
   MatSidenavContainer,
   MatSidenavContent,
 } from '@angular/material/sidenav';
-import { MatToolbar } from '@angular/material/toolbar';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 
 import { NgIf, TitleCasePipe, UpperCasePipe } from '@angular/common';
@@ -25,7 +25,7 @@ import { AppStore } from '../store/store';
     RouterModule,
     TitleCasePipe,
     UpperCasePipe,
-    MatToolbar,
+    MatToolbarModule,
     MatButton,
     MatSidenav,
     MatNavList,

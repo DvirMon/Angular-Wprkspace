@@ -4,7 +4,6 @@
 
 @use './m3-theme';
 
-$theme: mat.define-theme();
 
 @import 'primeng/resources/themes/lara-light-blue/theme.css';
 
@@ -18,6 +17,7 @@ $theme: mat.define-theme();
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 
 @include mat.core();
 

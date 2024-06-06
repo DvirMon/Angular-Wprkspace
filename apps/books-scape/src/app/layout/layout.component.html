@@ -27,10 +27,15 @@
 
         @if(showBookshelf()) {
 
-        <button class="bookshelf-btn" routerLink="bookshelf" mat-icon-button>
+        <button
+          class="bookshelf-btn"
+          routerLink="bookshelf"
+          mat-icon-button
+          matBadgeSize="large"
+          [matBadge]="shelfSize()"
+          matBadgeColor="primary"
+        >
           <mat-icon fontIcon="shelves"></mat-icon>
-          <span class="badge" [matBadge]="shelfSize()" matBadgeOverlap="false">
-          </span>
         </button>
 
         }

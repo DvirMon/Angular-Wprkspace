@@ -15,9 +15,7 @@
         "outputPath": "public/books-scape",
         "index": "apps/books-scape/src/index.html",
         "main": "apps/books-scape/src/main.ts",
-        "polyfills": [
-          "zone.js"
-        ],
+        "polyfills": [],
         "tsConfig": "apps/books-scape/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [

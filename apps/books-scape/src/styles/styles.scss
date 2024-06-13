@@ -4,7 +4,6 @@
 
 @use './m3-theme';
 
-
 @import 'primeng/resources/themes/lara-light-blue/theme.css';
 
 @import 'primeng/resources/primeng.css';
@@ -14,23 +13,22 @@
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
+@include mat.core();
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
-@include mat.core();
-
-books-scape-root,
-html,
-body {
-  height: 100%;
-  // @include mat.core-theme($theme);
-  // @include mat.all-component-themes($theme);
+:root {
   @include mat.core-theme(m3-theme.$light-theme);
   @include mat.all-component-themes(m3-theme.$light-theme);
 }
+
+html,
+body {
+  height: 100%;
+}
+
 body {
   margin: 0;
 }
-

@@ -23,7 +23,8 @@
           "apps/books-scape/src/assets"
         ],
         "styles": [
-          "apps/books-scape/src/styles.scss"
+          "@angular/material/prebuilt-themes/azure-blue.css",
+          "apps/books-scape/src/styles/styles.scss"
         ],
         "scripts": []
       },

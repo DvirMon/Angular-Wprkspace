@@ -6,6 +6,7 @@
 
 @use './palettes';
 
+
 $_rest: (
   secondary: map.get(palettes.$palettes, secondary),
   neutral: map.get(palettes.$palettes, neutral),

@@ -1,4 +1,4 @@
-import { Component, Signal, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Signal, inject, input } from '@angular/core';
 
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButton, MatIconButton } from '@angular/material/button';
@@ -36,6 +36,8 @@ import { AppStore } from '../store/store';
     MatIconButton,
     MatBadgeModule,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+
 })
 export class LayoutComponent {
   #store = inject(AppStore);
@@ -49,4 +51,7 @@ export class LayoutComponent {
   public readonly title: string = 'the books scape';
 
   public readonly shelfSize: Signal<string> = this.#store.shelfSize;
+
+
+  
 }

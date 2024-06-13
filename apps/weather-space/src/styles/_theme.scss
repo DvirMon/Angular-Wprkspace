@@ -68,11 +68,11 @@ $plt-secondary: (
   ),
 );
 
-$plt-primary: mat.define-palette($plt-primary);
-$plt-secondary: mat.define-palette($plt-secondary, A200, A100, A400);
-$warn: mat.define-palette(mat.$red-palette);
+$plt-primary: mat.m2-define-palette($plt-primary);
+$plt-secondary: mat.m2-define-palette($plt-secondary, A200, A100, A400);
+$warn: mat.m2-define-palette(mat.$m2-red-palette);
 
-$weather-theme: mat.define-light-theme(
+$weather-theme: mat.m2-define-light-theme(
   (
     color: (
       primary: $plt-primary,

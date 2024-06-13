@@ -4,16 +4,17 @@ import {
   EventEmitter,
   Output,
   input,
-} from "@angular/core";
-import { MatButtonModule } from "@angular/material/button";
-import { MatCard, MatCardContent } from "@angular/material/card";
-import { RouterModule } from "@angular/router";
+  output,
+} from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: "dom-card-button",
+  selector: 'dom-card-button',
   standalone: true,
   imports: [RouterModule, MatButtonModule, MatCard, MatCardContent],
-  
+
   template: `<mat-card>
     <mat-card-content>
       <section>
@@ -21,7 +22,8 @@ import { RouterModule } from "@angular/router";
           mat-raised-button
           [disableRipple]="true"
           color="accent"
-          [routerLink]="routerLink()">
+          [routerLink]="routerLink()"
+        >
           {{ label() }} <b>{{ boldLabel() }}</b>
         </button>
       </section>
@@ -48,5 +50,5 @@ export class CardButtonComponent {
   boldLabel = input<string>();
   routerLink = input<string>();
 
-  @Output() clicked: EventEmitter<void> = new EventEmitter<void>();
+  clickedChanged = output();
 }

@@ -9,6 +9,7 @@ import {
   TemplateRef,
   effect,
   input,
+  output,
   signal,
 } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -83,8 +84,8 @@ export class FormAutocompleteComponent<TOption> {
   @Input() displayOptionSelectedWith: (option: TOption) => boolean = () =>
     false;
 
-  @Output() queryChanged = new EventEmitter<string>();
-  @Output() optionSelected = new EventEmitter<TOption | TOption[]>();
+  queryChanged = output<string>();
+  optionSelected = output<TOption | TOption[]>();
 
   #valueChanged: Subject<string> = new Subject();
 
@@ -93,7 +94,7 @@ export class FormAutocompleteComponent<TOption> {
       debounceTime(300),
       distinctUntilChanged(),
       map((value) => (!value ? this.defaultValue() : value)),
-      tap((value) => this.queryChanged.emit(value))
+      tap((value) => this.queryChanged.emit(value as string))
     )
   );
 

@@ -1,9 +1,20 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output, effect, input } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  InputSignal,
+  Output,
+  OutputEmitterRef,
+  effect,
+  input,
+  output,
+} from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { createValueChangesEmitter } from '../../helper';
+import { outputFromObservable } from '@angular/core/rxjs-interop';
+import { of } from 'rxjs';
 
 export interface SearchMediaResultsData {
   totalMediaResults: number;
@@ -23,15 +34,17 @@ export interface SearchMediaResultsData {
   styleUrls: ['./search-input.component.scss'],
 })
 export class SearchInputComponent {
-  control = input.required<FormControl<string>>();
+  control: InputSignal<FormControl<string>> =
+    input.required<FormControl<string>>();
 
-  label = input<string>();
-  initialValue = input<string>();
+  label: InputSignal<string | undefined> = input<string>();
 
-  @Output() valueChanged = new EventEmitter<string>();
+  initialValue: InputSignal<string | undefined> = input<string>();
 
-  private handleValueChanges = createValueChangesEmitter((value) =>
-    this.valueChanged.emit(value)
+  valueChanged: OutputEmitterRef<string> = output<string>();
+
+  private handleValueChanges = createValueChangesEmitter(
+    (value) => this.valueChanged.emit(value)
   );
 
   constructor() {

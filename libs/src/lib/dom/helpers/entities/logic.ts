@@ -42,10 +42,14 @@ export function onUpdateCollection<Entity extends { id: EntityId }>(
 }
 
 /**
- * Creates a function that invokes a specified method on a LoaderService instance.
+ * Creates a function that invokes a specified method on a LoaderService 
+ * instance.
+ * 
  * @param Loader The LoaderService instance.
- * @param methodName The name of the method to invoke on the LoaderService instance.
- * @returns A function that accepts parameters for the specified method and returns an Observable of the result.
+ * @param methodName The name of the method to invoke on the LoaderService 
+ *                   instance.
+ * @returns A function that accepts parameters for the specified method and 
+ *          returns an Observable of the result.
  * @template T The type of parameters accepted by the method.
  */
 
@@ -57,24 +61,6 @@ export function createLoader<T>(
     const loader = inject(Loader);
     return (query: T) => loader[methodName](query);
   });
-}
-
-export function loadCollection<T>(
-  loader: (query: T) => Observable<Entity[]>,
-  next: (value: Entity[]) => void
-) {
-  return rxMethod<T>(
-    pipe(
-      switchMap((query) =>
-        loader(query).pipe(
-          tapResponse({
-            next: next,
-            error: () => EMPTY,
-          })
-        )
-      )
-    )
-  );
 }
 
 /**

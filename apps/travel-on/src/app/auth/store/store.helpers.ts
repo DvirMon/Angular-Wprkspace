@@ -1,6 +1,5 @@
 import { UserCredential } from '@angular/fire/auth';
 import { tapResponse } from '@ngrx/operators';
-import { StateSignal, patchState } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { Observable, pipe, switchMap } from 'rxjs';
 import { DialogService } from '../../shared/dialog/dialog.service';
@@ -16,10 +15,11 @@ import {
 } from '../utils';
 import { AuthState } from './auth.state';
 import { setAuthError, setUser } from './store.setters';
+import { patchState, WritableStateSource } from '@ngrx/signals';
 
 export function signIn(
   service: AuthService,
-  store: StateSignal<AuthState>,
+  store: WritableStateSource<AuthState>,
   event: AuthEvent
 ) {
   return rxMethod<SignInEvent>(
@@ -34,7 +34,7 @@ export function signIn(
 }
 export function register(
   service: AuthService,
-  store: StateSignal<AuthState>,
+  store: WritableStateSource<AuthState>,
   event: AuthEvent
 ) {
   return rxMethod<Register>(
@@ -49,22 +49,20 @@ export function register(
 }
 export function loadUserById(
   service: AuthService,
-  store: StateSignal<AuthState>,
+  store: WritableStateSource<AuthState>,
   event: AuthEvent
 ) {
   return rxMethod<string>(
     pipe(
       switchMap((userId) =>
-        service.loadUserById$(userId).pipe(
-          handleLoadUser(store, event)
-        )
+        service.loadUserById$(userId).pipe(handleLoadUser(store, event))
       )
     )
   );
 }
 
 export function handleLoadUser(
-  store: StateSignal<AuthState>,
+  store: WritableStateSource<AuthState>,
   event: AuthEvent
 ) {
   return tapResponse({
@@ -75,7 +73,7 @@ export function handleLoadUser(
 }
 
 export function sendResetEmail(
-  store: StateSignal<AuthState>,
+  store: WritableStateSource<AuthState>,
   authEvent: AuthEvent,
   service: AuthService,
   dialog: DialogService
@@ -96,7 +94,7 @@ export function sendResetEmail(
   );
 }
 export function confirmPasswordReset(
-  store: StateSignal<AuthState>,
+  store: WritableStateSource<AuthState>,
   authEvent: AuthEvent,
   service: AuthService,
   dialog: DialogService
@@ -122,7 +120,7 @@ export function confirmPasswordReset(
 }
 
 export function authenticate<T>(
-  store: StateSignal<AuthState>,
+  store: WritableStateSource<AuthState>,
   event: AuthEvent,
   authActionFn: (value: T) => Observable<UserCredential>
 ) {

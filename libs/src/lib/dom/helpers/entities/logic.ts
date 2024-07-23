@@ -1,27 +1,27 @@
 import { Injector, inject, runInInjectionContext } from '@angular/core';
 import { tapResponse } from '@ngrx/operators';
-import { StateSignal, patchState } from '@ngrx/signals';
+import { WritableStateSource, patchState } from '@ngrx/signals';
 import { EntityId, addEntities, setAllEntities } from '@ngrx/signals/entities';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { EMPTY, Observable, pipe, switchMap } from 'rxjs';
 import { Entity, EntityLoader, LoaderService } from './types';
 
 export function onLoadSlice<Entity extends { id: EntityId }>(
-  state: StateSignal<object>,
-  slice: keyof StateSignal<object>
+  state: WritableStateSource<object>,
+  slice: keyof WritableStateSource<object>
 ) {
   return (res: Entity[] | Entity) => patchState(state, { [slice]: res });
 }
 
 export function onLoadEntities<Entity extends { id: EntityId }>(
-  state: StateSignal<object>
+  state: WritableStateSource<object>
 ) {
   return (res: Entity[]) => patchState(state, addEntities(res));
 }
 
 // Function to handle the success response of loading entities
 export function onLoadCollection<Entity extends { id: EntityId }>(
-  state: StateSignal<object>,
+  state: WritableStateSource<object>,
   collection: string
 ) {
   return (res: Entity[] | Entity) =>
@@ -30,12 +30,12 @@ export function onLoadCollection<Entity extends { id: EntityId }>(
 
 // Function to handle the success response of loading entities
 export function onUpdateCollection<Entity extends { id: EntityId }>(
-  state: StateSignal<object>,
+  state: WritableStateSource<object>,
   collection: string
 ) {
   return (res: Entity[] | Entity) => {
     patchState(
-      state as StateSignal<object>,
+      state as WritableStateSource<object>,
       setAllEntities(res as Entity[], { collection })
     );
   };
@@ -92,7 +92,7 @@ export function loadEntities<T>(
 
 export function loadSlice<T>(
   loader: (query: T) => Observable<Entity[] | Entity>,
-  state: StateSignal<object>,
+  state: WritableStateSource<object>,
   slice: string
 ) {
   return rxMethod<T>(

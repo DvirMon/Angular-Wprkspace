@@ -31,7 +31,6 @@ jobs:
 
       # Optional: Connect your workspace to nx.app for distributed task execution
       # - run: npx nx-cloud start-ci-run --distribute-on="5 linux-medium-js" --stop-agents-after="build"
-
       # Build Specific Angular App
       - name: Build Specific Angular App
         run: npx nx build travel-on --prod --skip-nx-cache

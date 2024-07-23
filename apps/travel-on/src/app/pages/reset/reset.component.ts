@@ -29,9 +29,7 @@ import { CardButtonComponent, FormServerError } from '@dom';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ResetPageComponent {
-  #injector = inject(Injector);
   #authStore = inject(AuthStore);
-  #activatedRoute = inject(ActivatedRoute);
 
   // public readonly paramsSignal: Signal<Params>;
 

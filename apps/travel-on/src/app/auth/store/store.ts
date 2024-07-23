@@ -1,4 +1,4 @@
-import { withDevtools } from '@angular-architects/ngrx-toolkit';
+// import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import { computed, inject } from '@angular/core';
 import {
   patchState,
@@ -20,7 +20,7 @@ import { initialState } from './auth.state';
 
 export const AuthStore = signalStore(
   { providedIn: 'root' },
-  withDevtools('auth'),
+  // withDevtools('auth'),
   withState(initialState),
   withMethods(
     (store, service = inject(AuthService), dialog = inject(DialogService)) => ({

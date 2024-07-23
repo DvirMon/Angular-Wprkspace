@@ -1,20 +1,18 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Injector,
   Signal,
   computed,
   inject,
-  input,
+  input
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { CardButtonComponent, FormServerError } from '@dom';
 import {
   AuthDialogEvent,
   ResetContactFormComponent,
   ResetPasswordFormComponent,
 } from '../../auth';
 import { AuthStore } from '../../auth/store/store';
-import { CardButtonComponent, FormServerError } from '@dom';
 
 @Component({
   selector: 'to-reset',

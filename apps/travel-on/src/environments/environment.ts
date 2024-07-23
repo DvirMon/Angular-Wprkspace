@@ -3,7 +3,7 @@ export const environment = {
   server: "http://localhost:3000",
   firebaseConfig: {
     apiKey: "AIzaSyAWE61Vm0CpfUtHq4G48aJVMbdY6REEtrA",
-    authDomain: "travel-on-811d5.firebaseapp.com",
+    authDomain: "https://ng-travel-on.firebaseapp.com",
     databaseURL:
       "https://travel-on-811d5-default-rtdb.europe-west1.firebasedatabase.app",
     projectId: "travel-on-811d5",

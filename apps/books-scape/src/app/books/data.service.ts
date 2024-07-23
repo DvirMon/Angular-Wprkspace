@@ -10,7 +10,7 @@ import { Info } from './info.t';
 export class VolumesDataService {
   constructor(private bookHttp: VolumesHttpService) {}
 
-  // function to fetch books from Google Books API}
+  // Fetch books from Google Books API
   public loadVolumes(query: string): Observable<Book[] | Book> {
     return this.bookHttp.fetchVolumes(query as string).pipe(
       map((items) => this.mapItemsToBooks(items)),

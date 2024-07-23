@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'books-scape-info',
+  selector: 'books-scape-f',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './info.component.html',

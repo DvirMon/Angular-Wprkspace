@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, Signal, inject, input } from '@angular/core';
+import { NgIf, TitleCasePipe, UpperCasePipe } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Signal,
+  inject,
+  input,
+} from '@angular/core';
 
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButton, MatIconButton } from '@angular/material/button';
@@ -12,7 +19,6 @@ import {
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 
-import { NgIf, TitleCasePipe, UpperCasePipe } from '@angular/common';
 import { AppStore } from '../store/store';
 
 @Component({
@@ -37,8 +43,8 @@ import { AppStore } from '../store/store';
     MatBadgeModule,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
-
 })
+  
 export class LayoutComponent {
   #store = inject(AppStore);
 
@@ -48,10 +54,7 @@ export class LayoutComponent {
 
   public readonly routes: string[] = ['filters', 'table'];
 
-  public readonly title: string = 'the books scape';
+  public readonly title : string  = 'the books scape';
 
   public readonly shelfSize: Signal<string> = this.#store.shelfSize;
-
-
-  
 }

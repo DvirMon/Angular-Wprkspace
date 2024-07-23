@@ -28,7 +28,7 @@
     "@ngrx/effects": "18.0.1",
     "@ngrx/entity": "18.0.1",
     "@ngrx/operators": "18.0.1",
-    "@ngrx/signals": "^17.2.0",
+    "@ngrx/signals": "^18.0.0-rc.3",
     "@ngrx/store": "18.0.1",
     "@ngrx/store-devtools": "18.0.1",
     "@nx/angular": "19.5.2",

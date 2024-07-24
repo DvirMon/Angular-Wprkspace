@@ -1,33 +1,42 @@
 @use 'variables' as main;
 
 div.places-wrapper {
-  position: relative;
-  overflow: hidden;
-  height: 100vh; /* Adjust based on your needs */
+  background-image: url('../../../assets/images/backgrounds/user.jpg');
+  background-attachment: fixed;
+  background-size: cover; /* Ensures the image covers the entire background */
+  background-position: center;
+  min-height: 100vh;
 }
 
-.parallax-image {
-  background-image: url('../../../assets/images/backgrounds/user.jpg');
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
+
+
+main {
+  // top: 0;
+  // left: 0;
+  // width: 90%;
+  display: flex;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  // overflow-y: scroll;
 }
 
 div.places-list-container {
   height: 100%;
+  width: 100%;
   justify-content: center;
   display: flex;
-  width: 100%;
 }
 
-main.content {
-  top: 0;
-  left: 0;
-  // width: 90%;
-  height: 80%;
-  overflow-y: scroll;
+div.places-list-wrapper {
+  width: 100%;
+  overflow-wrap: hidden;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px 5%;
+}
+
+section.places-card-wrapper {
+  width: 25%;
 }

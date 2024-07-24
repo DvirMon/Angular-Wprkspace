@@ -11,7 +11,7 @@ import {
 import { ParallaxDirective } from '@dom';
 import { FloatingButtonComponent } from '@dom/components';
 import { AuthStore } from '../../auth/store/store';
-import { PlacesCardComponent } from '../../places/place-card/places-card.component';
+import { PlacesCardComponent, SelectChangedEvent } from '../../places/place-card/places-card.component';
 import {
   PlacesListComponent,
   SelectionListChange,
@@ -20,14 +20,15 @@ import { PlacesHeaderComponent } from '../../places/places-header/places-header.
 import { Places } from '../../places/places.model';
 import { SignalStore } from '../../store/store';
 import { PlacesPageService } from './places.service';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'to-places',
   standalone: true,
   imports: [
+    JsonPipe,
     PlacesHeaderComponent,
     PlacesListComponent,
-    PlacesCardComponent,
     FloatingButtonComponent,
     ParallaxDirective,
   ],
@@ -56,6 +57,14 @@ export class PlacesComponent implements OnInit {
     this.#store.loadFavorites(this.userId);
   }
 
+  public onSelectedChanged(event: SelectChangedEvent): void {
+    const { source, selected } = event;
+    const { place } = source;
+
+    // this._emitChangeEvent({ placeId: place().id, selected } as PlaceSelection);
+  }
+  
+
   async onSelectionChanged(event: SelectionListChange) {
     const { currentSelection } = event;
     await this.#store.updateFavorite(currentSelection);
@@ -64,4 +73,9 @@ export class PlacesComponent implements OnInit {
   onLogout(): void {
     runInInjectionContext(this.#injector, () => inject(AuthStore).logout());
   }
+
+  // private _emitChangeEvent(currentSelection: PlaceSelection) {
+  //   const event = { source: this, currentSelection } as SelectionListChange;
+  //   this.selectionChanged.emit(event);
+  // }
 }

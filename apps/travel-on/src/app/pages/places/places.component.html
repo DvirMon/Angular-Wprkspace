@@ -1,23 +1,53 @@
 <div class="places-wrapper">
-  <div class="parallax-image"></div>
-  <header class="h-40 flex justify-center items-center">
-    <div class="w-10/12">
-      <to-places-header></to-places-header>
-    </div>
-    <dom-floating-button
-      [label]="'Logout'"
-      (clicked)="onLogout()"
-    ></dom-floating-button>
-  </header>
-  <div class="places-list-container">
-    <main class="content w-10/12">
-      @if (isGrid()) {
+  <main>
+    <header class="h-40 flex justify-center items-center">
+      <div class="w-10/12">
+        <to-places-header></to-places-header>
+      </div>
+      <dom-floating-button
+        [label]="'Logout'"
+        (clicked)="onLogout()"
+      ></dom-floating-button>
+    </header>
+    <div class="places-list-wrapper">
       <to-places-list
         [places]="places()"
         [selection]="selection()"
-        (selectionChanged)="onSelectionChanged($event)"
       ></to-places-list>
-      }
-    </main>
-  </div>
+    </div>
+    <!-- <div class="parallax-image">
+    <header class="h-40 flex justify-center items-center">
+      <div class="w-10/12">
+        <to-places-header></to-places-header>
+      </div>
+      <dom-floating-button
+        [label]="'Logout'"
+        (clicked)="onLogout()"
+      ></dom-floating-button>
+    </header>
+    <div class="places-list-container">
+      <section>
+        <pre>
+        {{ selection() | json }}
+      </pre
+        >
+      </section>
+      <main class="content w-10/12">
+        <div class="places-list-wrapper">
+          @for (item of places(); track item.id) {
+          <section class="places-card-wrapper">
+            <to-places-card
+              [place]="item"
+              [selected]="selection()[item.id]"
+              (selectedChanged)="onSelectedChanged($event)"
+            >
+            </to-places-card>
+          </section>
+          }
+        </div>
+
+      </main>
+    </div>
+  </div> -->
+  </main>
 </div>

@@ -3,13 +3,11 @@
 div.places-list-wrapper {
   width: 100%;
   overflow-wrap: hidden;
-
-  // padding: main.spacing(2);
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 24px 5%;
-  // justify-content: space-between;
   section.places-card-wrapper {
-    width: 30%;
+    width: 25%;
   }
 }

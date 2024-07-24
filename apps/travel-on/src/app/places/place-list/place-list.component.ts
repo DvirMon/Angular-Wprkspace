@@ -5,12 +5,11 @@ import {
   SelectChangedEvent,
 } from '../place-card/places-card.component';
 import { Places } from '../places.model';
-
-type PlaceSelection = { placeId: string; selected: boolean };
+import { FavoriteSelection } from '../../store/features/with-favorites.feature';
 
 export interface SelectionListChange {
   source: PlacesListComponent;
-  currentSelection: PlaceSelection;
+  currentSelection: FavoriteSelection;
 }
 
 @Component({
@@ -31,10 +30,10 @@ export class PlacesListComponent {
     const { source, selected } = event;
     const { place } = source;
 
-    this._emitChangeEvent({ placeId: place().id, selected } as PlaceSelection);
+    this._emitChangeEvent({ placeId: place().id, selected } as FavoriteSelection);
   }
   
-  _emitChangeEvent(currentSelection: PlaceSelection) {
+  _emitChangeEvent(currentSelection: FavoriteSelection) {
     const event = { source: this, currentSelection } as SelectionListChange;
     this.selectionChanged.emit(event);
   }

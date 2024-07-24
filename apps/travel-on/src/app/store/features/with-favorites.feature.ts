@@ -14,12 +14,15 @@ import {
   withState,
 } from '@ngrx/signals';
 import { Favorite, FavoriteHttpService } from '../../favorites';
+import { rxMethod } from '@ngrx/signals/rxjs-interop';
+import { EMPTY, pipe, switchMap } from 'rxjs';
+import { tapResponse } from '@ngrx/operators';
 
 const SLICE = 'favorite';
 
 type FavoritesLoader = EntityLoader<string, Entity, 'loadFavorites'>;
 
-type FavoriteSelection = { placeId: string; selected: boolean };
+export type FavoriteSelection = { placeId: string; selected: boolean };
 
 export function withFavorites(Loader: LoaderService<FavoritesLoader>) {
   return signalStoreFeature(
@@ -31,27 +34,22 @@ export function withFavorites(Loader: LoaderService<FavoritesLoader>) {
       };
     }),
     withMethods((store, service = inject(FavoriteHttpService)) => ({
-      async updateFavorite(currentSelection: FavoriteSelection) {
-        const data = store.favorite();
-        const { vacationIds, id } = data;
-
-        const updatedVacationIds = updateVacationIds(
-          currentSelection,
-          vacationIds
-        );
-
-        const updatedData = {
-          ...data,
-          vacationIds: [...updatedVacationIds],
-        } as Favorite;
-
-
-        await service.updateFavoriteDoc(id, updatedData);
-
-        patchState(store, (state) => ({
-          favorite: { ...state.favorite, ...updatedData },
-        }));
-      },
+      updateFavoriteDB: rxMethod<Favorite>(
+        pipe(
+          switchMap((updatedData: Favorite) => {
+            const { id } = updatedData;
+            return service.updateFavoriteDocObs(id, updatedData).pipe(
+              tapResponse({
+                next: () =>
+                  patchState(store, (state) => ({
+                    favorite: { ...state.favorite, ...updatedData },
+                  })),
+                error: () => EMPTY,
+              })
+            );
+          })
+        )
+      ),
     })),
     withComputed(({ favorite }) => ({
       favoriteMap: computed(() => mapVacationIdsToRecord(favorite())),
@@ -60,8 +58,6 @@ export function withFavorites(Loader: LoaderService<FavoritesLoader>) {
 }
 
 function mapVacationIdsToRecord(favorite: Favorite): Record<string, boolean> {
-  
-
   if (!isObjectEmpty(favorite)) {
     return favorite.vacationIds.reduce((acc, value) => {
       return {

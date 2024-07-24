@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import {
-  SelectChangedEvent,
   PlacesCardComponent,
+  SelectChangedEvent,
 } from '../place-card/places-card.component';
 import { Places } from '../places.model';
 
@@ -21,11 +21,11 @@ export interface SelectionListChange {
   styleUrls: ['./place-list.component.scss'],
 })
 export class PlacesListComponent {
+  
   places = input.required<Places[]>();
   selection = input.required<Record<string, boolean>>();
 
-  @Output() readonly selectionChanged: EventEmitter<SelectionListChange> =
-    new EventEmitter<SelectionListChange>();
+  selectionChanged = output<SelectionListChange>()
 
   public onSelectedChanged(event: SelectChangedEvent): void {
     const { source, selected } = event;

@@ -44,7 +44,7 @@ export class FavoriteHttpService {
       })
     );
   }
-  public loadFavorites(userId: string): Observable<Favorite[]> {
+  public loadFavorites(userId: string): Observable<Favorite> {
     const querySnapshot$ = from(
       getDocs(query(this.favoritesRef, where('userId', '==', userId)))
     );
@@ -61,7 +61,7 @@ export class FavoriteHttpService {
       switchMap((querySnapshot: QuerySnapshot<Favorite>) =>
         iif(() => querySnapshot.empty, trueMediaResult$, falseMediaResult$)
       ),
-      map((res) => [res])
+      map((res) => res)
     );
   }
 

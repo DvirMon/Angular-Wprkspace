@@ -4,7 +4,7 @@ import {
   EntityLoader,
   LoaderService,
   createLoader,
-  loadSlice
+  loadSlice,
 } from '@dom';
 import {
   patchState,
@@ -23,7 +23,7 @@ type FavoriteSelection = { placeId: string; selected: boolean };
 
 export function withFavorites(Loader: LoaderService<FavoritesLoader>) {
   return signalStoreFeature(
-    withState<{ favorite: Favorite[] }>({ favorite: [] }),
+    withState<{ favorite: Favorite }>({ favorite: {} as Favorite }),
     withMethods((store) => {
       const loader = createLoader(Loader, 'loadFavorites');
       return {
@@ -32,7 +32,7 @@ export function withFavorites(Loader: LoaderService<FavoritesLoader>) {
     }),
     withMethods((store, service = inject(FavoriteHttpService)) => ({
       async updateFavorite(currentSelection: FavoriteSelection) {
-        const data = store.favorite()[0];
+        const data = store.favorite();
         const { vacationIds, id } = data;
 
         const updatedVacationIds = updateVacationIds(
@@ -40,23 +40,29 @@ export function withFavorites(Loader: LoaderService<FavoritesLoader>) {
           vacationIds
         );
 
-        const updatedData = { ...data, vacationIds: updatedVacationIds };
+        const updatedData = {
+          ...data,
+          vacationIds: [...updatedVacationIds],
+        } as Favorite;
+
 
         await service.updateFavoriteDoc(id, updatedData);
 
         patchState(store, (state) => ({
-          favorite: { ...state.favorite, vacationIds: updatedVacationIds },
+          favorite: { ...state.favorite, ...updatedData },
         }));
       },
     })),
     withComputed(({ favorite }) => ({
-      favoriteMap: computed(() => mapVacationIdsToRecord(favorite()[0])),
+      favoriteMap: computed(() => mapVacationIdsToRecord(favorite())),
     }))
   );
 }
 
 function mapVacationIdsToRecord(favorite: Favorite): Record<string, boolean> {
-  if (favorite) {
+  
+
+  if (!isObjectEmpty(favorite)) {
     return favorite.vacationIds.reduce((acc, value) => {
       return {
         ...acc,
@@ -71,10 +77,14 @@ function mapVacationIdsToRecord(favorite: Favorite): Record<string, boolean> {
 function updateVacationIds(
   currentSelection: FavoriteSelection,
   vacationIds: string[]
-) {
+): string[] {
   const { placeId, selected } = currentSelection;
 
   return selected
     ? [...vacationIds, placeId]
     : vacationIds.filter((id: string) => id !== placeId);
+}
+
+function isObjectEmpty(obj: object) {
+  return Object.keys(obj).length === 0;
 }

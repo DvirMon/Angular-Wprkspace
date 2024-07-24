@@ -12,6 +12,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular-architects/ngrx-toolkit": "^18.0.0-rc.2.0",
     "@angular/animations": "18.1.1",
     "@angular/cdk": "18.1.1",
     "@angular/common": "18.1.1",
@@ -33,8 +34,10 @@
     "@ngrx/store-devtools": "18.0.1",
     "@nx/angular": "19.5.2",
     "express": "^4.19.2",
+    "i": "^0.3.7",
     "ngx-toastr": "^18.0.0",
     "node": "^20.9.0",
+    "npm": "^10.8.2",
     "primeng": "^17.18.5",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

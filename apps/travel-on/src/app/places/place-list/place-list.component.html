@@ -1,10 +1,11 @@
-<div class="places-list-wrapper">
+<div class="grid-container">
   @for (item of places(); track item.id) {
   <section class="places-card-wrapper">
     <to-places-card
       [place]="item"
       [selected]="selection()[item.id]"
       (selectedChanged)="onSelectedChanged($event)"
+      [isGrid]="true"
     >
     </to-places-card>
   </section>

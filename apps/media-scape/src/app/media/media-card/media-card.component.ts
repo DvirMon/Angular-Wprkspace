@@ -2,20 +2,20 @@ import { NgOptimizedImage } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
   Injector,
   OnInit,
-  Output,
   effect,
   inject,
   input,
+  output,
   runInInjectionContext,
-  signal,
+  signal
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatCard, MatCardContent, MatCardImage } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { Router } from '@angular/router';
 import { FormInputComponent } from '@dom';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import {
@@ -30,7 +30,6 @@ import {
 } from 'rxjs';
 import { FormatDatePipe } from '../../shared/pipes/formatDate.pipe';
 import { MediaResult } from '../../shared/types';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'ms-media-card',
@@ -61,7 +60,7 @@ export class MediaCardComponent implements OnInit {
   control = new FormControl('', { nonNullable: true });
   blurChanged = new Subject<void>();
 
-  @Output() valueChanged = new EventEmitter<MediaResult>();
+  valueChanged = output<MediaResult>();
 
   private _handleValueChanged = rxMethod<string>(
     pipe(

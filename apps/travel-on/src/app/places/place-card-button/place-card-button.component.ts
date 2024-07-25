@@ -4,21 +4,20 @@ import {
   style,
   transition,
   trigger,
-} from "@angular/animations";
-import { CommonModule } from "@angular/common";
+} from '@angular/animations';
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
-  Output,
   Signal,
   computed,
-  input
-} from "@angular/core";
-import { toSignal } from "@angular/core/rxjs-interop";
-import { MatButtonModule } from "@angular/material/button";
-import { MatIconModule } from "@angular/material/icon";
-import { BehaviorSubject, Observable, delay, map, merge, skip } from "rxjs";
+  input,
+  output
+} from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { BehaviorSubject, Observable, delay, map, merge, skip } from 'rxjs';
 
 export interface ButtonSelectionChangedEvent {
   /** The source button of the event. */
@@ -28,40 +27,40 @@ export interface ButtonSelectionChangedEvent {
 }
 
 export enum SelectState {
-  DEFAULT = "default",
-  CHANGED = "changeState",
-  SELECTED = "selected",
+  DEFAULT = 'default',
+  CHANGED = 'changeState',
+  SELECTED = 'selected',
 }
 
 @Component({
-  selector: "to-place-card-button",
+  selector: 'to-place-card-button',
   standalone: true,
   imports: [CommonModule, MatButtonModule, MatIconModule],
-  templateUrl: "./place-card-button.component.html",
-  styleUrls: ["./place-card-button.component.scss"],
+  templateUrl: './place-card-button.component.html',
+  styleUrls: ['./place-card-button.component.scss'],
   animations: [
-    trigger("iconAnimation", [
+    trigger('iconAnimation', [
       state(
-        "default",
+        'default',
         style({
-          transform: "scale(1)",
-          color: "#9E9E9E",
+          transform: 'scale(1)',
+          color: '#9E9E9E',
         })
       ),
       state(
-        "changeState",
+        'changeState',
         style({
-          transform: "scale(1.2)",
+          transform: 'scale(1.2)',
         })
       ),
       state(
-        "selected",
+        'selected',
         style({
-          transform: "scale(1)",
+          transform: 'scale(1)',
         })
       ),
-      transition("default <=> changeState", animate("0.1s ease")),
-      transition("selected <=> changeState", animate("0.1s ease")),
+      transition('default <=> changeState', animate('0.1s ease')),
+      transition('selected <=> changeState', animate('0.1s ease')),
     ]),
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -73,8 +72,7 @@ export class PlaceCardButtonComponent {
 
   selected = input.required<boolean>();
 
-  @Output() readonly changed: EventEmitter<ButtonSelectionChangedEvent> =
-    new EventEmitter();
+  readonly changed = output<ButtonSelectionChangedEvent>();
 
   constructor() {
     this.isSelected = computed(() =>

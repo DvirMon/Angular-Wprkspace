@@ -2,15 +2,14 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
   OnInit,
-  Output,
   Signal,
   WritableSignal,
   computed,
   inject,
   input,
-  signal,
+  output,
+  signal
 } from '@angular/core';
 import {
   AbstractControl,
@@ -50,7 +49,7 @@ export class FormInputComponent implements OnInit {
 
   message: WritableSignal<string> = signal('');
 
-  @Output() blurChanged = new EventEmitter<FormControl>();
+  blurChanged = output<FormControl>();
 
   ngOnInit(): void {
     this.formControl = computed(() => this.control() as FormControl);

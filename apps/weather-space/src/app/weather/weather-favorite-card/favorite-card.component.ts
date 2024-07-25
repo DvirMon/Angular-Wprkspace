@@ -1,5 +1,5 @@
 import { NgClass, NgIf, TitleCasePipe } from '@angular/common';
-import { Component, EventEmitter, Output, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import {
   MatCard,
@@ -42,8 +42,7 @@ export class FavoriteEntityComponent {
   item = input.required<FavoriteEntity>();
   metric = input.required<boolean>();
 
-  @Output() selectionChanged: EventEmitter<FavoriteEntity> =
-    new EventEmitter<FavoriteEntity>();
+  selectionChanged = output<FavoriteEntity>();
 
   onSelectionChanged() {
     this.selectionChanged.emit(this.item());

@@ -2,12 +2,11 @@ import { JsonPipe, NgOptimizedImage, TitleCasePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
-  Output,
-  WritableSignal,
   inject,
   input,
+  output,
   signal,
+  WritableSignal
 } from '@angular/core';
 import {
   FormControl,
@@ -35,7 +34,7 @@ import {
   FormInputComponent,
   FormServerError,
   getFormKeys,
-  InputType
+  InputType,
 } from '@dom';
 import { EmailAndPasswordSignIn, SignInEvent, SignInMethod } from '../../utils';
 import { DEFAULT_EMAIL } from '../../utils/constants';
@@ -74,9 +73,10 @@ interface LoginForm {
 export class LoginFormComponent {
   #formError = inject(FormErrorService);
 
+  public readonly serverError = input<FormServerError>();
+  
   public readonly loginFormGroup: FormGroup<LoginForm>;
 
-  public readonly serverError = input<FormServerError>();
 
   public readonly errorsMap: { [key: string]: ValidationErrors } = {
     password: {
@@ -87,18 +87,18 @@ export class LoginFormComponent {
 
   public readonly inputTypes: { [key: string]: InputType } = {
     password: InputType.PASSWORD,
-    email : InputType.EMAIL
-  }
+    email: InputType.EMAIL,
+  };
 
   public readonly formKeys: WritableSignal<(keyof LoginForm)[]>;
 
   public message = signal('');
 
-  @Output() login: EventEmitter<SignInEvent> = new EventEmitter();
-  @Output() google: EventEmitter<SignInEvent> = new EventEmitter();
-  @Output() otp: EventEmitter<SignInEvent> = new EventEmitter();
-  @Output() emailLink: EventEmitter<SignInEvent> = new EventEmitter();
-  @Output() forget: EventEmitter<void> = new EventEmitter();
+  login = output<SignInEvent>();
+  google = output<SignInEvent>();
+  otp = output<SignInEvent>();
+  emailLink = output<SignInEvent>();
+  forget = output<void>();
 
   constructor() {
     this._setGoogleIcon();

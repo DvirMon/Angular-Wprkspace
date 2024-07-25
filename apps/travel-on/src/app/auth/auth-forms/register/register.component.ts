@@ -2,12 +2,11 @@ import { TitleCasePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
-  Injector,
-  Output,
-  WritableSignal,
   inject,
+  Injector,
   input,
+  output,
+  WritableSignal
 } from '@angular/core';
 import {
   FormControl,
@@ -57,6 +56,7 @@ export class RegisterFormComponent {
   serverError = input<FormServerError>();
 
   public readonly registerFormGroup: FormGroup<RegisterForm>;
+
   public readonly formKeys: WritableSignal<(keyof RegisterForm)[]>;
 
   public readonly errorsMap: { [key: string]: ValidationErrors } = {
@@ -68,10 +68,11 @@ export class RegisterFormComponent {
 
   public readonly inputTypes: { [key: string]: InputType } = {
     password: InputType.PASSWORD,
-    email : InputType.EMAIL
-  }
-
-  @Output() register: EventEmitter<Register> = new EventEmitter();
+    email: InputType.EMAIL,
+  };
+  
+  
+  register = output<Register>();
 
   constructor() {
     this.registerFormGroup = this._buildRegisterForm();
@@ -82,6 +83,7 @@ export class RegisterFormComponent {
       this.serverError,
       this.registerFormGroup
     );
+
   }
 
   private _buildRegisterForm(): FormGroup<RegisterForm> {

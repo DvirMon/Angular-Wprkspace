@@ -1,5 +1,5 @@
 import { DatePipe, NgFor, NgIf, TitleCasePipe } from '@angular/common';
-import { Component, EventEmitter, Output, input, model } from '@angular/core';
+import { Component, input, model, output } from '@angular/core';
 import { MatIconButton } from '@angular/material/button';
 import {
   MatButtonToggle,
@@ -64,9 +64,8 @@ export class WeatherMediaResultComponent {
   metric = model.required<boolean>();
   isFavorite = input.required<boolean>();
 
-  @Output() favoriteChanged: EventEmitter<FavoriteChangeEvent> =
-    new EventEmitter();
-  @Output() unitChanged: EventEmitter<UnitChangeEvent> = new EventEmitter();
+  favoriteChanged = output<FavoriteChangeEvent>();
+  unitChanged = output<UnitChangeEvent>();
 
   private _emitChange() {
     this.favoriteChanged.emit({

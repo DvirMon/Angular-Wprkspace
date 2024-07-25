@@ -1,12 +1,11 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
   OnInit,
-  Output,
   Signal,
   computed,
   input,
+  output
 } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
@@ -45,7 +44,7 @@ export class TableActionCellComponent implements OnInit {
 
   isIconButton!: Signal<boolean>;
 
-  @Output() actionClicked = new EventEmitter<void>();
+  actionClicked = output<void>();
 
   ngOnInit(): void {
     this.isIconButton = computed(() => !!this.icon());

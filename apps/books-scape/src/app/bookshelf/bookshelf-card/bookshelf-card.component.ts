@@ -2,9 +2,8 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
-  Output,
   input,
+  output
 } from '@angular/core';
 import { MatIconButton } from '@angular/material/button';
 import {
@@ -41,7 +40,7 @@ import { Book } from '../../books/books';
 export class BookshelfCardComponent {
   book = input.required<Book>();
 
-  @Output() clearFromShelf: EventEmitter<Book> = new EventEmitter();
+  clearFromShelf = output<Book>();
 
   onClear() {
     this.clearFromShelf.emit(this.book());

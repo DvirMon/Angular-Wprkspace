@@ -1,10 +1,9 @@
 import { JsonPipe, TitleCasePipe } from "@angular/common";
 import {
   Component,
-  EventEmitter,
-  Output,
   WritableSignal,
   inject,
+  output
 } from "@angular/core";
 import {
   FormControl,
@@ -44,7 +43,7 @@ export class ResetPasswordFormComponent {
   public readonly resetPasswordFormGroup: FormGroup<ResetPasswordForm>;
   public readonly formKeys: WritableSignal<(keyof ResetPasswordForm)[]>;
 
-  @Output() resetPassword: EventEmitter<string> = new EventEmitter();
+  resetPassword = output<string>();
 
   constructor() {
     this.resetPasswordFormGroup = this._buildResetForm();
@@ -65,6 +64,6 @@ export class ResetPasswordFormComponent {
   }
 
   public onSubmit(value: Partial<{ newPassword: string }>): void {
-    this.resetPassword.emit(value.newPassword);
+    this.resetPassword.emit(value.newPassword as string);
   }
 }

@@ -1,34 +1,70 @@
 @if (place()) {
-<mat-card>
-  <div class="w-full h-64">
-    <img mat-card-image [ngSrc]="place().imageUrl" fill alt="alternative" />
-  </div>
-  <mat-card-header>
-    <mat-card-title
-      >{{ place().destination.city }},
-      {{ place().destination.country }}</mat-card-title
-    >
-    <mat-card-subtitle>{{
-      place().price | currency : 'USD' : 'symbol' : '1.0-0'
-    }}</mat-card-subtitle>
-    <to-place-card-button
-      (changed)="onSelectedChanged($event)"
-      [selected]="selected()"
-    ></to-place-card-button>
-  </mat-card-header>
-  <mat-card-content>
-    <section class="schedule">
-      <span>
-        <b>Takeoff:</b>
-        {{ place().takeoff | dateTimestampPipe : 'EEEE, MMMM d, h:mm a' }}
-      </span>
-      <span>
-        <b>Landing:</b>
-        {{ place().landing | dateTimestampPipe : 'EEEE, MMMM d, h:mm a' }}
-      </span>
-    </section>
-  </mat-card-content>
-  <mat-card-footer></mat-card-footer>
-</mat-card>
+<ng-container *ngTemplateOutlet="isGrid() ? cardGrid : cardTable"></ng-container>
+
 
 }
+
+<ng-template #cardTable>
+  <mat-card class="places-list-card">
+    <mat-card-header>
+      <img
+        mat-card-image
+        [ngSrc]="place().imageUrl"
+        [alt]="place().destination.city"
+        width="150"
+        height="150"
+      />
+    </mat-card-header>
+    <mat-card-content>
+      <mat-card-title>{{ place().destination.city }}</mat-card-title>
+      <mat-card-subtitle>{{ place().destination.country }}</mat-card-subtitle>
+    </mat-card-content>
+    <mat-card-content>
+      <span>
+        {{ place().takeoff | dateTimestampPipe : 'EEEE, MMMM d' }}
+      </span>
+      <span>
+        {{ place().landing | dateTimestampPipe : 'EEEE, MMMM d' }}
+      </span>
+    </mat-card-content>
+  </mat-card>
+</ng-template>
+
+<ng-template #cardGrid>
+  <mat-card class="places-grid-card">
+    <div class="w-full h-64">
+      <img
+        mat-card-image
+        [ngSrc]="place().imageUrl"
+        [alt]="place().destination.city"
+        fill
+      />
+    </div>
+    <mat-card-header>
+      <mat-card-title
+        >{{ place().destination.city }},
+        {{ place().destination.country }}</mat-card-title
+      >
+      <mat-card-subtitle>{{
+        place().price | currency : 'USD' : 'symbol' : '1.0-0'
+      }}</mat-card-subtitle>
+      <to-place-card-button
+        (changed)="onSelectedChanged($event)"
+        [selected]="selected()"
+      ></to-place-card-button>
+    </mat-card-header>
+    <mat-card-content>
+      <section class="schedule">
+        <span>
+          <b>Takeoff:</b>
+          {{ place().takeoff | dateTimestampPipe : 'EEEE, MMMM d, h:mm a' }}
+        </span>
+        <span>
+          <b>Landing:</b>
+          {{ place().landing | dateTimestampPipe : 'EEEE, MMMM d, h:mm a' }}
+        </span>
+      </section>
+    </mat-card-content>
+    <mat-card-footer></mat-card-footer>
+  </mat-card>
+</ng-template>

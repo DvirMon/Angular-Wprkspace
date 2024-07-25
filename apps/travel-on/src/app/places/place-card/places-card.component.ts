@@ -40,6 +40,8 @@ export class PlacesCardComponent {
 
   selected = input.required<boolean>();
 
+  isGrid = input<boolean>(true);
+
   showOverlay = signal(false);
 
   @Output() readonly selectedChanged: EventEmitter<SelectChangedEvent> =

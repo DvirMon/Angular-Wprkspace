@@ -8,35 +8,16 @@ div.places-wrapper {
   min-height: 100vh;
 }
 
-
-
 main {
-  // top: 0;
-  // left: 0;
-  // width: 90%;
   display: flex;
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  // overflow-y: scroll;
+  flex-direction: row;
+  justify-content: center
 }
 
-div.places-list-container {
+div.places-content-container {
   height: 100%;
-  width: 100%;
   justify-content: center;
   display: flex;
 }
 
-div.places-list-wrapper {
-  width: 100%;
-  overflow-wrap: hidden;
-
-  display: flex;
-  flex-wrap: wrap;
-  gap: 24px 5%;
-}
-
-section.places-card-wrapper {
-  width: 25%;
-}

@@ -1,23 +1,21 @@
 <div class="places-wrapper">
+  <header class="h-40 flex justify-center items-center">
+    <div class="places-header-wrapper w-10/12">
+      <to-places-header></to-places-header>
+    </div>
+    <dom-floating-button
+      [label]="'Logout'"
+      (clicked)="onLogout()"
+    ></dom-floating-button>
+  </header>
   <main>
-    <header class="h-40 flex justify-center items-center">
-      <div class="w-10/12">
-        <to-places-header></to-places-header>
-      </div>
-      <dom-floating-button
-        [label]="'Logout'"
-        (clicked)="onLogout()"
-      ></dom-floating-button>
-    </header>
-    <div class="places-list-wrapper">
-      @if (isGrid()) {
-
+    <div class="places-content-wrapper w-10/12">
       <to-places-list
         [places]="places()"
         [selection]="selection()"
+        [isGrid]="isGrid()"
         (selectionChanged)="onSelectionChanged($event)"
       ></to-places-list>
-      }
     </div>
   </main>
 </div>

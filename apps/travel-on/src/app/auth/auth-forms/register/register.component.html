@@ -3,14 +3,17 @@
     <dom-divider-header label="Register"></dom-divider-header>
     <form
       [formGroup]="registerFormGroup"
-      (ngSubmit)="onSubmit(registerFormGroup.value)">
+      (ngSubmit)="onSubmit(registerFormGroup.value)"
+    >
       @for (name of formKeys(); track name) {
 
       <dom-form-input
         [control]="registerFormGroup.controls[name]"
         [name]="name"
         [label]="name | titlecase"
-        [messagesMap]="errorsMap[name]">
+        [messagesMap]="errorsMap[name]"
+        [type]="inputTypes[name]"
+      >
       </dom-form-input>
       }
 
@@ -19,7 +22,8 @@
         mat-raised-button
         type="submit"
         color="primary"
-        [disabled]="!registerFormGroup.valid">
+        [disabled]="!registerFormGroup.valid"
+      >
         Register
       </button>
     </form>

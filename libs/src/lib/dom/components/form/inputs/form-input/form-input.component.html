@@ -4,10 +4,10 @@
     #input
     matInput
     autocomplete="off"
-    [type]="type() || 'text'"
     [formControl]="formControl()"
     [name]="name()"
     (blur)="onBlur()"
+    [type]="type()"
   />
 
   @if (hint()) {

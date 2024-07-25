@@ -25,6 +25,7 @@ import {
   FormServerError,
   getFormKeys,
   handleServerErrorEffect,
+  InputType,
 } from '@dom/components';
 import { Register } from '../../index';
 import { DEFAULT_EMAIL } from '../../utils/constants';
@@ -64,6 +65,11 @@ export class RegisterFormComponent {
       maxlength: 'password is to long',
     },
   };
+
+  public readonly inputTypes: { [key: string]: InputType } = {
+    password: InputType.PASSWORD,
+    email : InputType.EMAIL
+  }
 
   @Output() register: EventEmitter<Register> = new EventEmitter();
 

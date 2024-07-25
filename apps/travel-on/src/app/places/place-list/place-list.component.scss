@@ -1,13 +1,14 @@
 @use 'variables' as main;
 
-div.places-list-wrapper {
-  width: 100%;
-  overflow-wrap: hidden;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 24px 5%;
-  section.places-card-wrapper {
-    width: 25%;
-  }
+.grid-container {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
 }
+
+.list-container  {
+  display: grid;
+  gap: 24px; // Adjust the gap as needed
+  grid-template-columns: repeat(2, 1fr); // This ensures 2 images per row
+}
+

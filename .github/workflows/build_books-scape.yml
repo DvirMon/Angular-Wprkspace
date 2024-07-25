@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - apps/books-scape
+      - apps/books-scape/**
   workflow_dispatch:
 
 permissions:

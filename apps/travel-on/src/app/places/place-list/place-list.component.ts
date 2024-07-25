@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, input, output } from '@angular/core';
+import { Component, computed, input, output } from '@angular/core';
 import {
   PlacesCardComponent,
   SelectChangedEvent,
@@ -20,19 +20,26 @@ export interface SelectionListChange {
   styleUrls: ['./place-list.component.scss'],
 })
 export class PlacesListComponent {
-  
   places = input.required<Places[]>();
   selection = input.required<Record<string, boolean>>();
+  isGrid = input<boolean>(true);
 
-  selectionChanged = output<SelectionListChange>()
+  selectionChanged = output<SelectionListChange>();
+
+  gridClass = computed(() =>
+    this.isGrid() ? 'grid-container' : 'list-container'
+  );
 
   public onSelectedChanged(event: SelectChangedEvent): void {
     const { source, selected } = event;
     const { place } = source;
 
-    this._emitChangeEvent({ placeId: place().id, selected } as FavoriteSelection);
+    this._emitChangeEvent({
+      placeId: place().id,
+      selected,
+    } as FavoriteSelection);
   }
-  
+
   _emitChangeEvent(currentSelection: FavoriteSelection) {
     const event = { source: this, currentSelection } as SelectionListChange;
     this.selectionChanged.emit(event);

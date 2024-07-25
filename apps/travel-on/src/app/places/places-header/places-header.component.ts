@@ -18,7 +18,7 @@ import { PlacesPageService } from '../../pages/places/places.service';
 export class PlacesHeaderComponent {
   #layout = inject(PlacesPageService);
 
-  onCheckedChanged() {
-    this.#layout.toggleLayout();
+  onToggleChanged() {
+    this.#layout.toggleIsGrid();
   }
 }

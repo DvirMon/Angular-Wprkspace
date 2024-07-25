@@ -6,11 +6,11 @@ import { Injectable, signal } from '@angular/core';
 export class PlacesPageService {
   private _isGrid = signal(true);
 
-  getIsGrid() {
+  public getIsGrid() {
     return this._isGrid;
   }
 
-  toggleLayout() {
+  public toggleIsGrid() {
     this._isGrid.update((value) => !value);
   }
 }

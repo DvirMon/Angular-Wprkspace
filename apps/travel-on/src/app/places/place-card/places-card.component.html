@@ -1,16 +1,18 @@
 @if (place()) {
-<ng-container *ngTemplateOutlet="isGrid() ? cardGrid : cardList"></ng-container>
+<ng-container *ngTemplateOutlet="isGrid() ? cardGrid : cardTable"></ng-container>
+
 
 }
 
-<ng-template #cardList>
+<ng-template #cardTable>
   <mat-card class="places-list-card">
-    <mat-card-header class="w-40">
+    <mat-card-header>
       <img
         mat-card-image
-        [src]="place().imageUrl"
-        fill
+        [ngSrc]="place().imageUrl"
         [alt]="place().destination.city"
+        width="150"
+        height="150"
       />
     </mat-card-header>
     <mat-card-content>
@@ -34,9 +36,8 @@
       <img
         mat-card-image
         [ngSrc]="place().imageUrl"
-        alt="alternative"
+        [alt]="place().destination.city"
         fill
-        priority="true"
       />
     </div>
     <mat-card-header>

@@ -1,6 +1,6 @@
 @use 'variables' as main;
 
-.mat-mdc-card.places-grid-card{
+.mat-mdc-card.places-grid-card {
   img.mat-mdc-card-image {
     position: relative !important;
   }
@@ -20,7 +20,6 @@
   }
 }
 
-:host {
   .mat-mdc-card.places-list-card {
     display: flex;
     flex-direction: row;
@@ -29,7 +28,7 @@
     .mat-mdc-card-header {
       padding: 8px;
     }
-    
+
     .mat-mdc-card-content {
       padding: 8px;
       display: flex;
@@ -39,7 +38,7 @@
       flex-grow: 1;
     }
   }
-}
+
 
 div.image-overlay-container {
   position: relative;

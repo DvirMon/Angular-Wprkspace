@@ -1,7 +1,6 @@
 @use 'variables' as main;
 
-mat-card {
-  
+.mat-mdc-card.places-grid-card{
   img.mat-mdc-card-image {
     position: relative !important;
   }
@@ -18,6 +17,27 @@ mat-card {
     display: flex;
     flex-direction: column;
     gap: main.spacing(1);
+  }
+}
+
+:host {
+  .mat-mdc-card.places-list-card {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+
+    .mat-mdc-card-header {
+      padding: 8px;
+    }
+    
+    .mat-mdc-card-content {
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 16px;
+      flex-grow: 1;
+    }
   }
 }
 

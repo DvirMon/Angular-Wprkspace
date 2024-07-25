@@ -1,6 +1,5 @@
 @if (place()) {
-
-<ng-container *ngTemplateOutlet="cardList"></ng-container>
+<ng-container *ngTemplateOutlet="isGrid() ? cardGrid : cardList"></ng-container>
 
 }
 

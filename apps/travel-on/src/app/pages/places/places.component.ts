@@ -20,6 +20,9 @@ import { PlacesHeaderComponent } from '../../places/places-header/places-header.
 import { Places } from '../../places/places.model';
 import { SignalStore } from '../../store/store';
 import { PlacesPageService } from './places.service';
+import { Favorite } from '../../favorites';
+import { FavoriteSelection } from '../../store/features/with-favorites.feature';
+import { updateFavoriteEntity } from './places.helpers';
 
 @Component({
   selector: 'to-places',
@@ -56,13 +59,18 @@ export class PlacesComponent implements OnInit {
     this.#store.loadFavorites(this.userId);
   }
 
-  async onSelectionChanged(event: SelectionListChange) {
+  onSelectionChanged(event: SelectionListChange) :void {
     const { currentSelection } = event;
-    await this.#store.updateFavorite(currentSelection);
+
+    const updateData = updateFavoriteEntity(
+      this.#store.favorite(),
+      currentSelection
+    );
+
+    this.#store.updateFavoriteDB(updateData);
   }
 
   onLogout(): void {
     runInInjectionContext(this.#injector, () => inject(AuthStore).logout());
   }
-
 }

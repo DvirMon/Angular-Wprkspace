@@ -10,11 +10,14 @@
       ></dom-floating-button>
     </header>
     <div class="places-list-wrapper">
+      @if (isGrid()) {
+
       <to-places-list
         [places]="places()"
         [selection]="selection()"
         (selectionChanged)="onSelectionChanged($event)"
       ></to-places-list>
+      }
     </div>
   </main>
 </div>

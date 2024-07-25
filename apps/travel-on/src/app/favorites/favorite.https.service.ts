@@ -69,4 +69,9 @@ export class FavoriteHttpService {
     const favoriteDocRef = doc(this.favoritesRef, docId);
     return setDoc<Favorite, DocumentData>(favoriteDocRef, data);
   }
+
+  public updateFavoriteDocObs(docId: string, data: Favorite): Observable<void> {
+    const favoriteDocRef = doc(this.favoritesRef, docId);
+    return from(setDoc<Favorite, DocumentData>(favoriteDocRef, data));
+  }
 }

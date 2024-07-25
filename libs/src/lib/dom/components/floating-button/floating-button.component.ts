@@ -1,19 +1,18 @@
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
-  Output,
   input,
-} from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { MatButtonModule } from "@angular/material/button";
-import { MatIconModule } from "@angular/material/icon";
-import { RouterModule } from "@angular/router";
+  output
+} from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { RouterModule } from '@angular/router';
 
-export type Side = "left" | "right" | { error: string };
+export type Side = 'left' | 'right' | { error: string };
 
 @Component({
-  selector: "dom-floating-button",
+  selector: 'dom-floating-button',
   standalone: true,
   imports: [CommonModule, RouterModule, MatButtonModule, MatIconModule],
   template: `
@@ -28,7 +27,8 @@ export type Side = "left" | "right" | { error: string };
       [style.border-top-left-radius.px]="side() === 'right' ? 25 : null"
       [style.border-bottom-left-radius.px]="side() === 'right' ? 25 : null"
       [routerLink]="routerLink()"
-      (click)="clicked.emit()">
+      (click)="clicked.emit()"
+    >
       {{ label() | titlecase }}
     </button>
   `,
@@ -43,9 +43,9 @@ export type Side = "left" | "right" | { error: string };
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FloatingButtonComponent {
-  side = input<Side>("right");
+  side = input<Side>('right');
   label = input<string>();
   routerLink = input<string>();
 
-  @Output() clicked: EventEmitter<void> = new EventEmitter<void>();
+  clicked = output<void>();
 }

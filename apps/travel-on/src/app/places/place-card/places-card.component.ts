@@ -2,18 +2,17 @@ import { CommonModule, NgOptimizedImage } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
-  Output,
   input,
-  signal,
+  output,
+  signal
 } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
+import { DateTimestampPipe } from '../../shared/pipes/date.pipe';
 import {
   ButtonSelectionChangedEvent,
   PlaceCardButtonComponent,
 } from '../place-card-button/place-card-button.component';
 import { Places } from '../places.model';
-import { DateTimestampPipe } from '../../shared/pipes/date.pipe';
 
 export interface SelectChangedEvent {
   /** The source button of the event. */
@@ -44,8 +43,7 @@ export class PlacesCardComponent {
 
   showOverlay = signal(false);
 
-  @Output() readonly selectedChanged: EventEmitter<SelectChangedEvent> =
-    new EventEmitter();
+  readonly selectedChanged = output<SelectChangedEvent>();
 
   private _createChangedEvent(
     value: ButtonSelectionChangedEvent

@@ -1,12 +1,11 @@
 import { JsonPipe, TitleCasePipe } from '@angular/common';
 import {
   Component,
-  EventEmitter,
   Injector,
-  Output,
   WritableSignal,
   inject,
   input,
+  output
 } from '@angular/core';
 import {
   FormControl,
@@ -56,7 +55,7 @@ export class ResetContactFormComponent {
   public readonly resetFormGroup: FormGroup<ResetContactForm>;
   public readonly formKeys: WritableSignal<(keyof ResetContactForm)[]>;
 
-  @Output() resetEmail: EventEmitter<string> = new EventEmitter();
+  resetEmail = output<string>();
 
   constructor() {
     this.resetFormGroup = this._buildResetForm();

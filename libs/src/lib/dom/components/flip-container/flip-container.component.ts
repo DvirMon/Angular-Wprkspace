@@ -4,26 +4,26 @@ import {
   style,
   transition,
   trigger,
-} from "@angular/animations";
+} from '@angular/animations';
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
-  Output,
   Signal,
   inject,
-} from "@angular/core";
-import { FlipContainerService } from "./flip-container.service";
+  output
+} from '@angular/core';
+import { FlipContainerService } from './flip-container.service';
 
 @Component({
-  selector: "dom-flip-container",
+  selector: 'dom-flip-container',
   standalone: true,
   template: `
     <div
       [@flip]="isFlipped() ? 'back' : 'front'"
       (click)="onClick()"
       (keyup)="handleKeyUp($event)"
-      tabindex="0">
+      tabindex="0"
+    >
       <div class="card-inner">
         <div class="card-front">
           <ng-content select=".front"></ng-content>
@@ -34,28 +34,28 @@ import { FlipContainerService } from "./flip-container.service";
       </div>
     </div>
   `,
-  styleUrls: ["./flip-container.component.scss"],
+  styleUrls: ['./flip-container.component.scss'],
   animations: [
-    trigger("flip", [
+    trigger('flip', [
       state(
-        "front",
+        'front',
         style({
-          transform: "rotateY(0deg)",
+          transform: 'rotateY(0deg)',
         })
       ),
       state(
-        "back",
+        'back',
         style({
-          transform: "rotateY(180deg)",
+          transform: 'rotateY(180deg)',
         })
       ),
-      transition("front <=> back", [animate("0.5s")]),
+      transition('front <=> back', [animate('0.5s')]),
     ]),
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FlipCardComponent {
-  @Output() flip: EventEmitter<void> = new EventEmitter();
+  flip = output<void>();
 
   public readonly isFlipped: Signal<boolean>;
   constructor() {

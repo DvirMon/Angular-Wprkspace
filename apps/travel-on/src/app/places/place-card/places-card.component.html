@@ -18,7 +18,8 @@
   </mat-card-header>
   <mat-card-content>
     <section class="schedule">
-      <span>
+ 
+     <span>
         <b>Takeoff:</b>
         {{ place().takeoff | dateTimestampPipe : 'EEEE, MMMM d, h:mm a' }}
       </span>
@@ -30,5 +31,40 @@
   </mat-card-content>
   <mat-card-footer></mat-card-footer>
 </mat-card>
-
 }
+
+<ng-template #cardList>
+  <mat-card class="placeshelf-card">
+    <mat-card-header>
+      <img
+        mat-card-image
+        [src]="place().imageUrl"
+        width="60"
+        height="80"
+        [alt]="place().destination.city"
+      />
+    </mat-card-header>
+    <mat-card-content>
+      <mat-card-title>{{ place().destination.city }}</mat-card-title>
+      <mat-card-subtitle>{{ place().destination.country }}</mat-card-subtitle>
+    </mat-card-content>
+  </mat-card>
+</ng-template>
+
+<ng-template #cardGrid>
+  <mat-card class="placeshelf-card">
+    <mat-card-header>
+      <img
+        mat-card-image
+        [src]="place().imageUrl"
+        width="60"
+        height="80"
+        [alt]="place().destination.city"
+      />
+    </mat-card-header>
+    <mat-card-content>
+      <mat-card-title>{{ place().destination.city }}</mat-card-title>
+      <mat-card-subtitle>{{ place().destination.country }}</mat-card-subtitle>
+    </mat-card-content>
+  </mat-card>
+</ng-template>

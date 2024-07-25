@@ -40,7 +40,7 @@ export class FormInputComponent implements OnInit {
   #formError = inject(FormErrorService);
   control = input.required<AbstractControl<unknown, unknown> | null>();
   name = input.required<string>();
-  type = input<InputType>();
+  type = input<InputType>(InputType.TEXT);
   label = input<string | undefined>();
   hint = input<string>();
 

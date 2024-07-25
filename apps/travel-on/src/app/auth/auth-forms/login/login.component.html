@@ -16,13 +16,14 @@
       [formGroup]="loginFormGroup"
       (ngSubmit)="onSubmit(loginFormGroup.value)"
     >
-      @for (key of formKeys(); track key) {
+      @for (name of formKeys(); track name) {
 
       <dom-form-input
-        [control]="loginFormGroup.get(key)"
-        [name]="key"
-        [label]="key | titlecase"
-        [messagesMap]="errorsMap[key]"
+        [control]="loginFormGroup.controls[name]"
+        [name]="name"
+        [label]="name | titlecase"
+        [messagesMap]="errorsMap[name]"
+        [type]="inputTypes[name]"
       >
       </dom-form-input>
 

@@ -27,18 +27,18 @@ import {
 } from '@angular/material/form-field';
 import { MatIcon, MatIconRegistry } from '@angular/material/icon';
 import { MatInput } from '@angular/material/input';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { DomSanitizer } from '@angular/platform-browser';
 import {
   DividerHeaderComponent,
   FormErrorService,
   FormInputComponent,
   FormServerError,
-  PasswordInputModel,
   getFormKeys,
+  InputType
 } from '@dom';
 import { EmailAndPasswordSignIn, SignInEvent, SignInMethod } from '../../utils';
 import { DEFAULT_EMAIL } from '../../utils/constants';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 interface LoginForm {
   email: FormControl<string>;
@@ -84,6 +84,11 @@ export class LoginFormComponent {
       maxlength: 'password is to long',
     },
   };
+
+  public readonly inputTypes: { [key: string]: InputType } = {
+    password: InputType.PASSWORD,
+    email : InputType.EMAIL
+  }
 
   public readonly formKeys: WritableSignal<(keyof LoginForm)[]>;
 

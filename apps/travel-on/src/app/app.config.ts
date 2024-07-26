@@ -8,10 +8,10 @@ import { provideFirebase } from './shared/providers/firebase';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    importProvidersFrom(),
     provideRouter(appRoutes, withComponentInputBinding()),
     provideHttpClient(withInterceptors([errorInterceptor])),
     provideAnimations(),
     provideFirebase(),
+    importProvidersFrom([]),
   ],
 };

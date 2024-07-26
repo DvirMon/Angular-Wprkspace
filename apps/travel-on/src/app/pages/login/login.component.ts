@@ -9,10 +9,10 @@ import {
   runInInjectionContext,
   signal,
 } from '@angular/core';
+import { Router } from '@angular/router';
 import { CardButtonComponent, FormServerError } from '@dom/components';
 import { LoginFormComponent, SignInEvent } from '../../auth';
 import { AuthStore } from '../../auth/store/store';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'to-login-page',

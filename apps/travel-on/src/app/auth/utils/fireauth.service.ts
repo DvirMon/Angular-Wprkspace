@@ -67,9 +67,26 @@ export class FireAuthService {
     return of(isSignInWithEmailLink(this.auth, emailLink));
   }
 
-  // Private method: Sign in with Google OAuth provider.
+  // // Private method: Sign in with Google OAuth provider.
+  // public signInWithGoogle$(): Observable<UserCredential> {
+  //   return from(signInWithPopup(this.auth, new GoogleAuthProvider()));
+  // }
+
   public signInWithGoogle$(): Observable<UserCredential> {
-    return from(signInWithPopup(this.auth, new GoogleAuthProvider()));
+    return from(
+      (async () => {
+        // Dynamically import Firebase and required modules
+        const { getAuth, signInWithPopup, GoogleAuthProvider } = await import(
+          'firebase/auth'
+        );
+
+        // Initialize Firebase Auth
+        const auth = getAuth();
+
+        // Sign in with Google
+        return signInWithPopup(auth, new GoogleAuthProvider());
+      })()
+    );
   }
 
   // Private method: Sign in with email link (magic link).

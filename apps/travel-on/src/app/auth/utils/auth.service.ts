@@ -3,22 +3,17 @@ import { ConfirmationResult, UserCredential } from '@angular/fire/auth';
 import {
   CollectionReference,
   Firestore,
-  QuerySnapshot,
-  addDoc,
-  collection,
-  getDocs,
-  query,
-  where,
+  collection
 } from '@angular/fire/firestore';
-import { Observable, from, map, of, switchMap } from 'rxjs';
+import { Router } from '@angular/router';
+import { Observable, of, switchMap } from 'rxjs';
+import { StorageKey } from '../../shared/constants';
 import {
   clearStorage,
   getFromStorage,
-  mapQuerySnapshotDoc,
   navigate,
-  setToStorage,
+  setToStorage
 } from '../../shared/helpers';
-import { FireAuthService } from './fireauth.service';
 import {
   ConfirmPasswordReset,
   Register,
@@ -26,8 +21,7 @@ import {
   SignInMethod,
   User,
 } from './auth.model';
-import { Router } from '@angular/router';
-import { StorageKey } from '../../shared/constants';
+import { FireAuthService } from './fireauth.service';
 
 interface EmailLinkData {
   email: string;
@@ -56,45 +50,6 @@ export class AuthService {
 
   public register$({ password, email }: Register) {
     return this.fireAuthService.createInWithEmailAndPassword$(email, password);
-  }
-
-  public getUserById(userId: string): Observable<User> {
-    const querySnapshot$ = this.getUserQuerySnapshot$('userId', userId);
-    return querySnapshot$.pipe(mapQuerySnapshotDoc<User>());
-  }
-  public loadUserById$(userId: string): Observable<User> {
-    const querySnapshot$ = this.getUserQuerySnapshot$('userId', userId);
-    return querySnapshot$.pipe(mapQuerySnapshotDoc<User>());
-  }
-
-  public saveUser(user: User): void {
-    from(addDoc(this.usersRef, user));
-  }
-
-  public addDocument(user: User): Observable<User> {
-    return this._checkDocumentExists(user.userId).pipe(
-      switchMap((empty: boolean) => {
-        if (empty) {
-          return from(addDoc(this.usersRef, user)).pipe(
-            map(() => user) // Return the user after successful addition
-          );
-        } else {
-          return of(user);
-        }
-      })
-    );
-  }
-
-  private _checkDocumentExists(userId: string): Observable<boolean> {
-    const querySnapshot$ = this.getUserQuerySnapshot$('userId', userId);
-    return querySnapshot$.pipe(map((querySnapshot) => querySnapshot.empty));
-  }
-
-  private getUserQuerySnapshot$(
-    getBy: keyof User,
-    value: string
-  ): Observable<QuerySnapshot<User>> {
-    return from(getDocs(query(this.usersRef, where(getBy, '==', value))));
   }
 
   // Sign in with different authentication methods based on the provided event.
@@ -131,7 +86,7 @@ export class AuthService {
   }
 
   // Create a new user account with the provided email and password.
-  public createInWithEmailAndPassword$(
+  public signInWithEmailAndPassword$(
     email: string,
     password: string
   ): Observable<UserCredential> {

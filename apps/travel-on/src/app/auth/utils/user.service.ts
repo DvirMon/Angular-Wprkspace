@@ -10,36 +10,28 @@ import {
   where,
 } from '@angular/fire/firestore';
 import { Observable, from, map, of, switchMap } from 'rxjs';
-import {
-  mapQuerySnapshotDoc
-} from '../../shared/helpers';
-import {
-  User
-} from './auth.model';
-
+import { mapQuerySnapshotDoc } from '../../shared/helpers';
+import { User } from './auth.model';
 
 @Injectable({ providedIn: 'root' })
-export class AuthService {
+export class UserService {
   private readonly USERS_COLLECTION = 'users';
   private readonly usersRef: CollectionReference<User>;
 
-  constructor(
-    private readonly firestore: Firestore,
-
-  ) {
+  constructor(private readonly firestore: Firestore) {
     this.usersRef = collection(
       this.firestore,
       this.USERS_COLLECTION
     ) as CollectionReference<User>;
   }
 
-
   public getUserById(userId: string): Observable<User> {
-    const querySnapshot$ = this.getUserQuerySnapshot$('userId', userId);
+    const querySnapshot$ = this._getUserQuerySnapshot$('userId', userId);
     return querySnapshot$.pipe(mapQuerySnapshotDoc<User>());
   }
+
   public loadUserById$(userId: string): Observable<User> {
-    const querySnapshot$ = this.getUserQuerySnapshot$('userId', userId);
+    const querySnapshot$ = this._getUserQuerySnapshot$('userId', userId);
     return querySnapshot$.pipe(mapQuerySnapshotDoc<User>());
   }
 
@@ -62,16 +54,14 @@ export class AuthService {
   }
 
   private _checkDocumentExists(userId: string): Observable<boolean> {
-    const querySnapshot$ = this.getUserQuerySnapshot$('userId', userId);
+    const querySnapshot$ = this._getUserQuerySnapshot$('userId', userId);
     return querySnapshot$.pipe(map((querySnapshot) => querySnapshot.empty));
   }
 
-  private getUserQuerySnapshot$(
+  private _getUserQuerySnapshot$(
     getBy: keyof User,
     value: string
   ): Observable<QuerySnapshot<User>> {
     return from(getDocs(query(this.usersRef, where(getBy, '==', value))));
   }
-
- 
 }

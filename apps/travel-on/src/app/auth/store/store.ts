@@ -17,23 +17,34 @@ import {
   signIn,
 } from './store.helpers';
 import { initialState } from './auth.state';
+import { UserService } from '../utils/user.service';
 
 export const AuthStore = signalStore(
   { providedIn: 'root' },
   // withDevtools('auth'),
   withState(initialState),
   withMethods(
-    (store, service = inject(AuthService), dialog = inject(DialogService)) => ({
-      signIn: signIn(service, store, AuthEvent.LOGIN),
-      register: register(service, store, AuthEvent.REGISTER),
-      sendResetEmail: sendResetEmail(store, AuthEvent.RESET, service, dialog),
+    (
+      store,
+      authService = inject(AuthService),
+      userService = inject(UserService),
+      dialogService = inject(DialogService)
+    ) => ({
+      signIn: signIn(authService, store, AuthEvent.LOGIN),
+      register: register(authService, store, AuthEvent.REGISTER),
+      sendResetEmail: sendResetEmail(
+        store,
+        AuthEvent.RESET,
+        authService,
+        dialogService
+      ),
       confirmPasswordReset: confirmPasswordReset(
         store,
         AuthEvent.RESET,
-        service,
-        dialog
+        authService,
+        dialogService
       ),
-      loadUserById: loadUserById(service, store, AuthEvent.LOGIN),
+      loadUserById: loadUserById(userService, store, AuthEvent.LOGIN),
     })
   ),
   withMethods((store, service = inject(AuthService)) => ({

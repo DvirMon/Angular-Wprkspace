@@ -3,7 +3,7 @@ import { ConfirmationResult, UserCredential } from '@angular/fire/auth';
 import {
   CollectionReference,
   Firestore,
-  collection
+  collection,
 } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { Observable, of, switchMap } from 'rxjs';
@@ -12,7 +12,7 @@ import {
   clearStorage,
   getFromStorage,
   navigate,
-  setToStorage
+  setToStorage,
 } from '../../shared/helpers';
 import {
   ConfirmPasswordReset,
@@ -32,20 +32,21 @@ interface EmailPasswordData {
   password: string;
 }
 
+// export interface SignInStrategy {
+//   signIn(data?: unknown): Observable<UserCredential>;
+// }
+
+type SignInStrategy = (data?: unknown) => Observable<UserCredential>;
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private readonly USERS_COLLECTION = 'users';
-  private readonly usersRef: CollectionReference<User>;
+  private signInStrategies: Map<SignInMethod, SignInStrategy> = new Map();
 
   constructor(
-    private readonly firestore: Firestore,
     private readonly fireAuthService: FireAuthService,
     private router: Router
   ) {
-    this.usersRef = collection(
-      this.firestore,
-      this.USERS_COLLECTION
-    ) as CollectionReference<User>;
+    this._setSignInMap();
   }
 
   public register$({ password, email }: Register) {
@@ -58,28 +59,11 @@ export class AuthService {
 
     return of(method).pipe(
       switchMap((method: SignInMethod) => {
-        switch (method) {
-          case SignInMethod.GOOGLE:
-            return this.fireAuthService.signInWithGoogle$();
-
-          case SignInMethod.EMAIL_LINK: {
-            const emailLinkData = data as EmailLinkData;
-            return this.fireAuthService.signInWithEmailLink$(
-              emailLinkData.email,
-              emailLinkData.emailLink
-            );
-          }
-
-          case SignInMethod.EMAIL_PASSWORD: {
-            const emailPasswordData = data as EmailPasswordData;
-            return this.fireAuthService.signInWithEmailAndPassword$(
-              emailPasswordData.email,
-              emailPasswordData.password
-            );
-          }
-
-          default:
-            return of({} as UserCredential);
+        const strategy = this.signInStrategies.get(method);
+        if (strategy) {
+          return strategy(data);
+        } else {
+          return of({} as UserCredential);
         }
       })
     );
@@ -131,5 +115,19 @@ export class AuthService {
 
   public isStorageLogged(): boolean {
     return getFromStorage<boolean>(StorageKey.LOGGED) || false;
+  }
+
+  private _setSignInMap() {
+    this.signInStrategies.set(SignInMethod.GOOGLE, () =>
+      this.fireAuthService.signInWithGoogle$()
+    );
+    this.signInStrategies.set(SignInMethod.EMAIL_LINK, (data) => {
+      const { email, emailLink } = data as EmailLinkData;
+      return this.fireAuthService.signInWithEmailLink$(email, emailLink);
+    });
+    this.signInStrategies.set(SignInMethod.EMAIL_PASSWORD, (data) => {
+      const { email, password } = data as EmailPasswordData;
+      return this.fireAuthService.signInWithEmailAndPassword$(email, password);
+    });
   }
 }

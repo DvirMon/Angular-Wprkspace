@@ -3,7 +3,6 @@ import {
   ActionCodeSettings,
   Auth,
   ConfirmationResult,
-  GoogleAuthProvider,
   RecaptchaVerifier,
   UserCredential,
   confirmPasswordReset,
@@ -13,8 +12,7 @@ import {
   sendSignInLinkToEmail,
   signInWithEmailAndPassword,
   signInWithEmailLink,
-  signInWithPhoneNumber,
-  signInWithPopup,
+  signInWithPhoneNumber
 } from '@angular/fire/auth';
 import { Observable, from, map, of } from 'rxjs';
 import { generateVerificationLink } from './auth.helpers';

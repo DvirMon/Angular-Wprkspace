@@ -38,7 +38,7 @@ import { updateFavoriteEntity } from './places.helpers';
   styleUrls: ['./places.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PlacesComponent implements OnInit {
+export class PlacesPageComponent implements OnInit {
   #injector = inject(Injector);
   #store = inject(SignalStore);
   #layout = inject(PlacesPageService);

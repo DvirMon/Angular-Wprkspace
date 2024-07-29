@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {
   CollectionReference,
   Firestore,
@@ -15,10 +15,12 @@ import { User } from './auth.model';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
+  readonly firestore = inject(Firestore);
+
   private readonly USERS_COLLECTION = 'users';
   private readonly usersRef: CollectionReference<User>;
 
-  constructor(private readonly firestore: Firestore) {
+  constructor() {
     this.usersRef = collection(
       this.firestore,
       this.USERS_COLLECTION

@@ -32,10 +32,6 @@ interface EmailPasswordData {
   password: string;
 }
 
-// export interface SignInStrategy {
-//   signIn(data?: unknown): Observable<UserCredential>;
-// }
-
 type SignInStrategy = (data?: unknown) => Observable<UserCredential>;
 
 @Injectable({ providedIn: 'root' })
@@ -60,11 +56,9 @@ export class AuthService {
     return of(method).pipe(
       switchMap((method: SignInMethod) => {
         const strategy = this.signInStrategies.get(method);
-        if (strategy) {
-          return strategy(data);
-        } else {
-          return of({} as UserCredential);
-        }
+        return strategy !== undefined
+          ? strategy(data)
+          : of({} as UserCredential);
       })
     );
   }
@@ -121,10 +115,12 @@ export class AuthService {
     this.signInStrategies.set(SignInMethod.GOOGLE, () =>
       this.fireAuthService.signInWithGoogle$()
     );
+
     this.signInStrategies.set(SignInMethod.EMAIL_LINK, (data) => {
       const { email, emailLink } = data as EmailLinkData;
       return this.fireAuthService.signInWithEmailLink$(email, emailLink);
     });
+
     this.signInStrategies.set(SignInMethod.EMAIL_PASSWORD, (data) => {
       const { email, password } = data as EmailPasswordData;
       return this.fireAuthService.signInWithEmailAndPassword$(email, password);

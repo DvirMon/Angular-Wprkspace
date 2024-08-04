@@ -31,6 +31,9 @@ export class VolumesPageComponent {
   public readonly books: Signal<Book[]>;
   public readonly initialValue: Signal<string>;
 
+
+  
+
   constructor() {
     this.books = this.#store.volumesEntities;
     this.initialValue = this.#store.searchTerm;

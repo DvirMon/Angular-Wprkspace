@@ -13,9 +13,7 @@ import {
   TableComponent,
   TableFormCellComponent,
 } from '@dom';
-import { TableActionsComponent } from '../../table/actions/table-actions.component';
 import { COLUMNS, ELEMENT_DATA, PeriodicElement } from './data.t';
-
 
 @Component({
   selector: 'books-scape-page-table',
@@ -28,7 +26,7 @@ import { COLUMNS, ELEMENT_DATA, PeriodicElement } from './data.t';
     ActionCellDirective,
     FormCellDirective,
     TableFormCellComponent,
-    TableActionsComponent,
+    TableActionCellComponent,
   ],
   templateUrl: './table-page.component.html',
   styleUrl: './table-page.component.css',

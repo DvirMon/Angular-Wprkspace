@@ -1,10 +1,5 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { ConfirmationResult, UserCredential } from '@angular/fire/auth';
-import {
-  CollectionReference,
-  Firestore,
-  collection,
-} from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { Observable, of, switchMap } from 'rxjs';
 import { StorageKey } from '../../shared/constants';
@@ -22,32 +17,13 @@ import {
   User,
 } from './auth.model';
 import { FireAuthService } from './fireauth.service';
-
-interface EmailLinkData {
-  email: string;
-  emailLink: string;
-}
-interface EmailPasswordData {
-  email: string;
-  password: string;
-}
-
-// export interface SignInStrategy {
-//   signIn(data?: unknown): Observable<UserCredential>;
-// }
-
-type SignInStrategy = (data?: unknown) => Observable<UserCredential>;
+import { SignInService } from './sign-in.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private signInStrategies: Map<SignInMethod, SignInStrategy> = new Map();
-
-  constructor(
-    private readonly fireAuthService: FireAuthService,
-    private router: Router
-  ) {
-    this._setSignInMap();
-  }
+  private readonly signInService = inject(SignInService);
+  private readonly fireAuthService = inject(FireAuthService);
+  private readonly router = inject(Router);
 
   public register$({ password, email }: Register) {
     return this.fireAuthService.createInWithEmailAndPassword$(email, password);
@@ -59,23 +35,14 @@ export class AuthService {
 
     return of(method).pipe(
       switchMap((method: SignInMethod) => {
-        const strategy = this.signInStrategies.get(method);
-        if (strategy) {
-          return strategy(data);
-        } else {
-          return of({} as UserCredential);
-        }
+        const strategy = this.signInService.getSignInStrategy(method);
+        return strategy !== undefined
+          ? strategy(data)
+          : of({} as UserCredential);
       })
     );
   }
 
-  // Create a new user account with the provided email and password.
-  public signInWithEmailAndPassword$(
-    email: string,
-    password: string
-  ): Observable<UserCredential> {
-    return this.fireAuthService.signInWithEmailAndPassword$(email, password);
-  }
 
   // Sign in with phone number and recaptcha verification.
   public signInWithPhone$(phone: string): Observable<ConfirmationResult> {
@@ -115,19 +82,5 @@ export class AuthService {
 
   public isStorageLogged(): boolean {
     return getFromStorage<boolean>(StorageKey.LOGGED) || false;
-  }
-
-  private _setSignInMap() {
-    this.signInStrategies.set(SignInMethod.GOOGLE, () =>
-      this.fireAuthService.signInWithGoogle$()
-    );
-    this.signInStrategies.set(SignInMethod.EMAIL_LINK, (data) => {
-      const { email, emailLink } = data as EmailLinkData;
-      return this.fireAuthService.signInWithEmailLink$(email, emailLink);
-    });
-    this.signInStrategies.set(SignInMethod.EMAIL_PASSWORD, (data) => {
-      const { email, password } = data as EmailPasswordData;
-      return this.fireAuthService.signInWithEmailAndPassword$(email, password);
-    });
   }
 }

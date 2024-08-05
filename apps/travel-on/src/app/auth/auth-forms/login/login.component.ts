@@ -5,8 +5,9 @@ import {
   inject,
   input,
   output,
+  OutputEmitterRef,
   signal,
-  WritableSignal
+  WritableSignal,
 } from '@angular/core';
 import {
   FormControl,
@@ -44,6 +45,10 @@ interface LoginForm {
   password: FormControl<string>;
 }
 
+type SignInMethodsEmitters = Partial<{
+  [key in SignInMethod]: OutputEmitterRef<SignInEvent>;
+}>;
+
 @Component({
   selector: 'to-login-form',
   standalone: true,
@@ -73,10 +78,11 @@ interface LoginForm {
 export class LoginFormComponent {
   #formError = inject(FormErrorService);
 
-  public readonly serverError = input<FormServerError>();
-  
-  public readonly loginFormGroup: FormGroup<LoginForm>;
+  public readonly SignInMethod = SignInMethod;
 
+  public readonly serverError = input<FormServerError>();
+
+  public readonly loginFormGroup: FormGroup<LoginForm>;
 
   public readonly errorsMap: { [key: string]: ValidationErrors } = {
     password: {
@@ -92,13 +98,18 @@ export class LoginFormComponent {
 
   public readonly formKeys: WritableSignal<(keyof LoginForm)[]>;
 
-  public message = signal('');
-
   login = output<SignInEvent>();
   google = output<SignInEvent>();
   otp = output<SignInEvent>();
   emailLink = output<SignInEvent>();
   forget = output<void>();
+
+  private readonly signInEmitters: SignInMethodsEmitters = {
+    [SignInMethod.GOOGLE]: this.google,
+    [SignInMethod.EMAIL_PASSWORD]: this.login,
+    [SignInMethod.EMAIL_LINK]: this.emailLink,
+    [SignInMethod.OTP]: this.otp,
+  };
 
   constructor() {
     this._setGoogleIcon();
@@ -138,26 +149,36 @@ export class LoginFormComponent {
     });
   }
 
-  public oGoogleSignIn(): void {
-    const event = this._createSignInEvent(SignInMethod.GOOGLE);
-    this.google.emit(event);
-  }
+  // public oGoogleSignIn(): void {
+  //   const event = this._createSignInEvent(SignInMethod.GOOGLE);
+  //   this.google.emit(event);
+  // }
 
-  public onSubmit(value: Partial<EmailAndPasswordSignIn>): void {
-    const event = this._createSignInEvent(SignInMethod.EMAIL_PASSWORD, value);
-    this.login.emit(event);
-  }
+  // public onSubmit(value: Partial<EmailAndPasswordSignIn>): void {
+  //   const event = this._createSignInEvent(SignInMethod.EMAIL_PASSWORD, value);
+  //   this.login.emit(event);
+  // }
 
-  public onOtpSignIn(): void {
-    const event = this._createSignInEvent(SignInMethod.OPT);
-    this.otp.emit(event);
-  }
+  // public onOtpSignIn(): void {
+  //   const event = this._createSignInEvent(SignInMethod.OTP);
+  //   this.otp.emit(event);
+  // }
 
-  public onEmailLinkSignIn() {
-    const event = this._createSignInEvent(SignInMethod.EMAIL_LINK);
-    this.emailLink.emit(event);
-  }
+  // public onEmailLinkSignIn() {
+  //   const event = this._createSignInEvent(SignInMethod.EMAIL_LINK);
+  //   this.emailLink.emit(event);
+  // }
 
+  public onSignIn(
+    method: SignInMethod,
+    value?: Partial<EmailAndPasswordSignIn>
+  ): void {
+    const event = this._createSignInEvent(method, value);
+
+    if (this.signInEmitters[method]) {
+      this.signInEmitters[method].emit(event);
+    }
+  }
   public onForgetPassword() {
     this.forget.emit();
   }

@@ -14,7 +14,7 @@
   <mat-card-content class="login-form-wrapper">
     <form
       [formGroup]="loginFormGroup"
-      (ngSubmit)="onSubmit(loginFormGroup.value)"
+      (ngSubmit)="onSignIn(SignInMethod.EMAIL_PASSWORD, loginFormGroup.value)"
     >
       @for (name of formKeys(); track name) {
 
@@ -46,7 +46,7 @@
         mat-stroked-button
         class="google-btn"
         [disableRipple]="true"
-        (click)="oGoogleSignIn()"
+        (click)="onSignIn(SignInMethod.GOOGLE)"
       >
         <mat-icon svgIcon="google" class="google-icon"></mat-icon>
         Continue with Google

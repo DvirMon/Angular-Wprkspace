@@ -17,9 +17,10 @@ import { AuthState } from './auth.state';
 import { setAuthError, setUser } from './store.setters';
 import { patchState, WritableStateSource } from '@ngrx/signals';
 import { UserService } from '../utils/user.service';
+import { LoginService } from '../../pages/login/login.service';
 
 export function signIn(
-  service: AuthService,
+  service: LoginService,
   store: WritableStateSource<AuthState>,
   event: AuthEvent
 ) {

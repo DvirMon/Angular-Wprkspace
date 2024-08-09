@@ -2,7 +2,9 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
+import { environment } from '../environments/environment';
 import { appRoutes } from './app.routes';
+import { DEFAULT_EMAIL } from './auth/utils/constants';
 import { errorInterceptor } from './shared/http/error.interceptor';
 import { provideFirebase } from './shared/providers/firebase';
 
@@ -13,5 +15,8 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideFirebase(),
     importProvidersFrom([]),
+
+    { provide : DEFAULT_EMAIL, useValue : environment.email }
+
   ],
 };

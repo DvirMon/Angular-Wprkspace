@@ -5,7 +5,7 @@ import {
   WritableSignal,
   inject,
   input,
-  output
+  output,
 } from '@angular/core';
 import {
   FormControl,
@@ -52,6 +52,8 @@ export class ResetContactFormComponent {
 
   serverError = input<FormServerError>();
 
+  defaultEmail = inject(DEFAULT_EMAIL);
+
   public readonly resetFormGroup: FormGroup<ResetContactForm>;
   public readonly formKeys: WritableSignal<(keyof ResetContactForm)[]>;
 
@@ -70,7 +72,7 @@ export class ResetContactFormComponent {
 
   private _buildResetForm(): FormGroup<ResetContactForm> {
     return inject(NonNullableFormBuilder).group({
-      email: [DEFAULT_EMAIL, [Validators.required, Validators.email]],
+      email: [this.defaultEmail, [Validators.required, Validators.email]],
     });
   }
 

@@ -1,19 +1,14 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ConfirmPasswordReset, Register } from './auth.model';
-import { FireAuthService } from './fireauth.service';
+import { ConfirmPasswordReset, FireAuthService } from '../../auth';
+
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
+export class ResetService {
   readonly #fireAuthService = inject(FireAuthService);
 
-  private test = 'test';
-
-  public register$({ password, email }: Register) {
-    return this.#fireAuthService.createInWithEmailAndPassword$(email, password);
-  }
 
   public sendResetEmail$(email: string): Observable<void> {
     return this.#fireAuthService.sendPasswordResetEmail(email);

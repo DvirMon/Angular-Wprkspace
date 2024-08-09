@@ -14,7 +14,8 @@ export const AppStore = signalStore(
   withSearchTerm(),
   withHooks({
     onInit(store) {
-      store.loadVolumes(store.searchTerm);
+      // store.loadVolumes(store.searchTerm);
     },
   })
 );
+

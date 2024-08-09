@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, map, shareReplay } from 'rxjs';
 import { Book, Item, VolumeInfo } from './books';
 import { VolumesHttpService } from './http.service';
 import { Info } from './info.t';
@@ -14,7 +14,8 @@ export class VolumesDataService {
   public loadVolumes(query: string): Observable<Book[] | Book> {
     return this.bookHttp.fetchVolumes(query as string).pipe(
       map((items) => this.mapItemsToBooks(items)),
-      map((books) => this.filterBooksWithImages(books))
+      map((books) => this.filterBooksWithImages(books)),
+      shareReplay(1)
     );
   }
 

@@ -1,5 +1,12 @@
 <books-scape-layout [showShopping]="false" [showBookshelf]="true">
-  <div class="books-page">
+
+  @if(volumes$ | async){}
+  <!-- @if(volumes$ | async){}
+  @if(volumes$ | async){}
+  @if(volumes$ | async){} -->
+  @if(length$ | async){}
+
+  <!-- <div class="books-page">
     <header>
       <div class="search-wrapper">
         <dom-form-search-input
@@ -22,7 +29,7 @@
 
       }
     </main>
-  </div>
+  </div> -->
 </books-scape-layout>
 
 

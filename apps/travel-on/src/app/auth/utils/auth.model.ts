@@ -1,3 +1,4 @@
+import { InjectionToken } from "@angular/core";
 import { FormServerError } from "@dom";
 
 export interface User {
@@ -27,7 +28,7 @@ export interface ConfirmPasswordReset {
 }
 
 export enum SignInMethod {
-  OPT = 'oneTimePassword',
+  OTP = 'oneTimePassword',
   EMAIL_LINK = 'emailLink',
   EMAIL_PASSWORD = 'password',
   FACEBOOK = 'facebook.com',
@@ -36,6 +37,8 @@ export enum SignInMethod {
   PHONE = 'phone',
   TWITTER = 'twitter.com',
 }
+
+export const SIGN_METHOD = new InjectionToken<typeof SignInMethod>("");
 
 export interface SignInEvent {
   method: SignInMethod;

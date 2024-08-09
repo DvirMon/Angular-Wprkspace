@@ -18,19 +18,22 @@ import {
 } from './store.helpers';
 import { initialState } from './auth.state';
 import { UserService } from '../utils/user.service';
+import { LoginService } from '../../pages/login/login.service';
+import { withDevtools } from '@angular-architects/ngrx-toolkit';
 
 export const AuthStore = signalStore(
   { providedIn: 'root' },
-  // withDevtools('auth'),
+  withDevtools('auth'),
   withState(initialState),
   withMethods(
     (
       store,
       authService = inject(AuthService),
+      loginService = inject(LoginService),
       userService = inject(UserService),
       dialogService = inject(DialogService)
     ) => ({
-      signIn: signIn(authService, store, AuthEvent.LOGIN),
+      signIn: signIn(loginService, store, AuthEvent.LOGIN),
       register: register(authService, store, AuthEvent.REGISTER),
       sendResetEmail: sendResetEmail(
         store,
@@ -47,7 +50,7 @@ export const AuthStore = signalStore(
       loadUserById: loadUserById(userService, store, AuthEvent.LOGIN),
     })
   ),
-  withMethods((store, service = inject(AuthService)) => ({
+  withMethods((store, service = inject(LoginService)) => ({
     login(): void {
       service.login(store.user());
     },

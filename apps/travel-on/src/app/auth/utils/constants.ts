@@ -1,5 +1,3 @@
-import { environment } from "../../../environments/environment";
+import { InjectionToken } from '@angular/core';
 
-
-
-export const DEFAULT_EMAIL = environment.email
+export const DEFAULT_EMAIL = new InjectionToken<string>("");

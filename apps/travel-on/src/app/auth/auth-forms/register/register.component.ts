@@ -53,6 +53,8 @@ interface RegisterForm {
 export class RegisterFormComponent {
   #injector = inject(Injector);
 
+  #defaultEmail = inject(DEFAULT_EMAIL);
+
   serverError = input<FormServerError>();
 
   public readonly registerFormGroup: FormGroup<RegisterForm>;
@@ -71,7 +73,6 @@ export class RegisterFormComponent {
     email: InputType.EMAIL,
   };
   
-  
   register = output<Register>();
 
   constructor() {
@@ -88,7 +89,7 @@ export class RegisterFormComponent {
 
   private _buildRegisterForm(): FormGroup<RegisterForm> {
     return inject(NonNullableFormBuilder).group({
-      email: [DEFAULT_EMAIL, [Validators.required, Validators.email]],
+      email: [this.#defaultEmail, [Validators.required, Validators.email]],
       password: [
         '',
         [

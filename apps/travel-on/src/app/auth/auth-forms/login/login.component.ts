@@ -6,8 +6,7 @@ import {
   input,
   output,
   OutputEmitterRef,
-  signal,
-  WritableSignal,
+  WritableSignal
 } from '@angular/core';
 import {
   FormControl,
@@ -37,7 +36,12 @@ import {
   getFormKeys,
   InputType,
 } from '@dom';
-import { EmailAndPasswordSignIn, SignInEvent, SignInMethod } from '../../utils';
+import {
+  EmailAndPasswordSignIn,
+  SIGN_METHOD,
+  SignInEvent,
+  SignInMethod,
+} from '../../utils';
 import { DEFAULT_EMAIL } from '../../utils/constants';
 
 interface LoginForm {
@@ -73,12 +77,18 @@ type SignInMethodsEmitters = Partial<{
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
+  providers: [{ provide: SIGN_METHOD, useValue: SignInMethod }
+
+    
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginFormComponent {
   #formError = inject(FormErrorService);
 
-  public readonly SignInMethod = SignInMethod;
+  #defaultEmail = inject(DEFAULT_EMAIL);
+
+  public readonly SignInMethod = inject(SIGN_METHOD);
 
   public readonly serverError = input<FormServerError>();
 
@@ -104,7 +114,7 @@ export class LoginFormComponent {
   emailLink = output<SignInEvent>();
   forget = output<void>();
 
-  private readonly signInEmitters: SignInMethodsEmitters = {
+  readonly #signInEmitters: SignInMethodsEmitters = {
     [SignInMethod.GOOGLE]: this.google,
     [SignInMethod.EMAIL_PASSWORD]: this.login,
     [SignInMethod.EMAIL_LINK]: this.emailLink,
@@ -112,6 +122,8 @@ export class LoginFormComponent {
   };
 
   constructor() {
+
+
     this._setGoogleIcon();
 
     this.loginFormGroup = this.buildLoginForm();
@@ -137,7 +149,7 @@ export class LoginFormComponent {
 
   private buildLoginForm(): FormGroup<LoginForm> {
     return inject(NonNullableFormBuilder).group({
-      email: [DEFAULT_EMAIL, [Validators.required, Validators.email]],
+      email: [this.#defaultEmail, [Validators.required, Validators.email]],
       password: [
         '',
         [
@@ -149,34 +161,14 @@ export class LoginFormComponent {
     });
   }
 
-  // public oGoogleSignIn(): void {
-  //   const event = this._createSignInEvent(SignInMethod.GOOGLE);
-  //   this.google.emit(event);
-  // }
-
-  // public onSubmit(value: Partial<EmailAndPasswordSignIn>): void {
-  //   const event = this._createSignInEvent(SignInMethod.EMAIL_PASSWORD, value);
-  //   this.login.emit(event);
-  // }
-
-  // public onOtpSignIn(): void {
-  //   const event = this._createSignInEvent(SignInMethod.OTP);
-  //   this.otp.emit(event);
-  // }
-
-  // public onEmailLinkSignIn() {
-  //   const event = this._createSignInEvent(SignInMethod.EMAIL_LINK);
-  //   this.emailLink.emit(event);
-  // }
-
   public onSignIn(
     method: SignInMethod,
     value?: Partial<EmailAndPasswordSignIn>
   ): void {
     const event = this._createSignInEvent(method, value);
 
-    if (this.signInEmitters[method]) {
-      this.signInEmitters[method].emit(event);
+    if (this.#signInEmitters[method]) {
+      this.#signInEmitters[method].emit(event);
     }
   }
   public onForgetPassword() {

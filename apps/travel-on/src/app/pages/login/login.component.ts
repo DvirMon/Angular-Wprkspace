@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { CardButtonComponent, FormServerError } from '@dom/components';
-import { LoginFormComponent, SignInEvent } from '../../auth';
+import { AuthService, LoginFormComponent, SignInEvent } from '../../auth';
 import { AuthStore } from '../../auth/store/store';
 
 @Component({
@@ -26,12 +26,16 @@ export class LoginPageComponent {
   #injector = inject(Injector);
   #authStore = inject(AuthStore);
 
+  private authService = inject(AuthService);
+
   public readonly showOtp: WritableSignal<boolean>;
   public readonly serverError: Signal<FormServerError | undefined>;
 
   constructor() {
     this.showOtp = signal(false);
     this.serverError = this.#authStore.loginError;
+
+    console.log( this.authService['test']);
 
     effect(() => {
       if (this.#authStore.isLoaded()) {

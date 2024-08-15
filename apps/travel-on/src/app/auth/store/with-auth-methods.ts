@@ -1,56 +1,50 @@
 import { inject } from '@angular/core';
 import {
-  signalStoreFeature,
-  withMethods,
-  WritableStateSource,
+    patchState,
+    signalStoreFeature,
+    type,
+    withMethods
 } from '@ngrx/signals';
 import { DialogService } from '../../shared/dialog/dialog.service';
-import { AuthService, AuthEvent } from '../utils';
+import { AuthEvent, AuthService } from '../utils';
+import { AuthState, initialState } from './auth.state';
 import {
-  signIn,
-  register,
-  sendResetEmail,
-  confirmPasswordReset,
-  loadUserById,
+    confirmPasswordReset,
+    loadUserById,
+    register,
+    sendResetEmail,
+    signIn,
 } from './store.helpers';
-import { AuthState } from './auth.state';
 
-export function withAuthMethods() {
+export function withAuthMethods<_>() {
   return signalStoreFeature(
+    { state: type<AuthState>() },
     withMethods(
       (
         store,
         service = inject(AuthService),
         dialog = inject(DialogService)
       ) => ({
-        signIn: signIn(
-          service,
-          store as WritableStateSource<AuthState>,
-          AuthEvent.LOGIN
-        ),
-        register: register(
-          service,
-          store as WritableStateSource<AuthState>,
-          AuthEvent.REGISTER
-        ),
-        sendResetEmail: sendResetEmail(
-          store as WritableStateSource<AuthState>,
-          AuthEvent.RESET,
-          service,
-          dialog
-        ),
+        signIn: signIn(service, store, AuthEvent.LOGIN),
+        register: register(service, store, AuthEvent.REGISTER),
+        sendResetEmail: sendResetEmail(store, AuthEvent.RESET, service, dialog),
         confirmPasswordReset: confirmPasswordReset(
-          store as WritableStateSource<AuthState>,
+          store,
           AuthEvent.RESET,
           service,
           dialog
         ),
-        loadUserById: loadUserById(
-          service,
-          store as WritableStateSource<AuthState>,
-          AuthEvent.LOGIN
-        ),
+        loadUserById: loadUserById(service, store, AuthEvent.LOGIN),
       })
-    )
+    ),
+    withMethods((store, service = inject(AuthService)) => ({
+      login(): void {
+        service.login(store.user());
+      },
+      logout(): void {
+        patchState(store, initialState);
+        service.logout();
+      },
+    }))
   );
 }

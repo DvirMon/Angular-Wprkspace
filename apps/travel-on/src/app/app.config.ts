@@ -5,11 +5,12 @@ import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { appRoutes } from './app.routes';
 import { errorInterceptor } from './shared/http/error.interceptor';
 import { provideFirebase } from './shared/providers/firebase';
+import { urlInterceptor } from './shared/http/url.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(appRoutes, withComponentInputBinding()),
-    provideHttpClient(withInterceptors([errorInterceptor])),
+    provideHttpClient(withInterceptors([urlInterceptor, errorInterceptor])),
     provideAnimations(),
     provideFirebase(),
   ],

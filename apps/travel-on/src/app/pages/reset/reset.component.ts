@@ -29,7 +29,6 @@ import { AuthStore } from '../../auth/store/store';
 export class ResetPageComponent {
   #authStore = inject(AuthStore);
 
-  // public readonly paramsSignal: Signal<Params>;
 
   public readonly showNewPassword: Signal<boolean>;
 

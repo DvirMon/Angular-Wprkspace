@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { tapResponse } from '@ngrx/operators';
-import { StateSignal, patchState } from '@ngrx/signals';
+import { WritableStateSource, patchState } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import {
   EMPTY,
@@ -57,7 +57,7 @@ export function registerGroupOptions(
 
 export function handleGroupOptions<T>(
   loader: (args: T) => Observable<Entity[]>,
-  state: StateSignal<object>
+  state: WritableStateSource<object>
 ) {
   return rxMethod<OptionChanged>(
     pipe(

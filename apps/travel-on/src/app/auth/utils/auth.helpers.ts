@@ -2,10 +2,10 @@ import { Location } from '@angular/common';
 import { Injector, inject, runInInjectionContext } from '@angular/core';
 import { UserCredential, User as UserFirebase } from '@angular/fire/auth';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { FormServerError } from '@dom';
 import { Observable, OperatorFunction } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AuthEvent, AuthServerError, User } from './auth.model';
-import { FormServerError } from '@dom';
+import { User } from './auth.model';
 
 // Function to generate a valid URL for the email verification link
 export function generateVerificationLink(
@@ -63,14 +63,15 @@ function mapUser(user: UserFirebase): User {
   } as User;
 }
 
-export function mapAuthServerError(
-  code: string,
-  event: AuthEvent
-): AuthServerError {
+export function mapAuthServerError(code: string) :FormServerError{
   const authErrorMessages: { [errorCode: string]: FormServerError } = {
     'auth/user-not-found': {
       control: 'email',
       message: 'This email is not register.',
+    },
+    'auth/too-many-requests': {
+      control: 'email',
+      message: 'You reach your limit requests.',
     },
 
     'auth/email-already-in-use': {
@@ -101,5 +102,5 @@ export function mapAuthServerError(
     },
   };
 
-  return { event, ...authErrorMessages[code] };
+  return authErrorMessages[code];
 }

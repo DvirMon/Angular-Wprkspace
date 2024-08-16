@@ -10,6 +10,6 @@ export function setAuthError(
   code: string,
   event: AuthEvent
 ): Partial<AuthState> {
-  const { control, message } = mapAuthServerError(code, event);
+  const { control, message } = mapAuthServerError(code);
   return { authError: { [event]: { message, control } } };
 }

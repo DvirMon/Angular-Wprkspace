@@ -1,8 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { UserCredential } from '@angular/fire/auth';
 import { Observable } from 'rxjs';
-import { SignInMethod } from './auth.model';
-import { FireAuthService } from './fireauth.service';
+import { FireAuthService, SignInMethod } from '../../auth';
 
 interface EmailLinkData {
   email: string;

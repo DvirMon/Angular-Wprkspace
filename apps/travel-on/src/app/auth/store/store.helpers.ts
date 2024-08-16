@@ -2,7 +2,7 @@ import { UserCredential } from '@angular/fire/auth';
 import { tapResponse } from '@ngrx/operators';
 import { patchState, WritableStateSource } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { Observable, pipe, switchMap } from 'rxjs';
+import { exhaustMap, Observable, pipe, switchMap } from 'rxjs';
 import { LoginService } from '../../pages/login/login.service';
 import { RegisterService } from '../../pages/register/register.service';
 import { ResetService } from '../../pages/reset/reset.service';
@@ -75,27 +75,7 @@ export function handleLoadUserResponse(
   });
 }
 
-export function sendResetEmail(
-  store: WritableStateSource<AuthState>,
-  authEvent: AuthEvent,
-  service: ResetService,
-  dialog: DialogService
-) {
-  return rxMethod<{ email: string; event: AuthDialogEvent }>(
-    pipe(
-      switchMap(({ email, event }) =>
-        service.sendResetEmail$(email).pipe(
-          tapResponse({
-            next: () =>
-              dialog.openDialog(authDialogMap[event], { email, event }),
-            error: (err: FirebaseError) =>
-              patchState(store, setAuthError(err.code, authEvent)),
-          })
-        )
-      )
-    )
-  );
-}
+
 export function confirmPasswordReset(
   store: WritableStateSource<AuthState>,
   authEvent: AuthEvent,
@@ -108,7 +88,7 @@ export function confirmPasswordReset(
     event: AuthDialogEvent;
   }>(
     pipe(
-      switchMap(({ newPassword, oobCode, event }) =>
+      exhaustMap(({ newPassword, oobCode, event }) =>
         service.confirmPasswordReset$({ newPassword, oobCode }).pipe(
           tapResponse({
             next: () =>

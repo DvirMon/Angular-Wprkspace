@@ -17,10 +17,10 @@ export class DialogService {
     component: ComponentType<T>,
     data: unknown
   ): MatDialogRef<T, unknown> {
-    return this.dialog.open<T>(component, this.setConfig(data));
+    return this.dialog.open<T>(component, this.#setConfig(data));
   }
 
-  private setConfig(data?: unknown): MatDialogConfig {
+  #setConfig(data?: unknown): MatDialogConfig {
     return {
       data,
       autoFocus: true,

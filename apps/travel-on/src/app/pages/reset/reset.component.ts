@@ -1,18 +1,28 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Signal,
   computed,
   inject,
-  input
+  input,
+  Signal,
+  signal,
+  WritableSignal,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CardButtonComponent, FormServerError } from '@dom';
+import { exhaustMap, Subject } from 'rxjs';
 import {
   AuthDialogEvent,
+  AuthEvent,
+  ConfirmDialogComponent,
+  FirebaseError,
+  mapAuthServerError,
   ResetContactFormComponent,
   ResetPasswordFormComponent,
 } from '../../auth';
 import { AuthStore } from '../../auth/store/store';
+import { DialogService } from '../../shared/dialog/dialog.service';
+import { ResetService } from './reset.service';
 
 @Component({
   selector: 'to-reset',
@@ -28,43 +38,52 @@ import { AuthStore } from '../../auth/store/store';
 })
 export class ResetPageComponent {
   #authStore = inject(AuthStore);
+  #resetService = inject(ResetService);
+  #dialogService = inject(DialogService);
 
-  // public readonly paramsSignal: Signal<Params>;
+  resetEmail = new Subject<string>();
 
   public readonly showNewPassword: Signal<boolean>;
 
-  public readonly serverError: Signal<FormServerError | undefined>;
+  public readonly serverError: WritableSignal<FormServerError | undefined> =
+    signal(undefined);
 
   mode = input.required<string>();
   oobCode = input.required<string>();
 
   constructor() {
-    // this.paramsSignal = toSignal(this.#activatedRoute.queryParams, {
-    //   initialValue: { mode: '' } as Params,
-    // });
-
     this.showNewPassword = computed(() => !!this.mode());
-    this.serverError = this.#authStore.resetError;
+
+    this.resetEmail
+      .asObservable()
+      .pipe(
+        exhaustMap((email: string) =>
+          this.#resetService.sendResetEmail$(email).pipe()
+        ),
+        takeUntilDestroyed()
+      )
+      .subscribe({
+        next: () =>
+          this.#dialogService.openDialog(ConfirmDialogComponent, {
+            email: '',
+            event: AuthEvent.RESET,
+          }),
+        error: (err: FirebaseError) => {
+          const error = mapAuthServerError(err.code);
+          this.serverError.set(error);
+        },
+      });
   }
 
   public onResetEmail(email: string) {
-    this.#authStore.sendResetEmail({
-      email,
-      event: AuthDialogEvent.CONFIRM_EMAIL,
-    });
+    this.resetEmail.next(email);
   }
 
   public onResetPassword(newPassword: string) {
-    // const oobCode = this.paramsSignal()['oobCode'];
     this.#authStore.confirmPasswordReset({
       newPassword,
       oobCode: this.oobCode(),
       event: AuthDialogEvent.RESET_PASSWORD,
     });
-    // this.#AuthStoreService.sendResetEmail("email");
-
-    // runInInjectionContext(this.#injector, () => {
-    //   inject(Router).navigateByUrl("reset");
-    // });
   }
 }

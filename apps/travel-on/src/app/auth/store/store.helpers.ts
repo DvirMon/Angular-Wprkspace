@@ -75,27 +75,7 @@ export function handleLoadUserResponse(
   });
 }
 
-export function sendResetEmail(
-  store: WritableStateSource<AuthState>,
-  authEvent: AuthEvent,
-  service: ResetService,
-  dialog: DialogService
-) {
-  return rxMethod<{ email: string; event: AuthDialogEvent }>(
-    pipe(
-      exhaustMap(({ email, event }) =>
-        service.sendResetEmail$(email).pipe(
-          tapResponse({
-            next: () =>
-              dialog.openDialog(authDialogMap[event], { email, event }),
-            error: (err: FirebaseError) =>
-              patchState(store, setAuthError(err.code, authEvent)),
-          })
-        )
-      )
-    )
-  );
-}
+
 export function confirmPasswordReset(
   store: WritableStateSource<AuthState>,
   authEvent: AuthEvent,

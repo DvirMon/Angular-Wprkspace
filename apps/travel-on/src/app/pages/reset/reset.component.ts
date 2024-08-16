@@ -1,22 +1,28 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Signal,
-  WritableSignal,
   computed,
   inject,
   input,
+  Signal,
   signal,
+  WritableSignal,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CardButtonComponent, FormServerError } from '@dom';
+import { exhaustMap, Subject } from 'rxjs';
 import {
   AuthDialogEvent,
+  AuthEvent,
+  ConfirmDialogComponent,
+  FirebaseError,
+  mapAuthServerError,
   ResetContactFormComponent,
   ResetPasswordFormComponent,
 } from '../../auth';
 import { AuthStore } from '../../auth/store/store';
-import { ResetService } from './reset.service';
 import { DialogService } from '../../shared/dialog/dialog.service';
+import { ResetService } from './reset.service';
 
 @Component({
   selector: 'to-reset',
@@ -33,8 +39,9 @@ import { DialogService } from '../../shared/dialog/dialog.service';
 export class ResetPageComponent {
   #authStore = inject(AuthStore);
   #resetService = inject(ResetService);
-  #dialogService = inject( DialogService)
+  #dialogService = inject(DialogService);
 
+  resetEmail = new Subject<string>();
 
   public readonly showNewPassword: Signal<boolean>;
 
@@ -46,14 +53,30 @@ export class ResetPageComponent {
 
   constructor() {
     this.showNewPassword = computed(() => !!this.mode());
-    // this.serverError = this.#authStore.resetError;
+
+    this.resetEmail
+      .asObservable()
+      .pipe(
+        exhaustMap((email: string) =>
+          this.#resetService.sendResetEmail$(email).pipe()
+        ),
+        takeUntilDestroyed()
+      )
+      .subscribe({
+        next: () =>
+          this.#dialogService.openDialog(ConfirmDialogComponent, {
+            email: '',
+            event: AuthEvent.RESET,
+          }),
+        error: (err: FirebaseError) => {
+          const error = mapAuthServerError(err.code);
+          this.serverError.set(error);
+        },
+      });
   }
 
   public onResetEmail(email: string) {
-    this.#authStore.sendResetEmail({
-      email,
-      event: AuthDialogEvent.CONFIRM_EMAIL,
-    });
+    this.resetEmail.next(email);
   }
 
   public onResetPassword(newPassword: string) {

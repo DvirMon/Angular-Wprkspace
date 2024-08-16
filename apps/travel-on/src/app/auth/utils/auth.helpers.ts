@@ -63,17 +63,14 @@ function mapUser(user: UserFirebase): User {
   } as User;
 }
 
-export function mapAuthServerError(
-  code: string,
-  event: AuthEvent
-): AuthServerError {
+export function mapAuthServerError(code: string) :FormServerError{
   const authErrorMessages: { [errorCode: string]: FormServerError } = {
     'auth/user-not-found': {
       control: 'email',
       message: 'This email is not register.',
     },
     'auth/too-many-requests': {
-      control: '',
+      control: 'email',
       message: 'You reach your limit requests.',
     },
 
@@ -105,5 +102,5 @@ export function mapAuthServerError(
     },
   };
 
-  return { event, ...authErrorMessages[code] };
+  return authErrorMessages[code];
 }

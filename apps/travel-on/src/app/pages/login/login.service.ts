@@ -28,12 +28,12 @@ export class LoginService {
     );
   }
 
-  public logout(): void {
+  public onLogout(): void {
     clearStorage();
     navigate('/');
   }
 
-  public login(user: User): void {
+  public onLogin(user: User): void {
     setToStorage(StorageKey.LOGGED, true);
     this.#router.navigateByUrl('places/' + user.userId);
   }

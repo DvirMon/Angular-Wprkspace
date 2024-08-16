@@ -1,12 +1,12 @@
 import { computed, inject } from '@angular/core';
 import { tapResponse } from '@ngrx/operators';
 import {
-  StateSignal,
   patchState,
   signalStoreFeature,
   withComputed,
   withMethods,
   withState,
+  WritableStateSource,
 } from '@ngrx/signals';
 import {
   EntityId,
@@ -64,7 +64,7 @@ export function withMedia() {
   );
 }
 
-function handleLoadResponse(store: StateSignal<State>) {
+function handleLoadResponse(store: WritableStateSource<State>) {
   return tapResponse({
     next: (results: Root) => {
       patchState(store, {
@@ -76,7 +76,7 @@ function handleLoadResponse(store: StateSignal<State>) {
     error: () => EMPTY,
   });
 }
-function handleUpdateResponse(store: StateSignal<State>) {
+function handleUpdateResponse(store: WritableStateSource<State>) {
   return tapResponse({
     next: (item: MediaResult) =>
       patchState(store, setEntity(item, { idKey: 'imdbID' })),

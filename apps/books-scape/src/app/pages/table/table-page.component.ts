@@ -13,7 +13,6 @@ import {
   TableComponent,
   TableFormCellComponent,
 } from '@dom';
-import { TableActionsComponent } from '../../table/actions/table-actions.component';
 import { COLUMNS, ELEMENT_DATA, PeriodicElement } from './data.t';
 
 
@@ -28,7 +27,6 @@ import { COLUMNS, ELEMENT_DATA, PeriodicElement } from './data.t';
     ActionCellDirective,
     FormCellDirective,
     TableFormCellComponent,
-    TableActionsComponent,
   ],
   templateUrl: './table-page.component.html',
   styleUrl: './table-page.component.css',

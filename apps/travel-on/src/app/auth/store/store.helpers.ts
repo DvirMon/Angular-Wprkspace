@@ -30,7 +30,7 @@ export function signIn(
       switchMap((value) =>
         service
           .signIn$(value)
-          .pipe(mapFirebaseCredentials(), handleLoadUser(store, event))
+          .pipe(mapFirebaseCredentials(), handleLoadUserResponse(store, event))
       )
     )
   );
@@ -45,7 +45,7 @@ export function register(
       switchMap((value) =>
         service
           .register$(value)
-          .pipe(mapFirebaseCredentials(), handleLoadUser(store, event))
+          .pipe(mapFirebaseCredentials(), handleLoadUserResponse(store, event))
       )
     )
   );
@@ -58,13 +58,13 @@ export function loadUserById(
   return rxMethod<string>(
     pipe(
       switchMap((userId) =>
-        service.loadUserById$(userId).pipe(handleLoadUser(store, event))
+        service.loadUserById$(userId).pipe(handleLoadUserResponse(store, event))
       )
     )
   );
 }
 
-export function handleLoadUser(
+export function handleLoadUserResponse(
   store: WritableStateSource<AuthState>,
   event: AuthEvent
 ) {
@@ -132,7 +132,7 @@ export function authenticate<T>(
       switchMap((value) =>
         authActionFn(value).pipe(
           mapFirebaseCredentials(),
-          handleLoadUser(store, event)
+          handleLoadUserResponse(store, event)
         )
       )
     )

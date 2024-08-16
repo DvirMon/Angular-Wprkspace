@@ -1,25 +1,27 @@
 import { UserCredential } from '@angular/fire/auth';
 import { tapResponse } from '@ngrx/operators';
+import { patchState, WritableStateSource } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { Observable, pipe, switchMap } from 'rxjs';
+import { LoginService } from '../../pages/login/login.service';
+import { RegisterService } from '../../pages/register/register.service';
+import { ResetService } from '../../pages/reset/reset.service';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { AuthDialogEvent, authDialogMap } from '../auth-dialogs';
 import {
   AuthEvent,
-  AuthService,
   FirebaseError,
+  mapFirebaseCredentials,
   Register,
   SignInEvent,
   User,
-  mapFirebaseCredentials,
 } from '../utils';
+import { UserService } from '../utils/user.service';
 import { AuthState } from './auth.state';
 import { setAuthError, setUser } from './store.setters';
-import { patchState, WritableStateSource } from '@ngrx/signals';
-import { UserService } from '../utils/user.service';
 
 export function signIn(
-  service: AuthService,
+  service: LoginService,
   store: WritableStateSource<AuthState>,
   event: AuthEvent
 ) {
@@ -34,7 +36,7 @@ export function signIn(
   );
 }
 export function register(
-  service: AuthService,
+  service: RegisterService,
   store: WritableStateSource<AuthState>,
   event: AuthEvent
 ) {
@@ -76,7 +78,7 @@ export function handleLoadUser(
 export function sendResetEmail(
   store: WritableStateSource<AuthState>,
   authEvent: AuthEvent,
-  service: AuthService,
+  service: ResetService,
   dialog: DialogService
 ) {
   return rxMethod<{ email: string; event: AuthDialogEvent }>(
@@ -97,7 +99,7 @@ export function sendResetEmail(
 export function confirmPasswordReset(
   store: WritableStateSource<AuthState>,
   authEvent: AuthEvent,
-  service: AuthService,
+  service: ResetService,
   dialog: DialogService
 ) {
   return rxMethod<{

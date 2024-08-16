@@ -5,8 +5,12 @@ import {
   type,
   withMethods,
 } from '@ngrx/signals';
+import { LoginService } from '../../pages/login/login.service';
+import { RegisterService } from '../../pages/register/register.service';
+import { ResetService } from '../../pages/reset/reset.service';
 import { DialogService } from '../../shared/dialog/dialog.service';
-import { AuthEvent, AuthService } from '../utils';
+import { AuthEvent } from '../utils';
+import { UserService } from '../utils/user.service';
 import { AuthState, initialState } from './auth.state';
 import {
   confirmPasswordReset,
@@ -15,7 +19,6 @@ import {
   sendResetEmail,
   signIn,
 } from './store.helpers';
-import { UserService } from '../utils/user.service';
 
 export function withAuthMethods<_>() {
   return signalStoreFeature(
@@ -23,35 +26,38 @@ export function withAuthMethods<_>() {
     withMethods(
       (
         store,
-        authService = inject(AuthService),
+        resetService = inject(ResetService),
+        registerService = inject(RegisterService),
+        loginService = inject(LoginService),
+
         userService = inject(UserService),
 
         dialog = inject(DialogService)
       ) => ({
-        signIn: signIn(authService, store, AuthEvent.LOGIN),
-        register: register(authService, store, AuthEvent.REGISTER),
+        signIn: signIn(loginService, store, AuthEvent.LOGIN),
+        register: register(registerService, store, AuthEvent.REGISTER),
         sendResetEmail: sendResetEmail(
           store,
           AuthEvent.RESET,
-          authService,
+          resetService,
           dialog
         ),
         confirmPasswordReset: confirmPasswordReset(
           store,
           AuthEvent.RESET,
-          authService,
+          resetService,
           dialog
         ),
         loadUserById: loadUserById(userService, store, AuthEvent.LOGIN),
       })
     ),
-    withMethods((store, service = inject(AuthService)) => ({
+    withMethods((store, service = inject(LoginService)) => ({
       login(): void {
-        service.login(store.user());
+        service.onLogin(store.user());
       },
       logout(): void {
         patchState(store, initialState);
-        service.logout();
+        service.onLogout();
       },
     }))
   );

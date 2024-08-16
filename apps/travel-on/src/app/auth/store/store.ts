@@ -18,10 +18,11 @@ import {
 } from './store.helpers';
 import { initialState } from './auth.state';
 import { UserService } from '../utils/user.service';
+import { withDevtools } from '@angular-architects/ngrx-toolkit';
 
 export const AuthStore = signalStore(
   { providedIn: 'root' },
-  // withDevtools('auth'),
+  withDevtools('auth'),
   withState(initialState),
   withMethods(
     (

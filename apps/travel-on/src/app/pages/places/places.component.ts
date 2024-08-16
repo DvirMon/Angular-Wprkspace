@@ -19,10 +19,8 @@ import {
 import { PlacesHeaderComponent } from '../../places/places-header/places-header.component';
 import { Places } from '../../places/places.model';
 import { SignalStore } from '../../store/store';
-import { PlacesPageService } from './places.service';
-import { Favorite } from '../../favorites';
-import { FavoriteSelection } from '../../store/features/with-favorites.feature';
 import { updateFavoriteEntity } from './places.helpers';
+import { PlacesPageService } from './places.service';
 
 @Component({
   selector: 'to-places',

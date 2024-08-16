@@ -6,6 +6,7 @@ import {
   createLoader,
   loadSlice,
 } from '@dom';
+import { tapResponse } from '@ngrx/operators';
 import {
   patchState,
   signalStoreFeature,
@@ -13,10 +14,9 @@ import {
   withMethods,
   withState,
 } from '@ngrx/signals';
-import { Favorite, FavoriteHttpService } from '../../favorites';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { EMPTY, pipe, switchMap } from 'rxjs';
-import { tapResponse } from '@ngrx/operators';
+import { Favorite, FavoriteHttpService } from '../../favorites';
 
 const SLICE = 'favorite';
 
@@ -70,16 +70,6 @@ function mapVacationIdsToRecord(favorite: Favorite): Record<string, boolean> {
   }
 }
 
-function updateVacationIds(
-  currentSelection: FavoriteSelection,
-  vacationIds: string[]
-): string[] {
-  const { placeId, selected } = currentSelection;
-
-  return selected
-    ? [...vacationIds, placeId]
-    : vacationIds.filter((id: string) => id !== placeId);
-}
 
 function isObjectEmpty(obj: object) {
   return Object.keys(obj).length === 0;

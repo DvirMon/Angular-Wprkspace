@@ -1,20 +1,21 @@
 import { inject } from '@angular/core';
 import {
-    patchState,
-    signalStoreFeature,
-    type,
-    withMethods
+  patchState,
+  signalStoreFeature,
+  type,
+  withMethods,
 } from '@ngrx/signals';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { AuthEvent, AuthService } from '../utils';
 import { AuthState, initialState } from './auth.state';
 import {
-    confirmPasswordReset,
-    loadUserById,
-    register,
-    sendResetEmail,
-    signIn,
+  confirmPasswordReset,
+  loadUserById,
+  register,
+  sendResetEmail,
+  signIn,
 } from './store.helpers';
+import { UserService } from '../utils/user.service';
 
 export function withAuthMethods<_>() {
   return signalStoreFeature(
@@ -22,19 +23,26 @@ export function withAuthMethods<_>() {
     withMethods(
       (
         store,
-        service = inject(AuthService),
+        authService = inject(AuthService),
+        userService = inject(UserService),
+
         dialog = inject(DialogService)
       ) => ({
-        signIn: signIn(service, store, AuthEvent.LOGIN),
-        register: register(service, store, AuthEvent.REGISTER),
-        sendResetEmail: sendResetEmail(store, AuthEvent.RESET, service, dialog),
+        signIn: signIn(authService, store, AuthEvent.LOGIN),
+        register: register(authService, store, AuthEvent.REGISTER),
+        sendResetEmail: sendResetEmail(
+          store,
+          AuthEvent.RESET,
+          authService,
+          dialog
+        ),
         confirmPasswordReset: confirmPasswordReset(
           store,
           AuthEvent.RESET,
-          service,
+          authService,
           dialog
         ),
-        loadUserById: loadUserById(service, store, AuthEvent.LOGIN),
+        loadUserById: loadUserById(userService, store, AuthEvent.LOGIN),
       })
     ),
     withMethods((store, service = inject(AuthService)) => ({

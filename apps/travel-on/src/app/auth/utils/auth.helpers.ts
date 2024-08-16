@@ -72,6 +72,10 @@ export function mapAuthServerError(
       control: 'email',
       message: 'This email is not register.',
     },
+    'auth/too-many-requests': {
+      control: '',
+      message: 'You reach your limit requests.',
+    },
 
     'auth/email-already-in-use': {
       control: 'email',

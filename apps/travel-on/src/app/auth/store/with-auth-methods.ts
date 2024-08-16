@@ -16,8 +16,7 @@ import {
   confirmPasswordReset,
   loadUserById,
   register,
-  sendResetEmail,
-  signIn,
+  signIn
 } from './store.helpers';
 
 export function withAuthMethods<_>() {
@@ -36,12 +35,7 @@ export function withAuthMethods<_>() {
       ) => ({
         signIn: signIn(loginService, store, AuthEvent.LOGIN),
         register: register(registerService, store, AuthEvent.REGISTER),
-        sendResetEmail: sendResetEmail(
-          store,
-          AuthEvent.RESET,
-          resetService,
-          dialog
-        ),
+  
         confirmPasswordReset: confirmPasswordReset(
           store,
           AuthEvent.RESET,

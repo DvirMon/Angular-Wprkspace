@@ -39,9 +39,6 @@ export class ResetPageComponent {
   oobCode = input.required<string>();
 
   constructor() {
-    // this.paramsSignal = toSignal(this.#activatedRoute.queryParams, {
-    //   initialValue: { mode: '' } as Params,
-    // });
 
     this.showNewPassword = computed(() => !!this.mode());
     this.serverError = this.#authStore.resetError;
@@ -61,10 +58,6 @@ export class ResetPageComponent {
       oobCode: this.oobCode(),
       event: AuthDialogEvent.RESET_PASSWORD,
     });
-    // this.#AuthStoreService.sendResetEmail("email");
-
-    // runInInjectionContext(this.#injector, () => {
-    //   inject(Router).navigateByUrl("reset");
-    // });
+ 
   }
 }

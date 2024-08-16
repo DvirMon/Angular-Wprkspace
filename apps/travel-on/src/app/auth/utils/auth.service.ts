@@ -1,10 +1,5 @@
 import { Injectable } from '@angular/core';
 import { ConfirmationResult, UserCredential } from '@angular/fire/auth';
-import {
-  CollectionReference,
-  Firestore,
-  collection,
-} from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { Observable, of, switchMap } from 'rxjs';
 import { StorageKey } from '../../shared/constants';

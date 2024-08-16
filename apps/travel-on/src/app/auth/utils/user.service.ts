@@ -15,37 +15,37 @@ import { User } from './auth.model';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
-  readonly firestore = inject(Firestore);
+  #firestore = inject(Firestore);
 
-  private readonly USERS_COLLECTION = 'users';
-  private readonly usersRef: CollectionReference<User>;
+  #USERS_COLLECTION = 'users';
+  #usersRef: CollectionReference<User>;
 
   constructor() {
-    this.usersRef = collection(
-      this.firestore,
-      this.USERS_COLLECTION
+    this.#usersRef = collection(
+      this.#firestore,
+      this.#USERS_COLLECTION
     ) as CollectionReference<User>;
   }
 
   public getUserById(userId: string): Observable<User> {
-    const querySnapshot$ = this._getUserQuerySnapshot$('userId', userId);
+    const querySnapshot$ = this.#getUserQuerySnapshot$('userId', userId);
     return querySnapshot$.pipe(mapQuerySnapshotDoc<User>());
   }
 
   public loadUserById$(userId: string): Observable<User> {
-    const querySnapshot$ = this._getUserQuerySnapshot$('userId', userId);
+    const querySnapshot$ = this.#getUserQuerySnapshot$('userId', userId);
     return querySnapshot$.pipe(mapQuerySnapshotDoc<User>());
   }
 
   public saveUser(user: User): void {
-    from(addDoc(this.usersRef, user));
+    from(addDoc(this.#usersRef, user));
   }
 
   public addUser(user: User): Observable<User> {
-    return this._checkDocumentExists(user.userId).pipe(
+    return this.#checkDocumentExists(user.userId).pipe(
       switchMap((empty: boolean) => {
         if (empty) {
-          return from(addDoc(this.usersRef, user)).pipe(
+          return from(addDoc(this.#usersRef, user)).pipe(
             map(() => user) // Return the user after successful addition
           );
         } else {
@@ -55,15 +55,15 @@ export class UserService {
     );
   }
 
-  private _checkDocumentExists(userId: string): Observable<boolean> {
-    const querySnapshot$ = this._getUserQuerySnapshot$('userId', userId);
+  #checkDocumentExists(userId: string): Observable<boolean> {
+    const querySnapshot$ = this.#getUserQuerySnapshot$('userId', userId);
     return querySnapshot$.pipe(map((querySnapshot) => querySnapshot.empty));
   }
 
-  private _getUserQuerySnapshot$(
+  #getUserQuerySnapshot$(
     getBy: keyof User,
     value: string
   ): Observable<QuerySnapshot<User>> {
-    return from(getDocs(query(this.usersRef, where(getBy, '==', value))));
+    return from(getDocs(query(this.#usersRef, where(getBy, '==', value))));
   }
 }

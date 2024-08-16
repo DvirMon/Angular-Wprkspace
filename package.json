@@ -35,6 +35,7 @@
     "@nx/angular": "19.5.7",
     "express": "^4.19.2",
     "i": "^0.3.7",
+    "ngx-skeleton-loader": "^9.0.0",
     "ngx-toastr": "^18.0.0",
     "node": "^20.9.0",
     "npm": "^10.8.2",

@@ -6,7 +6,7 @@ import { environment } from '../../../environments/environment';
 export function provideFirebase() {
   return [
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
-    provideAuth(() => getAuth()),
+    // provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
   ];
 }

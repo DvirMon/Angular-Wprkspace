@@ -1,24 +1,14 @@
 import { Injectable } from '@angular/core';
 import { ConfirmationResult, UserCredential } from '@angular/fire/auth';
-import {
-  CollectionReference,
-  Firestore,
-  QuerySnapshot,
-  addDoc,
-  collection,
-  getDocs,
-  query,
-  where,
-} from '@angular/fire/firestore';
-import { Observable, from, map, of, switchMap } from 'rxjs';
+import { Router } from '@angular/router';
+import { Observable, of, switchMap } from 'rxjs';
+import { StorageKey } from '../../shared/constants';
 import {
   clearStorage,
   getFromStorage,
-  mapQuerySnapshotDoc,
   navigate,
   setToStorage,
 } from '../../shared/helpers';
-import { FireAuthService } from './fireauth.service';
 import {
   ConfirmPasswordReset,
   Register,
@@ -26,8 +16,7 @@ import {
   SignInMethod,
   User,
 } from './auth.model';
-import { Router } from '@angular/router';
-import { StorageKey } from '../../shared/constants';
+import { FireAuthService } from './fireauth.service';
 
 interface EmailLinkData {
   email: string;
@@ -38,63 +27,21 @@ interface EmailPasswordData {
   password: string;
 }
 
+type SignInStrategy = (data?: unknown) => Observable<UserCredential>;
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private readonly USERS_COLLECTION = 'users';
-  private readonly usersRef: CollectionReference<User>;
+  private signInStrategies: Map<SignInMethod, SignInStrategy> = new Map();
 
   constructor(
-    private readonly firestore: Firestore,
     private readonly fireAuthService: FireAuthService,
     private router: Router
   ) {
-    this.usersRef = collection(
-      this.firestore,
-      this.USERS_COLLECTION
-    ) as CollectionReference<User>;
+    this._setSignInMap();
   }
 
   public register$({ password, email }: Register) {
     return this.fireAuthService.createInWithEmailAndPassword$(email, password);
-  }
-
-  public getUserById(userId: string): Observable<User> {
-    const querySnapshot$ = this.getUserQuerySnapshot$('userId', userId);
-    return querySnapshot$.pipe(mapQuerySnapshotDoc<User>());
-  }
-  public loadUserById$(userId: string): Observable<User> {
-    const querySnapshot$ = this.getUserQuerySnapshot$('userId', userId);
-    return querySnapshot$.pipe(mapQuerySnapshotDoc<User>());
-  }
-
-  public saveUser(user: User): void {
-    from(addDoc(this.usersRef, user));
-  }
-
-  public addDocument(user: User): Observable<User> {
-    return this._checkDocumentExists(user.userId).pipe(
-      switchMap((empty: boolean) => {
-        if (empty) {
-          return from(addDoc(this.usersRef, user)).pipe(
-            map(() => user) // Return the user after successful addition
-          );
-        } else {
-          return of(user);
-        }
-      })
-    );
-  }
-
-  private _checkDocumentExists(userId: string): Observable<boolean> {
-    const querySnapshot$ = this.getUserQuerySnapshot$('userId', userId);
-    return querySnapshot$.pipe(map((querySnapshot) => querySnapshot.empty));
-  }
-
-  private getUserQuerySnapshot$(
-    getBy: keyof User,
-    value: string
-  ): Observable<QuerySnapshot<User>> {
-    return from(getDocs(query(this.usersRef, where(getBy, '==', value))));
   }
 
   // Sign in with different authentication methods based on the provided event.
@@ -103,35 +50,16 @@ export class AuthService {
 
     return of(method).pipe(
       switchMap((method: SignInMethod) => {
-        switch (method) {
-          case SignInMethod.GOOGLE:
-            return this.fireAuthService.signInWithGoogle$();
-
-          case SignInMethod.EMAIL_LINK: {
-            const emailLinkData = data as EmailLinkData;
-            return this.fireAuthService.signInWithEmailLink$(
-              emailLinkData.email,
-              emailLinkData.emailLink
-            );
-          }
-
-          case SignInMethod.EMAIL_PASSWORD: {
-            const emailPasswordData = data as EmailPasswordData;
-            return this.fireAuthService.signInWithEmailAndPassword$(
-              emailPasswordData.email,
-              emailPasswordData.password
-            );
-          }
-
-          default:
-            return of({} as UserCredential);
-        }
+        const strategy = this.signInStrategies.get(method);
+        return strategy !== undefined
+          ? strategy(data)
+          : of({} as UserCredential);
       })
     );
   }
 
   // Create a new user account with the provided email and password.
-  public createInWithEmailAndPassword$(
+  public signInWithEmailAndPassword$(
     email: string,
     password: string
   ): Observable<UserCredential> {
@@ -176,5 +104,21 @@ export class AuthService {
 
   public isStorageLogged(): boolean {
     return getFromStorage<boolean>(StorageKey.LOGGED) || false;
+  }
+
+  private _setSignInMap() {
+    this.signInStrategies.set(SignInMethod.GOOGLE, () =>
+      this.fireAuthService.signInWithGoogle$()
+    );
+
+    this.signInStrategies.set(SignInMethod.EMAIL_LINK, (data) => {
+      const { email, emailLink } = data as EmailLinkData;
+      return this.fireAuthService.signInWithEmailLink$(email, emailLink);
+    });
+
+    this.signInStrategies.set(SignInMethod.EMAIL_PASSWORD, (data) => {
+      const { email, password } = data as EmailPasswordData;
+      return this.fireAuthService.signInWithEmailAndPassword$(email, password);
+    });
   }
 }

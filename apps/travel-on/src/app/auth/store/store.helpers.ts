@@ -16,6 +16,7 @@ import {
 import { AuthState } from './auth.state';
 import { setAuthError, setUser } from './store.setters';
 import { patchState, WritableStateSource } from '@ngrx/signals';
+import { UserService } from '../utils/user.service';
 
 export function signIn(
   service: AuthService,
@@ -48,7 +49,7 @@ export function register(
   );
 }
 export function loadUserById(
-  service: AuthService,
+  service: UserService,
   store: WritableStateSource<AuthState>,
   event: AuthEvent
 ) {

@@ -3,9 +3,9 @@ import { UserCredential } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { Observable, of, switchMap } from 'rxjs';
 import { SignInEvent, SignInMethod, User } from '../../auth';
-import { SignInService } from '../../auth/utils/sign-in.service';
 import { StorageKey } from '../../shared/constants';
 import { clearStorage, navigate, setToStorage } from '../../shared/helpers';
+import { SignInService } from './sign-in.service';
 
 @Injectable({
   providedIn: 'root',

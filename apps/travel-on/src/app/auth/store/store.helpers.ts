@@ -2,7 +2,7 @@ import { UserCredential } from '@angular/fire/auth';
 import { tapResponse } from '@ngrx/operators';
 import { patchState, WritableStateSource } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { Observable, pipe, switchMap } from 'rxjs';
+import { exhaustMap, Observable, pipe, switchMap } from 'rxjs';
 import { LoginService } from '../../pages/login/login.service';
 import { RegisterService } from '../../pages/register/register.service';
 import { ResetService } from '../../pages/reset/reset.service';
@@ -83,7 +83,7 @@ export function sendResetEmail(
 ) {
   return rxMethod<{ email: string; event: AuthDialogEvent }>(
     pipe(
-      switchMap(({ email, event }) =>
+      exhaustMap(({ email, event }) =>
         service.sendResetEmail$(email).pipe(
           tapResponse({
             next: () =>
@@ -108,7 +108,7 @@ export function confirmPasswordReset(
     event: AuthDialogEvent;
   }>(
     pipe(
-      switchMap(({ newPassword, oobCode, event }) =>
+      exhaustMap(({ newPassword, oobCode, event }) =>
         service.confirmPasswordReset$({ newPassword, oobCode }).pipe(
           tapResponse({
             next: () =>

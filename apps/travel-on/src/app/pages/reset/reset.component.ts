@@ -2,9 +2,11 @@ import {
   ChangeDetectionStrategy,
   Component,
   Signal,
+  WritableSignal,
   computed,
   inject,
-  input
+  input,
+  signal,
 } from '@angular/core';
 import { CardButtonComponent, FormServerError } from '@dom';
 import {
@@ -13,6 +15,8 @@ import {
   ResetPasswordFormComponent,
 } from '../../auth';
 import { AuthStore } from '../../auth/store/store';
+import { ResetService } from './reset.service';
+import { DialogService } from '../../shared/dialog/dialog.service';
 
 @Component({
   selector: 'to-reset',
@@ -28,19 +32,21 @@ import { AuthStore } from '../../auth/store/store';
 })
 export class ResetPageComponent {
   #authStore = inject(AuthStore);
+  #resetService = inject(ResetService);
+  #dialogService = inject( DialogService)
 
 
   public readonly showNewPassword: Signal<boolean>;
 
-  public readonly serverError: Signal<FormServerError | undefined>;
+  public readonly serverError: WritableSignal<FormServerError | undefined> =
+    signal(undefined);
 
   mode = input.required<string>();
   oobCode = input.required<string>();
 
   constructor() {
-
     this.showNewPassword = computed(() => !!this.mode());
-    this.serverError = this.#authStore.resetError;
+    // this.serverError = this.#authStore.resetError;
   }
 
   public onResetEmail(email: string) {
@@ -51,12 +57,10 @@ export class ResetPageComponent {
   }
 
   public onResetPassword(newPassword: string) {
-    // const oobCode = this.paramsSignal()['oobCode'];
     this.#authStore.confirmPasswordReset({
       newPassword,
       oobCode: this.oobCode(),
       event: AuthDialogEvent.RESET_PASSWORD,
     });
- 
   }
 }

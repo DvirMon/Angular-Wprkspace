@@ -12,4 +12,8 @@ export interface Places {
   takeoff :  Timestamp,
   landing: Timestamp,
   imageUrl: string
+  activities: string[]; 
+  rating: number;  // Optional: Rating out of 5
+
+
 }

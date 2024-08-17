@@ -1,6 +1,7 @@
 @if (place()) {
-<ng-container *ngTemplateOutlet="isGrid() ? cardGrid : cardTable"></ng-container>
-
+<ng-container
+  *ngTemplateOutlet="isGrid() ? cardGrid : cardTable"
+></ng-container>
 
 }
 
@@ -16,6 +17,7 @@
       />
     </mat-card-header>
     <mat-card-content>
+      <mat-icon fontIcon="location_on"></mat-icon>
       <mat-card-title>{{ place().destination.city }}</mat-card-title>
       <mat-card-subtitle>{{ place().destination.country }}</mat-card-subtitle>
     </mat-card-content>
@@ -41,19 +43,27 @@
       />
     </div>
     <mat-card-header>
-      <mat-card-title
-        >{{ place().destination.city }},
-        {{ place().destination.country }}</mat-card-title
-      >
-      <mat-card-subtitle>{{
+      <mat-card-title>
+        <mat-icon fontIcon="location_on"></mat-icon>
+        {{ place().destination.city }},
+        {{ place().destination.country }}
+      </mat-card-title>
+      <!-- <mat-card-subtitle>{{
         place().price | currency : 'USD' : 'symbol' : '1.0-0'
-      }}</mat-card-subtitle>
+      }}</mat-card-subtitle> -->
       <to-place-card-button
         (changed)="onSelectedChanged($event)"
         [selected]="selected()"
       ></to-place-card-button>
     </mat-card-header>
     <mat-card-content>
+      <section class="activities">
+        <mat-chip-set>
+          @for (activity of place().activities; track $index) {
+          <mat-chip [disableRipple]="true"> # {{ activity }}</mat-chip>
+          }
+        </mat-chip-set>
+      </section>
       <section class="schedule">
         <span>
           <b>Takeoff:</b>

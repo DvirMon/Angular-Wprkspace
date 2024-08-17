@@ -4,9 +4,11 @@ import {
   Component,
   input,
   output,
-  signal
+  signal,
 } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
 import { DateTimestampPipe } from '../../shared/pipes/date.pipe';
 import {
   ButtonSelectionChangedEvent,
@@ -29,6 +31,8 @@ export interface SelectChangedEvent {
     DateTimestampPipe,
     MatCardModule,
     PlaceCardButtonComponent,
+    MatIconModule,
+    MatChipsModule
   ],
   templateUrl: './places-card.component.html',
   styleUrls: ['./places-card.component.scss'],

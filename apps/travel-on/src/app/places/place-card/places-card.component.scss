@@ -16,14 +16,13 @@ mat-card.mat-mdc-card.places-grid-card {
     gap: main.spacing(1);
     padding: 0px main.spacing(2);
 
-    
     > div.mat-mdc-card-header-text {
       display: flex;
       flex-direction: column;
       gap: main.spacing(1);
     }
   }
-  
+
   .mat-mdc-card-title {
     display: flex;
     gap: main.spacing(1);
@@ -91,11 +90,15 @@ dl.activities-list {
   gap: main.spacing(1);
 
   > dt.activities-item {
+    height: main.spacing(4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: #e0e0e0;
     border-radius: main.spacing(3);
 
     > span.activities-text {
-      padding: main.spacing(3);
+      padding: 0px main.spacing(2);
     }
   }
 }

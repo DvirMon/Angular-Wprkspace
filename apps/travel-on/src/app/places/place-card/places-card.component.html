@@ -58,11 +58,14 @@
     </mat-card-header>
     <mat-card-content>
       <section class="activities">
-        <mat-chip-set>
+
+        <dl class="activities-list">
           @for (activity of place().activities; track $index) {
-          <mat-chip [disableRipple]="true"> # {{ activity }}</mat-chip>
+          <dt class="activities-item">
+            <span class="activities-text"> # {{ activity }} </span>
+          </dt>
           }
-        </mat-chip-set>
+        </dl>
       </section>
       <section class="schedule">
         <span>

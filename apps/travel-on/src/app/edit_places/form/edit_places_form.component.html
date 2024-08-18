@@ -1,0 +1,83 @@
+<form [formGroup]="placesForm" (ngSubmit)="onSubmit()">
+  <div class="form-container">
+    <div>
+      <section class="form-row">
+        <mat-form-field appearance="fill">
+          <mat-label>Destination</mat-label>
+          <input matInput id="destination" formControlName="destination" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Price</mat-label>
+          <input matInput id="price" formControlName="price" type="number" />
+        </mat-form-field>
+      </section>
+
+      <section class="form-row">
+        <mat-form-field appearance="fill">
+          <mat-label>Takeoff</mat-label>
+          <input
+            matInput
+            [matDatepicker]="takeoffPicker"
+            formControlName="takeoff"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="takeoffPicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #takeoffPicker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Landing</mat-label>
+          <input
+            matInput
+            [matDatepicker]="landingPicker"
+            formControlName="landing"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="landingPicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #landingPicker></mat-datepicker>
+        </mat-form-field>
+      </section>
+
+      <section class="form-row">
+        <mat-form-field appearance="fill">
+          <mat-label>Activities</mat-label>
+          <mat-select id="activities" formControlName="activities" multiple>
+            <mat-option
+              *ngFor="let activity of place().activities"
+              [value]="activity"
+            >
+              {{ activity }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Rating (Optional)</mat-label>
+          <input
+            matInput
+            id="rating"
+            formControlName="rating"
+            type="number"
+            min="0"
+            max="5"
+          />
+        </mat-form-field>
+      </section>
+    </div>
+
+    <div class="upload-image-wrapper">
+      <button (click)="fileUpload.click()" type="button">
+        
+        <mat-icon fontIcon="photo_library"></mat-icon>
+        <input type="file" hidden #fileUpload />
+        <span>Upload Image</span>
+      </button>
+    </div>
+  </div>
+
+  <button mat-raised-button color="primary" type="submit">Submit</button>
+</form>

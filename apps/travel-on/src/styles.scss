@@ -12,7 +12,7 @@
 html,
 body,
 to-root {
-  height: 100%;
+  height: 100vh;
   scroll-behavior: smooth;
   display: block;
 }
@@ -25,5 +25,6 @@ button {
   font-size: 14px;
 }
 
-
-
+mat-icon {
+  color: #707070 !important;
+}

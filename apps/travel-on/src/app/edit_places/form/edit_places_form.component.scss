@@ -1,0 +1,56 @@
+@use 'variables' as main;
+
+:host {
+  display: block;
+}
+
+.form-container {
+  display: flex;
+  gap: main.spacing(3); // Space between form fields
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  gap: main.spacing(3); // Space between columns
+
+  // Make sure form fields take equal space
+  mat-form-field {
+    flex: 1;
+  }
+}
+
+.full-width {
+  width: 100%;
+}
+
+div.upload-image-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 500px;
+  border: 1px dashed #707070;
+
+  button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: main.spacing(2);
+    height: 100%;
+    width: 100%;
+
+    mat-icon {
+      font-size: main.spacing(5);
+      height: main.spacing(5);
+      width: main.spacing(5);
+    }
+  }
+}
+
+.submit-button {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: main.spacing(3);
+}

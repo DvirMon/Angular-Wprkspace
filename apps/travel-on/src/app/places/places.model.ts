@@ -14,6 +14,4 @@ export interface Places {
   imageUrl: string
   activities: string[]; 
   rating: number;  // Optional: Rating out of 5
-
-
 }

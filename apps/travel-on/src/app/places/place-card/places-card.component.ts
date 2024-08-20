@@ -2,6 +2,7 @@ import { CommonModule, NgOptimizedImage } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  inject,
   input,
   output,
   signal,
@@ -14,6 +15,8 @@ import {
   PlaceCardButtonComponent,
 } from '../place-card-button/place-card-button.component';
 import { Places } from '../places.model';
+import { MatIconButton } from '@angular/material/button';
+import { Router } from '@angular/router';
 
 export interface SelectChangedEvent {
   /** The source button of the event. */
@@ -31,6 +34,7 @@ export interface SelectChangedEvent {
     MatCardModule,
     PlaceCardButtonComponent,
     MatIconModule,
+    MatIconButton,
   ],
   templateUrl: './places-card.component.html',
   styleUrls: ['./places-card.component.scss'],
@@ -40,6 +44,8 @@ export class PlacesCardComponent {
   place = input.required<Places>();
 
   selected = input.required<boolean>();
+
+  router = inject(Router);
 
   isGrid = input<boolean>(true);
 
@@ -62,7 +68,11 @@ export class PlacesCardComponent {
     this.selectedChanged.emit(event);
   }
 
-  onToggleOverlay() {
+  onToggleOverlay(): void {
     this.showOverlay.update((value) => !value);
+  }
+
+  onEdit(): void {
+    this.router.navigateByUrl('admin/' + this.place().id)
   }
 }

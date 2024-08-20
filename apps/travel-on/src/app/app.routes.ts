@@ -23,7 +23,7 @@ export const appRoutes: Routes = [
     title: 'Reset Password',
   },
   {
-    path: 'admin',
+    path: 'admin/:placeId',
     loadComponent: () =>
       import('./pages/edit_places/edit_places.component').then(
         (m) => m.EditPlacesPageComponent
@@ -32,13 +32,9 @@ export const appRoutes: Routes = [
   {
     path: 'places/:userId',
     loadComponent: () =>
-      import('./pages/edit_places/edit_places.component').then(
-        (m) => m.EditPlacesPageComponent
+      import('./pages/places/places.component').then(
+        (m) => m.PlacesPageComponent
       ),
-    // loadComponent: () =>
-    //   import('./pages/places/places.component').then(
-    //     (m) => m.PlacesPageComponent
-    //   ),
     title: 'Travel-On',
   },
   { path: '', redirectTo: '/', pathMatch: 'full' },

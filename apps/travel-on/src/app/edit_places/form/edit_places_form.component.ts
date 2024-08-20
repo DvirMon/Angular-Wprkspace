@@ -35,7 +35,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatDatepickerModule,
     MatSelectModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
   ],
   templateUrl: './edit_places_form.component.html',
   styleUrl: './edit_places_form.component.scss',
@@ -56,7 +56,8 @@ export class EditPlacesFormComponent {
     rating: [null, [Validators.min(0), Validators.max(5)]],
   });
 
-  onSubmit(): void {}
+  onSubmit(): void {
+  }
 
-  onFileSelected(event : unknown): void {}
+  onFileSelected(event: unknown): void {}
 }

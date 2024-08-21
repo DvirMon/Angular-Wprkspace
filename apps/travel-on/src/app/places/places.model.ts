@@ -4,6 +4,10 @@ export interface Destination {
   city : string,
   country : string,
 }
+export interface DestinationItem {
+  cities : string[],
+  country : string,
+}
 
 export interface Places {
   id: string,

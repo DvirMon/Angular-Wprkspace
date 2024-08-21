@@ -6,16 +6,16 @@ import {
   inject,
   input,
   OnInit,
-  signal,
-  untracked,
 } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { Timestamp } from '@angular/fire/firestore';
 import {
-  FormBuilder,
+  FormControl,
   FormGroup,
   FormsModule,
+  NonNullableFormBuilder,
   ReactiveFormsModule,
-  Validators,
+  Validators
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -24,14 +24,22 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import {
-  Destination,
-  DestinationItem,
-  Places,
-} from '../../places/places.model';
+import { distinctUntilChanged } from 'rxjs';
 import { EditPlacesService } from '../../pages/edit_places/edit-places.service';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { delay, distinctUntilKeyChanged, map, of, startWith } from 'rxjs';
+import { DestinationItem, Places } from '../../places/places.model';
+
+type PlaceForm = {
+  destination: FormGroup<{
+    city: FormControl<string>;
+    country: FormControl<string>;
+  }>;
+  price: FormControl<number>;
+  takeoff: FormControl<Timestamp>;
+  landing: FormControl<Timestamp>;
+  imageUrl: FormControl<string>;
+  activities: FormControl<string[]>;
+  rating: FormControl<number>;
+}
 
 @Component({
   selector: 'to-edit-places-form',
@@ -55,12 +63,12 @@ import { delay, distinctUntilKeyChanged, map, of, startWith } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditPlacesFormComponent implements OnInit {
-  #fb = inject(FormBuilder);
+  #nfb = inject(NonNullableFormBuilder);
   editService = inject(EditPlacesService);
 
   place = input.required<Partial<Places>>();
 
-  placesForm: FormGroup = this.#setPlaceFormGroup();
+  placesForm: FormGroup<PlaceForm> = this.#setPlaceFormGroup();
 
   destinations = toSignal(this.editService.loadDestinationList(), {
     initialValue: [],
@@ -70,15 +78,14 @@ export class EditPlacesFormComponent implements OnInit {
     this.destinations().map((des) => des.country)
   );
 
-  currentCountry$ = this.placesForm.controls['destination'].valueChanges.pipe(
-    distinctUntilKeyChanged('country'),
-    map((des: DestinationItem) => des.country.toLowerCase())
-  );
+  currentCountry$ =
+    this.placesForm.controls.destination.controls.country.valueChanges.pipe(
+      distinctUntilChanged()
+    );
 
   currentCountry = toSignal(this.currentCountry$, { initialValue: 'russia' });
 
   citiesOptions = computed(() => {
-
     const found = this.destinations().find(
       (des: DestinationItem) =>
         des.country.toLowerCase() === this.currentCountry()
@@ -88,7 +95,7 @@ export class EditPlacesFormComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.placesForm.setValue(this.place());
+    this.placesForm.setValue(this.place() as Places);
   }
 
   onSubmit(): void {
@@ -97,18 +104,28 @@ export class EditPlacesFormComponent implements OnInit {
 
   onFileSelected(event: unknown): void {}
 
-  #setPlaceFormGroup() {
-    return this.#fb.group({
-      destination: this.#fb.group({
-        city: [''],
-        country: [''],
+  #setPlaceFormGroup(): FormGroup<PlaceForm> {
+    return this.#nfb.group({
+      destination: this.#nfb.group({
+        city: this.#nfb.control<string>(''),
+        country: this.#nfb.control<string>(''),
       }),
-      price: [0, [Validators.required, Validators.min(0)]],
-      takeoff: [new Timestamp(0, 0), Validators.required],
-      landing: [new Timestamp(0, 0), Validators.required],
-      imageUrl: ['', [Validators.required, Validators.pattern('https?://.+')]],
-      activities: [[]],
-      rating: [null, [Validators.min(0), Validators.max(5)]],
+      price: this.#nfb.control<number>(0, [
+        Validators.required,
+        Validators.min(0),
+      ]),
+      takeoff: this.#nfb.control<Timestamp>(new Timestamp(0, 0), [
+        Validators.required,
+      ]),
+      landing: this.#nfb.control<Timestamp>(new Timestamp(0, 0), [
+        Validators.required,
+      ]),
+      imageUrl: this.#nfb.control<string>('', [
+        Validators.required,
+        Validators.pattern('https?://.+'),
+      ]),
+      activities: this.#nfb.control<string[]>([]),
+      rating: this.#nfb.control(0, [Validators.min(0), Validators.max(5)]),
     });
   }
 
@@ -116,7 +133,7 @@ export class EditPlacesFormComponent implements OnInit {
     return o1.toLowerCase() === o2.toLowerCase();
   }
   compareCitiesWith(o1: string, o2: string): boolean {
-    console.log(o1, o2)
+    console.log(o1, o2);
     return o1.toLowerCase().trim() === o2.toLowerCase();
   }
 }

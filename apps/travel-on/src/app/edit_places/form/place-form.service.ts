@@ -89,6 +89,6 @@ export class PlaceFormService {
   #initCurrentCountrySignal(
     currentCountry$: Observable<string>
   ): Signal<string> {
-    return toSignal(currentCountry$, { initialValue: 'russia' });
+    return toSignal(currentCountry$, { initialValue: '' });
   }
 }

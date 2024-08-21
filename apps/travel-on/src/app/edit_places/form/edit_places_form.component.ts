@@ -28,6 +28,7 @@ import { distinctUntilChanged, map, Observable } from 'rxjs';
 import { EditPlacesService } from '../../pages/edit_places/edit-places.service';
 import { Activity, DestinationItem, Places } from '../../places/places.model';
 import { PlaceFormService } from './place-form.service';
+import { compareString } from './form.validators';
 
 type PlaceForm = {
   destination: FormGroup<{
@@ -84,7 +85,6 @@ export class EditPlacesFormComponent implements OnInit {
   activitiesOptions = this.#placeFormService.getActivitiesOptions();
 
   ngOnInit(): void {
-    
     this.placesForm.setValue(this.place() as Places);
   }
 
@@ -95,20 +95,14 @@ export class EditPlacesFormComponent implements OnInit {
   onFileSelected(event: unknown): void {}
 
   compareWithCountries(o1: string, o2: string): boolean {
-    return o1.toLowerCase() === o2.toLowerCase();
+    return compareString(o1, o2);
   }
   compareCitiesWith(o1: string, o2: string): boolean {
-    return o1.toLowerCase() === o2.toLowerCase();
+    return compareString(o1, o2);
   }
 
   compareActivitiesWith(o1: Activity, o2: string): boolean {
-    return o1.name.toLowerCase() === o2.toLowerCase();
+    return compareString(o1.name, o2);
   }
 
-  #compareString(str1: string, str2: string): boolean {
-    if (!!str1 || !!str2) {
-      return false;
-    }
-    return str1.toLowerCase().trim() === str2.toLowerCase().trim();
-  }
-}
+ }

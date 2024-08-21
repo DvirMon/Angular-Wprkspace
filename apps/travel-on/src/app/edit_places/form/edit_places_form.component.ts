@@ -24,10 +24,23 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { distinctUntilChanged } from 'rxjs';
+import { distinctUntilChanged, map, Observable } from 'rxjs';
 import { EditPlacesService } from '../../pages/edit_places/edit-places.service';
 import { DestinationItem, Places } from '../../places/places.model';
-import { PlaceForm, PlaceFormService } from './place-form.service';
+import { PlaceFormService } from './place-form.service';
+
+type PlaceForm = {
+  destination: FormGroup<{
+    city: FormControl<string>;
+    country: FormControl<string>;
+  }>;
+  price: FormControl<number>;
+  takeoff: FormControl<Timestamp>;
+  landing: FormControl<Timestamp>;
+  imageUrl: FormControl<string>;
+  activities: FormControl<string[]>;
+  rating: FormControl<number>;
+};
 
 @Component({
   selector: 'to-edit-places-form',
@@ -52,34 +65,21 @@ import { PlaceForm, PlaceFormService } from './place-form.service';
   providers: [PlaceFormService],
 })
 export class EditPlacesFormComponent implements OnInit {
-  #editService = inject(EditPlacesService);
   #placeFormService = inject(PlaceFormService);
 
   place = input.required<Partial<Places>>();
 
-  placesForm: FormGroup<PlaceForm> = this.#placeFormService.setPlaceFormGroup();
-
-  destinations = toSignal(this.#editService.loadDestinationList(), {
-    initialValue: [],
-  });
+  placesForm: FormGroup<PlaceForm> = this.#placeFormService.getPlaceFormGroup();
 
   countriesOptions = this.#placeFormService.getCountriesOptions();
-  
-  currentCountry$ =
-    this.placesForm.controls.destination.controls.country.valueChanges.pipe(
-      distinctUntilChanged()
-    );
 
-  currentCountry = toSignal(this.currentCountry$, { initialValue: 'russia' });
+  #currentCountry$ = this.#placeFormService.getCountryValueChanges$(
+    this.placesForm
+  );
 
-  citiesOptions = computed(() => {
-    const found = this.destinations().find(
-      (des: DestinationItem) =>
-        des.country.toLowerCase() === this.currentCountry()
-    );
-
-    return found ? found.cities : [];
-  });
+  citiesOptions = this.#placeFormService.getCitiesOptions(
+    this.#currentCountry$
+  );
 
   ngOnInit(): void {
     this.placesForm.setValue(this.place() as Places);
@@ -91,11 +91,11 @@ export class EditPlacesFormComponent implements OnInit {
 
   onFileSelected(event: unknown): void {}
 
-
   compareWithCountries(o1: string, o2: string): boolean {
     return o1.toLowerCase() === o2.toLowerCase();
   }
   compareCitiesWith(o1: string, o2: string): boolean {
-    return o1.toLowerCase().trim() === o2.toLowerCase();
+    return o1.toLowerCase() === o2.toLowerCase();
   }
+
 }

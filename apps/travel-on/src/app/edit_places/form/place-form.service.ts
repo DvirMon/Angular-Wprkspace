@@ -1,4 +1,4 @@
-import { computed, inject } from '@angular/core';
+import { computed, inject, Signal } from '@angular/core';
 import { Timestamp } from '@angular/fire/firestore';
 import {
   FormControl,
@@ -8,6 +8,8 @@ import {
 } from '@angular/forms';
 import { EditPlacesService } from '../../pages/edit_places/edit-places.service';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { distinctUntilChanged, map, Observable } from 'rxjs';
+import { DestinationItem } from '../../places/places.model';
 
 export type PlaceForm = {
   destination: FormGroup<{
@@ -30,11 +32,29 @@ export class PlaceFormService {
     initialValue: [],
   });
 
-  getCountriesOptions() {
+  getCountriesOptions(): Signal<string[]> {
     return computed(() => this.#destinations().map((des) => des.country));
   }
 
-  setPlaceFormGroup(): FormGroup<PlaceForm> {
+  getCitiesOptions(currentCountry$: Observable<string>): Signal<string[]> {
+    const currentCountry = this.#initCurrentCountrySignal(currentCountry$);
+    return computed(() => {
+      const found = this.#destinations().find(
+        (des: DestinationItem) => des.country.toLowerCase() === currentCountry()
+      );
+
+      return found ? found.cities : [];
+    });
+  }
+
+  getCountryValueChanges$(form: FormGroup<PlaceForm>): Observable<string> {
+    return form.controls.destination.controls.country.valueChanges.pipe(
+      distinctUntilChanged(),
+      map((value: string) => value.toLowerCase())
+    );
+  }
+
+  getPlaceFormGroup(): FormGroup<PlaceForm> {
     return this.#nfb.group({
       destination: this.#nfb.group({
         city: this.#nfb.control<string>(''),
@@ -57,5 +77,11 @@ export class PlaceFormService {
       activities: this.#nfb.control<string[]>([]),
       rating: this.#nfb.control(0, [Validators.min(0), Validators.max(5)]),
     });
+  }
+
+  #initCurrentCountrySignal(
+    currentCountry$: Observable<string>
+  ): Signal<string> {
+    return toSignal(currentCountry$, { initialValue: 'russia' });
   }
 }

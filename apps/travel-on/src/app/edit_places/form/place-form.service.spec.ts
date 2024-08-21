@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { PlaceFormService } from '../../place-form/place-form.service';
+import { PlaceFormService } from './place-form.service';
 
 describe('PlaceFormService', () => {
   let service: PlaceFormService;

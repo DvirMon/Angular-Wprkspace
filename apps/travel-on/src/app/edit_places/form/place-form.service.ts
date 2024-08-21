@@ -10,6 +10,7 @@ import { EditPlacesService } from '../../pages/edit_places/edit-places.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { distinctUntilChanged, map, Observable } from 'rxjs';
 import { Activity, DestinationItem } from '../../places/places.model';
+import { maxSelectionValidator } from './form.validators';
 
 export type PlaceForm = {
   destination: FormGroup<{
@@ -31,7 +32,6 @@ export class PlaceFormService {
   #destinations = toSignal(this.#editService.loadDestinationList(), {
     initialValue: [],
   });
-
 
   getActivitiesOptions(): Signal<Activity[]> {
     return toSignal(this.#editService.loadActivitiesCollection(), {
@@ -81,7 +81,7 @@ export class PlaceFormService {
         Validators.required,
         Validators.pattern('https?://.+'),
       ]),
-      activities: this.#nfb.control<string[]>([]),
+      activities: this.#nfb.control<string[]>([], [maxSelectionValidator(5)]),
       rating: this.#nfb.control(0, [Validators.min(0), Validators.max(5)]),
     });
   }

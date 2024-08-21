@@ -1,7 +1,9 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {
   CollectionReference,
+  DocumentData,
   Firestore,
+  QuerySnapshot,
   collection,
   getDocs,
   query,
@@ -13,21 +15,23 @@ import { Places } from './places.model';
   providedIn: 'root',
 })
 export class PlacesHttpService {
-  private readonly vacationsRef: CollectionReference<Places>;
   private readonly VACATIONS_COLLECTION = 'vacations';
+  readonly #firestore = inject(Firestore);
 
-  constructor(private readonly firestore: Firestore) {
-    this.vacationsRef = collection(
-      this.firestore,
-      this.VACATIONS_COLLECTION
-    ) as CollectionReference<Places>;
-  }
+  constructor() {}
 
   public loadPlaces(): Observable<Places[]> {
     
-    const queryRef = query(this.vacationsRef);
+    const vacationsRef = collection(
+      this.#firestore,
+      this.VACATIONS_COLLECTION
+    ) as CollectionReference<Places>;
+    
+    const queryRef = query(vacationsRef);
+
+
     return from(getDocs(queryRef)).pipe(
-      map((querySnapshot) =>
+      map((querySnapshot: QuerySnapshot<Places, DocumentData>) =>
         querySnapshot.docs.map((doc) => {
           return { ...doc.data(), id: doc.id } as Places;
         })

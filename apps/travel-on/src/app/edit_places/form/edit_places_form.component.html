@@ -83,7 +83,7 @@
             multiple
           >
             @for (activity of activitiesOptions(); track $index) {
-            <mat-option [value]="activity">
+            <mat-option [value]="activity" toDisableIfMaxSelected>
               {{ activity.name }}
             </mat-option>
             }
@@ -104,7 +104,6 @@
     </div>
 
     <div class="upload-image-wrapper">
-
       <button (click)="fileUpload.click()" type="button">
         <mat-icon fontIcon="photo_library"></mat-icon>
         <input type="file" hidden #fileUpload />

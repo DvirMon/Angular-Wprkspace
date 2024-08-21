@@ -7,15 +7,12 @@ import {
   input,
   OnInit,
 } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { Timestamp } from '@angular/fire/firestore';
 import {
   FormControl,
   FormGroup,
   FormsModule,
-  NonNullableFormBuilder,
   ReactiveFormsModule,
-  Validators,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -24,11 +21,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { distinctUntilChanged, map, Observable } from 'rxjs';
-import { EditPlacesService } from '../../pages/edit_places/edit-places.service';
-import { Activity, DestinationItem, Places } from '../../places/places.model';
-import { PlaceFormService } from './place-form.service';
+import { Activity, Places } from '../../places/places.model';
+import { DisableIfMaxSelectedDirective } from './disable-max-selected.directive';
 import { compareString } from './form.validators';
+import { PlaceFormService } from './place-form.service';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 type PlaceForm = {
   destination: FormGroup<{
@@ -59,6 +56,7 @@ type PlaceForm = {
     MatSelectModule,
     MatButtonModule,
     MatIconModule,
+    DisableIfMaxSelectedDirective,
   ],
   templateUrl: './edit_places_form.component.html',
   styleUrl: './edit_places_form.component.scss',
@@ -84,7 +82,13 @@ export class EditPlacesFormComponent implements OnInit {
 
   activitiesOptions = this.#placeFormService.getActivitiesOptions();
 
+  isPlaceLoaded = computed(() => {
+    console.log(this.place());
+    return this.place() === undefined;
+  });
+
   ngOnInit(): void {
+
     this.placesForm.setValue(this.place() as Places);
   }
 
@@ -104,5 +108,4 @@ export class EditPlacesFormComponent implements OnInit {
   compareActivitiesWith(o1: Activity, o2: string): boolean {
     return compareString(o1.name, o2);
   }
-
- }
+}

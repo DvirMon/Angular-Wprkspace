@@ -129,11 +129,10 @@ export class EditPlacesFormComponent implements OnInit {
     });
   }
 
-  compareWith(o1: string, o2: string): boolean {
+  compareWithCountries(o1: string, o2: string): boolean {
     return o1.toLowerCase() === o2.toLowerCase();
   }
   compareCitiesWith(o1: string, o2: string): boolean {
-    console.log(o1, o2);
     return o1.toLowerCase().trim() === o2.toLowerCase();
   }
 }

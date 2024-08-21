@@ -34,14 +34,19 @@ export class DisableIfMaxSelectedDirective {
     initialValue: this.#control.valid as boolean,
   });
 
-  #controlValue$ = this.#control.control?.valueChanges;
+  #controlValue$ = this.#control.control?.valueChanges.pipe(
+    map((activities: Activity[]) =>
+      activities.map((value: Activity) => value.name)
+    ),
+    startWith(this.#control.value)
+  );
 
-  #controlValue = toSignal(this.#controlValue$ as Observable<Activity[]>, {
+  #controlValue = toSignal(this.#controlValue$ as Observable<string[]>, {
     initialValue: [],
   });
 
-  #isOptionNotInclude = computed(() =>
-    !this.#controlValue().includes(this.value())
+  #isOptionNotInclude = computed(
+    () => !this.#controlValue().includes(this.value().name)
   );
 
   isDisabled = computed(
@@ -50,24 +55,8 @@ export class DisableIfMaxSelectedDirective {
 
   constructor() {
     effect(() => {
-      this.#option.disabled = this.isDisabled() ;
+      this.#option.disabled = this.isDisabled();
     });
   }
 
-  // constructor() {
-
-  //   effect(() => {
-  //     if (this.value()) {
-  //       const value = this.value();
-  //       const controlValue = this.#control.value;
-  //       const { name } = value as Activity;
-
-  //       if (Array.isArray(controlValue)) {
-  //         const isFound = !!controlValue.find((item: string) => item === name);
-
-  //         this.#option.disabled = !isFound;
-  //       }
-  //     }
-  //   });
-  // }
 }

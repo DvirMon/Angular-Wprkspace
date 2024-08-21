@@ -82,11 +82,7 @@ export class EditPlacesFormComponent implements OnInit {
 
   activitiesOptions = this.#placeFormService.getActivitiesOptions();
 
-  isPlaceLoaded = computed(() => {
-    console.log(this.place());
-    return this.place() === undefined;
-  });
-
+ 
   ngOnInit(): void {
 
     this.placesForm.setValue(this.place() as Places);

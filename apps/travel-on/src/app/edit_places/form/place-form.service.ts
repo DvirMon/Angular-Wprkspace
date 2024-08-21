@@ -1,11 +1,13 @@
-import { inject } from '@angular/core';
+import { computed, inject } from '@angular/core';
 import { Timestamp } from '@angular/fire/firestore';
 import {
-  FormGroup,
   FormControl,
-  Validators,
+  FormGroup,
   NonNullableFormBuilder,
+  Validators,
 } from '@angular/forms';
+import { EditPlacesService } from '../../pages/edit_places/edit-places.service';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 export type PlaceForm = {
   destination: FormGroup<{
@@ -22,6 +24,15 @@ export type PlaceForm = {
 
 export class PlaceFormService {
   #nfb = inject(NonNullableFormBuilder);
+  #editService = inject(EditPlacesService);
+
+  #destinations = toSignal(this.#editService.loadDestinationList(), {
+    initialValue: [],
+  });
+
+  getCountriesOptions() {
+    return computed(() => this.#destinations().map((des) => des.country));
+  }
 
   setPlaceFormGroup(): FormGroup<PlaceForm> {
     return this.#nfb.group({

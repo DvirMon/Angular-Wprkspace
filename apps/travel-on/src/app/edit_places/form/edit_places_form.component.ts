@@ -63,10 +63,8 @@ export class EditPlacesFormComponent implements OnInit {
     initialValue: [],
   });
 
-  countriesOptions = computed(() =>
-    this.destinations().map((des) => des.country)
-  );
-
+  countriesOptions = this.#placeFormService.getCountriesOptions();
+  
   currentCountry$ =
     this.placesForm.controls.destination.controls.country.valueChanges.pipe(
       distinctUntilChanged()

@@ -10,8 +10,8 @@ import {
   QueryDocumentSnapshot,
   QuerySnapshot,
 } from '@angular/fire/firestore';
-import { from, map, Observable, shareReplay } from 'rxjs';
-import { Destination, DestinationItem, Places } from '../../places/places.model';
+import { from, map, Observable } from 'rxjs';
+import { DestinationItem, Places } from '../../places/places.model';
 
 @Injectable({
   providedIn: 'root',

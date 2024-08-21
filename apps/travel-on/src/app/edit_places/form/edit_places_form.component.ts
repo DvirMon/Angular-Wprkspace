@@ -24,7 +24,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { Destination, Places } from '../../places/places.model';
+import {
+  Destination,
+  DestinationItem,
+  Places,
+} from '../../places/places.model';
 import { EditPlacesService } from '../../pages/edit_places/edit-places.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { delay, distinctUntilKeyChanged, map, of, startWith } from 'rxjs';
@@ -68,19 +72,19 @@ export class EditPlacesFormComponent implements OnInit {
 
   currentCountry$ = this.placesForm.controls['destination'].valueChanges.pipe(
     distinctUntilKeyChanged('country'),
-    map((des: Destination) => des.country.toLowerCase())
+    map((des: DestinationItem) => des.country.toLowerCase())
   );
 
   currentCountry = toSignal(this.currentCountry$, { initialValue: 'russia' });
 
   citiesOptions = computed(() => {
 
-
     const found = this.destinations().find(
-      (des: Destination) => des.country.toLowerCase() === this.currentCountry()
+      (des: DestinationItem) =>
+        des.country.toLowerCase() === this.currentCountry()
     );
 
-    return found ? [found.city] : ['test'];
+    return found ? found.cities : [];
   });
 
   ngOnInit(): void {
@@ -112,6 +116,7 @@ export class EditPlacesFormComponent implements OnInit {
     return o1.toLowerCase() === o2.toLowerCase();
   }
   compareCitiesWith(o1: string, o2: string): boolean {
+    console.log(o1, o2)
     return o1.toLowerCase().trim() === o2.toLowerCase();
   }
 }

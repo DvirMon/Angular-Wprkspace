@@ -15,7 +15,7 @@ import {
   FormsModule,
   NonNullableFormBuilder,
   ReactiveFormsModule,
-  Validators
+  Validators,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -27,19 +27,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { distinctUntilChanged } from 'rxjs';
 import { EditPlacesService } from '../../pages/edit_places/edit-places.service';
 import { DestinationItem, Places } from '../../places/places.model';
-
-type PlaceForm = {
-  destination: FormGroup<{
-    city: FormControl<string>;
-    country: FormControl<string>;
-  }>;
-  price: FormControl<number>;
-  takeoff: FormControl<Timestamp>;
-  landing: FormControl<Timestamp>;
-  imageUrl: FormControl<string>;
-  activities: FormControl<string[]>;
-  rating: FormControl<number>;
-}
+import { PlaceForm, PlaceFormService } from './place-form.service';
 
 @Component({
   selector: 'to-edit-places-form',
@@ -61,16 +49,17 @@ type PlaceForm = {
   templateUrl: './edit_places_form.component.html',
   styleUrl: './edit_places_form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [PlaceFormService],
 })
 export class EditPlacesFormComponent implements OnInit {
-  #nfb = inject(NonNullableFormBuilder);
-  editService = inject(EditPlacesService);
+  #editService = inject(EditPlacesService);
+  #placeFormService = inject(PlaceFormService);
 
   place = input.required<Partial<Places>>();
 
-  placesForm: FormGroup<PlaceForm> = this.#setPlaceFormGroup();
+  placesForm: FormGroup<PlaceForm> = this.#placeFormService.setPlaceFormGroup();
 
-  destinations = toSignal(this.editService.loadDestinationList(), {
+  destinations = toSignal(this.#editService.loadDestinationList(), {
     initialValue: [],
   });
 
@@ -104,30 +93,6 @@ export class EditPlacesFormComponent implements OnInit {
 
   onFileSelected(event: unknown): void {}
 
-  #setPlaceFormGroup(): FormGroup<PlaceForm> {
-    return this.#nfb.group({
-      destination: this.#nfb.group({
-        city: this.#nfb.control<string>(''),
-        country: this.#nfb.control<string>(''),
-      }),
-      price: this.#nfb.control<number>(0, [
-        Validators.required,
-        Validators.min(0),
-      ]),
-      takeoff: this.#nfb.control<Timestamp>(new Timestamp(0, 0), [
-        Validators.required,
-      ]),
-      landing: this.#nfb.control<Timestamp>(new Timestamp(0, 0), [
-        Validators.required,
-      ]),
-      imageUrl: this.#nfb.control<string>('', [
-        Validators.required,
-        Validators.pattern('https?://.+'),
-      ]),
-      activities: this.#nfb.control<string[]>([]),
-      rating: this.#nfb.control(0, [Validators.min(0), Validators.max(5)]),
-    });
-  }
 
   compareWithCountries(o1: string, o2: string): boolean {
     return o1.toLowerCase() === o2.toLowerCase();

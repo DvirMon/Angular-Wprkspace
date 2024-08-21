@@ -15,21 +15,20 @@
             </mat-option>
             }
           </mat-select>
-
         </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>City</mat-label>
           <mat-select
-          [compareWith]="compareCitiesWith"
-          formControlName="city"
-          [value]="place().destination?.city"
-        >
-          @for (value of citiesOptions(); track $index) {
-          <mat-option [value]="value">
-            {{ value | titlecase }}
-          </mat-option>
-          }
-        </mat-select>
+            [compareWith]="compareCitiesWith"
+            formControlName="city"
+            [value]="place().destination?.city"
+          >
+            @for (value of citiesOptions(); track $index) {
+            <mat-option [value]="value">
+              {{ value | titlecase }}
+            </mat-option>
+            }
+          </mat-select>
         </mat-form-field>
       </section>
 
@@ -78,10 +77,14 @@
       <section class="form-row">
         <mat-form-field appearance="fill">
           <mat-label>Activities</mat-label>
-          <mat-select id="activities" formControlName="activities" multiple>
-            @for (activity of place().activities; track $index) {
+          <mat-select
+            [compareWith]="compareActivitiesWith"
+            formControlName="activities"
+            multiple
+          >
+            @for (activity of activitiesOptions(); track $index) {
             <mat-option [value]="activity">
-              {{ activity }}
+              {{ activity.name }}
             </mat-option>
             }
           </mat-select>

@@ -10,8 +10,8 @@ import {
   QueryDocumentSnapshot,
   QuerySnapshot,
 } from '@angular/fire/firestore';
-import { from, map, Observable } from 'rxjs';
-import { DestinationItem, Places } from '../../places/places.model';
+import { from, map, Observable, shareReplay } from 'rxjs';
+import { Activity, DestinationItem, Places } from '../../places/places.model';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +19,7 @@ import { DestinationItem, Places } from '../../places/places.model';
 export class EditPlacesService {
   readonly #VACATIONS_COLLECTION = 'vacations';
   readonly #DESTINATIONS_COLLECTION = 'destinations';
+  readonly #ACTIVITIES_COLLECTION = 'activities';
 
   readonly #firestore = inject(Firestore);
 
@@ -41,10 +42,18 @@ export class EditPlacesService {
             doc.data() as DestinationItem
         );
       }),
-      // shareReplay(1)
-      // map((destinations: Destination[]) =>
-      //   destinations.map((des) => des.country)
-      // )
+      shareReplay(1)
+    );
+  }
+  public loadActivitiesCollection(): Observable<Activity[]> {
+    const query = collection(this.#firestore, this.#ACTIVITIES_COLLECTION);
+    return from(getDocs(query)).pipe(
+      map((res: QuerySnapshot<DocumentData, DocumentData>) => {
+        return res.docs.map(
+          (doc: QueryDocumentSnapshot<DocumentData, DocumentData>) =>
+            ({ ...doc.data(), id: doc.id } as Activity)
+        );
+      })
     );
   }
 }

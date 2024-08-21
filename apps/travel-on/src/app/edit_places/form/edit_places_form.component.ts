@@ -26,7 +26,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { distinctUntilChanged, map, Observable } from 'rxjs';
 import { EditPlacesService } from '../../pages/edit_places/edit-places.service';
-import { DestinationItem, Places } from '../../places/places.model';
+import { Activity, DestinationItem, Places } from '../../places/places.model';
 import { PlaceFormService } from './place-form.service';
 
 type PlaceForm = {
@@ -81,7 +81,10 @@ export class EditPlacesFormComponent implements OnInit {
     this.#currentCountry$
   );
 
+  activitiesOptions = this.#placeFormService.getActivitiesOptions();
+
   ngOnInit(): void {
+    
     this.placesForm.setValue(this.place() as Places);
   }
 
@@ -98,4 +101,14 @@ export class EditPlacesFormComponent implements OnInit {
     return o1.toLowerCase() === o2.toLowerCase();
   }
 
+  compareActivitiesWith(o1: Activity, o2: string): boolean {
+    return o1.name.toLowerCase() === o2.toLowerCase();
+  }
+
+  #compareString(str1: string, str2: string): boolean {
+    if (!!str1 || !!str2) {
+      return false;
+    }
+    return str1.toLowerCase().trim() === str2.toLowerCase().trim();
+  }
 }

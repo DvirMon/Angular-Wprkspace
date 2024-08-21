@@ -9,7 +9,7 @@ import {
 import { EditPlacesService } from '../../pages/edit_places/edit-places.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { distinctUntilChanged, map, Observable } from 'rxjs';
-import { DestinationItem } from '../../places/places.model';
+import { Activity, DestinationItem } from '../../places/places.model';
 
 export type PlaceForm = {
   destination: FormGroup<{
@@ -31,6 +31,13 @@ export class PlaceFormService {
   #destinations = toSignal(this.#editService.loadDestinationList(), {
     initialValue: [],
   });
+
+
+  getActivitiesOptions(): Signal<Activity[]> {
+    return toSignal(this.#editService.loadActivitiesCollection(), {
+      initialValue: [],
+    });
+  }
 
   getCountriesOptions(): Signal<string[]> {
     return computed(() => this.#destinations().map((des) => des.country));

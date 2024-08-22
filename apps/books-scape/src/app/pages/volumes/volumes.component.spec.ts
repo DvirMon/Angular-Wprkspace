@@ -1,16 +1,24 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { VolumesPageComponent } from './volumes.component';
+import { provideHttpClient } from '@angular/common/http';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideRouter } from '@angular/router';
+import { appRoutes } from '../../app.routes';
 
-import { HomeComponent } from './books.component';
-
-describe('HomeComponent', () => {
-  let component: HomeComponent;
-  let fixture: ComponentFixture<HomeComponent>;
+describe('VolumesPageComponent', () => {
+  let component: VolumesPageComponent;
+  let fixture: ComponentFixture<VolumesPageComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HomeComponent],
+      imports: [VolumesPageComponent],
+      providers: [
+        provideHttpClient(),
+        provideAnimations(),
+        provideRouter(appRoutes),
+      ],
     });
-    fixture = TestBed.createComponent(HomeComponent);
+    fixture = TestBed.createComponent(VolumesPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PlacesComponent } from './places.component';
+import { PlacesPageComponent } from './places.component';
 
-describe('PlacesComponent', () => {
-  let component: PlacesComponent;
-  let fixture: ComponentFixture<PlacesComponent>;
+describe('PlacesPageComponent', () => {
+  let component: PlacesPageComponent;
+  let fixture: ComponentFixture<PlacesPageComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [PlacesComponent]
+      imports: [PlacesPageComponent]
     });
-    fixture = TestBed.createComponent(PlacesComponent);
+    fixture = TestBed.createComponent(PlacesPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { CanActivateFn } from '@angular/router';
 
-import { shelfGuard } from './checkout.guard';
+import { shelfGuard } from './shelf.guard';
 
 describe('shelfGuard', () => {
   const executeGuard: CanActivateFn = (...guardParameters) =>

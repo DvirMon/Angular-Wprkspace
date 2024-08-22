@@ -17,8 +17,9 @@
     "paths": {
       "@angular/*": ["./node_modules/@angular/*"],
       "@app/*": ["src/app/*"],
-      "@dom": ["libs/src/index.ts"],
       "@dom/components": ["libs/src/lib/dom/components/index.ts"],
+      "@dom/directives": ["libs/src/lib/dom/directives/index.ts"],
+      "@dom/helpers": ["libs/src/lib/dom/helpers/index.ts"],
       "@dom/components/card-button": [
         "libs/src/lib/dom/components/card-button/card-button.component.ts"
       ],
@@ -26,9 +27,6 @@
       "@dom/components/form/inputs/form-search-input": [
         "libs/src/lib/dom/components/form/inputs/form-search-input/search-input.component.ts"
       ],
-      "@dom/directives": ["libs/src.lib/dom/directives/index.ts"],
-      "@dom/helpers": ["libs/src.lib/dom/helpers/index.ts"],
-      "@dom/services": ["libs/src.lib/dom/services/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

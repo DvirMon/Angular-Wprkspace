@@ -26,7 +26,7 @@ import {
 import { MatIcon } from '@angular/material/icon';
 import { MatInput } from '@angular/material/input';
 import { MatSelect } from '@angular/material/select';
-import { FormAutocompleteComponent, getFormKeys } from '@dom';
+import { FormAutocompleteComponent, getFormKeys } from '@dom/components';
 import { WritableStateSource, patchState, signalState } from '@ngrx/signals';
 import { DropdownModule } from 'primeng/dropdown';
 import { Observable, of } from 'rxjs';

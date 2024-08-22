@@ -81,7 +81,7 @@ export class PlaceFormService {
         Validators.required,
         Validators.pattern('https?://.+'),
       ]),
-      activities: this.#nfb.control<string[]>([], [maxSelectionValidator(5)]),
+      activities: this.#nfb.control<string[]>([], [maxSelectionValidator(3)]),
       rating: this.#nfb.control(0, [Validators.min(0), Validators.max(5)]),
     });
   }

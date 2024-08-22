@@ -79,11 +79,16 @@
           <mat-label>Activities</mat-label>
           <mat-select
             [compareWith]="compareActivitiesWith"
+            
             formControlName="activities"
             multiple
           >
             @for (activity of activitiesOptions(); track $index) {
-            <mat-option [value]="activity" toDisableIfMaxSelected>
+            <mat-option
+              [value]="activity"
+              toDisableIfMaxSelected
+              [compareCallback]="compareCallback"
+            >
               {{ activity.name }}
             </mat-option>
             }

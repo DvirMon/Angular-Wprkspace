@@ -1,7 +1,11 @@
-import { AbstractControl, ValidatorFn } from '@angular/forms';
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+
+export interface MaxSelectionError extends ValidationErrors {
+  maxSelection: boolean;
+}
 
 export function maxSelectionValidator(max: number): ValidatorFn {
-  return (control: AbstractControl) => {
+  return (control: AbstractControl): MaxSelectionError | null => {
     const value = control.value;
     if (Array.isArray(value) && value.length > max - 1) {
       return { maxSelection: true };

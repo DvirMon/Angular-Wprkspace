@@ -82,9 +82,7 @@ export class EditPlacesFormComponent implements OnInit {
 
   activitiesOptions = this.#placeFormService.getActivitiesOptions();
 
- 
   ngOnInit(): void {
-
     this.placesForm.setValue(this.place() as Places);
   }
 
@@ -101,7 +99,11 @@ export class EditPlacesFormComponent implements OnInit {
     return compareString(o1, o2);
   }
 
-  compareActivitiesWith(o1: Activity, o2: string): boolean {
-    return compareString(o1.name, o2);
+  compareActivitiesWith(o1: Activity, o2: Activity): boolean {
+    return compareString(o1.name, o2.name);
+  }
+
+  compareCallback(option: Activity, selectedValues: Activity[]): boolean {
+    return selectedValues.includes(option);
   }
 }

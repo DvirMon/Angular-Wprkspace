@@ -2,16 +2,19 @@
   <div class="books-page">
     <header>
       <div class="search-wrapper">
+
         <dom-form-search-input
           [control]="searchControl"
           [initialValue]="initialValue()"
           (valueChanged)="onValueChanged($event)"
         ></dom-form-search-input>
+        
       </div>
     </header>
 
     <main class="books-wrapper">
-      @for (book of books(); track book.id) {
+      @for (book of books(); track book.id) { @defer {
+
       <div class="book-card-wrapper">
         <books-scape-book-card
           [book]="book"
@@ -19,8 +22,7 @@
           (infoSelected)="onInfo($event)"
         ></books-scape-book-card>
       </div>
-
-      }
+      } }
     </main>
   </div>
 </books-scape-layout>

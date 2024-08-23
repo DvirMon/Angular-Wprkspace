@@ -1,15 +1,46 @@
 <form [formGroup]="placesForm" (ngSubmit)="onSubmit()">
   <div class="form-container">
     <div>
-      <section class="form-row">
+      <section class="form-row" formGroupName="destination">
         <mat-form-field appearance="fill">
+          <mat-label>Countries</mat-label>
+          <mat-select
+            [compareWith]="compareWithCountries"
+            formControlName="country"
+            [value]="place().destination?.country"
+          >
+            @for (value of countriesOptions(); track $index) {
+            <mat-option [value]="value">
+              {{ value | titlecase }}
+            </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>City</mat-label>
+          <mat-select
+            [compareWith]="compareCitiesWith"
+            formControlName="city"
+            [value]="place().destination?.city"
+          >
+            @for (value of citiesOptions(); track $index) {
+            <mat-option [value]="value">
+              {{ value | titlecase }}
+            </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </section>
+
+      <section class="form-row">
+        <!-- <mat-form-field appearance="fill">
           <mat-label>Destination</mat-label>
           <input matInput id="destination" formControlName="destination" />
-        </mat-form-field>
+        </mat-form-field> -->
 
         <mat-form-field appearance="fill">
           <mat-label>Price</mat-label>
-          <input matInput id="price" formControlName="price" type="number" />
+          <input matInput formControlName="price" type="number" />
         </mat-form-field>
       </section>
 
@@ -46,13 +77,21 @@
       <section class="form-row">
         <mat-form-field appearance="fill">
           <mat-label>Activities</mat-label>
-          <mat-select id="activities" formControlName="activities" multiple>
+          <mat-select
+            [compareWith]="compareActivitiesWith"
+            
+            formControlName="activities"
+            multiple
+          >
+            @for (activity of activitiesOptions(); track $index) {
             <mat-option
-              *ngFor="let activity of place().activities"
               [value]="activity"
+              toDisableIfMaxSelected
+              [compareCallback]="compareCallback"
             >
-              {{ activity }}
+              {{ activity.name }}
             </mat-option>
+            }
           </mat-select>
         </mat-form-field>
         <mat-form-field appearance="fill">
@@ -71,7 +110,6 @@
 
     <div class="upload-image-wrapper">
       <button (click)="fileUpload.click()" type="button">
-        
         <mat-icon fontIcon="photo_library"></mat-icon>
         <input type="file" hidden #fileUpload />
         <span>Upload Image</span>

@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { PlacesHttpService } from './places-http.service';
+import { PlaceFormService } from './place-form.service';
 
-describe('PlacesHttpService', () => {
-  let service: PlacesHttpService;
+describe('PlaceFormService', () => {
+  let service: PlaceFormService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(PlacesHttpService);
+    service = TestBed.inject(PlaceFormService);
   });
 
   it('should be created', () => {

@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import {
   Component,
   InputSignal,
-  OutputEmitterRef,
   effect,
   input,
   output
@@ -39,8 +38,8 @@ export class SearchInputComponent {
 
   valueChanged = output<string>();
 
-  private handleValueChanges = createValueChangesEmitter(
-    (value) => this.valueChanged.emit(value)
+  private handleValueChanges = createValueChangesEmitter((value) =>
+    this.valueChanged.emit(value)
   );
 
   constructor() {

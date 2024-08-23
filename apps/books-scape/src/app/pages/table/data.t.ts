@@ -1,4 +1,4 @@
-import { GridBaseColDef } from '@dom';
+import { GridBaseColDef } from '@dom/components';
 
 export interface PeriodicElement {
   name: string;

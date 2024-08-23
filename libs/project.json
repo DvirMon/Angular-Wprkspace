@@ -1,7 +1,7 @@
 {
   "name": "dom",
   "$schema": "../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/src",
+  "sourceRoot": "libs/src/lib/dom",
   "prefix": "dom",
   "tags": [],
   "projectType": "library",

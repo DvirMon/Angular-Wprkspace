@@ -9,11 +9,11 @@ import {
 import { JsonPipe } from '@angular/common';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SearchInputComponent } from '@dom/components';
 import { BookCardComponent } from '../../books/book-card/book-card.component';
 import { Book } from '../../books/books';
 import { LayoutComponent } from '../../layout/layout.component';
 import { AppStore } from '../../store/store';
+import { SearchInputComponent } from '@dom/components/form/inputs/form-search-input';
 
 @Component({
   selector: 'books-scape-volume-page',

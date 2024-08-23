@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BookshelfPageComponent } from './basket.component';
+import { BookshelfPageComponent } from './shelf.component';
 
 describe('BookshelfPageComponent', () => {
   let component: BookshelfPageComponent;

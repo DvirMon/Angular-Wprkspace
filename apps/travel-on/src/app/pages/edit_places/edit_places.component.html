@@ -1,1 +1,4 @@
-<to-edit-places-form [place]="placeItem"></to-edit-places-form>
+@if (!isPlaceEmpty()) {
+
+<to-edit-places-form [place]="placeItem()"></to-edit-places-form>
+}

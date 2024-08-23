@@ -12,7 +12,7 @@ import {
   TableActionCellComponent,
   TableComponent,
   TableFormCellComponent,
-} from '@dom';
+} from '@dom/components';
 import { COLUMNS, ELEMENT_DATA, PeriodicElement } from './data.t';
 
 

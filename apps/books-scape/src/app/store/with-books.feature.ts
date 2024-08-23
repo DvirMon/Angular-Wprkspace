@@ -10,7 +10,7 @@ import {
   loadSlice,
   onLoadCollection,
   onUpdateCollection
-} from '@dom';
+} from '@dom/helpers';
 import { Book } from '../books/books';
 
 const COLLECTION = 'volumes';

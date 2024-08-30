@@ -23,10 +23,21 @@
       "@dom/components/card-button": [
         "libs/src/lib/dom/components/card-button/card-button.component.ts"
       ],
-
+      "@dom/components/divider-header": [
+        "libs/src/lib/dom/components/divider-header/divider-header.component"
+      ],
+      "@dom/components/flip-container": [
+        "libs/src/lib/dom/components/flip-container/flip-container.component"
+      ],
+      "@dom/components/floating-button": [
+        "libs/src/lib/dom/components/floating-button/floating-button.component"
+      ],
+      "@dom/components/info-card": [
+        "libs/src/lib/dom/components/info-card/info-card.component"
+      ],
       "@dom/components/form/inputs/form-search-input": [
         "libs/src/lib/dom/components/form/inputs/form-search-input/search-input.component.ts"
-      ],
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

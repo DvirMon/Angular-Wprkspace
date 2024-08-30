@@ -5,7 +5,7 @@ import {
   WritableSignal,
   inject,
   input,
-  output
+  output,
 } from '@angular/core';
 import {
   FormControl,
@@ -17,14 +17,15 @@ import {
 import { MatButton } from '@angular/material/button';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
+
+import { DEFAULT_EMAIL } from '../../../utils/constants';
 import {
-  DividerHeaderComponent,
   FormInputComponent,
   FormServerError,
   getFormKeys,
   handleServerErrorEffect,
-} from '@dom';
-import { DEFAULT_EMAIL } from '../../../utils/constants';
+} from '@dom/components';
+import { DividerHeaderComponent } from '@dom/components/divider-header';
 
 interface ResetContactForm {
   email: FormControl<string>;

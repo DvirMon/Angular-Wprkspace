@@ -1,4 +1,4 @@
-import { FormServerError } from "@dom";
+import { FormServerError } from "@dom/components";
 
 export interface User {
   userId: string;

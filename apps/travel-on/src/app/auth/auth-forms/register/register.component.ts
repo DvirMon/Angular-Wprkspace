@@ -19,7 +19,6 @@ import {
 import { MatButton } from '@angular/material/button';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import {
-  DividerHeaderComponent,
   FormInputComponent,
   FormServerError,
   getFormKeys,
@@ -28,6 +27,7 @@ import {
 } from '@dom/components';
 import { Register } from '../../index';
 import { DEFAULT_EMAIL } from '../../utils/constants';
+import { DividerHeaderComponent } from '@dom/components/divider-header';
 
 interface RegisterForm {
   email: FormControl<string>;

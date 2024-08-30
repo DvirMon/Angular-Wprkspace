@@ -2,7 +2,7 @@ import { Location } from '@angular/common';
 import { Injector, inject, runInInjectionContext } from '@angular/core';
 import { UserCredential, User as UserFirebase } from '@angular/fire/auth';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { FormServerError } from '@dom';
+import { FormServerError } from '@dom/components';
 import { Observable, OperatorFunction } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from './auth.model';
@@ -63,7 +63,7 @@ function mapUser(user: UserFirebase): User {
   } as User;
 }
 
-export function mapAuthServerError(code: string) :FormServerError{
+export function mapAuthServerError(code: string): FormServerError {
   const authErrorMessages: { [errorCode: string]: FormServerError } = {
     'auth/user-not-found': {
       control: 'email',

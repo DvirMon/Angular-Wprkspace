@@ -9,7 +9,6 @@ import {
   WritableSignal,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { CardButtonComponent, FormServerError } from '@dom';
 import { exhaustMap, Subject } from 'rxjs';
 import {
   AuthDialogEvent,
@@ -23,6 +22,8 @@ import {
 import { AuthStore } from '../../auth/store/store';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { ResetService } from './reset.service';
+import { FormServerError } from '@dom/components';
+import { CardButtonComponent } from '@dom/components/card-button';
 
 @Component({
   selector: 'to-reset',

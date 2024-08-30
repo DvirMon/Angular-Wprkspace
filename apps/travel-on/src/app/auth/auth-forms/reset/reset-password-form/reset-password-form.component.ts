@@ -1,29 +1,24 @@
-import { JsonPipe, TitleCasePipe } from "@angular/common";
-import {
-  Component,
-  WritableSignal,
-  inject,
-  output
-} from "@angular/core";
+import { JsonPipe, TitleCasePipe } from '@angular/common';
+import { Component, WritableSignal, inject, output } from '@angular/core';
 import {
   FormControl,
   FormGroup,
   NonNullableFormBuilder,
   ReactiveFormsModule,
   Validators,
-} from "@angular/forms";
-import { MatButton } from "@angular/material/button";
-import { MatCard, MatCardContent } from "@angular/material/card";
-import { MatIcon } from "@angular/material/icon";
-import { DividerHeaderComponent, FormInputComponent, getFormKeys } from "@dom/components";
-
+} from '@angular/forms';
+import { MatButton } from '@angular/material/button';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { MatIcon } from '@angular/material/icon';
+import { DividerHeaderComponent } from '@dom/components/divider-header';
+import { FormInputComponent, getFormKeys } from '@dom/components';
 
 interface ResetPasswordForm {
   newPassword: FormControl<string>;
 }
 
 @Component({
-  selector: "to-reset-password-form",
+  selector: 'to-reset-password-form',
   standalone: true,
   imports: [
     ReactiveFormsModule,
@@ -36,8 +31,8 @@ interface ResetPasswordForm {
     FormInputComponent,
     DividerHeaderComponent,
   ],
-  templateUrl: "./reset-password-form.component.html",
-  styleUrl: "./reset-password-form.component.scss",
+  templateUrl: './reset-password-form.component.html',
+  styleUrl: './reset-password-form.component.scss',
 })
 export class ResetPasswordFormComponent {
   public readonly resetPasswordFormGroup: FormGroup<ResetPasswordForm>;
@@ -53,7 +48,7 @@ export class ResetPasswordFormComponent {
   private _buildResetForm(): FormGroup<ResetPasswordForm> {
     return inject(NonNullableFormBuilder).group({
       newPassword: [
-        "abcdefgh",
+        'abcdefgh',
         [
           Validators.required,
           Validators.minLength(8),

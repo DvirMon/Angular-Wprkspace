@@ -5,7 +5,7 @@ import {
   LoaderService,
   createLoader,
   loadSlice,
-} from '@dom';
+} from '@dom/helpers';
 import { tapResponse } from '@ngrx/operators';
 import {
   patchState,

@@ -9,7 +9,7 @@ import {
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { createValueChangesEmitter } from '../../helper';
+import { createValueChangesEmitter } from '../../helpers';
 
 export interface SearchMediaResultsData {
   totalMediaResults: number;

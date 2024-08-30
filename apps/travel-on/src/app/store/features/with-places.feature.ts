@@ -1,12 +1,12 @@
+import { signalStoreFeature, withMethods, withState } from '@ngrx/signals';
+import { Places } from '../../places/places.model';
 import {
-  Entity,
   EntityLoader,
   LoaderService,
   createLoader,
-  loadSlice
-} from '@dom';
-import { signalStoreFeature, withMethods, withState } from '@ngrx/signals';
-import { Places } from '../../places/places.model';
+  loadSlice,
+  Entity,
+} from '@dom/helpers';
 
 interface PlacesState {
   places: Places[];

@@ -11,8 +11,8 @@ import { FormControl, FormGroup, ValidationErrors } from '@angular/forms';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { Observable, pipe } from 'rxjs';
 import { map, startWith, tap } from 'rxjs/operators';
-import { errorMessageMap } from './constants';
-import { FormServerError } from './types';
+import { errorMessageMap } from '../constants';
+import { FormServerError } from '../types';
 
 @Injectable({
   providedIn: 'root',

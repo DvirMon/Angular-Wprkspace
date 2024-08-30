@@ -9,7 +9,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
-import { InfoCardComponent } from '@dom/components';
+import { InfoCardComponent } from '@dom/components/info-card';
 
 @Component({
   selector: 'to-reset-password-dialog',

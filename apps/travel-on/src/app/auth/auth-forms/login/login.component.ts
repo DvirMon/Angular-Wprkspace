@@ -6,7 +6,7 @@ import {
   input,
   output,
   signal,
-  WritableSignal
+  WritableSignal,
 } from '@angular/core';
 import {
   FormControl,
@@ -28,16 +28,16 @@ import { MatIcon, MatIconRegistry } from '@angular/material/icon';
 import { MatInput } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { DomSanitizer } from '@angular/platform-browser';
-import {
-  DividerHeaderComponent,
-  FormErrorService,
-  FormInputComponent,
-  FormServerError,
-  getFormKeys,
-  InputType,
-} from '@dom';
+
 import { EmailAndPasswordSignIn, SignInEvent, SignInMethod } from '../../utils';
 import { DEFAULT_EMAIL } from '../../utils/constants';
+
+import { DividerHeaderComponent } from '@dom/components/divider-header';
+import { getFormKeys } from '@dom/components/form/helpers';
+import { FormInputComponent } from '@dom/components/form/inputs/form-input';
+import { InputType } from '@dom/components/form/models';
+import { FormErrorService } from '@dom/components/form/services';
+import { FormServerError } from '@dom/components/form/types';
 
 interface LoginForm {
   email: FormControl<string>;
@@ -74,9 +74,8 @@ export class LoginFormComponent {
   #formError = inject(FormErrorService);
 
   public readonly serverError = input<FormServerError>();
-  
-  public readonly loginFormGroup: FormGroup<LoginForm>;
 
+  public readonly loginFormGroup: FormGroup<LoginForm>;
 
   public readonly errorsMap: { [key: string]: ValidationErrors } = {
     password: {

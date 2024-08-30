@@ -10,8 +10,9 @@ import {
 import { MatButton } from '@angular/material/button';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
+import { FormInputComponent } from '@dom/components/form/inputs/form-input';
 import { DividerHeaderComponent } from '@dom/components/divider-header';
-import { FormInputComponent, getFormKeys } from '@dom/components';
+import { getFormKeys } from '@dom/components/form/helpers';
 
 interface ResetPasswordForm {
   newPassword: FormControl<string>;

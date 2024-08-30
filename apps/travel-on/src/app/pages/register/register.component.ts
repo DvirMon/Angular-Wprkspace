@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { Register, RegisterFormComponent } from '../../auth';
 import { AuthStore } from '../../auth/store/store';
-import { FormServerError } from '@dom/components';
+import { FormServerError } from '@dom/components/form/types';
 import { CardButtonComponent } from '@dom/components/card-button';
 
 @Component({

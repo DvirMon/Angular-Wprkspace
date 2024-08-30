@@ -22,7 +22,7 @@ import {
 import { AuthStore } from '../../auth/store/store';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { ResetService } from './reset.service';
-import { FormServerError } from '@dom/components';
+import { FormServerError } from '@dom/components/form/types';
 import { CardButtonComponent } from '@dom/components/card-button';
 
 @Component({

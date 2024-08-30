@@ -18,16 +18,14 @@ import {
 } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatCard, MatCardContent } from '@angular/material/card';
-import {
-  FormInputComponent,
-  FormServerError,
-  getFormKeys,
-  handleServerErrorEffect,
-  InputType,
-} from '@dom/components';
+
 import { Register } from '../../index';
 import { DEFAULT_EMAIL } from '../../utils/constants';
 import { DividerHeaderComponent } from '@dom/components/divider-header';
+import { FormInputComponent } from '@dom/components/form/inputs/form-input';
+import { getFormKeys, handleServerErrorEffect } from '@dom/components/form/helpers';
+import { FormServerError } from '@dom/components/form/types';
+import { InputType } from '@dom/components/form/models';
 
 interface RegisterForm {
   email: FormControl<string>;

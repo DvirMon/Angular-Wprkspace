@@ -2,7 +2,7 @@ import { Location } from '@angular/common';
 import { Injector, inject, runInInjectionContext } from '@angular/core';
 import { UserCredential, User as UserFirebase } from '@angular/fire/auth';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { FormServerError } from '@dom/components';
+import { FormServerError } from '@dom/components/form/types';
 import { Observable, OperatorFunction } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from './auth.model';

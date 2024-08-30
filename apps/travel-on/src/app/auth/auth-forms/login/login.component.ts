@@ -31,14 +31,13 @@ import { DomSanitizer } from '@angular/platform-browser';
 
 import { EmailAndPasswordSignIn, SignInEvent, SignInMethod } from '../../utils';
 import { DEFAULT_EMAIL } from '../../utils/constants';
-import {
-  FormInputComponent,
-  FormErrorService,
-  FormServerError,
-  InputType,
-  getFormKeys,
-} from '@dom/components';
+
 import { DividerHeaderComponent } from '@dom/components/divider-header';
+import { FormErrorService } from '@dom/components';
+import { getFormKeys } from '@dom/components/form/helpers';
+import { FormServerError } from '@dom/components/form/types';
+import { InputType } from '@dom/components/form/models';
+import { FormInputComponent } from '@dom/components/form/inputs/form-input';
 
 interface LoginForm {
   email: FormControl<string>;

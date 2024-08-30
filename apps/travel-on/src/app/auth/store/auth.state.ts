@@ -1,4 +1,4 @@
-import { FormServerError } from "@dom/components";
+import { FormServerError } from "@dom/components/form/types";
 import { AuthEvent, User } from "../utils/auth.model";
 
 export interface AuthState {

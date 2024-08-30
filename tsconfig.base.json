@@ -17,11 +17,10 @@
     "paths": {
       "@angular/*": ["./node_modules/@angular/*"],
       "@app/*": ["src/app/*"],
-      "@dom/components": ["libs/src/lib/dom/components/index.ts"],
       "@dom/directives": ["libs/src/lib/dom/directives/index.ts"],
       "@dom/helpers": ["libs/src/lib/dom/helpers/index.ts"],
       "@dom/components/card-button": [
-        "libs/src/lib/dom/components/card-button/card-button.component.ts"
+        "libs/src/lib/dom/components/card-button/card-button.component"
       ],
       "@dom/components/divider-header": [
         "libs/src/lib/dom/components/divider-header/divider-header.component"
@@ -35,9 +34,27 @@
       "@dom/components/info-card": [
         "libs/src/lib/dom/components/info-card/info-card.component"
       ],
+      "@dom/components/form/types": [
+        "libs/src/lib/dom/components/form/types.ts"
+      ],
+      "@dom/components/form/helpers": [
+        "libs/src/lib/dom/components/form/helpers.ts"
+      ],
+      "@dom/components/form/models": [
+        "libs/src/lib/dom/components/form/models/input.types.ts"
+      ],
       "@dom/components/form/inputs/form-search-input": [
-        "libs/src/lib/dom/components/form/inputs/form-search-input/search-input.component.ts"
-      ]
+        "libs/src/lib/dom/components/form/inputs/form-search/form-search.component.ts",
+      ],
+      "@dom/components/form/inputs/form-input": [
+        "libs/src/lib/dom/components/form/inputs/form-input/form-input.component.ts"
+      ],
+      "@dom/components/form/inputs/form-autocomplete": [
+        "libs/src/lib/dom/components/form/inputs/form-autocomplete/form-autocomplete.component.ts"
+      ],
+      "@dom/components/table": [
+        "libs/src/lib/dom/components/table/index.ts"
+      ],
     }
   },
   "exclude": ["node_modules", "tmp"]

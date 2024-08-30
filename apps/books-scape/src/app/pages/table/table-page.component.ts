@@ -4,17 +4,16 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { Observable, of } from 'rxjs';
 import { LayoutComponent } from '../../layout/layout.component';
 
+import { COLUMNS, ELEMENT_DATA, PeriodicElement } from './data.t';
 import {
+  TableComponent,
+  TableActionCellComponent,
   ActionCellDirective,
   FormCellDirective,
+  TableFormCellComponent,
   GridBaseColDef,
   GridRowModes,
-  TableActionCellComponent,
-  TableComponent,
-  TableFormCellComponent,
-} from '@dom/components';
-import { COLUMNS, ELEMENT_DATA, PeriodicElement } from './data.t';
-
+} from '@dom/components/table';
 
 @Component({
   selector: 'books-scape-page-table',

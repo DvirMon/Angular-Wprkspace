@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 import { Observable, Unsubscribable } from 'rxjs';
 import { LoginFormComponent, SignInEvent } from '../../auth';
 import { AuthStore } from '../../auth/store/store';
-import { FormServerError } from '@dom/components';
+import { FormServerError } from '@dom/components/form/types';
 import { CardButtonComponent } from '@dom/components/card-button';
 
 interface LoginStore {

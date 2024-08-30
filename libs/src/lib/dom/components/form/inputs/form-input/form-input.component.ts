@@ -9,7 +9,7 @@ import {
   inject,
   input,
   output,
-  signal
+  signal,
 } from '@angular/core';
 import {
   AbstractControl,
@@ -19,7 +19,7 @@ import {
 } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { FormErrorService } from '../../form-error.service';
+import { FormErrorService } from '../../services/form-error.service';
 import { InputType } from '../../models/input.types';
 
 @Component({

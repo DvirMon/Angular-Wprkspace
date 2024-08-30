@@ -40,6 +40,9 @@
       "@dom/components/form/helpers": [
         "libs/src/lib/dom/components/form/helpers.ts"
       ],
+      "@dom/components/form/services": [
+        "libs/src/lib/dom/components/form/services/form-error.service.ts"
+      ],
       "@dom/components/form/models": [
         "libs/src/lib/dom/components/form/models/input.types.ts"
       ],

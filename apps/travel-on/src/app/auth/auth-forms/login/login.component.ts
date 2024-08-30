@@ -33,11 +33,11 @@ import { EmailAndPasswordSignIn, SignInEvent, SignInMethod } from '../../utils';
 import { DEFAULT_EMAIL } from '../../utils/constants';
 
 import { DividerHeaderComponent } from '@dom/components/divider-header';
-import { FormErrorService } from '@dom/components';
 import { getFormKeys } from '@dom/components/form/helpers';
-import { FormServerError } from '@dom/components/form/types';
-import { InputType } from '@dom/components/form/models';
 import { FormInputComponent } from '@dom/components/form/inputs/form-input';
+import { InputType } from '@dom/components/form/models';
+import { FormErrorService } from '@dom/components/form/services';
+import { FormServerError } from '@dom/components/form/types';
 
 interface LoginForm {
   email: FormControl<string>;

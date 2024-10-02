@@ -19,7 +19,6 @@ export class FilterStrategyService<T> {
   #injector = inject(Injector);
 
   constructor() {
-    // this.#setStrategies();
 
     this.#setBuiltInStrategyFactories();
 
@@ -29,21 +28,26 @@ export class FilterStrategyService<T> {
       });
     }
   }
+
   getStrategy(operation: string): FilterStrategy<T> | undefined {
-    // Step 1: Try to get the built-in strategy factory or undefined
+    const strategy = this.#strategies.get(operation);
+    if (strategy) {
+      return strategy;
+    }
+    console.log('called here')
+    return this.#createStrategy(operation);
+  }
+
+  #createStrategy(operation: string): FilterStrategy<T> | undefined {
     const strategyFactory = this.#strategyFactories.get(operation);
 
-    // Step 2: Check if it's a built-in operation (returns true or false)
-    const isBuiltInOperation = Object.values(FilterOperation).includes(
-      operation as FilterOperation
-    );
+    if (!strategyFactory && this.#isBuiltInOperation(operation)) {
+      throw new Error(
+        `Required built-in strategy for operation "${operation}" not found.`
+      );
+    }
 
-    // Step 3: Immediately throw if it's a required built-in strategy but undefined
-    isBuiltInOperation &&
-      !strategyFactory &&
-      this.#throwMissingStrategyError(operation);
-
-    const strategy = strategyFactory?.() || this.#strategies.get(operation);
+    const strategy = strategyFactory?.();
 
     strategy ?? console.warn(`No strategy found for operation "${operation}".`);
 
@@ -61,19 +65,17 @@ export class FilterStrategyService<T> {
     this.#strategyFactories.set(FilterOperation.CONTAINS, () =>
       this.#injector.get(ContainsStrategy)
     );
-    // this.#strategyFactories.set(FilterOperation.GREATER_THAN, () =>
-    //   this.#injector.get(GreaterThanStrategy)
-    // );
-    // this.#strategyFactories.set(FilterOperation.LESS_THAN, () =>
-    //   this.#injector.get(LessThanStrategy)
-    // );
-  }
-
-  #throwMissingStrategyError(operation: string): never {
-    console.error(`Strategy for operation "${operation}" not found.`);
-    throw new Error(
-      `Required built-in strategy for operation "${operation}" not found.`
+    this.#strategyFactories.set(FilterOperation.GREATER_THAN, () =>
+      this.#injector.get(GreaterThanStrategy)
+    );
+    this.#strategyFactories.set(FilterOperation.LESS_THAN, () =>
+      this.#injector.get(LessThanStrategy)
     );
   }
 
+  #isBuiltInOperation(operation: string): boolean {
+    return Object.values(FilterOperation).includes(
+      operation as FilterOperation
+    );
+  }
 }

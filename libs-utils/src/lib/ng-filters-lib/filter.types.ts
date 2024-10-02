@@ -29,6 +29,8 @@ export interface FilterCriteria<T> {
   key: string; // Access the data in the object
   operation: string;
   value: unknown; // The value to filter by
+
+  // TODO ysu proxy instead of a function?
   preprocess?: (value: unknown) => unknown; // User-defined preprocessing logic;
 }
 

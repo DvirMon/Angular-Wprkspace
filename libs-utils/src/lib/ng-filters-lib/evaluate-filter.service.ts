@@ -1,11 +1,9 @@
-import { inject, Injectable } from '@angular/core';
+import { inject } from '@angular/core';
+import { AbstractEvaluate } from './abstract-evaluate';
 import { FilterStrategyService } from './filter-strategy.service';
 import { FilterCriteria, LOGICAL_OPERATOR } from './filter.types';
-import { AbstractEvaluate } from './abstract-evaluate';
 
-@Injectable({
-  providedIn: 'root', // Register as a singleton service
-})
+
 export class EvaluateFilterService<T> extends AbstractEvaluate<T> {
   #strategyService = inject(FilterStrategyService);
   #logicalOperator = inject(LOGICAL_OPERATOR);
@@ -35,7 +33,11 @@ export class EvaluateFilterService<T> extends AbstractEvaluate<T> {
     item: Record<string, any>,
     criterion: FilterCriteria<T>
   ): boolean {
+    
     const strategy = this.#strategyService.getStrategy(criterion.operation);
+
+    
+
     let value = this.#getNestedValue(item, criterion.key as string);
 
     if (criterion.preprocess) {

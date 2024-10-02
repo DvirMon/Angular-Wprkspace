@@ -24,15 +24,4 @@ export abstract class AbstractFilter<T> implements FilterManager<T> {
 
   // Method to set the filter configuration
   abstract setFilterCriteria(config: FilterCriteria<T>[]): void;
-
-  // Abstract method for evaluating a single criterion against an item
-  protected abstract evaluateCriterion(
-    item: T,
-    criterion: FilterCriteria<T>
-  ): boolean;
-
-  // Helper method to resolve nested properties - could be made protected utility
-  //   protected resolveNestedValue(item: T, key: string): string {
-  //     return key.split('.').reduce((acc, part) => acc && acc[part], item);
-  //   }
 }

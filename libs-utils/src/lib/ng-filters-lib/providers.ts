@@ -16,19 +16,13 @@ function provideFilterStrategies(): Provider[] {
 function provideLogicOperator(value: LogicalOperator = 'AND'): Provider {
   return { provide: LOGICAL_OPERATOR, useValue: value };
 }
-
-function provideEvaluateFilterService(
-  logicalOperator: LogicalOperator = 'AND'
-): Provider[] {
-  return [
-    { provide: LOGICAL_OPERATOR, useValue: logicalOperator }, // Provide LOGICAL_OPERATOR
-    { provide: EvaluateFilterService, useClass: EvaluateFilterService }, // Provide the service
-  ];
+function provideEvaluate(): Provider {
+  return { provide: AbstractEvaluate, useClass: EvaluateFilterService };
 }
 
 export function provideFilters(config?: FiltersConfig): Provider[] {
   return [
-    { provide: AbstractEvaluate, useClass: EvaluateFilterService },
+    provideEvaluate(),
     provideFilterStrategies(),
     provideLogicOperator(config?.logicalOperator),
   ];

@@ -34,9 +34,7 @@ export function withFilter() {
   );
 }
 
-export function createFilterCriteria(
-  searchTerm: string
-): FilterCriteria<MediaResult>[] {
+export function createFilterCriteria(searchTerm: string): FilterCriteria[] {
   return [
     { key: 'Title', value: searchTerm, operation: FilterOperation.CONTAINS },
     {

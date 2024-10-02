@@ -1,4 +1,5 @@
 import { InjectionToken } from '@angular/core';
+import { AbstractEvaluate } from './abstract-evaluate';
 
 // Represents a basic filter operation type
 
@@ -25,7 +26,7 @@ type NestedKeys<T> = {
 }[keyof T];
 
 // Represents the filter criteria for a single property
-export interface FilterCriteria<T> {
+export interface FilterCriteria {
   key: string; // Access the data in the object
   operation: string;
   value: unknown; // The value to filter by
@@ -34,10 +35,11 @@ export interface FilterCriteria<T> {
   preprocess?: (value: unknown) => unknown; // User-defined preprocessing logic;
 }
 
-export interface RangeFilterCriteria<T> extends FilterCriteria<T> {
+export interface RangeFilterCriteria extends FilterCriteria {
   rangeEnd: unknown; // Optional for 'range' operations
 }
 
 export interface FiltersConfig {
-  logicalOperator: LogicalOperator;
+  logicalOperator?: LogicalOperator;
+  evaluateClass? : AbstractEvaluate
 }

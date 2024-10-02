@@ -3,7 +3,7 @@ import { FilterOperation } from '../filter.types';
 import { FilterStrategy } from './strategies.types';
 
 export class GreaterThanStrategy<T> implements FilterStrategy<T> {
-  operation: FilterOperation = 'greaterThan';
+  operation: FilterOperation = FilterOperation.GREATER_THAN;
 
   evaluate(value: unknown, criterionValue: unknown): boolean {
     if (this.isComparable(value, criterionValue)) {

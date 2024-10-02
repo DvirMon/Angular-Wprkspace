@@ -5,7 +5,10 @@ import {
   withState,
 } from '@ngrx/signals';
 import { MediaType, MediaResult } from '../shared/types';
-import { FilterCriteria } from 'ng-filters-service/filters.types';
+import {
+  FilterCriteria,
+  FilterOperation,
+} from 'ng-filters-service/filters.types';
 
 interface FilterState {
   searchTerm: string;
@@ -35,11 +38,11 @@ export function createFilterCriteria(
   searchTerm: string
 ): FilterCriteria<MediaResult>[] {
   return [
-    { key: 'Title', value: searchTerm, operation: 'contains' },
+    { key: 'Title', value: searchTerm, operation: FilterOperation.CONTAINS },
     {
       key: 'Year',
       value: searchTerm,
-      operation: 'contains',
+      operation: FilterOperation.CONTAINS,
       preprocess: (value: unknown) => (value as string).substring(0, 4),
     },
   ];

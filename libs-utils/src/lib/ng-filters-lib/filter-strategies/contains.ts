@@ -3,7 +3,7 @@ import { FilterOperation } from '../filter.types';
 import { FilterStrategy } from './strategies.types';
 
 export class ContainsStrategy<T> implements FilterStrategy<T> {
-  operation: FilterOperation = 'contains';
+  operation: FilterOperation = FilterOperation.CONTAINS;
 
   evaluate(value: unknown, criterionValue: unknown): boolean {
     if (this.isComparable(value, criterionValue)) {
@@ -14,6 +14,9 @@ export class ContainsStrategy<T> implements FilterStrategy<T> {
     // Normalize both values to lowercase to perform case-insensitive comparison
     value = (value as string).toLowerCase();
     criterionValue = (criterionValue as string).toLowerCase();
+
+    console.log('data value', value)
+    console.log('compare value', criterionValue)
 
     // Check if the normalized value includes the normalized criterion value
     return (value as string).includes(criterionValue as string);

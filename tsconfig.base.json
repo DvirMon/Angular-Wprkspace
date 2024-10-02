@@ -64,6 +64,9 @@
       ],
       "ng-filters-service/filters.types": [
         "libs-utils/src/lib/ng-filters-lib/filter.types.ts"
+      ],
+      "ng-filters-service/providers": [
+        "libs-utils/src/lib/ng-filters-lib/providers.ts"
       ]
     }
   },

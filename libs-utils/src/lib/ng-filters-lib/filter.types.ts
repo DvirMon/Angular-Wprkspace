@@ -1,13 +1,21 @@
+import { InjectionToken } from '@angular/core';
+
 // Represents a basic filter operation type
-export type FilterOperation =
-  | 'equals'
-  | 'contains'
-  | 'greaterThan'
-  | 'lessThan'
-  | 'range';
+
+export enum FilterOperation {
+  EQUALS = 'equals',
+  CONTAINS = 'contains',
+  GREATER_THAN = 'greaterThan',
+  LESS_THAN = 'lessThan',
+  RANGE = 'range',
+}
 
 // Represents logical operators for combining filters
 export type LogicalOperator = 'AND' | 'OR';
+
+export const LOGICAL_OPERATOR = new InjectionToken<'AND' | 'OR'>(
+  'LOGICAL_OPERATOR'
+);
 
 type NestedKeys<T> = {
   [K in keyof T]: T[K] extends object

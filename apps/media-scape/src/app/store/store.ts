@@ -1,15 +1,15 @@
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import { computed, inject } from '@angular/core';
 import { signalStore, withComputed } from '@ngrx/signals';
+import { EvaluateFilterService } from 'ng-filters-service/evaluate-filters';
 import { MediaItem } from '../shared/types';
 import {
   createFilterCriteria,
   isTitleOrDate,
-  withFilter,
+  withFilter
 } from './with-filter.feature';
 import { getMedia, withMedia } from './with-media.feature';
 import { compareTitle, withSort } from './with-sort.feature';
-import { EvaluateFilterService } from 'ng-filters-service/evaluate-filters';
 
 export const AppStore = signalStore(
   { providedIn: 'root' },
@@ -22,7 +22,7 @@ export const AppStore = signalStore(
       store
         .entities()
         // .filter(isTitleOrDate(store.searchTerm()))
-        // .filter(service.evaluate(createFilterCriteria(store.searchTerm())))
+        .filter(service.evaluate(createFilterCriteria(store.searchTerm())))
         .sort((a, b) => compareTitle(a, b, store.sortDir()))
         .reduce(getMedia, [])
     ),
@@ -33,7 +33,8 @@ export const AppStore = signalStore(
         .map((item: MediaItem) => ({
           ...item,
           data: item.data
-            .filter(isTitleOrDate(store.searchTerm()))
+            // .filter(isTitleOrDate(store.searchTerm()))
+            .filter(service.evaluate(createFilterCriteria(store.searchTerm())))
             .sort((a, b) => compareTitle(a, b, store.sortDir())),
         }))
     ),

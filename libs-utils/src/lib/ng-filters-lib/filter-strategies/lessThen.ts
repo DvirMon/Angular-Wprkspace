@@ -3,7 +3,7 @@ import { FilterOperation } from '../filter.types';
 import { FilterStrategy } from './strategies.types';
 
 export class LessThanStrategy<T> implements FilterStrategy<T> {
-  operation: FilterOperation = 'lessThan';
+  operation: FilterOperation = FilterOperation.LESS_THAN;
 
   evaluate(value: unknown, criterionValue: unknown): boolean {
     if (this.isComparable(value, criterionValue)) {

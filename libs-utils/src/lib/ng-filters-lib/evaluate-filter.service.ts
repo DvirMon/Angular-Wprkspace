@@ -1,14 +1,7 @@
-import { inject, Injectable, InjectionToken } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { FilterStrategyService } from './filter-strategy.service';
-import { FilterCriteria } from './filter.types';
-
-export const LOGICAL_OPERATOR = new InjectionToken<'AND' | 'OR'>(
-  'LOGICAL_OPERATOR',
-  {
-    providedIn: 'root',
-    factory: () => 'AND', // Default value
-  }
-);
+import { FilterCriteria, LOGICAL_OPERATOR } from './filter.types';
+import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root', // Register as a singleton service
@@ -43,7 +36,15 @@ export class EvaluateFilterService<T> {
     criterion: FilterCriteria<T>
   ): boolean {
     const strategy = this.#strategyService.getStrategy(criterion.operation);
-    const value = this.#getNestedValue(item, criterion.key as string);
+    let value = this.#getNestedValue(item, criterion.key as string);
+
+    if (!strategy) {
+      console.warn('no strategy provided for: ' + criterion.operation);
+    }
+
+    if (criterion.preprocess) {
+      value = criterion.preprocess(value);
+    }
 
     return strategy ? strategy.evaluate(value, criterion.value) : false;
   }

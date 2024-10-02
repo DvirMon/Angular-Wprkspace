@@ -5,6 +5,7 @@ import { FilterCriteria } from './filter.types';
 
 @Injectable({ providedIn: 'root' })
 export abstract class CentralFilterService<T> extends AbstractFilter<T> {
+
   #evaluateService = inject(EvaluateFilterService);
 
   // Use computed to derive filteredData from data and filterConfig

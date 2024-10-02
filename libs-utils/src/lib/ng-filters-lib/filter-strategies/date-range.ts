@@ -3,7 +3,7 @@ import { isDate } from './compare.helpers';
 import { RangeFilterStrategy } from './strategies.types';
 
 export class DateRangeStrategy<T> implements RangeFilterStrategy<T> {
-  operation: FilterOperation = 'range';
+  operation: FilterOperation = FilterOperation.RANGE;
 
   evaluate(
     value: unknown,

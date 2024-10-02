@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, Injector } from '@angular/core';
 import { ContainsStrategy } from './filter-strategies/contains';
 import { EqualsStrategy } from './filter-strategies/equals';
 import { GreaterThanStrategy } from './filter-strategies/greaterThen';
@@ -7,17 +7,21 @@ import {
   FILTER_STRATEGIES,
   FilterStrategy,
 } from './filter-strategies/strategies.types';
+import { FilterOperation } from './filter.types';
 
 @Injectable({
   providedIn: 'root', // Register this service as a singleton
 })
 export class FilterStrategyService<T> {
   #strategies: Map<string, FilterStrategy<T>> = new Map();
+  #strategyFactories: Map<string, () => FilterStrategy<T>> = new Map(); // Lazy-loading strategy factories
   #injectedStrategies = inject(FILTER_STRATEGIES, { optional: true });
+  #injector = inject(Injector);
 
   constructor() {
+    // this.#setStrategies();
 
-    this.#setStrategies();
+    this.#setBuiltInStrategyFactories();
 
     if (this.#injectedStrategies && this.#injectedStrategies.length > 0) {
       this.#injectedStrategies.forEach((strategy) => {
@@ -27,13 +31,46 @@ export class FilterStrategyService<T> {
   }
 
   getStrategy(operation: string): FilterStrategy<T> | undefined {
-    return this.#strategies.get(operation);
+   
+    const strategyFactory =
+      this.#strategyFactories.get(operation) ??
+      this.#throwMissingStrategyError(operation); // Immediately throw if not found
+
+    // Lazily instantiate and cache the strategy
+    const strategy =
+      this.#strategies.get(operation) ||
+      this.#createAndCacheStrategy(operation, strategyFactory);
+
+    return strategy;
   }
 
-  #setStrategies() {
-    this.#strategies.set('equals', new EqualsStrategy<T>());
-    this.#strategies.set('contains', new ContainsStrategy<T>());
-    this.#strategies.set('greaterThan', new GreaterThanStrategy<T>());
-    this.#strategies.set('lessThan', new LessThanStrategy<T>());
+  #setBuiltInStrategyFactories() {
+    // Use the injector to lazily load strategies when needed
+    this.#strategyFactories.set(FilterOperation.EQUALS, () =>
+      this.#injector.get(EqualsStrategy)
+    );
+    this.#strategyFactories.set(FilterOperation.CONTAINS, () =>
+      this.#injector.get(ContainsStrategy)
+    );
+    this.#strategyFactories.set(FilterOperation.GREATER_THAN, () =>
+      this.#injector.get(GreaterThanStrategy)
+    );
+    this.#strategyFactories.set(FilterOperation.LESS_THAN, () =>
+      this.#injector.get(LessThanStrategy)
+    );
+  }
+
+  #throwMissingStrategyError(operation: string): never {
+    console.error(`Strategy for operation "${operation}" not found.`);
+    throw new Error(`No strategy provided for operation: "${operation}".`);
+  }
+
+  #createAndCacheStrategy(
+    operation: string,
+    factory: () => FilterStrategy<T>
+  ): FilterStrategy<T> {
+    const strategy = factory();
+    this.#strategies.set(operation, strategy);
+    return strategy;
   }
 }

@@ -29,17 +29,26 @@ export class FilterStrategyService<T> {
       });
     }
   }
-
   getStrategy(operation: string): FilterStrategy<T> | undefined {
-   
-    const strategyFactory =
-      this.#strategyFactories.get(operation) ??
-      this.#throwMissingStrategyError(operation); // Immediately throw if not found
+    // Step 1: Try to get the built-in strategy factory or undefined
+    const strategyFactory = this.#strategyFactories.get(operation);
 
-    // Lazily instantiate and cache the strategy
-    const strategy =
-      this.#strategies.get(operation) ||
-      this.#createAndCacheStrategy(operation, strategyFactory);
+    // Step 2: Check if it's a built-in operation (returns true or false)
+    const isBuiltInOperation = Object.values(FilterOperation).includes(
+      operation as FilterOperation
+    );
+
+    // Step 3: Immediately throw if it's a required built-in strategy but undefined
+    isBuiltInOperation &&
+      !strategyFactory &&
+      this.#throwMissingStrategyError(operation);
+
+    const strategy = strategyFactory?.() || this.#strategies.get(operation);
+
+    strategy ?? console.warn(`No strategy found for operation "${operation}".`);
+
+    // Cache and return the strategy if found
+    strategy && this.#strategies.set(operation, strategy);
 
     return strategy;
   }
@@ -52,25 +61,19 @@ export class FilterStrategyService<T> {
     this.#strategyFactories.set(FilterOperation.CONTAINS, () =>
       this.#injector.get(ContainsStrategy)
     );
-    this.#strategyFactories.set(FilterOperation.GREATER_THAN, () =>
-      this.#injector.get(GreaterThanStrategy)
-    );
-    this.#strategyFactories.set(FilterOperation.LESS_THAN, () =>
-      this.#injector.get(LessThanStrategy)
-    );
+    // this.#strategyFactories.set(FilterOperation.GREATER_THAN, () =>
+    //   this.#injector.get(GreaterThanStrategy)
+    // );
+    // this.#strategyFactories.set(FilterOperation.LESS_THAN, () =>
+    //   this.#injector.get(LessThanStrategy)
+    // );
   }
 
   #throwMissingStrategyError(operation: string): never {
     console.error(`Strategy for operation "${operation}" not found.`);
-    throw new Error(`No strategy provided for operation: "${operation}".`);
+    throw new Error(
+      `Required built-in strategy for operation "${operation}" not found.`
+    );
   }
 
-  #createAndCacheStrategy(
-    operation: string,
-    factory: () => FilterStrategy<T>
-  ): FilterStrategy<T> {
-    const strategy = factory();
-    this.#strategies.set(operation, strategy);
-    return strategy;
-  }
 }

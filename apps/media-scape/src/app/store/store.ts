@@ -1,11 +1,10 @@
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import { computed, inject } from '@angular/core';
 import { signalStore, withComputed } from '@ngrx/signals';
-import { EvaluateFilterService } from 'ng-filters-service/evaluate-filters';
+import { AbstractEvaluate } from 'ng-filters-service/abstract-evaluate';
 import { MediaItem } from '../shared/types';
 import {
   createFilterCriteria,
-  isTitleOrDate,
   withFilter
 } from './with-filter.feature';
 import { getMedia, withMedia } from './with-media.feature';
@@ -17,7 +16,7 @@ export const AppStore = signalStore(
   withMedia(),
   withFilter(),
   withSort(),
-  withComputed((store, service = inject(EvaluateFilterService)) => ({
+  withComputed((store, service = inject(AbstractEvaluate)) => ({
     mediaV1: computed(() =>
       store
         .entities()

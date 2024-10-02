@@ -1,31 +1,35 @@
 import { Provider } from '@angular/core';
+import { EvaluateFilterService } from './evaluate-filter.service';
 import { ContainsStrategy } from './filter-strategies/contains';
 import { EqualsStrategy } from './filter-strategies/equals';
-import { GreaterThanStrategy } from './filter-strategies/greaterThen';
-import { LessThanStrategy } from './filter-strategies/lessThen';
-import { FILTER_STRATEGIES } from './filter-strategies/strategies.types';
-import { LogicalOperator, LOGICAL_OPERATOR } from './filter.types';
-import { EvaluateFilterService } from './evaluate-filter.service';
+import {
+  FiltersConfig,
+  LOGICAL_OPERATOR,
+  LogicalOperator,
+} from './filter.types';
+import { AbstractEvaluate } from './abstract-evaluate';
 
-export function provideStrategies(): Provider[] {
-  return [
-    { provide: FILTER_STRATEGIES, useClass: EqualsStrategy, multi: true },
-    { provide: FILTER_STRATEGIES, useClass: ContainsStrategy, multi: true },
-    { provide: FILTER_STRATEGIES, useClass: GreaterThanStrategy, multi: true },
-    { provide: FILTER_STRATEGIES, useClass: LessThanStrategy, multi: true },
-    // { provide: FILTER_STRATEGIES, useClass: RangeStrategy, multi: true },
-  ];
+function provideFilterStrategies(): Provider[] {
+  return [EqualsStrategy, ContainsStrategy];
 }
 
-export function provideLogicOperator(value: LogicalOperator = 'AND'): Provider {
+function provideLogicOperator(value: LogicalOperator = 'AND'): Provider {
   return { provide: LOGICAL_OPERATOR, useValue: value };
 }
 
-export function provideEvaluateFilterService(
+function provideEvaluateFilterService(
   logicalOperator: LogicalOperator = 'AND'
 ): Provider[] {
   return [
     { provide: LOGICAL_OPERATOR, useValue: logicalOperator }, // Provide LOGICAL_OPERATOR
     { provide: EvaluateFilterService, useClass: EvaluateFilterService }, // Provide the service
+  ];
+}
+
+export function provideFilters(config?: FiltersConfig): Provider[] {
+  return [
+    { provide: AbstractEvaluate, useClass: EvaluateFilterService },
+    provideFilterStrategies(),
+    provideLogicOperator(config?.logicalOperator),
   ];
 }

@@ -27,11 +27,15 @@ type NestedKeys<T> = {
 // Represents the filter criteria for a single property
 export interface FilterCriteria<T> {
   key: string; // Access the data in the object
-  operation: FilterOperation;
+  operation: string;
   value: unknown; // The value to filter by
   preprocess?: (value: unknown) => unknown; // User-defined preprocessing logic;
 }
 
 export interface RangeFilterCriteria<T> extends FilterCriteria<T> {
   rangeEnd: unknown; // Optional for 'range' operations
+}
+
+export interface FiltersConfig {
+  logicalOperator: LogicalOperator;
 }

@@ -1,12 +1,12 @@
 import { inject, Injectable } from '@angular/core';
 import { FilterStrategyService } from './filter-strategy.service';
 import { FilterCriteria, LOGICAL_OPERATOR } from './filter.types';
-import { throwError } from 'rxjs';
+import { AbstractEvaluate } from './abstract-evaluate';
 
 @Injectable({
   providedIn: 'root', // Register as a singleton service
 })
-export class EvaluateFilterService<T> {
+export class EvaluateFilterService<T> extends AbstractEvaluate<T> {
   #strategyService = inject(FilterStrategyService);
   #logicalOperator = inject(LOGICAL_OPERATOR);
 
@@ -37,10 +37,6 @@ export class EvaluateFilterService<T> {
   ): boolean {
     const strategy = this.#strategyService.getStrategy(criterion.operation);
     let value = this.#getNestedValue(item, criterion.key as string);
-
-    if (!strategy) {
-      console.warn('no strategy provided for: ' + criterion.operation);
-    }
 
     if (criterion.preprocess) {
       value = criterion.preprocess(value);

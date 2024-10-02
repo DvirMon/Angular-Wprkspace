@@ -17,8 +17,6 @@
     "paths": {
       "@angular/*": ["./node_modules/@angular/*"],
       "@app/*": ["src/app/*"],
-      "@dom/directives": ["libs/src/lib/dom/directives/index.ts"],
-      "@dom/helpers": ["libs/src/lib/dom/helpers/index.ts"],
       "@dom/components/card-button": [
         "libs/src/lib/dom/components/card-button/card-button.component"
       ],
@@ -31,33 +29,42 @@
       "@dom/components/floating-button": [
         "libs/src/lib/dom/components/floating-button/floating-button.component"
       ],
-      "@dom/components/info-card": [
-        "libs/src/lib/dom/components/info-card/info-card.component"
-      ],
-      "@dom/components/form/types": [
-        "libs/src/lib/dom/components/form/types.ts"
-      ],
       "@dom/components/form/helpers": [
         "libs/src/lib/dom/components/form/helpers.ts"
-      ],
-      "@dom/components/form/services": [
-        "libs/src/lib/dom/components/form/services/form-error.service.ts"
-      ],
-      "@dom/components/form/models": [
-        "libs/src/lib/dom/components/form/models/input.types.ts"
-      ],
-      "@dom/components/form/inputs/form-search-input": [
-        "libs/src/lib/dom/components/form/inputs/form-search/form-search.component.ts",
-      ],
-      "@dom/components/form/inputs/form-input": [
-        "libs/src/lib/dom/components/form/inputs/form-input/form-input.component.ts"
       ],
       "@dom/components/form/inputs/form-autocomplete": [
         "libs/src/lib/dom/components/form/inputs/form-autocomplete/form-autocomplete.component.ts"
       ],
-      "@dom/components/table": [
-        "libs/src/lib/dom/components/table/index.ts"
+      "@dom/components/form/inputs/form-input": [
+        "libs/src/lib/dom/components/form/inputs/form-input/form-input.component.ts"
       ],
+      "@dom/components/form/inputs/form-search-input": [
+        "libs/src/lib/dom/components/form/inputs/form-search/form-search.component.ts"
+      ],
+      "@dom/components/form/models": [
+        "libs/src/lib/dom/components/form/models/input.types.ts"
+      ],
+      "@dom/components/form/services": [
+        "libs/src/lib/dom/components/form/services/form-error.service.ts"
+      ],
+      "@dom/components/form/types": [
+        "libs/src/lib/dom/components/form/types.ts"
+      ],
+      "@dom/components/info-card": [
+        "libs/src/lib/dom/components/info-card/info-card.component"
+      ],
+      "@dom/components/table": ["libs/src/lib/dom/components/table/index.ts"],
+      "@dom/directives": ["libs/src/lib/dom/directives/index.ts"],
+      "@dom/helpers": ["libs/src/lib/dom/helpers/index.ts"],
+      "ng-filters-service/abstract-filters": [
+        "libs-utils/src/lib/ng-filters-lib/abstract-filters.ts"
+      ],
+      "ng-filters-service/evaluate-filters": [
+        "libs-utils/src/lib/ng-filters-lib/evaluate-filter.service.ts"
+      ],
+      "ng-filters-service/filters.types": [
+        "libs-utils/src/lib/ng-filters-lib/filter.types.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -7,6 +7,7 @@ import { appRoutes } from './app.routes';
 import { ErrorsService } from './shared/error.service';
 import { errorInterceptor } from './shared/interceptors/error.interceptor';
 
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(appRoutes, withComponentInputBinding()),
@@ -17,5 +18,6 @@ export const appConfig: ApplicationConfig = {
       useClass: ErrorsService,
     },
     provideFilters({ logicalOperator: 'OR' }),
+
   ],
 };

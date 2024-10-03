@@ -14,10 +14,9 @@ export class EvaluateFilterService extends AbstractEvaluate {
 
   // Evaluate if a single item matches all criteria
   #matchesAllCriteria<T>(item: T, criteria: FilterCriteria[]): boolean {
-    // const { criteria, logicalOperator } = config;
     const results = criteria.map((criterion) =>
       this.#evaluateCriterionWithStrategy(
-        item as Record<string, any>,
+        item as Record<string, unknown>,
         criterion
       )
     );
@@ -29,12 +28,10 @@ export class EvaluateFilterService extends AbstractEvaluate {
 
   // Evaluate a single criterion using the strategy pattern
   #evaluateCriterionWithStrategy(
-    item: Record<string, any>,
+    item: Record<string, unknown>,
     criterion: FilterCriteria
   ): boolean {
-    
     const strategy = this.#strategyService.getStrategy(criterion.operation);
-
 
     let value = this.#getNestedValue(item, criterion.key as string);
 
@@ -45,11 +42,11 @@ export class EvaluateFilterService extends AbstractEvaluate {
     return strategy ? strategy.evaluate(value, criterion.value) : false;
   }
 
-  #getNestedValue(obj: Record<string, any>, path: string): unknown {
+  #getNestedValue(obj: Record<string, unknown>, path: string): unknown {
     const keys = path.split('.');
 
     const value = keys.reduce((acc, key) => {
-      return acc[key];
+      return acc[key] as Record<string, unknown>;
     }, obj);
 
     return value;

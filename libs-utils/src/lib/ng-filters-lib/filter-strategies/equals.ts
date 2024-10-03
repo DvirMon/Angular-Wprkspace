@@ -5,10 +5,6 @@ import { FilterStrategy } from './strategies.types';
 export class EqualsStrategy<T> implements FilterStrategy<T> {
   operation: FilterOperation = FilterOperation.EQUALS;
 
-  constructor() {
-    console.log('EqualsStrategy created');
-  }
-
   evaluate(value: unknown, criterionValue: unknown): boolean {
     if (this.isComparable(value, criterionValue)) {
       return value === criterionValue;

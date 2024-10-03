@@ -39,7 +39,7 @@ export class EvaluateFilterService extends AbstractEvaluate {
       value = criterion.preprocess(value);
     }
 
-    return strategy ? strategy.evaluate(value, criterion.value) : false;
+    return strategy ? strategy.evaluate(value, criterion.value) : true;
   }
 
   #getNestedValue(obj: Record<string, unknown>, path: string): unknown {

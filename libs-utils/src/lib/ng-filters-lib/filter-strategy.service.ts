@@ -19,7 +19,6 @@ export class FilterStrategyService<T> {
   #injector = inject(Injector);
 
   constructor() {
-
     this.#setBuiltInStrategyFactories();
 
     if (this.#injectedStrategies && this.#injectedStrategies.length > 0) {
@@ -34,7 +33,6 @@ export class FilterStrategyService<T> {
     if (strategy) {
       return strategy;
     }
-    console.log('called here')
     return this.#createStrategy(operation);
   }
 
@@ -49,12 +47,19 @@ export class FilterStrategyService<T> {
 
     const strategy = strategyFactory?.();
 
-    strategy ?? console.warn(`No strategy found for operation "${operation}".`);
+    strategy ?? this.#handleMissingStrategy(operation);
 
     // Cache and return the strategy if found
     strategy && this.#strategies.set(operation, strategy);
 
     return strategy;
+  }
+
+  #handleMissingStrategy(operation: string) {
+    console.warn(`No strategy found for operation "${operation}"`);
+    console.warn(
+      `A strategy should be provided using the FILTER_STRATEGY token.`
+    );
   }
 
   #setBuiltInStrategyFactories() {

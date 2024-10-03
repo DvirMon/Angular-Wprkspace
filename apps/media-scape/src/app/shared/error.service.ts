@@ -5,15 +5,20 @@ import { ErrorHandler, Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class ErrorsService implements ErrorHandler {
-  handleError(error: ErrorEvent | HttpErrorResponse) {
-    if (error instanceof ErrorEvent) {
-      this.handleClientError(error);
+  handleError(error: Error | HttpErrorResponse) {
+
+
+    if (error instanceof HttpErrorResponse) {
+      return
     }
+
+    this.handleClientError(error);
   }
 
-  private handleClientError(error: ErrorEvent): void {
+  private handleClientError(error: Error): void {
+
     console.error(
-      'Custom Error Handler:',
+      'Error Handler:',
       error.message || 'An unexpected error occurred'
     );
   }

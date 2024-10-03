@@ -6,12 +6,6 @@ export class ContainsStrategy<T> implements FilterStrategy<T> {
   operation: FilterOperation = FilterOperation.CONTAINS;
 
 
-  constructor() {
-
-    console.log('ContainsStrategy created')
-  }
-
-
   evaluate(value: unknown, criterionValue: unknown): boolean {
     if (this.isComparable(value, criterionValue)) {
       console.warn('Invalid value types provided for contains strategy.');

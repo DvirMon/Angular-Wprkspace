@@ -238,10 +238,13 @@ export const appConfig: ApplicationConfig = {
 
 - **`setData(newData: T[]): void`**  
   Sets the data to be filtered.
+
 - **`setFilterCriteria(criteria: FilterCriteria[]): void`**  
   Sets the filter criteria array.
+
 - **`getFilteredData(): Signal<T[]>`**  
   Returns the filtered data as an Angular Signal.
+
 - **`clearFilters(): void`**  
   Clears all filters and resets the data.
 

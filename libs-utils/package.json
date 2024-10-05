@@ -53,7 +53,7 @@
     "type": "git",
     "url": "https://github.com/dvirmon/ng-filters-service"
   },
-  "author": "Your Name",
+  "author": "Dvir Monajem",
   "license": "MIT",
   "description": "A service to handle filters in Angular",
   "keywords": [

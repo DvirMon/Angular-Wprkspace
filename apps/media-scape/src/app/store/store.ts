@@ -1,8 +1,12 @@
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
-import { computed } from '@angular/core';
+import { computed, inject } from '@angular/core';
 import { signalStore, withComputed } from '@ngrx/signals';
+import { AbstractEvaluate } from 'ng-filters-service/abstract-evaluate';
 import { MediaItem } from '../shared/types';
-import { isTitleOrDate, withFilter } from './with-filter.feature';
+import {
+  createFilterCriteria,
+  withFilter
+} from './with-filter.feature';
 import { getMedia, withMedia } from './with-media.feature';
 import { compareTitle, withSort } from './with-sort.feature';
 
@@ -12,11 +16,12 @@ export const AppStore = signalStore(
   withMedia(),
   withFilter(),
   withSort(),
-  withComputed((store) => ({
+  withComputed((store, service = inject(AbstractEvaluate)) => ({
     mediaV1: computed(() =>
       store
         .entities()
-        .filter(isTitleOrDate(store.searchTerm()))
+        // .filter(isTitleOrDate(store.searchTerm()))
+        .filter(service.evaluate(createFilterCriteria(store.searchTerm())))
         .sort((a, b) => compareTitle(a, b, store.sortDir()))
         .reduce(getMedia, [])
     ),
@@ -27,7 +32,8 @@ export const AppStore = signalStore(
         .map((item: MediaItem) => ({
           ...item,
           data: item.data
-            .filter(isTitleOrDate(store.searchTerm()))
+            // .filter(isTitleOrDate(store.searchTerm()))
+            .filter(service.evaluate(createFilterCriteria(store.searchTerm())))
             .sort((a, b) => compareTitle(a, b, store.sortDir())),
         }))
     ),

@@ -26,6 +26,7 @@ import { DisableIfMaxSelectedDirective } from './disable-max-selected.directive'
 import { compareString } from './form.validators';
 import { PlaceFormService } from './place-form.service';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { OptionTestComponent } from '../option-test.component';
 
 type PlaceForm = {
   destination: FormGroup<{
@@ -44,7 +45,7 @@ type PlaceForm = {
   selector: 'to-edit-places-form',
   standalone: true,
   imports: [
-    NgFor,
+    // NgFor,
     JsonPipe,
     TitleCasePipe,
     FormsModule,
@@ -57,6 +58,7 @@ type PlaceForm = {
     MatButtonModule,
     MatIconModule,
     DisableIfMaxSelectedDirective,
+    OptionTestComponent
   ],
   templateUrl: './edit_places_form.component.html',
   styleUrl: './edit_places_form.component.scss',

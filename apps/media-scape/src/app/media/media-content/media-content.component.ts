@@ -1,4 +1,9 @@
-import { JsonPipe, NgClass, NgTemplateOutlet, TitleCasePipe } from '@angular/common';
+import {
+  JsonPipe,
+  NgClass,
+  NgTemplateOutlet,
+  TitleCasePipe,
+} from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,

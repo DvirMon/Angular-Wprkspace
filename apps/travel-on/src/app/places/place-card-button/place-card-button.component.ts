@@ -12,7 +12,7 @@ import {
   Signal,
   computed,
   input,
-  output
+  output,
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
@@ -66,7 +66,7 @@ export enum SelectState {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlaceCardButtonComponent {
-  private readonly clickEvent: BehaviorSubject<SelectState>;
+  #clickEvent: BehaviorSubject<SelectState>;
   protected readonly isSelected: Signal<SelectState>;
   protected readonly iconState: Signal<SelectState | undefined>;
 
@@ -75,27 +75,28 @@ export class PlaceCardButtonComponent {
   readonly changed = output<ButtonSelectionChangedEvent>();
 
   constructor() {
+
     this.isSelected = computed(() =>
       this.selected() ? SelectState.SELECTED : SelectState.DEFAULT
     );
-    this.clickEvent = new BehaviorSubject<SelectState>(SelectState.DEFAULT);
+    this.#clickEvent = new BehaviorSubject<SelectState>(SelectState.DEFAULT);
 
-    this.iconState = toSignal(this._getIconState$());
+    this.iconState = toSignal(this.#getIconState$());
   }
 
-  private _getIconState$(): Observable<SelectState> {
-    return merge(this._getChangeState$(), this._getSelectedState$());
+  #getIconState$(): Observable<SelectState> {
+    return merge(this.#getChangeState$(), this.#getSelectedState$());
   }
 
-  private _getChangeState$(): Observable<SelectState> {
-    return this.clickEvent.asObservable().pipe(
+  #getChangeState$(): Observable<SelectState> {
+    return this.#clickEvent.asObservable().pipe(
       skip(1),
       map(() => SelectState.CHANGED)
     );
   }
 
-  private _getSelectedState$(): Observable<SelectState> {
-    return this.clickEvent.asObservable().pipe(
+  #getSelectedState$(): Observable<SelectState> {
+    return this.#clickEvent.asObservable().pipe(
       skip(1),
       delay(300),
       map((state: SelectState) => state === SelectState.SELECTED),
@@ -114,30 +115,28 @@ export class PlaceCardButtonComponent {
       return;
     }
 
-    this.clickEvent.next(currentState);
+    this.#clickEvent.next(currentState);
 
-    const newState = this._calculateNewState(currentState);
-    this._handleChangeEvent(newState);
+    const newState = this.#calculateNewState(currentState);
+    this.#handleChangeEvent(newState);
   }
 
-  private _calculateNewState(currentState: string): SelectState {
+  #calculateNewState(currentState: string): SelectState {
     return currentState === SelectState.DEFAULT
       ? SelectState.SELECTED
       : SelectState.DEFAULT;
   }
 
-  private _handleChangeEvent(newState: SelectState): void {
-    const event = this._createChangeEvent(newState);
-    this._emitChangeEvent(event);
+  #handleChangeEvent(newState: SelectState): void {
+    const event = this.#createChangeEvent(newState);
+    this.#emitChangeEvent(event);
   }
 
-  private _emitChangeEvent(event: ButtonSelectionChangedEvent): void {
+  #emitChangeEvent(event: ButtonSelectionChangedEvent): void {
     this.changed.emit(event);
   }
 
-  private _createChangeEvent(
-    newState: SelectState
-  ): ButtonSelectionChangedEvent {
+  #createChangeEvent(newState: SelectState): ButtonSelectionChangedEvent {
     const event: ButtonSelectionChangedEvent = {
       source: this,
       selected: newState !== SelectState.DEFAULT,

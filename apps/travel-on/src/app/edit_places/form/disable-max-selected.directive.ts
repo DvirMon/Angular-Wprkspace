@@ -10,7 +10,6 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { NgControl } from '@angular/forms';
 import { MatOption } from '@angular/material/core';
 import { map, Observable, startWith } from 'rxjs';
-import { Activity } from '../../places/places.model';
 
 @Directive({
   selector: '[toDisableIfMaxSelected]',
@@ -48,13 +47,13 @@ export class DisableIfMaxSelectedDirective<T> {
     () => !this.compareCallback(this.value(), this.#controlValue())
   );
 
-  isDisabled = computed(
+  #isDisabled = computed(
     () => this.#isMaxSelection() && this.#isOptionNotIncluded()
   );
 
   constructor() {
     effect(() => {
-      this.#option.disabled = this.isDisabled();
+      this.#option.disabled = this.#isDisabled();
     });
   }
 }

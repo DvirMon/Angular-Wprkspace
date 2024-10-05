@@ -11,6 +11,7 @@ import {
 import {
   EntityId,
   EntityMap,
+  SelectEntityId,
   addEntities,
   setEntity,
   withEntities,
@@ -27,6 +28,8 @@ interface State {
   entityMap: EntityMap<MediaResult>;
   ids: EntityId[];
 }
+
+const selectId: SelectEntityId<MediaResult> = (media) => media.imdbID;
 
 export function withMedia() {
   return signalStoreFeature(
@@ -71,7 +74,7 @@ function handleLoadResponse(store: WritableStateSource<State>) {
         totalResults: Number(results.totalResults),
       });
 
-      patchState(store, addEntities(results.results, { idKey: 'imdbID' }));
+      patchState(store, addEntities(results.results, { selectId }));
     },
     error: () => EMPTY,
   });
@@ -79,7 +82,7 @@ function handleLoadResponse(store: WritableStateSource<State>) {
 function handleUpdateResponse(store: WritableStateSource<State>) {
   return tapResponse({
     next: (item: MediaResult) =>
-      patchState(store, setEntity(item, { idKey: 'imdbID' })),
+      patchState(store, setEntity(item, { selectId })),
     error: () => EMPTY,
   });
 }

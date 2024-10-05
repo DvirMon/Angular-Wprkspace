@@ -9,14 +9,13 @@ import {
   input,
   output,
   runInInjectionContext,
-  signal
+  signal,
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatCard, MatCardContent, MatCardImage } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
-import { FormInputComponent } from '@dom';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import {
   Observable,
@@ -30,6 +29,7 @@ import {
 } from 'rxjs';
 import { FormatDatePipe } from '../../shared/pipes/formatDate.pipe';
 import { MediaResult } from '../../shared/types';
+import { FormInputComponent } from '@dom/components/form/inputs/form-input';
 
 @Component({
   selector: 'ms-media-card',

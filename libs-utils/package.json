@@ -51,7 +51,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/dvirmon/ng-filters-service"
+    "url": "https://github.com/DvirMon/Angular-Wprkspace/tree/dev/libs-utils/src/lib/ng-filters-lib"
   },
   "author": "Dvir Monajem",
   "license": "MIT",

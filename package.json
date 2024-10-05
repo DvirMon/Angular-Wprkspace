@@ -6,7 +6,7 @@
     "start": "nx serve travel-on",
     "lint": "nx lint",
     "build": "nx build",
-    "test": "nx test",
+    "test": "npx nx run ng-filters-lib:test",
     "migrate": "nx migrate latest && npx nx migrate --run-migrations",
     "migrate-ng": "npm install @angular/cli @angular/core @angular/cdk @angular/material && nx migrate --run-migrations"
   },

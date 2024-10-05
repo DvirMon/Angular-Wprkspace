@@ -41,5 +41,4 @@ export interface RangeFilterCriteria extends FilterCriteria {
 
 export interface FiltersConfig {
   logicalOperator?: LogicalOperator;
-  evaluateClass? : AbstractEvaluate
 }

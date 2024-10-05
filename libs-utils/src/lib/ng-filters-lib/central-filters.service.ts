@@ -4,11 +4,11 @@ import { EvaluateFilterService } from './evaluate-filter.service';
 import { FilterCriteria } from './filter.types';
 
 @Injectable({ providedIn: 'root' })
-export abstract class CentralFilterService extends AbstractFilter {
+export class CentralFilterService<T> extends AbstractFilter<T> {
   #evaluateService = inject(EvaluateFilterService);
 
   // Use computed to derive filteredData from data and filterConfig
-  #filteredData = computed(() => {
+  override filteredData = computed(() => {
     const criteria = this.filterCriteria();
     const currentData = this.data();
 
@@ -19,7 +19,7 @@ export abstract class CentralFilterService extends AbstractFilter {
     return this.#applyCriteria(currentData, criteria);
   });
 
-  override setData(newData: Record<string, unknown>[]): void {
+  override setData(newData: T[]): void {
     this.data.set(newData);
   }
 
@@ -28,8 +28,8 @@ export abstract class CentralFilterService extends AbstractFilter {
   }
 
   // Abstract method to retrieve filtered data
-  override getFilteredData(): Signal<Record<string, unknown>[]> {
-    return this.#filteredData;
+  override getFilteredData(): Signal<T[]> {
+    return this.filteredData;
   }
 
   // Utility method to clear filters
@@ -37,10 +37,7 @@ export abstract class CentralFilterService extends AbstractFilter {
     this.filterCriteria.set([]);
   }
 
-  #applyCriteria(
-    data: Record<string, unknown>[],
-    criteria: FilterCriteria[]
-  ): Record<string, unknown>[] {
+  #applyCriteria(data: T[], criteria: FilterCriteria[]): T[] {
     return data.filter(this.#evaluateService.evaluate(criteria));
   }
 }

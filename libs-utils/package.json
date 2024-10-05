@@ -5,5 +5,60 @@
     "@angular/common": "^18.1.0",
     "@angular/core": "^18.1.0"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "files": [
+    "lib/"
+  ],
+  "main": "./lib/index.js",
+  "exports": {
+    "./abstract-filters": {
+      "import": "./lib/abstract-filters.js",
+      "require": "./lib/abstract-filters.js",
+      "types": "./lib/abstract-filters.d.ts"
+    },
+    "./abstract-evaluate": {
+      "import": "./lib/abstract-evaluate.js",
+      "require": "./lib/abstract-evaluate.js",
+      "types": "./lib/abstract-evaluate.d.ts"
+    },
+    "./evaluate-filters": {
+      "import": "./lib/evaluate-filter.service.js",
+      "require": "./lib/evaluate-filter.service.js",
+      "types": "./lib/evaluate-filter.service.d.ts"
+    },
+    "./filters.types": {
+      "import": "./lib/filter.types.js",
+      "require": "./lib/filter.types.js",
+      "types": "./lib/filter.types.d.ts"
+    },
+    "./strategies.types": {
+      "import": "./lib/strategies.types.js",
+      "require": "./lib/strategies.types.js",
+      "types": "./lib/strategies.types.d.ts"
+    },
+    "./providers": {
+      "import": "./lib/providers.js",
+      "require": "./lib/providers.js",
+      "types": "./lib/providers.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "nx build ng-filters-service"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dvirmon/ng-filters-service"
+  },
+  "author": "Your Name",
+  "license": "MIT",
+  "description": "A service to handle filters in Angular",
+  "keywords": [
+    "angular",
+    "filters",
+    "service"
+  ]
 }

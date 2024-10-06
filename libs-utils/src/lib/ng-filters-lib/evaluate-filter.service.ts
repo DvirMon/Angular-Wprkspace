@@ -1,25 +1,33 @@
 import { inject } from '@angular/core';
 import { AbstractEvaluate } from './abstract-evaluate';
 import { FilterStrategyService } from './filter-strategy.service';
-import { FilterCriteria, LOGICAL_OPERATOR } from './filter.types';
+import {
+  EvaluateConfig,
+  FilterCriteria,
+  LOGICAL_OPERATOR,
+} from './filter.types';
 
 export class EvaluateFilterService extends AbstractEvaluate {
   #strategyService = inject(FilterStrategyService);
   #logicalOperator = inject(LOGICAL_OPERATOR);
 
   // Returns a function that can be used as a predicate for array filtering
-  evaluate<T>(criteria: FilterCriteria[]): (item: T) => boolean {
-    return (item: T): boolean => this.#matchesAllCriteria(item, criteria);
+  evaluate<T>(config: EvaluateConfig): (item: T) => boolean {
+    return (item: T): boolean => this.#matchesAllCriteria(item, config);
   }
 
   // Evaluate if a single item matches all criteria
-  #matchesAllCriteria<T>(item: T, criteria: FilterCriteria[]): boolean {
+  #matchesAllCriteria<T>(item: T, config: EvaluateConfig): boolean {
+    const { criteria, logicalOperator } = config;
+
     const results = criteria.map((criterion) =>
       this.#evaluateCriterionWithStrategy(
         item as Record<string, unknown>,
         criterion
       )
     );
+
+    this.#logicalOperator = logicalOperator || this.#logicalOperator;
 
     return this.#logicalOperator === 'AND'
       ? results.every(Boolean)

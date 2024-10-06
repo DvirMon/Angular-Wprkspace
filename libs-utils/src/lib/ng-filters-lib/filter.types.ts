@@ -1,8 +1,6 @@
 import { InjectionToken } from '@angular/core';
-import { AbstractEvaluate } from './abstract-evaluate';
 
 // Represents a basic filter operation type
-
 export enum FilterOperation {
   EQUALS = 'equals',
   CONTAINS = 'contains',
@@ -18,27 +16,21 @@ export const LOGICAL_OPERATOR = new InjectionToken<'AND' | 'OR'>(
   'LOGICAL_OPERATOR'
 );
 
-type NestedKeys<T> = {
-  [K in keyof T]: T[K] extends object
-    ? // Recursively call NestedKeys for nested objects, adding `K.` to the path
-      `${K & string}` | `${K & string}.${NestedKeys<T[K]>}`
-    : `${K & string}`;
-}[keyof T];
-
 // Represents the filter criteria for a single property
 export interface FilterCriteria {
   key: string; // Access the data in the object
-  operation: string;
+  operation: FilterOperation | string;
   value: unknown; // The value to filter by
 
   // TODO ysu proxy instead of a function?
   preprocess?: (value: unknown) => unknown; // User-defined preprocessing logic;
 }
 
-export interface RangeFilterCriteria extends FilterCriteria {
-  rangeEnd: unknown; // Optional for 'range' operations
+export interface FiltersConfig {
+  logicalOperator?: LogicalOperator;
 }
 
-export interface FiltersConfig {
+export interface EvaluateConfig {
+  criteria: FilterCriteria[];
   logicalOperator?: LogicalOperator;
 }

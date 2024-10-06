@@ -1,28 +1,28 @@
-import { isNumber, isInNumberRange } from './compare.helpers';
 import { FilterOperation } from '../filter.types';
-import { RangeFilterStrategy } from './strategies.types';
+import { isInRange, isNumber } from './compare.helpers';
+import { FilterStrategy } from './strategies.types';
 
-export class NumberRangeStrategy<T> implements RangeFilterStrategy<T> {
-  operation: FilterOperation = 'range';
+export class NumberRangeStrategy<T> implements FilterStrategy<T> {
+  operation: FilterOperation = FilterOperation.RANGE;
 
-  evaluate(value: unknown, criterionValue: unknown, rangeEnd: number): boolean {
-    if (this.isComparable(value, criterionValue, rangeEnd)) {
-      return isInNumberRange(
-        value as number,
-        criterionValue as number,
-        rangeEnd as number
-      );
+  evaluate(value: unknown, criterionValue: unknown): boolean {
+    const [min, max] = criterionValue as number[];
+
+    if (this.isComparable(value, criterionValue)) {
+      return this.#isInNumberRange(value, min, max);
     }
 
-    console.warn('Invalid value types provided for number range strategy.');
+    console.warn('Invalid value types provided for date range strategy.');
     return false;
   }
 
-  isComparable(
-    value: unknown,
-    criterionValue: unknown,
-    rangeEnd: unknown
-  ): boolean {
-    return isNumber(value) && isNumber(criterionValue) && isNumber(rangeEnd);
+  // Utility method to compare number ranges
+  #isInNumberRange<T>(value: T, min: T, max: T): boolean {
+    return isInRange(value, min, max)
+  }
+
+  isComparable(value: unknown, criterionValue: unknown): boolean {
+    const [min, max] = criterionValue as number[];
+    return isNumber(value) && isNumber(min) && isNumber(max);
   }
 }

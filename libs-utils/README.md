@@ -177,9 +177,8 @@ import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class CustomEvaluate<T> extends AbstractEvaluate<T> {
-
   // Implement your own evaluation logic
-  evaluate<T>(criteria: FilterCriteria[]): (item: T) => boolean {
+  evaluate<T>(config: EvaluateConfig): (item: T) => boolean {
     // Custom evaluation for your criteria
     return /* custom logic */;
   }
@@ -227,26 +226,119 @@ export const appConfig: ApplicationConfig = {
 };
 ```
 
-### API
+## Built-in Filter Strategies
 
-#### `AbstractEvaluate`
+ng-filters-lib provides several built-in filter strategies that cover common use cases. These strategies define how specific operations should be applied to the data.
 
-- **`evaluate<T>(criteria: FilterCriteria[]): (item: T) => boolean`**  
-  Returns a function that can be used to filter an array declaratively.
+### Supported Filter Operations
 
-#### `AbstractFilter<T>`
+- **equals**: Checks if a value equals the filter value.
+- **contains**: Checks if a value contains the filter value (for strings).
+- **greaterThan**: Checks if a value is greater than the filter value (for numbers and dates).
+- **lessThan**: Checks if a value is less than the filter value (for numbers and dates).
+
+**Note:** All string comparisons are case-sensitive by default. If you require case-insensitive comparisons, consider using the `preprocess` option to modify the input values.
+
+## API
+
+### `EvaluateConfig` interface
+
+The `EvaluateConfig` is the configuration object that defines how the evaluation of filter criteria is handled.
+
+- **`criteria: FilterCriteria[]`**  
+  An array of filter criteria that will be used to evaluate and filter the data.
+  
+- **`logicalOperator: 'AND' | 'OR'`** (Optional)  
+  Specifies how multiple filter criteria should be combined. The default value is `'AND'`.  
+  - `'AND'`: All criteria must be satisfied.
+  - `'OR'`: Only one criterion must be satisfied.
+
+#### Example:
+
+```typescript
+const evaluateConfig: EvaluateConfig = {
+  criteria: [
+    { key: 'title', operation: 'contains', value: 'Star Wars' },
+    { key: 'releaseDate', operation: 'greaterThan', value: '2000-01-01' },
+  ],
+  logicalOperator: 'AND'
+};
+```
+
+### `FilterCriteria` interface
+
+The `FilterCriteria` interface defines the structure for each filtering rule applied to the data.
+
+- **`key: string`**  
+  The key that identifies the field in the data object to be filtered.
+
+- **`operation: FilterOperation | string`**  
+  The operation used to filter the data (e.g., `'equals'`, `'contains'`, `'greaterThan'`).
+
+- **`value: unknown`**  
+  The value that will be used in the filtering operation.
+
+- **`preprocess?: (value: unknown) => unknown`** (Optional)  
+  A user-defined function that pre-processes the value before applying the filter.
+
+#### Example:
+
+```typescript
+const filterCriteria: FilterCriteria[] = [
+  {
+    key: 'title',
+    operation: FilterOperation.CONTAINS,
+    value: 'Star Wars',
+    preprocess: (value: unknown) => (typeof value === 'string' ? value.toLowerCase() : value),
+  },
+  {
+    key: 'releaseDate',
+    operation: FilterOperation.GREATER_THAN,
+    value: '2000-01-01',
+  },
+];
+```
+
+## `FilterOperation` Enum
+
+The `FilterOperation` enum defines the supported operations for filtering in ng-filters-lib. These operations are used in the `FilterCriteria` to specify how data should be filtered.
+
+### Enum Values:
+
+- **`EQUALS = 'equals'`**  
+  Checks if a value equals the filter value.
+
+- **`CONTAINS = 'contains'`**  
+  Checks if a string contains the filter value.
+
+- **`GREATER_THAN = 'greaterThan'`**  
+  Checks if a value is greater than the filter value. Typically used for numbers or dates.
+
+- **`LESS_THAN = 'lessThan'`**  
+  Checks if a value is less than the filter value. Typically used for numbers or dates.
+
+- **`RANGE = 'range'`** 
+  This operation is not supported by the built-in filter strategies. If you want to use range-based filtering, you will need to provide your own custom filtering strategy. 
+  
+## `AbstractEvaluate` class
+
+- **`evaluate<T>(config: EvaluateConfig): (item: T) => boolean`**  
+  Returns a function that can be used to filter an array declaratively based on the provided configuration.
+
+### `AbstractFilter<T>` class
 
 - **`setData(newData: T[]): void`**  
   Sets the data to be filtered.
 
 - **`setFilterCriteria(criteria: FilterCriteria[]): void`**  
-  Sets the filter criteria array.
+  Sets the array of filter criteria to be applied.
 
 - **`getFilteredData(): Signal<T[]>`**  
-  Returns the filtered data as an Angular Signal.
+  Returns the filtered data as an Angular Signal, allowing reactive handling of filtered results.
 
 - **`clearFilters(): void`**  
-  Clears all filters and resets the data.
+  Clears all filters and resets the data to its original state.
+
 
 ## Running Unit Tests
 

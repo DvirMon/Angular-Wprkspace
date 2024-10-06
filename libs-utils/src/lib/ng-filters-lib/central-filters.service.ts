@@ -1,7 +1,7 @@
 import { computed, inject, Injectable, Signal } from '@angular/core';
 import { AbstractFilter } from './abstract-filters';
 import { EvaluateFilterService } from './evaluate-filter.service';
-import { FilterCriteria } from './filter.types';
+import { EvaluateConfig } from './filter.types';
 
 @Injectable({ providedIn: 'root' })
 export class CentralFilterService<T> extends AbstractFilter<T> {
@@ -9,22 +9,22 @@ export class CentralFilterService<T> extends AbstractFilter<T> {
 
   // Use computed to derive filteredData from data and filterConfig
   override filteredData = computed(() => {
-    const criteria = this.filterCriteria();
+    const config = this.filterConfig();
     const currentData = this.data();
 
-    if (!(criteria.length == 0)) {
+    if (!(config?.criteria.length == 0)) {
       return currentData; // Return all data if no filter config is set
     }
 
-    return this.#applyCriteria(currentData, criteria);
+    return this.#applyCriteria(currentData, config);
   });
 
   override setData(newData: T[]): void {
     this.data.set(newData);
   }
 
-  override setFilterCriteria(criteria: FilterCriteria[]): void {
-    this.filterCriteria.set(criteria);
+  override setFilterConfig(config: EvaluateConfig): void {
+    this.filterConfig.set(config);
   }
 
   // Abstract method to retrieve filtered data
@@ -34,10 +34,10 @@ export class CentralFilterService<T> extends AbstractFilter<T> {
 
   // Utility method to clear filters
   override clearFilters(): void {
-    this.filterCriteria.set([]);
+    this.filterConfig.set(null);
   }
 
-  #applyCriteria(data: T[], criteria: FilterCriteria[]): T[] {
-    return data.filter(this.#evaluateService.evaluate(criteria));
+  #applyCriteria(data: T[], config: EvaluateConfig): T[] {
+    return data.filter(this.#evaluateService.evaluate(config));
   }
 }

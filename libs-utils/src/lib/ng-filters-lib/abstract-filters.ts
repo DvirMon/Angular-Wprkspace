@@ -1,16 +1,17 @@
 import { signal, Signal, WritableSignal } from '@angular/core';
-import { FilterCriteria } from './filter.types';
+import { EvaluateConfig } from './filter.types';
 
 interface FilterManager<T> {
   setData(newData: T[]): void;
-  setFilterCriteria(config: FilterCriteria[]): void;
+  setFilterConfig(config: EvaluateConfig): void;
   getFilteredData(): Signal<T[]>;
   clearFilters(): void;
 }
 
 export abstract class AbstractFilter<T> implements FilterManager<T> {
   protected data: WritableSignal<T[]> = signal([]);
-  protected filterCriteria = signal<FilterCriteria[]>([]);
+  // protected filterCriteria = signal<FilterCriteria[]>([]);
+  protected filterConfig = signal<EvaluateConfig | null>(null)
   protected abstract filteredData: Signal<T[]>;
 
   // Make setData abstract, to be implemented by concrete classes
@@ -23,5 +24,5 @@ export abstract class AbstractFilter<T> implements FilterManager<T> {
   abstract clearFilters(): void;
 
   // Method to set the filter configuration
-  abstract setFilterCriteria(config: FilterCriteria[]): void;
+  abstract setFilterConfig(config: EvaluateConfig): void;
 }

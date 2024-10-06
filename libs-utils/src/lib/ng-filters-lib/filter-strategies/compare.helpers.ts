@@ -18,7 +18,7 @@ export function isInNumberRange(
 }
 
 // Utility method to compare date ranges
-export function isInDateRange(value: Date, start: Date, end: Date): boolean {
+export function isInRange<T>(value: T, start: T, end: T): boolean {
   return value >= start && value <= end;
 }
 

@@ -211,7 +211,7 @@ const filterCriteria: FilterCriteria[] = [
 
 The `FilterOperation` enum defines the supported operations for filtering in ng-filters-lib. These operations are used in the `FilterCriteria` to specify how data should be filtered.
 
-## Enum Values:
+#### Enum Values:
 
 - **`EQUALS = 'equals'`**  
   Checks if a value equals the filter value.

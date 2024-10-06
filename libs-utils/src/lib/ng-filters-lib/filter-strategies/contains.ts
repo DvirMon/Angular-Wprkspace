@@ -12,10 +12,6 @@ export class ContainsStrategy<T> implements FilterStrategy<T> {
       return false;
     }
 
-    // Normalize both values to lowercase to perform case-insensitive comparison
-    value = (value as string).toLowerCase();
-    criterionValue = (criterionValue as string).toLowerCase();
-
     // Check if the normalized value includes the normalized criterion value
     return (value as string).includes(criterionValue as string);
 

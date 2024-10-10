@@ -21,6 +21,7 @@ import { updateFavoriteEntity } from './places.helpers';
 import { PlacesPageService } from './places.service';
 import { ParallaxDirective } from '@dom/directives';
 import { FloatingButtonComponent } from '@dom/components/floating-button';
+import { PlacesHttpService } from '../../places/places-http.service';
 
 @Component({
   selector: 'to-places',
@@ -51,6 +52,7 @@ export class PlacesPageComponent implements OnInit {
     this.places = this.#store.places;
     this.selection = this.#store.favoriteMap;
     this.isGrid = this.#layout.getIsGrid();
+
   }
 
   ngOnInit(): void {

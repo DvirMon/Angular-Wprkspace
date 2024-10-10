@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { API_URL } from '../shared/tokans';
+import { API_URL } from '../shared/tokens';
 import { Places } from './places.model';
 
 @Injectable({

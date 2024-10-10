@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { iif, Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { API_URL } from '../shared/tokans';
+import { API_URL } from '../shared/tokens';
 import { Favorite } from './model';
 
 @Injectable({

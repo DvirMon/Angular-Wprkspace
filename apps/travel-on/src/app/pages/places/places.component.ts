@@ -9,6 +9,8 @@ import {
   input,
   runInInjectionContext,
 } from '@angular/core';
+import { FloatingButtonComponent } from '@dom/components/floating-button';
+import { ParallaxDirective } from '@dom/directives';
 import { AuthStore } from '../../auth/store/store';
 import {
   PlacesListComponent,
@@ -19,9 +21,6 @@ import { Places } from '../../places/places.model';
 import { SignalStore } from '../../store/store';
 import { updateFavoriteEntity } from './places.helpers';
 import { PlacesPageService } from './places.service';
-import { ParallaxDirective } from '@dom/directives';
-import { FloatingButtonComponent } from '@dom/components/floating-button';
-import { PlacesHttpService } from '../../places/places-http.service';
 
 @Component({
   selector: 'to-places',

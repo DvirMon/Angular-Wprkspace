@@ -1,8 +1,6 @@
-<button mat-icon-button (click)="onButtonClick(iconState())" color="warn">
+<button mat-icon-button (click)="onButtonClick(iconState())">
   <mat-icon
     [@iconAnimation]="iconState() === undefined ? isSelected() : iconState()"
-
     fontIcon="favorite"
   ></mat-icon>
 </button>
-

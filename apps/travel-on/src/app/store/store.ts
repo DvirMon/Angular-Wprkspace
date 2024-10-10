@@ -3,7 +3,7 @@ import { signalStore, withHooks } from '@ngrx/signals';
 import { PlacesHttpService } from '../places/places-http.service';
 import { withPlaces } from './features/with-places.feature';
 import { withFavorites } from './features/with-favorites.feature';
-import { FavoriteHttpService } from '../favorites/favorite.https.service';
+import { FavoriteHttpService } from '../favorites/favorite.https.service.copy';
 
 export const SignalStore = signalStore(
   { providedIn: 'root' },

@@ -73,6 +73,6 @@ export class PlacesCardComponent {
   }
 
   onEdit(): void {
-    this.router.navigateByUrl('admin/' + this.place().id)
+    this.router.navigateByUrl('admin/' + this.place().id);
   }
 }

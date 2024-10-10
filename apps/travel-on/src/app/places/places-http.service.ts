@@ -1,41 +1,18 @@
-import { inject, Injectable } from '@angular/core';
-import {
-  CollectionReference,
-  DocumentData,
-  Firestore,
-  QuerySnapshot,
-  collection,
-  getDocs,
-  query,
-} from '@angular/fire/firestore';
-import { Observable, from, map } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
+import { Observable } from 'rxjs';
+import { API_URL } from '../shared/tokans';
 import { Places } from './places.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PlacesHttpService {
-  private readonly VACATIONS_COLLECTION = 'vacations';
-  readonly #firestore = inject(Firestore);
-
-  constructor() {}
+  readonly #http = inject(HttpClient);
+  readonly #apiUrl = inject(API_URL);
 
   public loadPlaces(): Observable<Places[]> {
-    
-    const vacationsRef = collection(
-      this.#firestore,
-      this.VACATIONS_COLLECTION
-    ) as CollectionReference<Places>;
-    
-    const queryRef = query(vacationsRef);
-
-
-    return from(getDocs(queryRef)).pipe(
-      map((querySnapshot: QuerySnapshot<Places, DocumentData>) =>
-        querySnapshot.docs.map((doc) => {
-          return { ...doc.data(), id: doc.id } as Places;
-        })
-      )
-    );
+    const url = `${this.#apiUrl}/places`;
+    return this.#http.get<Places[]>(url);
   }
 }

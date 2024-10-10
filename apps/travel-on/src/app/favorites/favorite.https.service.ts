@@ -1,77 +1,42 @@
-import { Injectable } from '@angular/core';
-import {
-  CollectionReference,
-  DocumentData,
-  DocumentReference,
-  Firestore,
-  QuerySnapshot,
-  addDoc,
-  collection,
-  doc,
-  getDocs,
-  query,
-  setDoc,
-  where,
-} from '@angular/fire/firestore';
-import { Observable, from, iif, map, of, switchMap } from 'rxjs';
-import { mapQuerySnapshotDoc } from '../shared/helpers';
-import { createFavorite } from './helpers';
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { iif, Observable, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { API_URL } from '../shared/tokans';
 import { Favorite } from './model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FavoriteHttpService {
-  private readonly FAVORITES_COLLECTION = 'favorites';
-  private readonly favoritesRef: CollectionReference<Favorite>;
+  readonly #apiUrl = inject(API_URL);
 
-  constructor(private readonly firestore: Firestore) {
-    this.favoritesRef = collection(
-      this.firestore,
-      this.FAVORITES_COLLECTION
-    ) as CollectionReference<Favorite>;
-  }
+  readonly #url = this.#apiUrl + '/favorites';
 
-  private _createNewFavoriteDoc$(
-    favoritesRef: CollectionReference<DocumentData>,
-    userId: string
-  ): Observable<Favorite> {
-    const newFavorite: Partial<Favorite> = createFavorite(userId);
+  readonly #http = inject(HttpClient);
 
-    return from(addDoc(favoritesRef, newFavorite)).pipe(
-      switchMap((doc: DocumentReference<DocumentData>) => {
-        return of({ ...newFavorite, id: doc.id } as Favorite);
-      })
-    );
-  }
+  // Load favorites for a user
   public loadFavorites(userId: string): Observable<Favorite> {
-    const querySnapshot$ = from(
-      getDocs(query(this.favoritesRef, where('userId', '==', userId)))
-    );
-
-    const trueMediaResult$ = querySnapshot$.pipe(
-      switchMap(() => this._createNewFavoriteDoc$(this.favoritesRef, userId))
-    );
-
-    const falseMediaResult$ = querySnapshot$.pipe(
-      mapQuerySnapshotDoc<Favorite>()
-    );
-
-    return querySnapshot$.pipe(
-      switchMap((querySnapshot: QuerySnapshot<Favorite>) =>
-        iif(() => querySnapshot.empty, trueMediaResult$, falseMediaResult$)
-      ),
-      map((res) => res)
-    );
+    return this.#http
+      .get<Favorite | null>(`${this.#url}/${userId}`)
+      .pipe(
+        switchMap((favorite: Favorite | null) =>
+          iif(
+            () => !favorite,
+            this.#createNewFavorite(userId),
+            of(favorite as Favorite)
+          )
+        )
+      );
   }
 
-  public updateFavoriteDoc(docId: string, data: Favorite) {
-    const favoriteDocRef = doc(this.favoritesRef, docId);
-    return setDoc<Favorite, DocumentData>(favoriteDocRef, data);
+  // Create a new favorite document
+  #createNewFavorite(userId: string): Observable<Favorite> {
+    return this.#http.post<Favorite>(this.#url, { userId });
   }
 
-  public updateFavoriteDocObs(docId: string, data: Favorite): Observable<void> {
-    const favoriteDocRef = doc(this.favoritesRef, docId);
-    return from(setDoc<Favorite, DocumentData>(favoriteDocRef, data));
+  // Update a favorite document
+  public updateFavoriteDoc(docId: string, data: Favorite): Observable<void> {
+    return this.#http.post<void>(`${this.#url}/update/${docId}`, data);
   }
 }

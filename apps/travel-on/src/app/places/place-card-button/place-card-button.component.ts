@@ -44,19 +44,21 @@ export enum SelectState {
         'default',
         style({
           transform: 'scale(1)',
-          color: '#9E9E9E',
+          color: '#707070',
         })
       ),
       state(
         'changeState',
         style({
           transform: 'scale(1.2)',
+          color: '#707070',
         })
       ),
       state(
         'selected',
         style({
           transform: 'scale(1)',
+          color: '#f73282',
         })
       ),
       transition('default <=> changeState', animate('0.1s ease')),
@@ -75,10 +77,10 @@ export class PlaceCardButtonComponent {
   readonly changed = output<ButtonSelectionChangedEvent>();
 
   constructor() {
+    this.isSelected = computed(() => {
+      return this.selected() ? SelectState.SELECTED : SelectState.DEFAULT;
+    });
 
-    this.isSelected = computed(() =>
-      this.selected() ? SelectState.SELECTED : SelectState.DEFAULT
-    );
     this.#clickEvent = new BehaviorSubject<SelectState>(SelectState.DEFAULT);
 
     this.iconState = toSignal(this.#getIconState$());

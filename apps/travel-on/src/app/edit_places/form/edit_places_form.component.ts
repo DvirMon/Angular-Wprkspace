@@ -1,18 +1,15 @@
-import { JsonPipe, NgFor, TitleCasePipe } from '@angular/common';
+import { JsonPipe, TitleCasePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  computed,
   inject,
   input,
-  OnInit,
+  OnInit
 } from '@angular/core';
-import { Timestamp } from '@angular/fire/firestore';
 import {
-  FormControl,
   FormGroup,
   FormsModule,
-  ReactiveFormsModule,
+  ReactiveFormsModule
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -22,24 +19,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { Activity, Places } from '../../places/places.model';
+import { OptionTestComponent } from '../option-test.component';
 import { DisableIfMaxSelectedDirective } from './disable-max-selected.directive';
 import { compareString } from './form.validators';
-import { PlaceFormService } from './place-form.service';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { OptionTestComponent } from '../option-test.component';
+import { PlaceForm, PlaceFormService } from './place-form.service';
 
-type PlaceForm = {
-  destination: FormGroup<{
-    city: FormControl<string>;
-    country: FormControl<string>;
-  }>;
-  price: FormControl<number>;
-  takeoff: FormControl<Timestamp>;
-  landing: FormControl<Timestamp>;
-  imageUrl: FormControl<string>;
-  activities: FormControl<string[]>;
-  rating: FormControl<number>;
-};
 
 @Component({
   selector: 'to-edit-places-form',

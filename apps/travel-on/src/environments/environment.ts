@@ -13,4 +13,5 @@ export const environment = {
     measurementId: 'G-BSDTG44DV2',
   },
   email: 'dmenajem@gmail.com',
+  apiUrl : "http://localhost:3000/api"
 };

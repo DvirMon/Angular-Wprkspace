@@ -13,4 +13,6 @@ export const environment = {
     measurementId: 'G-BSDTG44DV2',
   },
   email: '',
+  apiUrl: 'https://api.yourproductionurl.com/api' // Production API
+
 };

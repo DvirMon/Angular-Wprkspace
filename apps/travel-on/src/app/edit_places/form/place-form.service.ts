@@ -1,14 +1,13 @@
 import { computed, inject, Signal } from '@angular/core';
-import { Timestamp } from '@angular/fire/firestore';
+import { toSignal } from '@angular/core/rxjs-interop';
 import {
   FormControl,
   FormGroup,
   NonNullableFormBuilder,
   Validators,
 } from '@angular/forms';
-import { EditPlacesService } from '../../pages/edit_places/edit-places.service';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { distinctUntilChanged, map, Observable } from 'rxjs';
+import { EditPlacesService } from '../../pages/edit_places/edit-places.service';
 import { Activity, DestinationItem } from '../../places/places.model';
 import { maxSelectionValidator } from './form.validators';
 
@@ -18,8 +17,8 @@ export type PlaceForm = {
     country: FormControl<string>;
   }>;
   price: FormControl<number>;
-  takeoff: FormControl<Timestamp>;
-  landing: FormControl<Timestamp>;
+  takeoff: FormControl<Date>;
+  landing: FormControl<Date>;
   imageUrl: FormControl<string>;
   activities: FormControl<string[]>;
   rating: FormControl<number>;
@@ -71,10 +70,10 @@ export class PlaceFormService {
         Validators.required,
         Validators.min(0),
       ]),
-      takeoff: this.#nfb.control<Timestamp>(new Timestamp(0, 0), [
+      takeoff: this.#nfb.control<Date>(new Date(0, 0), [
         Validators.required,
       ]),
-      landing: this.#nfb.control<Timestamp>(new Timestamp(0, 0), [
+      landing: this.#nfb.control<Date>(new Date(0, 0), [
         Validators.required,
       ]),
       imageUrl: this.#nfb.control<string>('', [

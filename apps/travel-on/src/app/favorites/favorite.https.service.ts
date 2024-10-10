@@ -8,10 +8,10 @@ import { Favorite } from './model';
 @Injectable({
   providedIn: 'root',
 })
-export class FavoriteService {
+export class FavoriteHttpService {
   readonly #apiUrl = inject(API_URL);
 
-  readonly #url = this.#apiUrl + '/favorite';
+  readonly #url = this.#apiUrl + '/favorites';
 
   readonly #http = inject(HttpClient);
   

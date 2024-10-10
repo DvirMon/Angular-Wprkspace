@@ -38,7 +38,7 @@ export function withFavorites(Loader: LoaderService<FavoritesLoader>) {
         pipe(
           switchMap((updatedData: Favorite) => {
             const { id } = updatedData;
-            return service.updateFavoriteDocObs(id, updatedData).pipe(
+            return service.updateFavoriteDoc(id, updatedData).pipe(
               tapResponse({
                 next: () =>
                   patchState(store, (state) => ({

@@ -78,7 +78,6 @@ export class PlaceCardButtonComponent {
 
   constructor() {
     this.isSelected = computed(() => {
-      console.log(this.selected());
       return this.selected() ? SelectState.SELECTED : SelectState.DEFAULT;
     });
 

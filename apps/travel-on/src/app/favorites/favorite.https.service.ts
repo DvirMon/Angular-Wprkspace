@@ -14,7 +14,7 @@ export class FavoriteHttpService {
   readonly #url = this.#apiUrl + '/favorites';
 
   readonly #http = inject(HttpClient);
-  
+
   // Load favorites for a user
   public loadFavorites(userId: string): Observable<Favorite> {
     return this.#http
@@ -32,7 +32,7 @@ export class FavoriteHttpService {
 
   // Create a new favorite document
   #createNewFavorite(userId: string): Observable<Favorite> {
-    return this.#http.post<Favorite>(this.#url, userId);
+    return this.#http.post<Favorite>(this.#url, { userId });
   }
 
   // Update a favorite document

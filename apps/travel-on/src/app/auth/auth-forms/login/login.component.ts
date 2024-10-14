@@ -152,11 +152,6 @@ export class LoginFormComponent {
     this.otp.emit(event);
   }
 
-  public onEmailLinkSignIn() {
-    const event = this._createSignInEvent(SignInMethod.EMAIL_LINK);
-    this.emailLink.emit(event);
-  }
-
   public onForgetPassword() {
     this.forget.emit();
   }

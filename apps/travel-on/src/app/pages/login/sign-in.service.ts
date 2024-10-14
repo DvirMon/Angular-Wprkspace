@@ -2,6 +2,9 @@ import { inject, Injectable } from '@angular/core';
 import { UserCredential } from '@angular/fire/auth';
 import { Observable } from 'rxjs';
 import { FireAuthService, SignInMethod } from '../../auth';
+import { debugTap } from '../../shared/operators/debug';
+import { HttpClient } from '@angular/common/http';
+import { API_URL } from '../../shared/tokens';
 
 interface EmailLinkData {
   email: string;
@@ -19,30 +22,43 @@ type SignInStrategy = (data?: unknown) => Observable<UserCredential>;
   providedIn: 'root',
 })
 export class SignInService {
-  private readonly fireAuthService = inject(FireAuthService);
+  readonly #fireAuthService = inject(FireAuthService);
 
-  private readonly signInStrategies: Map<SignInMethod, SignInStrategy> =
-    new Map();
+  readonly #signInStrategies: Map<SignInMethod, SignInStrategy> = new Map();
+
+  readonly #http = inject(HttpClient);
+
+  readonly apiUrl = inject(API_URL);
 
   constructor() {
-    this._setSignInMap();
+    this.#setSignInMap();
   }
 
   public getSignInStrategy(method: SignInMethod): SignInStrategy | undefined {
-    return this.signInStrategies.get(method);
+    return this.#signInStrategies.get(method);
   }
 
-  private _setSignInMap() {
-    this.signInStrategies.set(SignInMethod.GOOGLE, () =>
-      this.fireAuthService.signInWithGoogle$()
+  public verifyToken(cred: UserCredential, idToken: string) {
+    return this.#http.post<UserCredential>(
+      `${this.apiUrl}/users/profile`,
+      { cred },
+      {
+        headers: {
+          Authorization: `Bearer ${idToken}`,
+          'Content-Type': 'application/json',
+        },
+      }
     );
-    this.signInStrategies.set(SignInMethod.EMAIL_LINK, (data: unknown) => {
-      const { email, emailLink } = data as EmailLinkData;
-      return this.fireAuthService.signInWithEmailLink$(email, emailLink);
-    });
-    this.signInStrategies.set(SignInMethod.EMAIL_PASSWORD, (data: unknown) => {
+  }
+
+  #setSignInMap() {
+    this.#signInStrategies.set(SignInMethod.GOOGLE, () =>
+      this.#fireAuthService.signInWithGoogle$()
+    );
+
+    this.#signInStrategies.set(SignInMethod.EMAIL_PASSWORD, (data: unknown) => {
       const { email, password } = data as EmailPasswordData;
-      return this.fireAuthService.signInWithEmailAndPassword$(email, password);
+      return this.#fireAuthService.signInWithEmailAndPassword$(email, password);
     });
   }
 }

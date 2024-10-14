@@ -28,6 +28,7 @@ export class LoginService {
     );
   }
 
+
   public onLogout(): void {
     clearStorage();
     navigate('/');

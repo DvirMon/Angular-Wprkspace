@@ -1,11 +1,8 @@
-import { Injectable, Injector, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
-  getAuth,
-  GoogleAuthProvider,
-  signInWithPopup,
-  UserCredential,
+  UserCredential
 } from '@angular/fire/auth';
-import { Observable, defer, from, switchMap } from 'rxjs';
+import { defer, from, Observable, switchMap } from 'rxjs';
 
 export interface FirebaseError {
   code: string;

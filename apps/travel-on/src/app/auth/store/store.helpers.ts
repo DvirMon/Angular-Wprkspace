@@ -1,8 +1,9 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { UserCredential } from '@angular/fire/auth';
 import { tapResponse } from '@ngrx/operators';
 import { patchState, WritableStateSource } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { exhaustMap, from, map, Observable, pipe, switchMap } from 'rxjs';
+import { exhaustMap, Observable, pipe, switchMap } from 'rxjs';
 import { SignInService } from '../../pages/login/sign-in.service';
 import { RegisterService } from '../../pages/register/register.service';
 import { ResetService } from '../../pages/reset/reset.service';
@@ -19,8 +20,6 @@ import {
 import { UserService } from '../utils/user.service';
 import { AuthState } from './auth.state';
 import { setAuthError, setUser } from './store.setters';
-import { debugTap } from '../../shared/operators/debug';
-import { HttpErrorResponse } from '@angular/common/http';
 
 export function signIn(
   service: SignInService,

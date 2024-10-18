@@ -1,15 +1,10 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { UserCredential } from '@angular/fire/auth';
 import { Observable, of, switchMap } from 'rxjs';
 import { FireAuthService, SignInEvent, SignInMethod, User } from '../../auth';
-import { debugTap } from '../../shared/operators/debug';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { API_URL } from '../../shared/tokens';
 
-interface EmailLinkData {
-  email: string;
-  emailLink: string;
-}
 
 interface EmailPasswordData {
   email: string;

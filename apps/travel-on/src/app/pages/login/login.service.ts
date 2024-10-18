@@ -3,13 +3,11 @@ import { Router } from '@angular/router';
 import { User } from '../../auth';
 import { StorageKey } from '../../shared/constants';
 import { clearStorage, navigate, setToStorage } from '../../shared/helpers';
-import { SignInService } from './sign-in.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
-  readonly #signInService = inject(SignInService);
   readonly #router = inject(Router);
 
 

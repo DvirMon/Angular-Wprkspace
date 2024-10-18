@@ -1,4 +1,4 @@
-import { EventEmitter, OnInit, Signal } from '@angular/core';
+import { OnInit, Signal } from '@angular/core';
 import * as i0 from "@angular/core";
 export declare class TableActionCellComponent implements OnInit {
     icon: import("@angular/core").InputSignal<string>;
@@ -6,7 +6,7 @@ export declare class TableActionCellComponent implements OnInit {
     text: import("@angular/core").InputSignal<string>;
     isDisabled: import("@angular/core").InputSignal<boolean>;
     isIconButton: Signal<boolean>;
-    actionClicked: EventEmitter<void>;
+    actionClicked: import("@angular/core").OutputEmitterRef<void>;
     ngOnInit(): void;
     onActionButtonClick(): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<TableActionCellComponent, never>;

@@ -8,10 +8,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import * as i0 from "@angular/core";
 export class TableFormCellComponent {
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "17.3.2", ngImport: i0, type: TableFormCellComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "17.3.2", type: TableFormCellComponent, isStandalone: true, selector: "dom-table-form-cell", ngImport: i0, template: "<div>form cell</div>\r\n", dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "ngmodule", type: MatSelectModule }, { kind: "ngmodule", type: MatFormFieldModule }, { kind: "ngmodule", type: MatIconModule }, { kind: "ngmodule", type: MatInputModule }], changeDetection: i0.ChangeDetectionStrategy.OnPush }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.1.1", ngImport: i0, type: TableFormCellComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.1.1", type: TableFormCellComponent, isStandalone: true, selector: "dom-table-form-cell", ngImport: i0, template: "<div>form cell</div>\r\n", dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "ngmodule", type: MatSelectModule }, { kind: "ngmodule", type: MatFormFieldModule }, { kind: "ngmodule", type: MatIconModule }, { kind: "ngmodule", type: MatInputModule }], changeDetection: i0.ChangeDetectionStrategy.OnPush }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "17.3.2", ngImport: i0, type: TableFormCellComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.1.1", ngImport: i0, type: TableFormCellComponent, decorators: [{
             type: Component,
             args: [{ selector: 'dom-table-form-cell', standalone: true, imports: [
                         CommonModule,

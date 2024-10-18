@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  server: 'http://localhost:3000',
+  server: 'https://node-travel-on-server.onrender.com',
   firebaseConfig: {
     apiKey: 'AIzaSyAWE61Vm0CpfUtHq4G48aJVMbdY6REEtrA',
     authDomain: 'travel-on-811d5.firebaseapp.com',

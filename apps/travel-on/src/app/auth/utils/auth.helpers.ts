@@ -75,7 +75,7 @@ export function mapAuthServerError(code: string): FormServerError {
       message: 'You reach your limit requests.',
     },
 
-    'auth/email-already-in-use': {
+    'auth/email-already-exists': {
       control: 'email',
       message: 'This email is already exist.',
     },
@@ -103,5 +103,5 @@ export function mapAuthServerError(code: string): FormServerError {
     },
   };
 
-  return authErrorMessages[code];
+  return authErrorMessages[code] || { control: '', message: '' };
 }

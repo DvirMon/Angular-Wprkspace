@@ -45,7 +45,6 @@ export function mapFirebaseCredentials(): OperatorFunction<
 > {
   return (source: Observable<UserCredential>): Observable<User> =>
     source.pipe(
-      tap((cred) => console.log(cred.user.getIdToken())),
       map((credential: UserCredential) => credential.user),
       map((userFirebase: UserFirebase) => {
         const user = mapUser(userFirebase); // Replace with your _mapUser logic

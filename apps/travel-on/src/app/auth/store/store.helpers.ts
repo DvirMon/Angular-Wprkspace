@@ -30,18 +30,28 @@ export function signIn(
   return rxMethod<SignInEvent>(
     pipe(
       switchMap((value) =>
-        service.signIn$(value).pipe(
-          switchMap((value: UserCredential) =>
-            from(value.user.getIdToken()).pipe(
-              debugTap('Token'),
-              switchMap((token: string) => service.getUser(token))
-            )
-          )
-        )
+        service
+          .signIn$(value)
+          .pipe(mapFirebaseCredentials(), handleLoadUserResponse(store, event))
       )
     )
   );
 }
+//   return rxMethod<SignInEvent>(
+//     pipe(
+//       switchMap((value) =>
+//         service.signIn$(value).pipe(
+//           switchMap((value: UserCredential) =>
+//             from(value.user.getIdToken()).pipe(
+//               debugTap('Token'),
+//               switchMap((token: string) => service.getUser(token))
+//             )
+//           )
+//         )
+//       )
+//     )
+//   );
+// }
 
 export function register(
   service: RegisterService,
@@ -51,9 +61,7 @@ export function register(
   return rxMethod<Register>(
     pipe(
       switchMap((value) =>
-        service
-          .register$(value)
-          .pipe(handleLoadUserResponse(store, event))
+        service.register$(value).pipe(handleLoadUserResponse(store, event))
       )
     )
   );
@@ -72,6 +80,18 @@ export function loadUserById(
   );
 }
 
+/*************  ✨ Codeium Command ⭐  *************/
+/**
+ * TapResponse operator that handles the response from loading a user.
+ *
+ * In case of a successful response, it sets the user in the store.
+ * In case of an error, it sets the error in the store.
+ *
+ * @param store The auth store.
+ * @param event The event that triggered the user load.
+ * @returns A tapResponse operator that handles the response.
+ */
+/******  a84524d5-839e-4495-b35c-9e400f1e0a07  *******/
 
 export function handleLoadUserResponse(
   store: WritableStateSource<AuthState>,
@@ -80,7 +100,7 @@ export function handleLoadUserResponse(
   return tapResponse({
     next: (user: User) => patchState(store, setUser(user)),
     error: (err: HttpErrorResponse) => {
-      console.log(err.error)
+      console.log(err.error);
 
       patchState(store, setAuthError(err.error.code, event));
     },

@@ -12,11 +12,11 @@ import {
   WritableSignal,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, switchMap, Unsubscribable } from 'rxjs';
+import { CardButtonComponent } from '@dom/components/card-button';
+import { FormServerError } from '@dom/components/form/types';
+import { Observable, Unsubscribable } from 'rxjs';
 import { FireAuthService, LoginFormComponent, SignInEvent } from '../../auth';
 import { AuthStore } from '../../auth/store/store';
-import { FormServerError } from '@dom/components/form/types';
-import { CardButtonComponent } from '@dom/components/card-button';
 
 interface LoginStore {
   isLoaded: Signal<boolean>;
@@ -49,26 +49,13 @@ export class LoginPageComponent {
   public readonly showOtp: WritableSignal<boolean>;
   public readonly serverError: Signal<FormServerError | undefined>;
 
-  readonly #fireAuthService = inject(FireAuthService);
-
   constructor() {
-    // this.#fireAuthService
-    //   .signInWithEmailAndPassword$('dom@gmail.com', '12345678')
-    //   .pipe(
-    //     switchMap(() => {
-    //       return this.#fireAuthService.getToken();
-    //     })
-    //   )
-    //   .subscribe((v) => {
-    //     console.log(v);
-    //   });
-
     this.showOtp = signal(false);
     this.serverError = this.#authStore.loginError;
 
     effect(() => {
       if (this.#authStore.isLoaded()) {
-        // this.#authStore.login();
+        this.#authStore.login();
       }
     });
   }

@@ -98,10 +98,8 @@ export function handleLoadUserResponse(
 ) {
   return tapResponse({
     next: (user: User) => patchState(store, setUser(user)),
-    error: (err: HttpErrorResponse) => {
-      console.log(err.error);
-
-      patchState(store, setAuthError(err.error.code, event));
+    error: (err: FirebaseError) => {
+      patchState(store, setAuthError(err.code, event));
     },
   });
 }

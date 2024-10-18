@@ -6,7 +6,10 @@ import { ErrorHandler, Injectable, Provider } from '@angular/core';
 })
 export class ErrorsService implements ErrorHandler {
   handleError(error: ErrorEvent | HttpErrorResponse) {
-    console.log(error);
+    
+    if (error instanceof HttpErrorResponse) {
+      return;
+    }
 
     if (error instanceof ErrorEvent) {
       this.handleClientError(error);

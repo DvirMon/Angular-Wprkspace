@@ -20,6 +20,7 @@ import { UserService } from '../utils/user.service';
 import { AuthState } from './auth.state';
 import { setAuthError, setUser } from './store.setters';
 import { debugTap } from '../../shared/operators/debug';
+import { HttpErrorResponse } from '@angular/common/http';
 
 export function signIn(
   service: SignInService,
@@ -52,7 +53,7 @@ export function register(
       switchMap((value) =>
         service
           .register$(value)
-          .pipe(mapFirebaseCredentials(), handleLoadUserResponse(store, event))
+          .pipe(handleLoadUserResponse(store, event))
       )
     )
   );
@@ -71,14 +72,18 @@ export function loadUserById(
   );
 }
 
+
 export function handleLoadUserResponse(
   store: WritableStateSource<AuthState>,
   event: AuthEvent
 ) {
   return tapResponse({
     next: (user: User) => patchState(store, setUser(user)),
-    error: (err: FirebaseError) =>
-      patchState(store, setAuthError(err.code, event)),
+    error: (err: HttpErrorResponse) => {
+      console.log(err.error)
+
+      patchState(store, setAuthError(err.error.code, event));
+    },
   });
 }
 
@@ -100,7 +105,6 @@ export function confirmPasswordReset(
             next: () =>
               dialog.openDialog(authDialogMap[event], { email: '', event }),
             error: (err: FirebaseError) =>
-              
               patchState(store, setAuthError(err.code, authEvent)),
           })
         )

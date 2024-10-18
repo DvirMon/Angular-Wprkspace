@@ -1,8 +1,7 @@
-import { inject, Injectable } from '@angular/core';
-import { FireAuthService, Register } from '../../auth';
-import { Observable } from 'rxjs';
-import { UserCredential } from '@angular/fire/auth';
 import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { FireAuthService, Register, User } from '../../auth';
 import { API_URL } from '../../shared/tokens';
 
 @Injectable({
@@ -16,7 +15,7 @@ export class RegisterService {
 
   readonly #url = this.#apiUrl + '/auth/register';
 
-  public register$({ password, email }: Register): Observable<UserCredential> {
-    return this.#http.post<UserCredential>(this.#url, { email, password });
+  public register$({ password, email }: Register): Observable<User> {
+    return this.#http.post<User>(this.#url, { email, password });
   }
 }

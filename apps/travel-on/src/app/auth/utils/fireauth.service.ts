@@ -68,7 +68,7 @@ export class FireAuthService {
           password
         );
 
-        return defer(() => userCredential).pipe(debugTap('UserCredential'));
+        return defer(() => userCredential);
       })
     );
   }

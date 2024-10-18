@@ -1,3 +1,4 @@
+import { environment } from 'apps/travel-on/src/environments/environment';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
@@ -25,12 +26,14 @@ export function debugTap<T>(
   return (source: Observable<T>) =>
     source.pipe(
       tap((value) => {
-        const callerInfo = getCallerInfo();
-        console.log(
-          `${message} | Value:`,
-          value,
-          `| Called from: ${callerInfo}`
-        );
+        if (!environment.production) {
+          const callerInfo = getCallerInfo();
+          console.log(
+            `${message} | Value:`,
+            value,
+            `| Called from: ${callerInfo}`
+          );
+        }
       })
     );
 }

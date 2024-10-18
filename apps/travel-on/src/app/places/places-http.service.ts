@@ -12,6 +12,9 @@ export class PlacesHttpService {
   readonly #apiUrl = inject(API_URL);
 
   public loadPlaces(): Observable<Places[]> {
+
+    console.log(this.#apiUrl)
+
     const url = `${this.#apiUrl}/places`;
     return this.#http.get<Places[]>(url);
   }

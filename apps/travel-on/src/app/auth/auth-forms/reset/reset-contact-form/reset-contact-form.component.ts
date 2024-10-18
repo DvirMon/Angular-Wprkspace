@@ -18,8 +18,6 @@ import { MatButton } from '@angular/material/button';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 
-import { DEFAULT_EMAIL } from '../../../utils/constants';
-
 import { DividerHeaderComponent } from '@dom/components/divider-header';
 import { FormInputComponent } from '@dom/components/form/inputs/form-input';
 import {
@@ -72,7 +70,7 @@ export class ResetContactFormComponent {
 
   private _buildResetForm(): FormGroup<ResetContactForm> {
     return inject(NonNullableFormBuilder).group({
-      email: [DEFAULT_EMAIL, [Validators.required, Validators.email]],
+      email: ['DEFAULT_EMAIL', [Validators.required, Validators.email]],
     });
   }
 

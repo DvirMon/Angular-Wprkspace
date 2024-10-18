@@ -7,6 +7,7 @@ import { provideErrorService } from './shared/error.service';
 import { errorInterceptor } from './shared/http/error.interceptor';
 import { provideApiUrl } from './shared/providers/apiUrl';
 import { provideFirebase } from './shared/providers/firebase';
+import { provideDefaultEmail } from './shared/providers/degualtEmail';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -16,6 +17,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideFirebase(),
     provideApiUrl(),
+    provideDefaultEmail(),
     provideErrorService()
   ],
 };

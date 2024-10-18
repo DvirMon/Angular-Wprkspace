@@ -20,7 +20,6 @@ import { MatButton } from '@angular/material/button';
 import { MatCard, MatCardContent } from '@angular/material/card';
 
 import { Register } from '../../index';
-import { DEFAULT_EMAIL } from '../../utils/constants';
 import { DividerHeaderComponent } from '@dom/components/divider-header';
 import { FormInputComponent } from '@dom/components/form/inputs/form-input';
 import { getFormKeys, handleServerErrorEffect } from '@dom/components/form/helpers';
@@ -86,7 +85,7 @@ export class RegisterFormComponent {
 
   private _buildRegisterForm(): FormGroup<RegisterForm> {
     return inject(NonNullableFormBuilder).group({
-      email: [DEFAULT_EMAIL, [Validators.required, Validators.email]],
+      email: ['DEFAULT_EMAIL', [Validators.required, Validators.email]],
       password: [
         '',
         [

@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import {
-  UserCredential
-} from '@angular/fire/auth';
+import { UserCredential } from '@angular/fire/auth';
 import { defer, from, Observable, switchMap } from 'rxjs';
+import { debugTap } from '../../shared/operators/debug';
 
 export interface FirebaseError {
   code: string;
@@ -20,7 +19,17 @@ export class FireAuthService {
       })
     );
   }
-  public createInWithEmailAndPassword$(
+
+  public getToken(): Observable<string | undefined> {
+    return defer(() =>
+      import('firebase/auth').then((firebase) => {
+        const auth = firebase.getAuth();
+        return auth.currentUser?.getIdToken();
+      })
+    );
+  }
+
+  public createUserWithEmailAndPassword$(
     email: string,
     password: string
   ): Observable<UserCredential> {
@@ -52,12 +61,14 @@ export class FireAuthService {
     return this.#loadFirebaseAuth().pipe(
       switchMap(({ getAuth, signInWithEmailAndPassword }) => {
         const auth = getAuth();
+
         const userCredential = signInWithEmailAndPassword(
           auth,
           email,
           password
         );
-        return defer(() => userCredential);
+
+        return defer(() => userCredential).pipe(debugTap('UserCredential'));
       })
     );
   }

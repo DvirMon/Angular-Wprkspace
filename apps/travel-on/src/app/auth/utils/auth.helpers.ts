@@ -4,7 +4,7 @@ import { UserCredential, User as UserFirebase } from '@angular/fire/auth';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormServerError } from '@dom/components/form/types';
 import { Observable, OperatorFunction } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { User } from './auth.model';
 
 // Function to generate a valid URL for the email verification link
@@ -45,6 +45,7 @@ export function mapFirebaseCredentials(): OperatorFunction<
 > {
   return (source: Observable<UserCredential>): Observable<User> =>
     source.pipe(
+      tap((cred) => console.log(cred.user.getIdToken())),
       map((credential: UserCredential) => credential.user),
       map((userFirebase: UserFirebase) => {
         const user = mapUser(userFirebase); // Replace with your _mapUser logic

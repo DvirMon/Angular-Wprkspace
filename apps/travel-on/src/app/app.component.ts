@@ -10,4 +10,6 @@ import { AuthStore } from './auth/store/store';
   styleUrl: './app.component.scss',
   providers: [AuthStore],
 })
-export class AppComponent {}
+export class AppComponent {
+ 
+}

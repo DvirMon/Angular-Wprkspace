@@ -1,9 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { UserCredential } from '@angular/fire/auth';
-import { Observable } from 'rxjs';
-import { FireAuthService, SignInMethod } from '../../auth';
+import { Observable, of, switchMap } from 'rxjs';
+import { FireAuthService, SignInEvent, SignInMethod, User } from '../../auth';
 import { debugTap } from '../../shared/operators/debug';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { API_URL } from '../../shared/tokens';
 
 interface EmailLinkData {
@@ -28,27 +28,30 @@ export class SignInService {
 
   readonly #http = inject(HttpClient);
 
-  readonly apiUrl = inject(API_URL);
+  readonly #apiUrl = inject(API_URL);
 
   constructor() {
     this.#setSignInMap();
   }
+  // Sign in with different authentication methods based on the provided event.
+  public signIn$(event: SignInEvent): Observable<UserCredential> {
+    const { method, data } = event;
 
-  public getSignInStrategy(method: SignInMethod): SignInStrategy | undefined {
-    return this.#signInStrategies.get(method);
-  }
-
-  public verifyToken(cred: UserCredential, idToken: string) {
-    return this.#http.post<UserCredential>(
-      `${this.apiUrl}/users/profile`,
-      { cred },
-      {
-        headers: {
-          Authorization: `Bearer ${idToken}`,
-          'Content-Type': 'application/json',
-        },
-      }
+    return of(method).pipe(
+      switchMap((method: SignInMethod) => {
+        const strategy = this.#signInStrategies.get(method);
+        return strategy !== undefined
+          ? strategy(data)
+          : of({} as UserCredential);
+      })
     );
+  }
+  public getUser(idToken: string) {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${idToken}`,
+    });
+
+    return this.#http.get<User>(`${this.#apiUrl}/users/profile`, { headers });
   }
 
   #setSignInMap() {

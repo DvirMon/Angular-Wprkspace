@@ -16,8 +16,9 @@ import {
   confirmPasswordReset,
   loadUserById,
   register,
-  signIn
+  signIn,
 } from './store.helpers';
+import { SignInService } from '../../pages/login/sign-in.service';
 
 export function withAuthMethods<_>() {
   return signalStoreFeature(
@@ -27,15 +28,14 @@ export function withAuthMethods<_>() {
         store,
         resetService = inject(ResetService),
         registerService = inject(RegisterService),
-        loginService = inject(LoginService),
-
+        signInService = inject(SignInService),
         userService = inject(UserService),
 
         dialog = inject(DialogService)
       ) => ({
-        signIn: signIn(loginService, store, AuthEvent.LOGIN),
+        signIn: signIn(signInService, store, AuthEvent.LOGIN),
         register: register(registerService, store, AuthEvent.REGISTER),
-  
+
         confirmPasswordReset: confirmPasswordReset(
           store,
           AuthEvent.RESET,

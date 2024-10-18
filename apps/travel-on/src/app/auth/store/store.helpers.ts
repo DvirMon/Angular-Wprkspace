@@ -2,8 +2,8 @@ import { UserCredential } from '@angular/fire/auth';
 import { tapResponse } from '@ngrx/operators';
 import { patchState, WritableStateSource } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { exhaustMap, Observable, pipe, switchMap } from 'rxjs';
-import { LoginService } from '../../pages/login/login.service';
+import { exhaustMap, from, map, Observable, pipe, switchMap } from 'rxjs';
+import { SignInService } from '../../pages/login/sign-in.service';
 import { RegisterService } from '../../pages/register/register.service';
 import { ResetService } from '../../pages/reset/reset.service';
 import { DialogService } from '../../shared/dialog/dialog.service';
@@ -19,22 +19,29 @@ import {
 import { UserService } from '../utils/user.service';
 import { AuthState } from './auth.state';
 import { setAuthError, setUser } from './store.setters';
+import { debugTap } from '../../shared/operators/debug';
 
 export function signIn(
-  service: LoginService,
+  service: SignInService,
   store: WritableStateSource<AuthState>,
   event: AuthEvent
 ) {
   return rxMethod<SignInEvent>(
     pipe(
       switchMap((value) =>
-        service
-          .signIn$(value)
-          .pipe(mapFirebaseCredentials(), handleLoadUserResponse(store, event))
+        service.signIn$(value).pipe(
+          switchMap((value: UserCredential) =>
+            from(value.user.getIdToken()).pipe(
+              debugTap('Token'),
+              switchMap((token: string) => service.getUser(token))
+            )
+          )
+        )
       )
     )
   );
 }
+
 export function register(
   service: RegisterService,
   store: WritableStateSource<AuthState>,
@@ -75,7 +82,6 @@ export function handleLoadUserResponse(
   });
 }
 
-
 export function confirmPasswordReset(
   store: WritableStateSource<AuthState>,
   authEvent: AuthEvent,
@@ -94,6 +100,7 @@ export function confirmPasswordReset(
             next: () =>
               dialog.openDialog(authDialogMap[event], { email: '', event }),
             error: (err: FirebaseError) =>
+              
               patchState(store, setAuthError(err.code, authEvent)),
           })
         )
